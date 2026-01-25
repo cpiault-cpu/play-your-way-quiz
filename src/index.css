@@ -82,6 +82,7 @@
   .hero-section {
     position: relative;
     background: url('/images/classroom-bg.png') center/cover no-repeat;
+    min-height: 50vh;
   }
 
   .hero-section::before {
