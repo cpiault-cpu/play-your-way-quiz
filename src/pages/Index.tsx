@@ -47,7 +47,7 @@ const Index = () => {
           transition={{ duration: 0.6 }}
           className="relative z-10 max-w-6xl mx-auto px-4 text-center"
         >
-          <div className="bg-white/85 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-white/30 shadow-lg max-w-3xl mx-auto">
+          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/40 shadow-lg max-w-2xl mx-auto">
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 flex items-center justify-center gap-3">
               <span>{language === "fr" ? "🇫🇷" : "🇬🇧"}</span>
               {t.title}
