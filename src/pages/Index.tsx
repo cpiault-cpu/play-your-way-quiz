@@ -37,15 +37,26 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header language={language} onToggleLanguage={handleToggleLanguage} />
+      {/* Hero Section with background image - includes header */}
+      <section className="hero-section">
+        {/* Header inside hero for same background */}
+        <div className="relative z-20 py-4 px-6">
+          <div className="max-w-6xl mx-auto flex justify-center items-center">
+            <a href="https://www.peita.fr" target="_blank" rel="noopener noreferrer">
+              <img 
+                src="/images/peita-logo.png" 
+                alt="PEITA Logo" 
+                className="h-16 md:h-20 object-contain"
+              />
+            </a>
+          </div>
+        </div>
 
-      {/* Hero Section with background image */}
-      <section className="hero-section py-8 md:py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="relative z-10 max-w-6xl mx-auto px-4 text-center"
+          className="relative z-10 max-w-6xl mx-auto px-4 pb-12 text-center"
         >
           <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 md:p-6 border border-white/40 shadow-lg max-w-xl mx-auto">
             <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-2 flex items-center justify-center gap-2">
