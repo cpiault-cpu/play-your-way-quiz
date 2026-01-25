@@ -36,18 +36,18 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen forest-bg">
+    <div className="min-h-screen bg-background">
       <Header language={language} onToggleLanguage={handleToggleLanguage} />
 
-      <main className="relative z-10 max-w-6xl mx-auto px-4 py-12">
-        {/* Hero Section */}
+      {/* Hero Section with background image */}
+      <section className="hero-section py-16 md:py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="relative z-10 max-w-6xl mx-auto px-4 text-center"
         >
-          <div className="bg-card/80 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-border/50 shadow-lg max-w-3xl mx-auto">
+          <div className="bg-white/85 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-white/30 shadow-lg max-w-3xl mx-auto">
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 flex items-center justify-center gap-3">
               <span>{language === "fr" ? "🇫🇷" : "🇬🇧"}</span>
               {t.title}
@@ -70,8 +70,10 @@ const Index = () => {
             </button>
           </div>
         </motion.div>
+      </section>
 
-        {/* Quiz Levels */}
+      {/* Quiz Levels */}
+      <main className="max-w-6xl mx-auto px-4 py-12">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
