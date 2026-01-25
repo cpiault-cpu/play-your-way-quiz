@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,26 +6,27 @@
 
 @layer base {
   :root {
-    --background: 246 50% 8%;
-    --foreground: 0 0% 98%;
+    /* Nature/Forest theme - Dark green tones */
+    --background: 160 30% 18%;
+    --foreground: 60 20% 95%;
 
-    --card: 246 40% 12%;
-    --card-foreground: 0 0% 98%;
+    --card: 160 25% 25%;
+    --card-foreground: 60 20% 95%;
 
-    --popover: 246 40% 12%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 160 25% 22%;
+    --popover-foreground: 60 20% 95%;
 
-    --primary: 16 90% 60%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 45 50% 55%;
+    --primary-foreground: 160 40% 15%;
 
-    --secondary: 252 60% 55%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 160 20% 35%;
+    --secondary-foreground: 60 20% 95%;
 
-    --muted: 246 30% 18%;
-    --muted-foreground: 240 5% 65%;
+    --muted: 160 15% 30%;
+    --muted-foreground: 60 10% 75%;
 
-    --accent: 168 70% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 160 40% 40%;
+    --accent-foreground: 60 20% 95%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
@@ -33,22 +34,22 @@
     --success: 142 76% 46%;
     --success-foreground: 0 0% 100%;
 
-    --border: 246 30% 22%;
-    --input: 246 30% 22%;
-    --ring: 16 90% 60%;
+    --border: 160 20% 30%;
+    --input: 160 20% 30%;
+    --ring: 45 50% 55%;
 
-    --radius: 1rem;
+    --radius: 0.75rem;
 
-    /* Quiz-specific tokens */
-    --gradient-main: linear-gradient(135deg, hsl(252 70% 20%) 0%, hsl(280 60% 15%) 50%, hsl(246 50% 8%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(246 40% 15%) 0%, hsl(246 40% 12%) 100%);
-    --gradient-correct: linear-gradient(135deg, hsl(142 76% 46%) 0%, hsl(158 70% 40%) 100%);
-    --gradient-incorrect: linear-gradient(135deg, hsl(0 72% 51%) 0%, hsl(15 80% 45%) 100%);
-    --gradient-button: linear-gradient(135deg, hsl(16 90% 55%) 0%, hsl(30 90% 55%) 100%);
+    /* Brainfest specific tokens */
+    --gradient-forest: linear-gradient(135deg, hsl(160 40% 15%) 0%, hsl(160 30% 20%) 50%, hsl(150 25% 18%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(160 25% 28% / 0.9) 0%, hsl(160 25% 22% / 0.95) 100%);
+    --gradient-button: linear-gradient(135deg, hsl(45 50% 50%) 0%, hsl(35 55% 45%) 100%);
+    --gradient-level1: linear-gradient(135deg, hsl(160 40% 35%) 0%, hsl(160 35% 40%) 100%);
+    --gradient-level2: linear-gradient(135deg, hsl(45 45% 50%) 0%, hsl(35 50% 45%) 100%);
+    --gradient-level3: linear-gradient(135deg, hsl(30 60% 50%) 0%, hsl(20 55% 45%) 100%);
     
-    --shadow-glow: 0 0 60px hsl(252 70% 40% / 0.3);
-    --shadow-card: 0 25px 50px -12px hsl(0 0% 0% / 0.5);
-    --shadow-button: 0 10px 40px -10px hsl(16 90% 50% / 0.5);
+    --shadow-card: 0 20px 50px -15px hsl(160 40% 5% / 0.5);
+    --shadow-button: 0 8px 30px -8px hsl(45 50% 40% / 0.4);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -69,26 +70,53 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', sans-serif;
-    background: var(--gradient-main);
     min-height: 100vh;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Cormorant Garamond', serif;
   }
 }
 
 @layer utilities {
+  .forest-bg {
+    background: var(--gradient-forest);
+    position: relative;
+  }
+
+  .forest-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=80') center/cover no-repeat;
+    opacity: 0.15;
+    z-index: 0;
+  }
+
   .quiz-card {
     background: var(--gradient-card);
     box-shadow: var(--shadow-card);
+    backdrop-filter: blur(10px);
   }
 
-  .glow {
-    box-shadow: var(--shadow-glow);
+  .level-badge-1 {
+    background: var(--gradient-level1);
   }
 
-  .btn-glow {
+  .level-badge-2 {
+    background: var(--gradient-level2);
+  }
+
+  .level-badge-3 {
+    background: var(--gradient-level3);
+  }
+
+  .btn-primary-custom {
+    background: var(--gradient-button);
     box-shadow: var(--shadow-button);
+  }
+
+  .molecule-icon {
+    opacity: 0.15;
   }
 }
