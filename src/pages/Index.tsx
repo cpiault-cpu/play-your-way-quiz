@@ -47,26 +47,28 @@ const Index = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 flex items-center justify-center gap-3">
-            <span>{language === "fr" ? "🇫🇷" : "🇬🇧"}</span>
-            {t.title}
-          </h1>
-          <p className="text-lg md:text-xl text-muted-foreground mb-2">
-            {t.subtitle}
-          </p>
-          <p className="text-md text-muted-foreground mb-2">
-            {t.discountInfo}
-          </p>
-          <p className="text-sm text-muted-foreground/80 italic mb-6">
-            {t.warning}
-          </p>
+          <div className="bg-card/80 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-border/50 shadow-lg max-w-3xl mx-auto">
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 flex items-center justify-center gap-3">
+              <span>{language === "fr" ? "🇫🇷" : "🇬🇧"}</span>
+              {t.title}
+            </h1>
+            <p className="text-lg md:text-xl text-foreground/90 mb-2">
+              {t.subtitle}
+            </p>
+            <p className="text-md text-foreground/80 mb-2">
+              {t.discountInfo}
+            </p>
+            <p className="text-sm text-foreground/70 italic mb-6">
+              {t.warning}
+            </p>
 
-          <button
-            onClick={handleToggleLanguage}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 border border-border text-foreground hover:bg-muted transition-colors"
-          >
-            {language === "fr" ? "🇬🇧" : "🇫🇷"} {t.switchLang}
-          </button>
+            <button
+              onClick={handleToggleLanguage}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30 text-foreground hover:bg-primary/30 transition-colors"
+            >
+              {language === "fr" ? "🇬🇧" : "🇫🇷"} {t.switchLang}
+            </button>
+          </div>
         </motion.div>
 
         {/* Quiz Levels */}
