@@ -36,9 +36,9 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section with background image - includes header */}
-      <section className="hero-section">
+    <div className="min-h-screen hero-section">
+      {/* Hero Section */}
+      <section>
         {/* Header inside hero for same background */}
         <div className="relative z-20 py-4 px-6">
           <div className="max-w-6xl mx-auto flex justify-center items-center">
