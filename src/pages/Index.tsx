@@ -40,25 +40,25 @@ const Index = () => {
       <Header language={language} onToggleLanguage={handleToggleLanguage} />
 
       {/* Hero Section with background image */}
-      <section className="hero-section py-16 md:py-24">
+      <section className="hero-section py-8 md:py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="relative z-10 max-w-6xl mx-auto px-4 text-center"
         >
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/40 shadow-lg max-w-2xl mx-auto">
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 flex items-center justify-center gap-3">
+          <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 md:p-6 border border-white/40 shadow-lg max-w-xl mx-auto">
+            <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-2 flex items-center justify-center gap-2">
               <span>{language === "fr" ? "🇫🇷" : "🇬🇧"}</span>
               {t.title}
             </h1>
-            <p className="text-lg md:text-xl text-foreground/90 mb-2">
+            <p className="text-base md:text-lg text-foreground/90 mb-1">
               {t.subtitle}
             </p>
-            <p className="text-md text-foreground/80 mb-2">
+            <p className="text-sm text-foreground/80 mb-1">
               {t.discountInfo}
             </p>
-            <p className="text-sm text-foreground/70 italic mb-6">
+            <p className="text-xs text-foreground/70 italic mb-4">
               {t.warning}
             </p>
 
