@@ -36,9 +36,9 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen hero-section">
-      {/* Hero Section */}
-      <section>
+    <div className="min-h-screen bg-background">
+      {/* Hero Section with background image - includes header */}
+      <section className="hero-section">
         {/* Header inside hero for same background */}
         <div className="relative z-20 py-4 px-6">
           <div className="max-w-6xl mx-auto flex justify-center items-center">
@@ -46,7 +46,7 @@ const Index = () => {
               <img 
                 src="/images/peita-logo.png" 
                 alt="PEITA Logo" 
-                className="h-16 md:h-20 object-contain"
+                className="h-12 md:h-14 object-contain"
               />
             </a>
           </div>
