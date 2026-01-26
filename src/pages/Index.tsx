@@ -55,24 +55,24 @@ const Index = () => {
           />
         </a>
 
-        <div className="max-w-lg mx-auto">
-          <h1 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-2 flex items-center justify-center gap-2">
+        <div className="max-w-2xl mx-auto">
+          <h1 className="font-serif text-3xl md:text-5xl font-bold text-foreground mb-3 flex items-center justify-center gap-3">
             <span>{language === "fr" ? "🇫🇷" : "🇬🇧"}</span>
             {t.title}
           </h1>
-          <p className="text-sm md:text-base text-foreground/90 mb-2">
+          <p className="text-base md:text-xl text-foreground/90 mb-3">
             {t.subtitle}
           </p>
-          <p className="text-xs md:text-sm text-foreground/80 mb-2">
+          <p className="text-sm md:text-lg text-foreground/80 mb-3">
             {t.discountInfo}
           </p>
-          <p className="text-xs text-foreground/70 italic mb-4">
+          <p className="text-sm md:text-base text-foreground/70 italic mb-6">
             {t.warning}
           </p>
 
           <button
             onClick={handleToggleLanguage}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-full bg-primary/20 border border-primary/30 text-foreground hover:bg-primary/30 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 text-base md:text-lg rounded-full bg-primary/20 border border-primary/30 text-foreground hover:bg-primary/30 transition-colors"
           >
             {language === "fr" ? "🇬🇧" : "🇫🇷"} {t.switchLang}
           </button>
