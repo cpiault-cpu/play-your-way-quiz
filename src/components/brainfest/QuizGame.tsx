@@ -1,11 +1,12 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Check, X, ArrowLeft, Copy, CheckCircle } from "lucide-react";
+import { ArrowRight, Check, X, ArrowLeft, Copy, CheckCircle, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Quiz, Language, translations } from "@/data/quizData";
 import { toast } from "sonner";
 
+const TIMER_DURATION = 30; // seconds per question
 interface QuizGameProps {
   quiz: Quiz;
   language: Language;
@@ -23,7 +24,8 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
   const [isAnswered, setIsAnswered] = useState(false);
   const [score, setScore] = useState(0);
   const [copied, setCopied] = useState(false);
-
+  const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const currentQuestion = quiz.questions[currentQuestionIndex];
   const isLastQuestion = currentQuestionIndex === quiz.questions.length - 1;
   const discountCode = `BRAINFEST${quiz.id.replace('.', '')}-${quiz.discount.replace('%', '')}`;
@@ -55,14 +57,62 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
   );
 
   const handleNext = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
     if (isLastQuestion) {
       setGameState("results");
     } else {
       setCurrentQuestionIndex((prev) => prev + 1);
       setSelectedAnswer(null);
       setIsAnswered(false);
+      setTimeLeft(TIMER_DURATION);
     }
   }, [isLastQuestion]);
+
+  // Handle time out - auto-select wrong answer
+  const handleTimeOut = useCallback(() => {
+    if (!isAnswered) {
+      setIsAnswered(true);
+      setSelectedAnswer(-1); // No answer selected
+    }
+  }, [isAnswered]);
+
+  // Timer effect
+  useEffect(() => {
+    if (gameState !== "playing" || isAnswered) {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+      return;
+    }
+
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          handleTimeOut();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [gameState, isAnswered, currentQuestionIndex, handleTimeOut]);
+
+  // Reset timer when question changes
+  useEffect(() => {
+    if (gameState === "playing") {
+      setTimeLeft(TIMER_DURATION);
+    }
+  }, [currentQuestionIndex, gameState]);
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(discountCode);
@@ -144,18 +194,35 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
               exit={{ opacity: 0, y: -20 }}
               className="space-y-6"
             >
-              {/* Progress */}
+              {/* Progress and Timer */}
               <div className="quiz-card rounded-xl p-4 border border-border">
-                <div className="flex justify-between text-sm text-muted-foreground mb-2">
+                <div className="flex justify-between items-center text-sm text-muted-foreground mb-2">
                   <span>{t.question} {currentQuestionIndex + 1} {t.of} {quiz.questions.length}</span>
-                  <span>{Math.round(((currentQuestionIndex + 1) / quiz.questions.length) * 100)}%</span>
+                  <div className={`flex items-center gap-2 font-medium ${
+                    timeLeft <= 10 ? "text-destructive" : timeLeft <= 20 ? "text-warning" : "text-foreground"
+                  }`}>
+                    <Clock className={`w-4 h-4 ${timeLeft <= 10 ? "animate-pulse" : ""}`} />
+                    <span className="tabular-nums">{timeLeft}s</span>
+                  </div>
                 </div>
-                <div className="h-2 bg-muted rounded-full overflow-hidden">
+                {/* Question progress bar */}
+                <div className="h-2 bg-muted rounded-full overflow-hidden mb-2">
                   <motion.div
                     className="h-full bg-primary rounded-full"
                     initial={{ width: 0 }}
                     animate={{ width: `${((currentQuestionIndex + 1) / quiz.questions.length) * 100}%` }}
                     transition={{ duration: 0.5 }}
+                  />
+                </div>
+                {/* Timer progress bar */}
+                <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                  <motion.div
+                    className={`h-full rounded-full ${
+                      timeLeft <= 10 ? "bg-destructive" : timeLeft <= 20 ? "bg-warning" : "bg-success"
+                    }`}
+                    initial={{ width: "100%" }}
+                    animate={{ width: `${(timeLeft / TIMER_DURATION) * 100}%` }}
+                    transition={{ duration: 0.3 }}
                   />
                 </div>
               </div>
