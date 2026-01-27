@@ -178,6 +178,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
   const [currentSeries, setCurrentSeries] = useState(0);
   const [activeNote, setActiveNote] = useState<number | null>(null);
   const [seriesCompleted, setSeriesCompleted] = useState(0);
+  const [usedSequences, setUsedSequences] = useState<string[]>([]); // Track used sequences to avoid repetition
 
   // Initialize AudioContext
   const initAudio = useCallback(() => {
@@ -613,21 +614,46 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
     setPlayerInput([]);
   }, [playNote]);
 
-  // Generate new sequence - for level 3, use famous melody patterns
-  const generateSequence = useCallback((length: number, round?: number) => {
-    // For level 3, use predefined famous melodies
-    if (config.useInstruments && round !== undefined) {
-      if (round === 1) return [...FAMOUS_MELODIES.round1];
-      if (round === 2) return [...FAMOUS_MELODIES.round2];
-      if (round === 3) return [...FAMOUS_MELODIES.round3];
+  // Generate new sequence - ensures it's different from previously used ones
+  const generateSequence = useCallback((length: number, round?: number, previousSequences: string[] = []) => {
+    const maxAttempts = 50; // Prevent infinite loop
+    
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      let newSequence: number[];
+      
+      // For level 3, use predefined famous melodies but shuffle them slightly
+      if (config.useInstruments && round !== undefined) {
+        if (round === 1) newSequence = [...FAMOUS_MELODIES.round1];
+        else if (round === 2) newSequence = [...FAMOUS_MELODIES.round2];
+        else if (round === 3) newSequence = [...FAMOUS_MELODIES.round3];
+        else {
+          // For rounds beyond 3, generate random
+          newSequence = [];
+          for (let i = 0; i < length; i++) {
+            newSequence.push(Math.floor(Math.random() * notes.length));
+          }
+        }
+      } else {
+        // Generate random sequence
+        newSequence = [];
+        for (let i = 0; i < length; i++) {
+          newSequence.push(Math.floor(Math.random() * notes.length));
+        }
+      }
+      
+      // Check if this sequence was already used
+      const sequenceKey = newSequence.join(",");
+      if (!previousSequences.includes(sequenceKey)) {
+        return newSequence;
+      }
     }
     
-    // For other levels, generate random sequence
-    const newSequence: number[] = [];
+    // Fallback: return a completely random sequence
+    const fallbackSequence: number[] = [];
     for (let i = 0; i < length; i++) {
-      newSequence.push(Math.floor(Math.random() * notes.length));
+      fallbackSequence.push(Math.floor(Math.random() * notes.length));
     }
-    return newSequence;
+    return fallbackSequence;
   }, [notes.length, config.useInstruments]);
 
   // Get notes per sequence for current round (level 3 has progressive difficulty)
@@ -641,7 +667,10 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
   // Start new game
   const startGame = useCallback(() => {
     const notesCount = getNotesForRound(1);
-    const newSequence = generateSequence(notesCount, config.useInstruments ? 1 : undefined);
+    const newSequence = generateSequence(notesCount, config.useInstruments ? 1 : undefined, usedSequences);
+    const sequenceKey = newSequence.join(",");
+    
+    setUsedSequences(prev => [...prev, sequenceKey]);
     setSequence(newSequence);
     setCurrentSeries(1);
     setSeriesCompleted(0);
@@ -649,7 +678,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
     setGameState("playing");
     
     setTimeout(() => playSequence(newSequence), 1000);
-  }, [generateSequence, playSequence, getNotesForRound, config.useInstruments]);
+  }, [generateSequence, playSequence, getNotesForRound, config.useInstruments, usedSequences]);
 
   // Handle player note click
   const handleNoteClick = useCallback((noteIndex: number) => {
@@ -685,13 +714,16 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
       setTimeout(() => {
         const nextExercise = currentSeries + 1;
         const notesCount = getNotesForRound(nextExercise);
-        const newSequence = generateSequence(notesCount, config.useInstruments ? nextExercise : undefined);
+        const newSequence = generateSequence(notesCount, config.useInstruments ? nextExercise : undefined, usedSequences);
+        const sequenceKey = newSequence.join(",");
+        
+        setUsedSequences(prev => [...prev, sequenceKey]);
         setSequence(newSequence);
         setCurrentSeries(nextExercise);
         playSequence(newSequence);
       }, 1500);
     }
-  }, [gameState, playerInput, sequence, playNote, playSequence, generateSequence, config, seriesCompleted, currentSeries, getNotesForRound]);
+  }, [gameState, playerInput, sequence, playNote, playSequence, generateSequence, config, seriesCompleted, currentSeries, getNotesForRound, usedSequences]);
 
   // Cleanup audio context on unmount
   useEffect(() => {
