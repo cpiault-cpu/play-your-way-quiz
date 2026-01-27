@@ -44,7 +44,7 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
   };
 
   return (
-    <div className="quiz-card rounded-xl p-4 sm:p-5 md:p-6 border border-border relative overflow-hidden transition-transform hover:scale-[1.02] duration-300">
+    <div className="quiz-card rounded-xl p-4 sm:p-5 md:p-6 border border-border relative overflow-hidden">
       {getIcon()}
       
       <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
