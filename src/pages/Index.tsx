@@ -89,12 +89,19 @@ const Index = () => {
         >
           {/* Show Musical Memory section when Memory category is selected or when showing all */}
           {(selectedCategory === null || selectedCategory === "memory") && (
-            <section className="mb-8 sm:mb-10">
+            <section className="mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10">
               <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-foreground mb-4 sm:mb-5 flex items-center gap-2 sm:gap-3">
                 <span className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center text-lg sm:text-xl md:text-2xl flex-shrink-0">🎹</span>
                 <span className="truncate">{language === "fr" ? "Mémoire Musicale" : "Musical Memory"}</span>
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+              {/* Mobile: vertical stack */}
+              <div className="md:hidden flex flex-col gap-4 min-w-0">
+                <MusicalMemoryCard level={1} language={language} onPlay={handlePlayMusicalMemory} />
+                <MusicalMemoryCard level={2} language={language} onPlay={handlePlayMusicalMemory} />
+                <MusicalMemoryCard level={3} language={language} onPlay={handlePlayMusicalMemory} />
+              </div>
+              {/* Desktop: grid */}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
                 <MusicalMemoryCard level={1} language={language} onPlay={handlePlayMusicalMemory} />
                 <MusicalMemoryCard level={2} language={language} onPlay={handlePlayMusicalMemory} />
                 <MusicalMemoryCard level={3} language={language} onPlay={handlePlayMusicalMemory} />
