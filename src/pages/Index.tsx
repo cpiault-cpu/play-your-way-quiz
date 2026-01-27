@@ -123,8 +123,7 @@ const Index = () => {
       >
         {/* Title and intro - larger for visibility */}
         <div className="max-w-3xl mx-auto text-center mb-8">
-          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-3 flex items-center justify-center gap-3">
-            <span className="text-2xl md:text-3xl">{language === "fr" ? "🇫🇷" : "🇬🇧"}</span>
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-3">
             {t.title}
           </h1>
           <p className="text-base md:text-xl lg:text-2xl text-foreground/80 mb-3">
@@ -139,29 +138,41 @@ const Index = () => {
 
           <button
             onClick={handleToggleLanguage}
-            className="inline-flex items-center gap-2 px-6 py-3 text-base md:text-lg rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-md hover:shadow-lg active:scale-95 font-medium"
+            className="inline-flex items-center gap-2 px-5 py-3 text-2xl md:text-3xl rounded-full bg-primary/10 hover:bg-primary/20 transition-all shadow-md hover:shadow-lg active:scale-95"
+            aria-label={t.switchLang}
           >
-            {language === "fr" ? "🇬🇧" : "🇫🇷"} {t.switchLang}
+            {language === "fr" ? "🇬🇧" : "🇫🇷"}
           </button>
         </div>
 
-        {/* Category Navigation - with scroll hint */}
-        <div className="mb-8 -mx-4 px-4">
-          {/* Scroll hint for mobile */}
-          <div className="flex items-center justify-between mb-3 md:hidden">
-            <p className="text-sm text-muted-foreground font-medium">
-              {language === "fr" ? "Catégories" : "Categories"}
-            </p>
-            <div className="flex items-center gap-1 text-primary animate-pulse">
-              <span className="text-sm font-medium">{language === "fr" ? "Glisser" : "Swipe"}</span>
-              <span className="text-lg">→</span>
-            </div>
+        {/* Category Navigation - vertical on mobile, horizontal on desktop */}
+        <div className="mb-8">
+          {/* Mobile: vertical stack */}
+          <div className="flex flex-col gap-2 md:hidden">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(selectedCategory === cat.id ? null : cat.id)}
+                className={`w-full px-5 py-4 rounded-xl text-lg font-semibold shadow-sm transition-all text-left ${
+                  selectedCategory === cat.id 
+                    ? "bg-primary text-primary-foreground shadow-lg" 
+                    : "bg-muted text-muted-foreground hover:bg-muted/80"
+                }`}
+              >
+                {cat.id === "micronutrition" && "💊 "}
+                {cat.id === "biology" && "🧬 "}
+                {cat.id === "plants" && "🌿 "}
+                {cat.id === "memory" && "🎵 "}
+                {cat.name[language]}
+              </button>
+            ))}
           </div>
           
-          <div className="flex gap-3 justify-start md:justify-center overflow-x-auto pb-3 scrollbar-hide">
+          {/* Desktop: horizontal centered */}
+          <div className="hidden md:flex gap-3 justify-center">
             <button
               onClick={() => setSelectedCategory(null)}
-              className={`category-pill flex-shrink-0 px-5 py-3 rounded-full text-base md:text-lg font-semibold shadow-sm transition-all ${
+              className={`px-5 py-3 rounded-full text-lg font-semibold shadow-sm transition-all ${
                 selectedCategory === null 
                   ? "bg-primary text-primary-foreground shadow-lg scale-105" 
                   : "bg-muted text-muted-foreground hover:bg-muted/80"
@@ -173,7 +184,7 @@ const Index = () => {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`category-pill flex-shrink-0 px-5 py-3 rounded-full text-base md:text-lg font-semibold shadow-sm whitespace-nowrap transition-all ${
+                className={`px-5 py-3 rounded-full text-lg font-semibold shadow-sm whitespace-nowrap transition-all ${
                   selectedCategory === cat.id 
                     ? "bg-primary text-primary-foreground shadow-lg scale-105" 
                     : "bg-muted text-muted-foreground hover:bg-muted/80"

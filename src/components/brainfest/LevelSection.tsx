@@ -13,13 +13,29 @@ const LevelSection = ({ level, quizzes, language, onPlayQuiz }: LevelSectionProp
   const levelQuizzes = quizzes.filter(q => q.level === level);
 
   return (
-    <section className="mb-12">
-      <h2 className="font-serif text-2xl md:text-3xl font-semibold text-foreground mb-6 flex items-center gap-3">
+    <section className="mb-10">
+      <h2 className="font-serif text-xl md:text-2xl lg:text-3xl font-semibold text-foreground mb-4 flex items-center gap-2">
         <span className="w-2 h-2 rounded-full bg-primary" />
         {t.level} {level}
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Mobile: horizontal scroll */}
+      <div className="md:hidden -mx-4 px-4">
+        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory">
+          {levelQuizzes.map((quiz) => (
+            <div key={quiz.id} className="flex-shrink-0 w-[85vw] snap-start">
+              <QuizCard
+                quiz={quiz}
+                language={language}
+                onPlay={onPlayQuiz}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop: grid */}
+      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {levelQuizzes.map((quiz) => (
           <QuizCard
             key={quiz.id}
