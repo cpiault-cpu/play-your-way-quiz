@@ -97,56 +97,73 @@ const translations = {
   fr: {
     title: "Mémoire Musicale",
     subtitle: "Reproduisez la séquence de notes",
-    round: "Série",
+    exercise: "Exercice",
     listen: "Écoutez la séquence...",
     yourTurn: "À vous de jouer !",
-    success: "Bravo ! Série réussie",
+    success: "Bravo ! Exercice réussi",
     failure: "Oops ! Mauvaise note",
     gameOver: "Partie terminée",
     victory: "Victoire !",
     finalScore: "Score final",
-    rounds: "séries réussies",
+    exercises: "exercices réussis",
     youWon: "Vous avez gagné !",
     playAgain: "Rejouer",
     back: "Retour",
     start: "Commencer",
     instructions: "Écoutez la séquence de notes et reproduisez-la en cliquant sur les touches colorées dans le bon ordre.",
-    level1Desc: "6 notes • 3 séries à mémoriser",
-    level2Desc: "8 notes par séquence",
-    level3Desc: "10 notes • Instruments différents",
-    seriesOf: "Série",
+    level1Desc: "4 exercices • 5 notes",
+    level2Desc: "4 exercices • 7 notes",
+    level3Desc: "4 exercices • 9 notes",
     of: "sur",
+    couponTitle: "Félicitations !",
+    couponText: "Voici votre code de réduction :",
+    couponCopied: "Code copié !",
   },
   en: {
     title: "Musical Memory",
     subtitle: "Reproduce the note sequence",
-    round: "Series",
+    exercise: "Exercise",
     listen: "Listen to the sequence...",
     yourTurn: "Your turn!",
-    success: "Great! Series completed",
+    success: "Great! Exercise completed",
     failure: "Oops! Wrong note",
     gameOver: "Game Over",
     victory: "Victory!",
     finalScore: "Final Score",
-    rounds: "series completed",
+    exercises: "exercises completed",
     youWon: "You won!",
     playAgain: "Play Again",
     back: "Back",
     start: "Start",
     instructions: "Listen to the sequence of notes and reproduce it by clicking the colored keys in the correct order.",
-    level1Desc: "6 notes • 3 series to memorize",
-    level2Desc: "8 notes per sequence",
-    level3Desc: "10 notes • Different instruments",
-    seriesOf: "Series",
+    level1Desc: "4 exercises • 5 notes",
+    level2Desc: "4 exercises • 7 notes",
+    level3Desc: "4 exercises • 9 notes",
     of: "of",
+    couponTitle: "Congratulations!",
+    couponText: "Here is your discount code:",
+    couponCopied: "Code copied!",
   },
 };
 
-// Level configuration
+// Level configuration - 4 exercises per level
 const LEVEL_CONFIG = {
-  1: { notesPerSequence: 5, seriesToWin: 1, useInstruments: true },
-  2: { notesPerSequence: 7, seriesToWin: 1, useInstruments: true },
-  3: { notesPerSequence: 9, seriesToWin: 1, useInstruments: true },
+  1: { notesPerSequence: 5, exercisesToWin: 4, useInstruments: true },
+  2: { notesPerSequence: 7, exercisesToWin: 4, useInstruments: true },
+  3: { notesPerSequence: 9, exercisesToWin: 4, useInstruments: true },
+};
+
+// Discount codes per level
+const DISCOUNT_CODES = {
+  1: "MEMOIRE5",
+  2: "MEMOIRE10",
+  3: "MEMOIRE15",
+};
+
+const DISCOUNT_AMOUNTS = {
+  1: "5%",
+  2: "10%",
+  3: "15%",
 };
 
 const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) => {
@@ -651,11 +668,11 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
     
     // Check if sequence is complete
     if (newInput.length === sequence.length) {
-      const newSeriesCompleted = seriesCompleted + 1;
-      setSeriesCompleted(newSeriesCompleted);
+      const newExercisesCompleted = seriesCompleted + 1;
+      setSeriesCompleted(newExercisesCompleted);
       
-      // Check if player won (completed all required series)
-      if (newSeriesCompleted >= config.seriesToWin) {
+      // Check if player won (completed all required exercises)
+      if (newExercisesCompleted >= config.exercisesToWin) {
         setGameState("success");
         fireConfetti(); // Launch confetti!
         setTimeout(() => setGameState("victory"), 1500);
@@ -664,13 +681,13 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
       
       setGameState("success");
       
-      // Generate next series (with potentially more notes for level 3)
+      // Generate next exercise
       setTimeout(() => {
-        const nextRound = currentSeries + 1;
-        const notesCount = getNotesForRound(nextRound);
-        const newSequence = generateSequence(notesCount, config.useInstruments ? nextRound : undefined);
+        const nextExercise = currentSeries + 1;
+        const notesCount = getNotesForRound(nextExercise);
+        const newSequence = generateSequence(notesCount, config.useInstruments ? nextExercise : undefined);
         setSequence(newSequence);
-        setCurrentSeries(nextRound);
+        setCurrentSeries(nextExercise);
         playSequence(newSequence);
       }, 1500);
     }
@@ -748,10 +765,10 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
               animate={{ opacity: 1 }}
               className="mb-6"
             >
-              {/* Round indicator */}
+              {/* Exercise indicator */}
               <div className="flex items-center justify-between mb-3 sm:mb-4">
                 <span className="text-base sm:text-xl md:text-2xl font-semibold text-foreground">
-                  {t.seriesOf} {currentSeries} {t.of} {config.seriesToWin}
+                  {t.exercise} {currentSeries} {t.of} {config.exercisesToWin}
                 </span>
                 <span className="text-sm sm:text-base md:text-lg text-muted-foreground font-medium">
                   {sequence.length} notes
@@ -815,7 +832,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                   {t.gameOver}
                 </h2>
                 <p className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-2">
-                  {seriesCompleted} {t.rounds}
+                  {seriesCompleted} {t.exercises}
                 </p>
                 <p className="text-muted-foreground text-sm sm:text-lg mb-4 sm:mb-6">
                   {t.finalScore}
@@ -850,18 +867,36 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
               <div className="bg-card border border-border rounded-xl p-4 sm:p-6 md:p-8">
                 <Trophy className="w-14 h-14 sm:w-20 sm:h-20 text-yellow-500 mx-auto mb-3 sm:mb-4" />
                 <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">
-                  🎉 {t.victory}
+                  🎉 {t.couponTitle}
                 </h2>
-                <p className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-2">
-                  {t.youWon}
+                <p className="text-lg sm:text-xl text-foreground mb-4">
+                  {t.couponText}
                 </p>
-                <p className="text-muted-foreground text-sm sm:text-lg mb-4 sm:mb-6">
-                  {config.seriesToWin} {t.rounds}
-                </p>
+                
+                {/* Coupon code display */}
+                <div className="bg-gradient-to-r from-amber-100 to-yellow-100 border-2 border-dashed border-amber-400 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6">
+                  <p className="text-2xl sm:text-3xl md:text-4xl font-black text-amber-700 tracking-wider">
+                    {DISCOUNT_CODES[level]}
+                  </p>
+                  <p className="text-lg sm:text-xl font-semibold text-amber-600 mt-2">
+                    {DISCOUNT_AMOUNTS[level]} {language === "fr" ? "de réduction" : "discount"}
+                  </p>
+                </div>
+                
+                <Button
+                  onClick={() => {
+                    navigator.clipboard.writeText(DISCOUNT_CODES[level]);
+                  }}
+                  className="btn-primary-custom text-white text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 mb-4"
+                >
+                  📋 {language === "fr" ? "Copier le code" : "Copy code"}
+                </Button>
+                
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                   <Button
                     onClick={startGame}
-                    className="btn-primary-custom text-white text-sm sm:text-lg px-4 sm:px-6 py-4 sm:py-5"
+                    variant="outline"
+                    className="border-border text-sm sm:text-lg px-4 sm:px-6 py-4 sm:py-5"
                   >
                     <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                     {t.playAgain}
