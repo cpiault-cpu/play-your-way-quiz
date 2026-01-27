@@ -694,24 +694,24 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
   };
 
   return (
-    <div className="min-h-screen bg-background py-6 px-4">
+    <div className="min-h-screen bg-background py-4 sm:py-6 px-3 sm:px-4">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
           <Button
             variant="ghost"
             size="icon"
             onClick={onBack}
-            className="text-foreground hover:bg-muted"
+            className="text-foreground hover:bg-muted flex-shrink-0"
           >
-            <ArrowLeft className="w-6 h-6" />
+            <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </Button>
-          <div>
-            <h1 className="font-serif text-2xl md:text-4xl font-bold text-foreground flex items-center gap-2">
-              <Volume2 className="w-7 h-7 text-primary" />
-              {t.title}
+          <div className="min-w-0">
+            <h1 className="font-serif text-xl sm:text-2xl md:text-4xl font-bold text-foreground flex items-center gap-2 truncate">
+              <Volume2 className="w-5 h-5 sm:w-7 sm:h-7 text-primary flex-shrink-0" />
+              <span className="truncate">{t.title}</span>
             </h1>
-            <p className="text-muted-foreground text-base md:text-lg">
+            <p className="text-muted-foreground text-sm sm:text-base md:text-lg truncate">
               {t.subtitle} • {getLevelDescription()}
             </p>
           </div>
@@ -727,14 +727,14 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
               exit={{ opacity: 0, y: -20 }}
               className="text-center mb-6"
             >
-              <div className="bg-card border border-border rounded-xl p-6 md:p-8 mb-6">
-                <p className="text-foreground text-lg md:text-xl mb-6">{t.instructions}</p>
+              <div className="bg-card border border-border rounded-xl p-4 sm:p-6 md:p-8 mb-4 sm:mb-6">
+                <p className="text-foreground text-sm sm:text-lg md:text-xl mb-4 sm:mb-6">{t.instructions}</p>
                 <Button
                   onClick={startGame}
-                  className="btn-primary-custom text-primary-foreground font-medium text-lg px-8 py-6"
+                  className="btn-primary-custom text-white font-medium text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 w-full sm:w-auto"
                   size="lg"
                 >
-                  <Play className="w-6 h-6 mr-2" />
+                  <Play className="w-5 h-5 sm:w-6 sm:h-6 mr-2" />
                   {t.start}
                 </Button>
               </div>
@@ -749,11 +749,11 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
               className="mb-6"
             >
               {/* Round indicator */}
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xl md:text-2xl font-semibold text-foreground">
+              <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <span className="text-base sm:text-xl md:text-2xl font-semibold text-foreground">
                   {t.seriesOf} {currentSeries} {t.of} {config.seriesToWin}
                 </span>
-                <span className="text-base md:text-lg text-muted-foreground font-medium">
+                <span className="text-sm sm:text-base md:text-lg text-muted-foreground font-medium">
                   {sequence.length} notes
                 </span>
               </div>
@@ -761,22 +761,22 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
               {/* Progress bar */}
               <Progress 
                 value={gameState === "input" ? (playerInput.length / sequence.length) * 100 : 0} 
-                className="h-3 mb-4"
+                className="h-2 sm:h-3 mb-3 sm:mb-4"
               />
               
               {/* Status message */}
-              <div className="text-center py-4">
+              <div className="text-center py-3 sm:py-4">
                 {gameState === "listening" && (
                   <motion.p 
                     animate={{ opacity: [0.5, 1, 0.5] }}
                     transition={{ repeat: Infinity, duration: 1.5 }}
-                    className="text-xl md:text-2xl text-primary font-medium"
+                    className="text-base sm:text-xl md:text-2xl text-primary font-medium"
                   >
                     🎵 {t.listen}
                   </motion.p>
                 )}
                 {gameState === "input" && (
-                  <p className="text-xl md:text-2xl text-foreground font-medium">
+                  <p className="text-base sm:text-xl md:text-2xl text-foreground font-medium">
                     👆 {t.yourTurn}
                   </p>
                 )}
@@ -784,7 +784,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                   <motion.p
                     initial={{ scale: 0.8 }}
                     animate={{ scale: 1 }}
-                    className="text-xl md:text-2xl text-green-500 font-medium"
+                    className="text-base sm:text-xl md:text-2xl text-green-500 font-medium"
                   >
                     ✨ {t.success}
                   </motion.p>
@@ -793,7 +793,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                   <motion.p
                     initial={{ scale: 0.8 }}
                     animate={{ scale: 1 }}
-                    className="text-xl md:text-2xl text-red-500 font-medium"
+                    className="text-base sm:text-xl md:text-2xl text-red-500 font-medium"
                   >
                     ❌ {t.failure}
                   </motion.p>
@@ -807,31 +807,31 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
               key="gameover"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-center mb-6"
+              className="text-center mb-4 sm:mb-6"
             >
-              <div className="bg-card border border-border rounded-xl p-8">
-                <div className="text-6xl mb-4">😢</div>
-                <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-2">
+              <div className="bg-card border border-border rounded-xl p-4 sm:p-6 md:p-8">
+                <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">😢</div>
+                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">
                   {t.gameOver}
                 </h2>
-                <p className="text-2xl md:text-3xl font-bold text-primary mb-2">
+                <p className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-2">
                   {seriesCompleted} {t.rounds}
                 </p>
-                <p className="text-muted-foreground text-lg mb-6">
+                <p className="text-muted-foreground text-sm sm:text-lg mb-4 sm:mb-6">
                   {t.finalScore}
                 </p>
-                <div className="flex gap-4 justify-center">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                   <Button
                     onClick={startGame}
-                    className="btn-primary-custom text-primary-foreground text-lg px-6 py-5"
+                    className="btn-primary-custom text-white text-sm sm:text-lg px-4 sm:px-6 py-4 sm:py-5"
                   >
-                    <RotateCcw className="w-5 h-5 mr-2" />
+                    <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                     {t.playAgain}
                   </Button>
                   <Button
                     variant="outline"
                     onClick={onBack}
-                    className="border-border text-lg px-6 py-5"
+                    className="border-border text-sm sm:text-lg px-4 sm:px-6 py-4 sm:py-5"
                   >
                     {t.back}
                   </Button>
@@ -845,31 +845,31 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
               key="victory"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-center mb-6"
+              className="text-center mb-4 sm:mb-6"
             >
-              <div className="bg-card border border-border rounded-xl p-8">
-                <Trophy className="w-20 h-20 text-yellow-500 mx-auto mb-4" />
-                <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-2">
+              <div className="bg-card border border-border rounded-xl p-4 sm:p-6 md:p-8">
+                <Trophy className="w-14 h-14 sm:w-20 sm:h-20 text-yellow-500 mx-auto mb-3 sm:mb-4" />
+                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">
                   🎉 {t.victory}
                 </h2>
-                <p className="text-2xl md:text-3xl font-bold text-primary mb-2">
+                <p className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-2">
                   {t.youWon}
                 </p>
-                <p className="text-muted-foreground text-lg mb-6">
+                <p className="text-muted-foreground text-sm sm:text-lg mb-4 sm:mb-6">
                   {config.seriesToWin} {t.rounds}
                 </p>
-                <div className="flex gap-4 justify-center">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                   <Button
                     onClick={startGame}
-                    className="btn-primary-custom text-primary-foreground text-lg px-6 py-5"
+                    className="btn-primary-custom text-white text-sm sm:text-lg px-4 sm:px-6 py-4 sm:py-5"
                   >
-                    <RotateCcw className="w-5 h-5 mr-2" />
+                    <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                     {t.playAgain}
                   </Button>
                   <Button
                     variant="outline"
                     onClick={onBack}
-                    className="border-border text-lg px-6 py-5"
+                    className="border-border text-sm sm:text-lg px-4 sm:px-6 py-4 sm:py-5"
                   >
                     {t.back}
                   </Button>
@@ -880,17 +880,17 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
         </AnimatePresence>
 
         {/* Keys/Instruments Grid */}
-        <div className={`grid gap-3 md:gap-4 ${config.useInstruments ? "grid-cols-5" : "grid-cols-4"}`}>
+        <div className={`grid gap-2 sm:gap-3 md:gap-4 ${config.useInstruments ? "grid-cols-5" : "grid-cols-4"}`}>
           {notes.map((note, index) => (
             <motion.button
               key={note.name}
               onClick={() => handleNoteClick(index)}
               disabled={gameState !== "input"}
               className={`
-                relative aspect-square rounded-2xl font-bold text-sm md:text-lg
+                relative aspect-square rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm md:text-lg
                 transition-all duration-100
                 ${activeNote === index 
-                  ? `bg-gradient-to-br ${note.activeColor} scale-110 shadow-2xl ring-4 ring-white` 
+                  ? `bg-gradient-to-br ${note.activeColor} scale-105 sm:scale-110 shadow-xl sm:shadow-2xl ring-2 sm:ring-4 ring-white` 
                   : `bg-gradient-to-br ${note.color}`
                 }
                 ${gameState === "input" ? "hover:scale-105 hover:brightness-110 cursor-pointer active:scale-95" : "cursor-default opacity-80"}
@@ -898,15 +898,15 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
               `}
               whileTap={gameState === "input" ? { scale: 0.9 } : {}}
               animate={activeNote === index ? { 
-                scale: [1, 1.15, 1.1],
+                scale: [1, 1.1, 1.08],
               } : { scale: 1 }}
               transition={{ duration: 0.15 }}
             >
-              <div className="flex flex-col items-center justify-center h-full">
+              <div className="flex flex-col items-center justify-center h-full p-1">
                 {config.useInstruments ? (
-                  <span className="text-3xl md:text-4xl">{(note as InstrumentNote).emoji}</span>
+                  <span className="text-xl sm:text-2xl md:text-4xl">{(note as InstrumentNote).emoji}</span>
                 ) : (
-                  <span className={`drop-shadow-lg text-lg md:text-xl font-bold ${activeNote === index ? "text-gray-800" : "text-white"}`}>
+                  <span className={`drop-shadow-lg text-sm sm:text-lg md:text-xl font-bold ${activeNote === index ? "text-gray-800" : "text-white"}`}>
                     {(note as typeof PIANO_NOTES[0]).name}
                   </span>
                 )}
@@ -918,7 +918,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1.4 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 rounded-2xl bg-white/50 blur-xl -z-10"
+                  className="absolute inset-0 rounded-xl sm:rounded-2xl bg-white/50 blur-xl -z-10"
                 />
               )}
             </motion.button>
@@ -927,8 +927,9 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
 
         {/* Note names legend - only show for piano levels */}
         {!config.useInstruments && (
-          <div className="mt-6 text-center text-base md:text-lg text-muted-foreground">
-            <p>Do (C) • Ré (D) • Mi (E) • Fa (F) • Sol (G) • La (A) • Si (B) • Do² (C2)</p>
+          <div className="mt-4 sm:mt-6 text-center text-xs sm:text-sm md:text-lg text-muted-foreground">
+            <p className="hidden sm:block">Do (C) • Ré (D) • Mi (E) • Fa (F) • Sol (G) • La (A) • Si (B) • Do² (C2)</p>
+            <p className="sm:hidden">C • D • E • F • G • A • B • C2</p>
           </div>
         )}
       </div>

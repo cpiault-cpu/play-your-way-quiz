@@ -144,13 +144,13 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
 
   return (
     <div className="min-h-screen forest-bg">
-      <div className="relative z-10 max-w-2xl mx-auto px-4 py-8">
+      <div className="relative z-10 max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
         <Button
           variant="ghost"
           onClick={onBack}
-          className="mb-6 text-foreground hover:bg-muted"
+          className="mb-4 sm:mb-6 text-foreground hover:bg-muted text-sm sm:text-base"
         >
-          <ArrowLeft className="w-4 h-4 mr-2" />
+          <ArrowLeft className="w-4 h-4 mr-1.5 sm:mr-2" />
           {t.backToQuizzes}
         </Button>
 
@@ -161,24 +161,24 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="quiz-card rounded-xl p-8 border border-border"
+              className="quiz-card rounded-xl p-4 sm:p-6 md:p-8 border border-border"
             >
-              <h2 className="font-serif text-2xl md:text-3xl font-semibold text-foreground mb-2">
+              <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-semibold text-foreground mb-2 leading-tight">
                 {quiz.title[language]}
               </h2>
-              <p className="text-muted-foreground mb-8">{t.enterEmail}</p>
+              <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8">{t.enterEmail}</p>
 
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 <Input
                   type="email"
                   placeholder={t.emailPlaceholder}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-muted border-border text-foreground"
+                  className="bg-muted border-border text-foreground text-base"
                 />
                 <Button
                   onClick={handleStartQuiz}
-                  className="w-full btn-primary-custom text-primary-foreground font-medium"
+                  className="w-full btn-primary-custom text-white font-medium text-sm sm:text-base py-2.5 sm:py-3"
                 >
                   {t.startQuiz}
                 </Button>
@@ -192,21 +192,21 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="space-y-6"
+              className="space-y-3 sm:space-y-6"
             >
               {/* Progress and Timer */}
-              <div className="quiz-card rounded-xl p-4 border border-border">
-                <div className="flex justify-between items-center text-sm text-muted-foreground mb-2">
+              <div className="quiz-card rounded-xl p-3 sm:p-4 border border-border">
+                <div className="flex justify-between items-center text-xs sm:text-sm text-muted-foreground mb-2">
                   <span>{t.question} {currentQuestionIndex + 1} {t.of} {quiz.questions.length}</span>
-                  <div className={`flex items-center gap-2 font-medium ${
+                  <div className={`flex items-center gap-1.5 sm:gap-2 font-medium ${
                     timeLeft <= 10 ? "text-destructive" : timeLeft <= 20 ? "text-warning" : "text-foreground"
                   }`}>
-                    <Clock className={`w-4 h-4 ${timeLeft <= 10 ? "animate-pulse" : ""}`} />
+                    <Clock className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${timeLeft <= 10 ? "animate-pulse" : ""}`} />
                     <span className="tabular-nums">{timeLeft}s</span>
                   </div>
                 </div>
                 {/* Question progress bar */}
-                <div className="h-2 bg-muted rounded-full overflow-hidden mb-2">
+                <div className="h-1.5 sm:h-2 bg-muted rounded-full overflow-hidden mb-2">
                   <motion.div
                     className="h-full bg-primary rounded-full"
                     initial={{ width: 0 }}
@@ -215,7 +215,7 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                   />
                 </div>
                 {/* Timer progress bar */}
-                <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                <div className="h-1 sm:h-1.5 bg-muted rounded-full overflow-hidden">
                   <motion.div
                     className={`h-full rounded-full ${
                       timeLeft <= 10 ? "bg-destructive" : timeLeft <= 20 ? "bg-warning" : "bg-success"
@@ -232,13 +232,13 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                 key={currentQuestion.id}
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="quiz-card rounded-xl p-8 border border-border"
+                className="quiz-card rounded-xl p-4 sm:p-6 md:p-8 border border-border"
               >
-                <h3 className="font-serif text-xl md:text-2xl font-semibold text-foreground mb-8">
+                <h3 className="font-serif text-base sm:text-lg md:text-2xl font-semibold text-foreground mb-4 sm:mb-6 md:mb-8 leading-snug">
                   {currentQuestion.question[language]}
                 </h3>
 
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   {currentQuestion.options[language].map((option, index) => (
                     <motion.button
                       key={index}
@@ -246,9 +246,9 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                       whileTap={!isAnswered ? { scale: 0.99 } : {}}
                       onClick={() => handleSelectAnswer(index)}
                       disabled={isAnswered}
-                      className={`w-full p-4 rounded-lg border-2 transition-all duration-300 flex items-center gap-4 text-left ${getOptionClass(index)}`}
+                      className={`w-full p-3 sm:p-4 rounded-lg border-2 transition-all duration-300 flex items-start sm:items-center gap-2.5 sm:gap-4 text-left ${getOptionClass(index)}`}
                     >
-                      <span className={`w-8 h-8 rounded-lg flex items-center justify-center font-semibold text-sm ${
+                      <span className={`w-6 h-6 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center font-semibold text-xs sm:text-sm flex-shrink-0 ${
                         isAnswered && index === currentQuestion.correctAnswer
                           ? "bg-success text-success-foreground"
                           : isAnswered && index === selectedAnswer && index !== currentQuestion.correctAnswer
@@ -256,14 +256,14 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                           : "bg-muted text-foreground"
                       }`}>
                         {isAnswered && index === currentQuestion.correctAnswer ? (
-                          <Check className="w-4 h-4" />
+                          <Check className="w-3 h-3 sm:w-4 sm:h-4" />
                         ) : isAnswered && index === selectedAnswer ? (
-                          <X className="w-4 h-4" />
+                          <X className="w-3 h-3 sm:w-4 sm:h-4" />
                         ) : (
                           String.fromCharCode(65 + index)
                         )}
                       </span>
-                      <span className="text-foreground">{option}</span>
+                      <span className="text-sm sm:text-base text-foreground leading-snug">{option}</span>
                     </motion.button>
                   ))}
                 </div>
@@ -272,7 +272,7 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-6 flex justify-between items-center"
+                    className="mt-4 sm:mt-6 flex flex-col sm:flex-row justify-between items-center gap-3"
                   >
                     <span className={`text-sm font-medium ${
                       selectedAnswer === currentQuestion.correctAnswer
@@ -283,7 +283,7 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                     </span>
                     <Button
                       onClick={handleNext}
-                      className="btn-primary-custom text-primary-foreground"
+                      className="btn-primary-custom text-white w-full sm:w-auto text-sm sm:text-base"
                     >
                       {isLastQuestion ? t.seeResults : t.next}
                       <ArrowRight className="w-4 h-4 ml-2" />
@@ -299,30 +299,30 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
               key="results"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="quiz-card rounded-xl p-8 border border-border text-center"
+              className="quiz-card rounded-xl p-4 sm:p-6 md:p-8 border border-border text-center"
             >
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: "spring" }}
-                className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary/20 flex items-center justify-center"
+                className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 rounded-full bg-primary/20 flex items-center justify-center"
               >
-                <CheckCircle className="w-10 h-10 text-primary" />
+                <CheckCircle className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
               </motion.div>
 
-              <h2 className="font-serif text-3xl font-bold text-foreground mb-2">
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-2">
                 {t.congratulations}
               </h2>
-              <p className="text-xl text-muted-foreground mb-2">{getScoreMessage()}</p>
-              <p className="text-lg text-foreground mb-8">
+              <p className="text-base sm:text-xl text-muted-foreground mb-2">{getScoreMessage()}</p>
+              <p className="text-base sm:text-lg text-foreground mb-6 sm:mb-8">
                 {t.score}: <span className="font-bold text-primary">{score}/{quiz.questions.length}</span>
               </p>
 
               {score >= Math.ceil(quiz.questions.length * 0.6) && (
-                <div className="bg-muted rounded-lg p-6 mb-6">
-                  <p className="text-sm text-muted-foreground mb-2">{t.discountCode}</p>
-                  <div className="flex items-center justify-center gap-3">
-                    <code className="text-lg font-mono font-bold text-primary bg-background px-4 py-2 rounded">
+                <div className="bg-muted rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-2">{t.discountCode}</p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
+                    <code className="text-sm sm:text-lg font-mono font-bold text-primary bg-background px-3 sm:px-4 py-2 rounded break-all">
                       {discountCode}
                     </code>
                     <Button
@@ -339,7 +339,7 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
 
               <Button
                 onClick={onBack}
-                className="btn-primary-custom text-primary-foreground"
+                className="btn-primary-custom text-white w-full sm:w-auto text-sm sm:text-base"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 {t.backToQuizzes}
