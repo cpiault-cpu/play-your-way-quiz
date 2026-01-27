@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from "react";
 import { Quiz, Language, translations } from "@/data/quizData";
 import QuizCard from "./QuizCard";
 
@@ -11,6 +12,32 @@ interface LevelSectionProps {
 const LevelSection = ({ level, quizzes, language, onPlayQuiz }: LevelSectionProps) => {
   const t = translations[language];
   const levelQuizzes = quizzes.filter(q => q.level === level);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Track scroll position to update active dot
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const scrollLeft = container.scrollLeft;
+      const cardWidth = container.offsetWidth * 0.85 + 16; // 85vw + gap
+      const newIndex = Math.round(scrollLeft / cardWidth);
+      setActiveIndex(Math.min(newIndex, levelQuizzes.length - 1));
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, [levelQuizzes.length]);
+
+  // Scroll to specific card when dot is clicked
+  const scrollToIndex = (index: number) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    const cardWidth = container.offsetWidth * 0.85 + 16;
+    container.scrollTo({ left: index * cardWidth, behavior: "smooth" });
+  };
 
   return (
     <section className="mb-10">
@@ -19,9 +46,12 @@ const LevelSection = ({ level, quizzes, language, onPlayQuiz }: LevelSectionProp
         {t.level} {level}
       </h2>
 
-      {/* Mobile: horizontal scroll */}
+      {/* Mobile: horizontal scroll with pagination dots */}
       <div className="md:hidden -mx-4 px-4">
-        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory">
+        <div 
+          ref={scrollContainerRef}
+          className="flex gap-4 overflow-x-auto pb-3 scrollbar-hide snap-x snap-mandatory"
+        >
           {levelQuizzes.map((quiz) => (
             <div key={quiz.id} className="flex-shrink-0 w-[85vw] snap-start">
               <QuizCard
@@ -32,6 +62,24 @@ const LevelSection = ({ level, quizzes, language, onPlayQuiz }: LevelSectionProp
             </div>
           ))}
         </div>
+        
+        {/* Pagination dots */}
+        {levelQuizzes.length > 1 && (
+          <div className="flex justify-center gap-2 mt-2">
+            {levelQuizzes.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollToIndex(index)}
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                  index === activeIndex 
+                    ? "bg-primary scale-125" 
+                    : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                }`}
+                aria-label={`Quiz ${index + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Desktop: grid */}
