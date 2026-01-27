@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Language } from "@/data/quizData";
+import ginkgoLeaf from "@/assets/ginkgo-leaf.png";
 
 type CategoryId = "micronutrition" | "biology" | "plants" | "memory";
 
@@ -81,9 +82,9 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               className="inline-block mb-4"
             >
               <img 
-                src="/images/peita-logo.png" 
-                alt="PEITA Logo" 
-                className="h-14 md:h-16 lg:h-20 object-contain filter brightness-0 invert mx-auto md:ml-auto md:mr-0"
+                src={ginkgoLeaf} 
+                alt="Ginkgo Biloba" 
+                className="h-16 md:h-20 lg:h-24 object-contain mx-auto md:ml-auto md:mr-0 drop-shadow-lg"
               />
             </a>
             
