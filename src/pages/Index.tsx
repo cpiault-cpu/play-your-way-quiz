@@ -6,6 +6,7 @@ import LevelSection from "@/components/brainfest/LevelSection";
 import QuizGame from "@/components/brainfest/QuizGame";
 import MusicalMemoryGame from "@/components/brainfest/MusicalMemoryGame";
 import MusicalMemoryCard from "@/components/brainfest/MusicalMemoryCard";
+import Footer from "@/components/brainfest/Footer";
 
 // Category type
 type CategoryId = "micronutrition" | "biology" | "plants" | "memory";
@@ -70,7 +71,7 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Hero Section with categories */}
       <HeroSection 
         language={language} 
@@ -80,7 +81,7 @@ const Index = () => {
       />
 
       {/* Quiz Levels */}
-      <main className="max-w-6xl mx-auto px-4 pb-16">
+      <main className="max-w-6xl mx-auto px-4 pb-16 flex-grow">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -89,7 +90,7 @@ const Index = () => {
           {/* Show Musical Memory section when Memory category is selected or when showing all */}
           {(selectedCategory === null || selectedCategory === "memory") && (
             <section className="mb-10">
-              <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground mb-5 flex items-center gap-3">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-foreground mb-5 flex items-center gap-3">
                 <span className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center text-xl md:text-2xl">🎹</span>
                 {language === "fr" ? "Mémoire Musicale" : "Musical Memory"}
               </h2>
@@ -122,6 +123,9 @@ const Index = () => {
           })}
         </motion.div>
       </main>
+
+      {/* Footer */}
+      <Footer language={language} />
     </div>
   );
 };
