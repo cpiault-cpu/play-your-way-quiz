@@ -16,9 +16,9 @@ const translations = {
     level: "Niveau",
     discount: "de réduction",
     play: "Jouer",
-    level1Desc: "3-4 notes",
-    level2Desc: "5-6 notes",
-    level3Desc: "7-8 notes",
+    level1Desc: "6 notes • 3 séries",
+    level2Desc: "8 notes",
+    level3Desc: "10 notes • Multi-instruments",
   },
   en: {
     title: "Musical Memory",
@@ -26,9 +26,9 @@ const translations = {
     level: "Level",
     discount: "discount",
     play: "Play",
-    level1Desc: "3-4 notes",
-    level2Desc: "5-6 notes",
-    level3Desc: "7-8 notes",
+    level1Desc: "6 notes • 3 series",
+    level2Desc: "8 notes",
+    level3Desc: "10 notes • Multi-instruments",
   },
 };
 
@@ -65,36 +65,36 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
   };
 
   return (
-    <div className="quiz-card rounded-xl p-6 border border-border relative overflow-hidden transition-transform hover:scale-[1.02] duration-300">
+    <div className="quiz-card rounded-xl p-6 md:p-8 border border-border relative overflow-hidden transition-transform hover:scale-[1.02] duration-300">
       {/* Musical Brain Icon */}
       <div className="absolute top-4 right-4">
         <div className="relative">
-          <BrainIcon className="molecule-icon w-16 h-16" />
-          <Volume2 className="absolute -bottom-1 -right-1 w-5 h-5 text-primary" />
+          <BrainIcon className="molecule-icon w-16 h-16 md:w-20 md:h-20" />
+          <Volume2 className="absolute -bottom-1 -right-1 w-6 h-6 text-primary" />
         </div>
       </div>
       
       <div className="flex items-center gap-3 mb-4">
-        <span className={`${getLevelBadgeClass()} text-xs font-semibold px-3 py-1 rounded-full text-primary-foreground`}>
+        <span className={`${getLevelBadgeClass()} text-sm md:text-base font-semibold px-4 py-1.5 rounded-full text-primary-foreground`}>
           {t.level} {level}
         </span>
-        <span className="text-sm text-muted-foreground">
+        <span className="text-base md:text-lg text-muted-foreground font-medium">
           {getDiscount()} {t.discount}
         </span>
       </div>
 
-      <h3 className="font-serif text-xl font-semibold text-foreground mb-1">
+      <h3 className="font-serif text-xl md:text-2xl font-semibold text-foreground mb-2">
         {t.title}
       </h3>
-      <p className="text-sm text-muted-foreground mb-6">
+      <p className="text-base md:text-lg text-muted-foreground mb-6">
         {t.subtitle} • {getLevelDesc()}
       </p>
 
       <Button
         onClick={() => onPlay(level)}
-        className="w-full btn-primary-custom text-primary-foreground font-medium hover:opacity-90 transition-opacity"
+        className="w-full btn-primary-custom text-primary-foreground font-medium hover:opacity-90 transition-opacity text-base md:text-lg py-5 md:py-6"
       >
-        <Play className="w-4 h-4 mr-2" />
+        <Play className="w-5 h-5 mr-2" />
         {t.play}
       </Button>
     </div>
