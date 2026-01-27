@@ -44,7 +44,7 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
   };
 
   return (
-    <div className="quiz-card rounded-xl p-4 sm:p-5 md:p-6 border border-border relative overflow-hidden">
+    <div className="quiz-card w-full max-w-full min-w-0 rounded-xl p-4 sm:p-5 md:p-6 border border-border relative overflow-hidden">
       {getIcon()}
       
       <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
@@ -63,20 +63,20 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
       <div className="space-y-2 sm:space-y-3">
         <Button
           onClick={() => onPlay(quiz.id)}
-          className="w-full btn-primary-custom text-white font-medium hover:opacity-90 transition-opacity text-sm sm:text-base py-2.5 sm:py-3"
+          className="w-full min-w-0 btn-primary-custom text-white font-medium hover:opacity-90 transition-opacity text-sm sm:text-base py-2.5 sm:py-3"
         >
           <Play className="w-4 h-4 mr-2 flex-shrink-0" />
-          <span className="truncate">{t.play}</span>
+          <span className="truncate min-w-0">{t.play}</span>
         </Button>
 
         <Button
           variant="outline"
-          className="w-full border-border text-foreground hover:bg-muted text-sm sm:text-base py-2.5 sm:py-3"
+          className="w-full min-w-0 border-border text-foreground hover:bg-muted text-sm sm:text-base py-2.5 sm:py-3"
           asChild
         >
           <a href="https://www.peita.fr/boutique" target="_blank" rel="noopener noreferrer">
             <ExternalLink className="w-4 h-4 mr-2 flex-shrink-0" />
-            <span className="truncate">{t.visitShop}</span>
+            <span className="truncate min-w-0">{t.visitShop}</span>
           </a>
         </Button>
       </div>
