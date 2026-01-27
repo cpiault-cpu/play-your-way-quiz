@@ -58,11 +58,10 @@ const PIANO_NOTES = [
   { name: "C2", frequency: 523.25, color: "from-pink-500 to-pink-600", activeColor: "from-pink-300 to-pink-400 shadow-pink-400/60" },
 ];
 
-// Instrument sounds for level 3 - each note is a different instrument
-type InstrumentType = "piano" | "violin" | "flute" | "cymbal" | "bassDrum" | "xylophone" | "trumpet" | "guitar" | "harp" | "bell";
+// Instrument sounds for level 3 - each note is a different instrument with rich sound synthesis
+type InstrumentType = "piano" | "violin" | "flute" | "clarinet" | "cello" | "xylophone" | "trumpet" | "guitar" | "harp" | "bell";
 
 interface InstrumentNote {
-  name: string;
   instrument: InstrumentType;
   frequency: number;
   color: string;
@@ -71,17 +70,28 @@ interface InstrumentNote {
 }
 
 const INSTRUMENT_NOTES: InstrumentNote[] = [
-  { name: "Piano", instrument: "piano", frequency: 261.63, color: "from-slate-600 to-slate-700", activeColor: "from-slate-400 to-slate-500 shadow-slate-400/60", emoji: "🎹" },
-  { name: "Violon", instrument: "violin", frequency: 440.0, color: "from-amber-600 to-amber-700", activeColor: "from-amber-400 to-amber-500 shadow-amber-400/60", emoji: "🎻" },
-  { name: "Flûte", instrument: "flute", frequency: 523.25, color: "from-sky-500 to-sky-600", activeColor: "from-sky-300 to-sky-400 shadow-sky-400/60", emoji: "🪈" },
-  { name: "Cymbale", instrument: "cymbal", frequency: 0, color: "from-yellow-500 to-yellow-600", activeColor: "from-yellow-300 to-yellow-400 shadow-yellow-400/60", emoji: "🥁" },
-  { name: "Grosse caisse", instrument: "bassDrum", frequency: 60, color: "from-red-700 to-red-800", activeColor: "from-red-500 to-red-600 shadow-red-500/60", emoji: "🪘" },
-  { name: "Xylophone", instrument: "xylophone", frequency: 587.33, color: "from-pink-500 to-pink-600", activeColor: "from-pink-300 to-pink-400 shadow-pink-400/60", emoji: "🎵" },
-  { name: "Trompette", instrument: "trumpet", frequency: 349.23, color: "from-orange-500 to-orange-600", activeColor: "from-orange-300 to-orange-400 shadow-orange-400/60", emoji: "🎺" },
-  { name: "Guitare", instrument: "guitar", frequency: 196.0, color: "from-rose-600 to-rose-700", activeColor: "from-rose-400 to-rose-500 shadow-rose-400/60", emoji: "🎸" },
-  { name: "Harpe", instrument: "harp", frequency: 392.0, color: "from-violet-500 to-violet-600", activeColor: "from-violet-300 to-violet-400 shadow-violet-400/60", emoji: "🎶" },
-  { name: "Cloche", instrument: "bell", frequency: 880.0, color: "from-teal-500 to-teal-600", activeColor: "from-teal-300 to-teal-400 shadow-teal-400/60", emoji: "🔔" },
+  { instrument: "piano", frequency: 261.63, color: "from-slate-600 to-slate-700", activeColor: "from-slate-400 to-slate-500 shadow-slate-400/60", emoji: "🎹" },
+  { instrument: "violin", frequency: 440.0, color: "from-amber-600 to-amber-700", activeColor: "from-amber-400 to-amber-500 shadow-amber-400/60", emoji: "🎻" },
+  { instrument: "flute", frequency: 523.25, color: "from-sky-500 to-sky-600", activeColor: "from-sky-300 to-sky-400 shadow-sky-400/60", emoji: "🪈" },
+  { instrument: "clarinet", frequency: 349.23, color: "from-emerald-600 to-emerald-700", activeColor: "from-emerald-400 to-emerald-500 shadow-emerald-400/60", emoji: "🎷" },
+  { instrument: "cello", frequency: 130.81, color: "from-red-700 to-red-800", activeColor: "from-red-500 to-red-600 shadow-red-500/60", emoji: "🪕" },
+  { instrument: "xylophone", frequency: 587.33, color: "from-pink-500 to-pink-600", activeColor: "from-pink-300 to-pink-400 shadow-pink-400/60", emoji: "🎵" },
+  { instrument: "trumpet", frequency: 392.0, color: "from-orange-500 to-orange-600", activeColor: "from-orange-300 to-orange-400 shadow-orange-400/60", emoji: "🎺" },
+  { instrument: "guitar", frequency: 196.0, color: "from-rose-600 to-rose-700", activeColor: "from-rose-400 to-rose-500 shadow-rose-400/60", emoji: "🎸" },
+  { instrument: "harp", frequency: 329.63, color: "from-violet-500 to-violet-600", activeColor: "from-violet-300 to-violet-400 shadow-violet-400/60", emoji: "🎶" },
+  { instrument: "bell", frequency: 880.0, color: "from-teal-500 to-teal-600", activeColor: "from-teal-300 to-teal-400 shadow-teal-400/60", emoji: "🔔" },
 ];
+
+// Famous melody patterns inspired by classical/jazz pieces
+// These are index sequences into INSTRUMENT_NOTES
+const FAMOUS_MELODIES = {
+  // 8 notes - Inspired by Beethoven's Ode to Joy theme
+  round1: [0, 0, 1, 2, 2, 1, 0, 6], // Piano-Piano-Violin-Flute repeated pattern
+  // 9 notes - Inspired by Mozart's Eine kleine Nachtmusik
+  round2: [7, 7, 4, 7, 7, 4, 0, 1, 2],
+  // 10 notes - Inspired by Take Five (jazz)
+  round3: [3, 5, 8, 0, 9, 3, 5, 8, 0, 1],
+};
 
 const translations = {
   fr: {
@@ -136,7 +146,7 @@ const translations = {
 const LEVEL_CONFIG = {
   1: { notesPerSequence: 6, seriesToWin: 3, useInstruments: false },
   2: { notesPerSequence: 8, seriesToWin: 1, useInstruments: false },
-  3: { notesPerSequence: 10, seriesToWin: 1, useInstruments: true },
+  3: { notesPerSequence: [8, 9, 10], seriesToWin: 3, useInstruments: true },
 };
 
 const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) => {
@@ -160,167 +170,381 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
     return audioContextRef.current;
   }, []);
 
-  // Play instrument sound based on type
+  // Play instrument sound based on type - improved rich synthesis
   const playInstrumentSound = useCallback((instrument: InstrumentType, frequency: number, audioContext: AudioContext) => {
     const currentTime = audioContext.currentTime;
     
+    // Create master gain for all instruments
+    const masterGain = audioContext.createGain();
+    masterGain.gain.setValueAtTime(0.6, currentTime);
+    masterGain.connect(audioContext.destination);
+    
     switch (instrument) {
       case "piano": {
-        const osc = audioContext.createOscillator();
-        const gain = audioContext.createGain();
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(frequency, currentTime);
-        gain.gain.setValueAtTime(0, currentTime);
-        gain.gain.linearRampToValueAtTime(0.5, currentTime + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.8);
-        osc.connect(gain);
-        gain.connect(audioContext.destination);
-        osc.start(currentTime);
-        osc.stop(currentTime + 0.8);
+        // Rich piano with harmonics
+        const fundamentalGain = audioContext.createGain();
+        const osc1 = audioContext.createOscillator();
+        const osc2 = audioContext.createOscillator();
+        const osc3 = audioContext.createOscillator();
+        
+        osc1.type = "sine";
+        osc2.type = "sine";
+        osc3.type = "sine";
+        osc1.frequency.setValueAtTime(frequency, currentTime);
+        osc2.frequency.setValueAtTime(frequency * 2, currentTime);
+        osc3.frequency.setValueAtTime(frequency * 3, currentTime);
+        
+        const gain1 = audioContext.createGain();
+        const gain2 = audioContext.createGain();
+        const gain3 = audioContext.createGain();
+        
+        gain1.gain.setValueAtTime(0.5, currentTime);
+        gain2.gain.setValueAtTime(0.2, currentTime);
+        gain3.gain.setValueAtTime(0.1, currentTime);
+        
+        fundamentalGain.gain.setValueAtTime(0, currentTime);
+        fundamentalGain.gain.linearRampToValueAtTime(0.7, currentTime + 0.01);
+        fundamentalGain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.2);
+        
+        osc1.connect(gain1).connect(fundamentalGain);
+        osc2.connect(gain2).connect(fundamentalGain);
+        osc3.connect(gain3).connect(fundamentalGain);
+        fundamentalGain.connect(masterGain);
+        
+        osc1.start(currentTime);
+        osc2.start(currentTime);
+        osc3.start(currentTime);
+        osc1.stop(currentTime + 1.2);
+        osc2.stop(currentTime + 1.2);
+        osc3.stop(currentTime + 1.2);
         break;
       }
       case "violin": {
+        // Warm violin with vibrato
         const osc = audioContext.createOscillator();
+        const vibrato = audioContext.createOscillator();
+        const vibratoGain = audioContext.createGain();
         const gain = audioContext.createGain();
+        const filter = audioContext.createBiquadFilter();
+        
+        vibrato.frequency.setValueAtTime(5, currentTime);
+        vibratoGain.gain.setValueAtTime(3, currentTime);
+        vibrato.connect(vibratoGain);
+        vibratoGain.connect(osc.frequency);
+        
         osc.type = "sawtooth";
         osc.frequency.setValueAtTime(frequency, currentTime);
+        
+        filter.type = "lowpass";
+        filter.frequency.setValueAtTime(2000, currentTime);
+        filter.Q.setValueAtTime(1, currentTime);
+        
         gain.gain.setValueAtTime(0, currentTime);
-        gain.gain.linearRampToValueAtTime(0.3, currentTime + 0.1);
-        gain.gain.linearRampToValueAtTime(0.25, currentTime + 0.5);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.8);
-        osc.connect(gain);
-        gain.connect(audioContext.destination);
+        gain.gain.linearRampToValueAtTime(0.35, currentTime + 0.15);
+        gain.gain.setValueAtTime(0.3, currentTime + 0.5);
+        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1);
+        
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(masterGain);
+        
+        vibrato.start(currentTime);
         osc.start(currentTime);
-        osc.stop(currentTime + 0.8);
+        vibrato.stop(currentTime + 1);
+        osc.stop(currentTime + 1);
         break;
       }
       case "flute": {
+        // Breathy flute
         const osc = audioContext.createOscillator();
+        const noise = audioContext.createOscillator();
         const gain = audioContext.createGain();
+        const noiseGain = audioContext.createGain();
+        const filter = audioContext.createBiquadFilter();
+        
         osc.type = "sine";
         osc.frequency.setValueAtTime(frequency, currentTime);
+        
+        noise.type = "triangle";
+        noise.frequency.setValueAtTime(frequency * 2, currentTime);
+        noiseGain.gain.setValueAtTime(0.08, currentTime);
+        
+        filter.type = "bandpass";
+        filter.frequency.setValueAtTime(frequency, currentTime);
+        filter.Q.setValueAtTime(2, currentTime);
+        
         gain.gain.setValueAtTime(0, currentTime);
-        gain.gain.linearRampToValueAtTime(0.4, currentTime + 0.08);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.6);
-        osc.connect(gain);
-        gain.connect(audioContext.destination);
+        gain.gain.linearRampToValueAtTime(0.4, currentTime + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.8);
+        
+        osc.connect(filter);
+        noise.connect(noiseGain);
+        noiseGain.connect(filter);
+        filter.connect(gain);
+        gain.connect(masterGain);
+        
         osc.start(currentTime);
-        osc.stop(currentTime + 0.6);
+        noise.start(currentTime);
+        osc.stop(currentTime + 0.8);
+        noise.stop(currentTime + 0.8);
         break;
       }
-      case "cymbal": {
-        const bufferSize = audioContext.sampleRate * 0.5;
-        const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
-        const data = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-          data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (audioContext.sampleRate * 0.15));
-        }
-        const source = audioContext.createBufferSource();
+      case "clarinet": {
+        // Clarinet with odd harmonics
+        const osc1 = audioContext.createOscillator();
+        const osc2 = audioContext.createOscillator();
+        const osc3 = audioContext.createOscillator();
         const gain = audioContext.createGain();
         const filter = audioContext.createBiquadFilter();
-        filter.type = "highpass";
-        filter.frequency.setValueAtTime(3000, currentTime);
-        source.buffer = buffer;
-        gain.gain.setValueAtTime(0.4, currentTime);
-        source.connect(filter);
+        
+        osc1.type = "square";
+        osc2.type = "square";
+        osc3.type = "square";
+        osc1.frequency.setValueAtTime(frequency, currentTime);
+        osc2.frequency.setValueAtTime(frequency * 3, currentTime);
+        osc3.frequency.setValueAtTime(frequency * 5, currentTime);
+        
+        const gain1 = audioContext.createGain();
+        const gain2 = audioContext.createGain();
+        const gain3 = audioContext.createGain();
+        gain1.gain.setValueAtTime(0.3, currentTime);
+        gain2.gain.setValueAtTime(0.15, currentTime);
+        gain3.gain.setValueAtTime(0.05, currentTime);
+        
+        filter.type = "lowpass";
+        filter.frequency.setValueAtTime(1500, currentTime);
+        
+        gain.gain.setValueAtTime(0, currentTime);
+        gain.gain.linearRampToValueAtTime(0.25, currentTime + 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.9);
+        
+        osc1.connect(gain1).connect(filter);
+        osc2.connect(gain2).connect(filter);
+        osc3.connect(gain3).connect(filter);
         filter.connect(gain);
-        gain.connect(audioContext.destination);
-        source.start(currentTime);
+        gain.connect(masterGain);
+        
+        osc1.start(currentTime);
+        osc2.start(currentTime);
+        osc3.start(currentTime);
+        osc1.stop(currentTime + 0.9);
+        osc2.stop(currentTime + 0.9);
+        osc3.stop(currentTime + 0.9);
         break;
       }
-      case "bassDrum": {
+      case "cello": {
+        // Deep cello with rich harmonics
         const osc = audioContext.createOscillator();
+        const osc2 = audioContext.createOscillator();
+        const vibrato = audioContext.createOscillator();
+        const vibratoGain = audioContext.createGain();
         const gain = audioContext.createGain();
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(150, currentTime);
-        osc.frequency.exponentialRampToValueAtTime(40, currentTime + 0.15);
-        gain.gain.setValueAtTime(0.8, currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.4);
-        osc.connect(gain);
-        gain.connect(audioContext.destination);
+        const filter = audioContext.createBiquadFilter();
+        
+        vibrato.frequency.setValueAtTime(4, currentTime);
+        vibratoGain.gain.setValueAtTime(2, currentTime);
+        vibrato.connect(vibratoGain);
+        vibratoGain.connect(osc.frequency);
+        
+        osc.type = "sawtooth";
+        osc2.type = "triangle";
+        osc.frequency.setValueAtTime(frequency, currentTime);
+        osc2.frequency.setValueAtTime(frequency * 2, currentTime);
+        
+        filter.type = "lowpass";
+        filter.frequency.setValueAtTime(800, currentTime);
+        
+        gain.gain.setValueAtTime(0, currentTime);
+        gain.gain.linearRampToValueAtTime(0.4, currentTime + 0.2);
+        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.2);
+        
+        const oscGain = audioContext.createGain();
+        const osc2Gain = audioContext.createGain();
+        oscGain.gain.setValueAtTime(0.4, currentTime);
+        osc2Gain.gain.setValueAtTime(0.15, currentTime);
+        
+        osc.connect(oscGain).connect(filter);
+        osc2.connect(osc2Gain).connect(filter);
+        filter.connect(gain);
+        gain.connect(masterGain);
+        
+        vibrato.start(currentTime);
         osc.start(currentTime);
-        osc.stop(currentTime + 0.4);
+        osc2.start(currentTime);
+        vibrato.stop(currentTime + 1.2);
+        osc.stop(currentTime + 1.2);
+        osc2.stop(currentTime + 1.2);
         break;
       }
       case "xylophone": {
+        // Bright xylophone with quick decay
         const osc = audioContext.createOscillator();
-        const gain = audioContext.createGain();
-        osc.type = "triangle";
-        osc.frequency.setValueAtTime(frequency, currentTime);
-        gain.gain.setValueAtTime(0, currentTime);
-        gain.gain.linearRampToValueAtTime(0.5, currentTime + 0.01);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.3);
-        osc.connect(gain);
-        gain.connect(audioContext.destination);
-        osc.start(currentTime);
-        osc.stop(currentTime + 0.3);
-        break;
-      }
-      case "trumpet": {
-        const osc = audioContext.createOscillator();
-        const gain = audioContext.createGain();
-        osc.type = "square";
-        osc.frequency.setValueAtTime(frequency, currentTime);
-        gain.gain.setValueAtTime(0, currentTime);
-        gain.gain.linearRampToValueAtTime(0.25, currentTime + 0.05);
-        gain.gain.linearRampToValueAtTime(0.2, currentTime + 0.4);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.6);
-        osc.connect(gain);
-        gain.connect(audioContext.destination);
-        osc.start(currentTime);
-        osc.stop(currentTime + 0.6);
-        break;
-      }
-      case "guitar": {
-        const osc1 = audioContext.createOscillator();
         const osc2 = audioContext.createOscillator();
         const gain = audioContext.createGain();
-        osc1.type = "triangle";
-        osc2.type = "sawtooth";
-        osc1.frequency.setValueAtTime(frequency, currentTime);
-        osc2.frequency.setValueAtTime(frequency * 2, currentTime);
-        gain.gain.setValueAtTime(0.4, currentTime);
+        
+        osc.type = "sine";
+        osc2.type = "sine";
+        osc.frequency.setValueAtTime(frequency, currentTime);
+        osc2.frequency.setValueAtTime(frequency * 4, currentTime);
+        
+        const gain2 = audioContext.createGain();
+        gain2.gain.setValueAtTime(0.3, currentTime);
+        
+        gain.gain.setValueAtTime(0.6, currentTime);
         gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.5);
-        osc1.connect(gain);
-        osc2.connect(gain);
-        gain.connect(audioContext.destination);
-        osc1.start(currentTime);
+        
+        osc.connect(gain);
+        osc2.connect(gain2).connect(gain);
+        gain.connect(masterGain);
+        
+        osc.start(currentTime);
         osc2.start(currentTime);
-        osc1.stop(currentTime + 0.5);
+        osc.stop(currentTime + 0.5);
         osc2.stop(currentTime + 0.5);
         break;
       }
-      case "harp": {
+      case "trumpet": {
+        // Bright trumpet with brass character
         const osc = audioContext.createOscillator();
+        const osc2 = audioContext.createOscillator();
         const gain = audioContext.createGain();
-        osc.type = "sine";
+        const filter = audioContext.createBiquadFilter();
+        
+        osc.type = "sawtooth";
+        osc2.type = "square";
         osc.frequency.setValueAtTime(frequency, currentTime);
+        osc2.frequency.setValueAtTime(frequency * 2, currentTime);
+        
+        filter.type = "lowpass";
+        filter.frequency.setValueAtTime(500, currentTime);
+        filter.frequency.linearRampToValueAtTime(3000, currentTime + 0.1);
+        
+        const oscGain = audioContext.createGain();
+        const osc2Gain = audioContext.createGain();
+        oscGain.gain.setValueAtTime(0.3, currentTime);
+        osc2Gain.gain.setValueAtTime(0.15, currentTime);
+        
         gain.gain.setValueAtTime(0, currentTime);
-        gain.gain.linearRampToValueAtTime(0.4, currentTime + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.2);
-        osc.connect(gain);
-        gain.connect(audioContext.destination);
+        gain.gain.linearRampToValueAtTime(0.35, currentTime + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.8);
+        
+        osc.connect(oscGain).connect(filter);
+        osc2.connect(osc2Gain).connect(filter);
+        filter.connect(gain);
+        gain.connect(masterGain);
+        
         osc.start(currentTime);
-        osc.stop(currentTime + 1.2);
+        osc2.start(currentTime);
+        osc.stop(currentTime + 0.8);
+        osc2.stop(currentTime + 0.8);
+        break;
+      }
+      case "guitar": {
+        // Acoustic guitar pluck
+        const osc1 = audioContext.createOscillator();
+        const osc2 = audioContext.createOscillator();
+        const osc3 = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        const filter = audioContext.createBiquadFilter();
+        
+        osc1.type = "triangle";
+        osc2.type = "sawtooth";
+        osc3.type = "sine";
+        osc1.frequency.setValueAtTime(frequency, currentTime);
+        osc2.frequency.setValueAtTime(frequency * 2, currentTime);
+        osc3.frequency.setValueAtTime(frequency * 3, currentTime);
+        
+        const gain1 = audioContext.createGain();
+        const gain2 = audioContext.createGain();
+        const gain3 = audioContext.createGain();
+        gain1.gain.setValueAtTime(0.4, currentTime);
+        gain2.gain.setValueAtTime(0.2, currentTime);
+        gain3.gain.setValueAtTime(0.1, currentTime);
+        
+        filter.type = "lowpass";
+        filter.frequency.setValueAtTime(3000, currentTime);
+        filter.frequency.exponentialRampToValueAtTime(800, currentTime + 0.5);
+        
+        gain.gain.setValueAtTime(0.5, currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.8);
+        
+        osc1.connect(gain1).connect(filter);
+        osc2.connect(gain2).connect(filter);
+        osc3.connect(gain3).connect(filter);
+        filter.connect(gain);
+        gain.connect(masterGain);
+        
+        osc1.start(currentTime);
+        osc2.start(currentTime);
+        osc3.start(currentTime);
+        osc1.stop(currentTime + 0.8);
+        osc2.stop(currentTime + 0.8);
+        osc3.stop(currentTime + 0.8);
+        break;
+      }
+      case "harp": {
+        // Ethereal harp with long sustain
+        const osc = audioContext.createOscillator();
+        const osc2 = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        
+        osc.type = "sine";
+        osc2.type = "triangle";
+        osc.frequency.setValueAtTime(frequency, currentTime);
+        osc2.frequency.setValueAtTime(frequency * 2, currentTime);
+        
+        const gain2 = audioContext.createGain();
+        gain2.gain.setValueAtTime(0.2, currentTime);
+        
+        gain.gain.setValueAtTime(0, currentTime);
+        gain.gain.linearRampToValueAtTime(0.45, currentTime + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.5);
+        
+        osc.connect(gain);
+        osc2.connect(gain2).connect(gain);
+        gain.connect(masterGain);
+        
+        osc.start(currentTime);
+        osc2.start(currentTime);
+        osc.stop(currentTime + 1.5);
+        osc2.stop(currentTime + 1.5);
         break;
       }
       case "bell": {
+        // Church bell with inharmonic partials
         const osc1 = audioContext.createOscillator();
         const osc2 = audioContext.createOscillator();
+        const osc3 = audioContext.createOscillator();
         const gain = audioContext.createGain();
+        
         osc1.type = "sine";
         osc2.type = "sine";
+        osc3.type = "sine";
         osc1.frequency.setValueAtTime(frequency, currentTime);
         osc2.frequency.setValueAtTime(frequency * 2.4, currentTime);
-        gain.gain.setValueAtTime(0.3, currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1);
-        osc1.connect(gain);
-        osc2.connect(gain);
-        gain.connect(audioContext.destination);
+        osc3.frequency.setValueAtTime(frequency * 5.95, currentTime);
+        
+        const gain1 = audioContext.createGain();
+        const gain2 = audioContext.createGain();
+        const gain3 = audioContext.createGain();
+        gain1.gain.setValueAtTime(0.4, currentTime);
+        gain2.gain.setValueAtTime(0.25, currentTime);
+        gain3.gain.setValueAtTime(0.15, currentTime);
+        
+        gain.gain.setValueAtTime(0.5, currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.8);
+        
+        osc1.connect(gain1).connect(gain);
+        osc2.connect(gain2).connect(gain);
+        osc3.connect(gain3).connect(gain);
+        gain.connect(masterGain);
+        
         osc1.start(currentTime);
         osc2.start(currentTime);
-        osc1.stop(currentTime + 1);
-        osc2.stop(currentTime + 1);
+        osc3.start(currentTime);
+        osc1.stop(currentTime + 1.8);
+        osc2.stop(currentTime + 1.8);
+        osc3.stop(currentTime + 1.8);
         break;
       }
     }
@@ -372,18 +596,35 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
     setPlayerInput([]);
   }, [playNote]);
 
-  // Generate new sequence
-  const generateSequence = useCallback((length: number) => {
+  // Generate new sequence - for level 3, use famous melody patterns
+  const generateSequence = useCallback((length: number, round?: number) => {
+    // For level 3, use predefined famous melodies
+    if (config.useInstruments && round !== undefined) {
+      if (round === 1) return [...FAMOUS_MELODIES.round1];
+      if (round === 2) return [...FAMOUS_MELODIES.round2];
+      if (round === 3) return [...FAMOUS_MELODIES.round3];
+    }
+    
+    // For other levels, generate random sequence
     const newSequence: number[] = [];
     for (let i = 0; i < length; i++) {
       newSequence.push(Math.floor(Math.random() * notes.length));
     }
     return newSequence;
-  }, [notes.length]);
+  }, [notes.length, config.useInstruments]);
+
+  // Get notes per sequence for current round (level 3 has progressive difficulty)
+  const getNotesForRound = useCallback((round: number) => {
+    if (Array.isArray(config.notesPerSequence)) {
+      return config.notesPerSequence[Math.min(round - 1, config.notesPerSequence.length - 1)];
+    }
+    return config.notesPerSequence;
+  }, [config.notesPerSequence]);
 
   // Start new game
   const startGame = useCallback(() => {
-    const newSequence = generateSequence(config.notesPerSequence);
+    const notesCount = getNotesForRound(1);
+    const newSequence = generateSequence(notesCount, config.useInstruments ? 1 : undefined);
     setSequence(newSequence);
     setCurrentSeries(1);
     setSeriesCompleted(0);
@@ -391,7 +632,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
     setGameState("playing");
     
     setTimeout(() => playSequence(newSequence), 1000);
-  }, [generateSequence, playSequence, config.notesPerSequence]);
+  }, [generateSequence, playSequence, getNotesForRound, config.useInstruments]);
 
   // Handle player note click
   const handleNoteClick = useCallback((noteIndex: number) => {
@@ -423,15 +664,17 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
       
       setGameState("success");
       
-      // Generate next series (new sequence of same length)
+      // Generate next series (with potentially more notes for level 3)
       setTimeout(() => {
-        const newSequence = generateSequence(config.notesPerSequence);
+        const nextRound = currentSeries + 1;
+        const notesCount = getNotesForRound(nextRound);
+        const newSequence = generateSequence(notesCount, config.useInstruments ? nextRound : undefined);
         setSequence(newSequence);
-        setCurrentSeries(prev => prev + 1);
+        setCurrentSeries(nextRound);
         playSequence(newSequence);
       }, 1500);
     }
-  }, [gameState, playerInput, sequence, playNote, playSequence, generateSequence, config, seriesCompleted]);
+  }, [gameState, playerInput, sequence, playNote, playSequence, generateSequence, config, seriesCompleted, currentSeries, getNotesForRound]);
 
   // Cleanup audio context on unmount
   useEffect(() => {
@@ -511,7 +754,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                   {t.seriesOf} {currentSeries} {t.of} {config.seriesToWin}
                 </span>
                 <span className="text-base md:text-lg text-muted-foreground font-medium">
-                  {config.notesPerSequence} notes
+                  {sequence.length} notes
                 </span>
               </div>
               
@@ -660,12 +903,13 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
               transition={{ duration: 0.15 }}
             >
               <div className="flex flex-col items-center justify-center h-full">
-                {config.useInstruments && (
-                  <span className="text-2xl md:text-3xl mb-1">{(note as InstrumentNote).emoji}</span>
+                {config.useInstruments ? (
+                  <span className="text-3xl md:text-4xl">{(note as InstrumentNote).emoji}</span>
+                ) : (
+                  <span className={`drop-shadow-lg text-lg md:text-xl font-bold ${activeNote === index ? "text-gray-800" : "text-white"}`}>
+                    {(note as typeof PIANO_NOTES[0]).name}
+                  </span>
                 )}
-                <span className={`drop-shadow-lg ${activeNote === index ? "text-gray-800 font-black" : "text-white"} ${config.useInstruments ? "text-xs md:text-sm" : ""}`}>
-                  {note.name}
-                </span>
               </div>
               
               {/* Intense glow effect when active */}
@@ -681,14 +925,12 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
           ))}
         </div>
 
-        {/* Note names legend */}
-        <div className="mt-6 text-center text-base md:text-lg text-muted-foreground">
-          {config.useInstruments ? (
-            <p>🎹 Piano • 🎻 Violon • 🪈 Flûte • 🥁 Cymbale • 🪘 Grosse caisse</p>
-          ) : (
+        {/* Note names legend - only show for piano levels */}
+        {!config.useInstruments && (
+          <div className="mt-6 text-center text-base md:text-lg text-muted-foreground">
             <p>Do (C) • Ré (D) • Mi (E) • Fa (F) • Sol (G) • La (A) • Si (B) • Do² (C2)</p>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
