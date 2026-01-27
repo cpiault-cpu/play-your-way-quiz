@@ -7,27 +7,8 @@ import QuizGame from "@/components/brainfest/QuizGame";
 import MusicalMemoryGame from "@/components/brainfest/MusicalMemoryGame";
 import MusicalMemoryCard from "@/components/brainfest/MusicalMemoryCard";
 
-// Category definitions
+// Category type
 type CategoryId = "micronutrition" | "biology" | "plants" | "memory";
-
-interface Category {
-  id: CategoryId;
-  name: { fr: string; en: string };
-  subcategories?: { id: string; name: { fr: string; en: string } }[];
-}
-
-const categories: Category[] = [
-  { id: "micronutrition", name: { fr: "Micronutrition", en: "Micronutrition" } },
-  { id: "biology", name: { fr: "Biologie", en: "Biology" } },
-  { id: "plants", name: { fr: "Plantes médicinales", en: "Medicinal Plants" } },
-  { 
-    id: "memory", 
-    name: { fr: "Mémoire", en: "Memory" },
-    subcategories: [
-      { id: "music", name: { fr: "Musique", en: "Music" } }
-    ]
-  },
-];
 
 // Map quiz categories to our category IDs
 const getCategoryForQuiz = (quiz: Quiz): CategoryId => {
@@ -90,71 +71,13 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section with gradient background */}
-      <HeroSection language={language} onToggleLanguage={handleToggleLanguage} />
-
-      {/* Category Navigation */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="px-4 py-8 md:py-10"
-      >
-        {/* Category Navigation - vertical on mobile, horizontal on desktop */}
-        <div className="max-w-6xl mx-auto mb-8">
-          {/* Mobile: vertical stack */}
-          <div className="flex flex-col gap-2 md:hidden">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(selectedCategory === cat.id ? null : cat.id)}
-                className={`w-full px-5 py-4 rounded-xl text-lg font-semibold shadow-sm transition-all text-left ${
-                  selectedCategory === cat.id 
-                    ? "bg-primary text-primary-foreground shadow-lg" 
-                    : "bg-muted text-muted-foreground hover:bg-muted/80"
-                }`}
-              >
-                {cat.id === "micronutrition" && "💊 "}
-                {cat.id === "biology" && "🧬 "}
-                {cat.id === "plants" && "🌿 "}
-                {cat.id === "memory" && "🎵 "}
-                {cat.name[language]}
-              </button>
-            ))}
-          </div>
-          
-          {/* Desktop: horizontal centered */}
-          <div className="hidden md:flex gap-3 justify-center">
-            <button
-              onClick={() => setSelectedCategory(null)}
-              className={`px-5 py-3 rounded-full text-lg font-semibold shadow-sm transition-all ${
-                selectedCategory === null 
-                  ? "bg-primary text-primary-foreground shadow-lg scale-105" 
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
-              }`}
-            >
-              {language === "fr" ? "✨ Tous" : "✨ All"}
-            </button>
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`px-5 py-3 rounded-full text-lg font-semibold shadow-sm whitespace-nowrap transition-all ${
-                  selectedCategory === cat.id 
-                    ? "bg-primary text-primary-foreground shadow-lg scale-105" 
-                    : "bg-muted text-muted-foreground hover:bg-muted/80"
-                }`}
-              >
-                {cat.id === "micronutrition" && "💊 "}
-                {cat.id === "biology" && "🧬 "}
-                {cat.id === "plants" && "🌿 "}
-                {cat.id === "memory" && "🎵 "}
-                {cat.name[language]}
-              </button>
-            ))}
-          </div>
-        </div>
-      </motion.div>
+      {/* Hero Section with categories */}
+      <HeroSection 
+        language={language} 
+        onToggleLanguage={handleToggleLanguage}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+      />
 
       {/* Quiz Levels */}
       <main className="max-w-6xl mx-auto px-4 pb-16">
