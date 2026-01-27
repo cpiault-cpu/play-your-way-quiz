@@ -83,7 +83,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               <img 
                 src="/images/peita-logo-transparent.png" 
                 alt="PEITA Logo" 
-                className="h-24 sm:h-28 md:h-32 lg:h-36 w-auto mx-auto md:ml-auto md:mr-0 drop-shadow-lg opacity-80"
+                className="h-12 sm:h-16 md:h-20 lg:h-24 w-auto mx-auto md:ml-auto md:mr-0 drop-shadow-lg opacity-80"
               />
             </a>
             
