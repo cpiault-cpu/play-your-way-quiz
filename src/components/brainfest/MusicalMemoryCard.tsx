@@ -63,7 +63,7 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
   };
 
   return (
-    <div className="quiz-card rounded-xl p-4 sm:p-6 md:p-8 border border-border relative overflow-hidden transition-transform hover:scale-[1.02] duration-300">
+    <div className="quiz-card rounded-xl p-4 sm:p-6 md:p-8 border border-border relative overflow-hidden">
       {/* Musical Brain Icon */}
       <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
         <div className="relative">
