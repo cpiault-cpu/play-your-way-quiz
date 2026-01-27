@@ -81,7 +81,7 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
         </span>
       </div>
 
-      <h3 className="font-serif text-lg sm:text-xl md:text-2xl font-semibold text-foreground mb-1 sm:mb-2 pr-14 sm:pr-16">
+      <h3 className="font-serif text-lg sm:text-xl md:text-2xl font-semibold text-foreground mb-1 sm:mb-2 pr-14 sm:pr-16 break-words">
         {t.title}
       </h3>
       <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-4 sm:mb-6">

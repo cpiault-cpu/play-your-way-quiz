@@ -22,7 +22,8 @@ const LevelSection = ({ level, quizzes, language, onPlayQuiz }: LevelSectionProp
 
     const handleScroll = () => {
       const scrollLeft = container.scrollLeft;
-      const cardWidth = container.offsetWidth * 0.85 + 16; // 85vw + gap
+      const gap = window.innerWidth >= 640 ? 16 : 12; // matches gap-4 / gap-3
+      const cardWidth = container.offsetWidth * 0.85 + gap; // card is 85% of container + gap
       const newIndex = Math.round(scrollLeft / cardWidth);
       setActiveIndex(Math.min(newIndex, levelQuizzes.length - 1));
     };
@@ -35,7 +36,8 @@ const LevelSection = ({ level, quizzes, language, onPlayQuiz }: LevelSectionProp
   const scrollToIndex = (index: number) => {
     const container = scrollContainerRef.current;
     if (!container) return;
-    const cardWidth = container.offsetWidth * 0.85 + 16;
+    const gap = window.innerWidth >= 640 ? 16 : 12;
+    const cardWidth = container.offsetWidth * 0.85 + gap;
     container.scrollTo({ left: index * cardWidth, behavior: "smooth" });
   };
 
@@ -47,13 +49,13 @@ const LevelSection = ({ level, quizzes, language, onPlayQuiz }: LevelSectionProp
       </h2>
 
       {/* Mobile: horizontal scroll with pagination dots */}
-      <div className="md:hidden -mx-3 px-3 sm:-mx-4 sm:px-4">
+      <div className="md:hidden">
         <div 
           ref={scrollContainerRef}
-          className="flex gap-3 sm:gap-4 overflow-x-auto pb-3 scrollbar-hide snap-x snap-mandatory"
+          className="flex gap-3 sm:gap-4 overflow-x-auto pb-3 scrollbar-hide snap-x snap-mandatory max-w-full overscroll-x-contain"
         >
           {levelQuizzes.map((quiz) => (
-            <div key={quiz.id} className="flex-shrink-0 w-[80vw] sm:w-[75vw] snap-start">
+            <div key={quiz.id} className="flex-shrink-0 w-[85%] max-w-[22rem] snap-start">
               <QuizCard
                 quiz={quiz}
                 language={language}
