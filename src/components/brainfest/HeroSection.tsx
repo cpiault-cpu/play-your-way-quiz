@@ -118,16 +118,6 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
           transition={{ duration: 0.5, delay: 0.4 }}
           className="flex flex-wrap justify-center gap-1.5 sm:gap-2 md:gap-3"
         >
-          <button
-            onClick={() => onSelectCategory(null)}
-            className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm md:text-base font-semibold transition-all ${
-              selectedCategory === null 
-                ? "bg-amber-400 text-[#3E5D58] shadow-lg" 
-                : "bg-white/10 text-white hover:bg-white/20 border border-white/20"
-            }`}
-          >
-            ✨ {language === "fr" ? "Tous" : "All"}
-          </button>
           {categories.map((cat) => (
             <button
               key={cat.id}
