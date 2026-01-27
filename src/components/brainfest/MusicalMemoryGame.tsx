@@ -59,7 +59,7 @@ const PIANO_NOTES = [
 ];
 
 // Instrument sounds for level 3 - each note is a different instrument with rich sound synthesis
-type InstrumentType = "piano" | "violin" | "flute" | "clarinet" | "cello" | "xylophone" | "trumpet" | "guitar" | "harp" | "bell";
+type InstrumentType = "piano" | "violin" | "flute" | "clarinet" | "xylophone" | "trumpet" | "guitar" | "bell";
 
 interface InstrumentNote {
   instrument: InstrumentType;
@@ -74,23 +74,21 @@ const INSTRUMENT_NOTES: InstrumentNote[] = [
   { instrument: "violin", frequency: 440.0, color: "from-amber-600 to-amber-700", activeColor: "from-amber-400 to-amber-500 shadow-amber-400/60", emoji: "🎻" },
   { instrument: "flute", frequency: 523.25, color: "from-sky-500 to-sky-600", activeColor: "from-sky-300 to-sky-400 shadow-sky-400/60", emoji: "🪈" },
   { instrument: "clarinet", frequency: 349.23, color: "from-emerald-600 to-emerald-700", activeColor: "from-emerald-400 to-emerald-500 shadow-emerald-400/60", emoji: "🎷" },
-  { instrument: "cello", frequency: 130.81, color: "from-red-700 to-red-800", activeColor: "from-red-500 to-red-600 shadow-red-500/60", emoji: "🪕" },
   { instrument: "xylophone", frequency: 587.33, color: "from-pink-500 to-pink-600", activeColor: "from-pink-300 to-pink-400 shadow-pink-400/60", emoji: "🎵" },
   { instrument: "trumpet", frequency: 392.0, color: "from-orange-500 to-orange-600", activeColor: "from-orange-300 to-orange-400 shadow-orange-400/60", emoji: "🎺" },
   { instrument: "guitar", frequency: 196.0, color: "from-rose-600 to-rose-700", activeColor: "from-rose-400 to-rose-500 shadow-rose-400/60", emoji: "🎸" },
-  { instrument: "harp", frequency: 329.63, color: "from-violet-500 to-violet-600", activeColor: "from-violet-300 to-violet-400 shadow-violet-400/60", emoji: "🎶" },
   { instrument: "bell", frequency: 880.0, color: "from-teal-500 to-teal-600", activeColor: "from-teal-300 to-teal-400 shadow-teal-400/60", emoji: "🔔" },
 ];
 
 // Famous melody patterns inspired by classical/jazz pieces
-// These are index sequences into INSTRUMENT_NOTES
+// These are index sequences into INSTRUMENT_NOTES (max index 7 for 8 instruments)
 const FAMOUS_MELODIES = {
   // 8 notes - Inspired by Beethoven's Ode to Joy theme
-  round1: [0, 0, 1, 2, 2, 1, 0, 6], // Piano-Piano-Violin-Flute repeated pattern
+  round1: [0, 0, 1, 2, 2, 1, 0, 6],
   // 9 notes - Inspired by Mozart's Eine kleine Nachtmusik
   round2: [7, 7, 4, 7, 7, 4, 0, 1, 2],
-  // 10 notes - Inspired by Take Five (jazz)
-  round3: [3, 5, 8, 0, 9, 3, 5, 8, 0, 1],
+  // 10 notes - Inspired by Take Five (jazz) - adjusted for 8 instruments
+  round3: [3, 5, 7, 0, 6, 3, 5, 7, 0, 1],
 };
 
 const translations = {
@@ -113,7 +111,7 @@ const translations = {
     instructions: "Écoutez la séquence de notes et reproduisez-la en cliquant sur les touches colorées dans le bon ordre.",
     level1Desc: "3 exercices • 5 notes",
     level2Desc: "3 exercices • 7 notes",
-    level3Desc: "3 exercices • 9 notes",
+    level3Desc: "3 exercices • 8 notes",
     of: "sur",
     couponTitle: "Félicitations !",
     couponText: "Voici votre code de réduction :",
@@ -138,7 +136,7 @@ const translations = {
     instructions: "Listen to the sequence of notes and reproduce it by clicking the colored keys in the correct order.",
     level1Desc: "3 exercises • 5 notes",
     level2Desc: "3 exercises • 7 notes",
-    level3Desc: "3 exercises • 9 notes",
+    level3Desc: "3 exercises • 8 notes",
     of: "of",
     couponTitle: "Congratulations!",
     couponText: "Here is your discount code:",
@@ -150,7 +148,7 @@ const translations = {
 const LEVEL_CONFIG = {
   1: { notesPerSequence: 5, exercisesToWin: 3, useInstruments: true },
   2: { notesPerSequence: 7, exercisesToWin: 3, useInstruments: true },
-  3: { notesPerSequence: 9, exercisesToWin: 3, useInstruments: true },
+  3: { notesPerSequence: 8, exercisesToWin: 3, useInstruments: true },
 };
 
 // Discount codes per level
@@ -350,50 +348,6 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
         osc3.stop(currentTime + 0.9);
         break;
       }
-      case "cello": {
-        // Deep cello with rich harmonics
-        const osc = audioContext.createOscillator();
-        const osc2 = audioContext.createOscillator();
-        const vibrato = audioContext.createOscillator();
-        const vibratoGain = audioContext.createGain();
-        const gain = audioContext.createGain();
-        const filter = audioContext.createBiquadFilter();
-        
-        vibrato.frequency.setValueAtTime(4, currentTime);
-        vibratoGain.gain.setValueAtTime(2, currentTime);
-        vibrato.connect(vibratoGain);
-        vibratoGain.connect(osc.frequency);
-        
-        osc.type = "sawtooth";
-        osc2.type = "triangle";
-        osc.frequency.setValueAtTime(frequency, currentTime);
-        osc2.frequency.setValueAtTime(frequency * 2, currentTime);
-        
-        filter.type = "lowpass";
-        filter.frequency.setValueAtTime(800, currentTime);
-        
-        gain.gain.setValueAtTime(0, currentTime);
-        gain.gain.linearRampToValueAtTime(0.4, currentTime + 0.2);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.2);
-        
-        const oscGain = audioContext.createGain();
-        const osc2Gain = audioContext.createGain();
-        oscGain.gain.setValueAtTime(0.4, currentTime);
-        osc2Gain.gain.setValueAtTime(0.15, currentTime);
-        
-        osc.connect(oscGain).connect(filter);
-        osc2.connect(osc2Gain).connect(filter);
-        filter.connect(gain);
-        gain.connect(masterGain);
-        
-        vibrato.start(currentTime);
-        osc.start(currentTime);
-        osc2.start(currentTime);
-        vibrato.stop(currentTime + 1.2);
-        osc.stop(currentTime + 1.2);
-        osc2.stop(currentTime + 1.2);
-        break;
-      }
       case "xylophone": {
         // Bright xylophone with quick decay
         const osc = audioContext.createOscillator();
@@ -498,34 +452,6 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
         osc1.stop(currentTime + 0.8);
         osc2.stop(currentTime + 0.8);
         osc3.stop(currentTime + 0.8);
-        break;
-      }
-      case "harp": {
-        // Ethereal harp with long sustain
-        const osc = audioContext.createOscillator();
-        const osc2 = audioContext.createOscillator();
-        const gain = audioContext.createGain();
-        
-        osc.type = "sine";
-        osc2.type = "triangle";
-        osc.frequency.setValueAtTime(frequency, currentTime);
-        osc2.frequency.setValueAtTime(frequency * 2, currentTime);
-        
-        const gain2 = audioContext.createGain();
-        gain2.gain.setValueAtTime(0.2, currentTime);
-        
-        gain.gain.setValueAtTime(0, currentTime);
-        gain.gain.linearRampToValueAtTime(0.45, currentTime + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.5);
-        
-        osc.connect(gain);
-        osc2.connect(gain2).connect(gain);
-        gain.connect(masterGain);
-        
-        osc.start(currentTime);
-        osc2.start(currentTime);
-        osc.stop(currentTime + 1.5);
-        osc2.stop(currentTime + 1.5);
         break;
       }
       case "bell": {
@@ -966,7 +892,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
         </AnimatePresence>
 
         {/* Keys/Instruments Grid */}
-        <div className={`grid gap-2 sm:gap-3 md:gap-4 ${config.useInstruments ? "grid-cols-5" : "grid-cols-4"}`}>
+        <div className={`grid gap-2 sm:gap-3 md:gap-4 ${config.useInstruments ? "grid-cols-4" : "grid-cols-4"}`}>
           {notes.map((note, index) => (
             <motion.button
               key={note.name}
