@@ -11,16 +11,16 @@ interface MusicalMemoryGameProps {
   onBack: () => void;
 }
 
-// Piano notes with their frequencies
+// Piano notes with their frequencies - vivid colors for better visibility
 const NOTES = [
-  { name: "C", frequency: 261.63, color: "from-red-400 to-red-500" },
-  { name: "D", frequency: 293.66, color: "from-orange-400 to-orange-500" },
-  { name: "E", frequency: 329.63, color: "from-yellow-400 to-yellow-500" },
-  { name: "F", frequency: 349.23, color: "from-green-400 to-green-500" },
-  { name: "G", frequency: 392.0, color: "from-blue-400 to-blue-500" },
-  { name: "A", frequency: 440.0, color: "from-indigo-400 to-indigo-500" },
-  { name: "B", frequency: 493.88, color: "from-purple-400 to-purple-500" },
-  { name: "C2", frequency: 523.25, color: "from-pink-400 to-pink-500" },
+  { name: "C", frequency: 261.63, color: "from-red-500 to-red-600", activeColor: "from-red-300 to-red-400 shadow-red-400/60" },
+  { name: "D", frequency: 293.66, color: "from-orange-500 to-orange-600", activeColor: "from-orange-300 to-orange-400 shadow-orange-400/60" },
+  { name: "E", frequency: 329.63, color: "from-yellow-400 to-yellow-500", activeColor: "from-yellow-200 to-yellow-300 shadow-yellow-300/60" },
+  { name: "F", frequency: 349.23, color: "from-emerald-500 to-emerald-600", activeColor: "from-emerald-300 to-emerald-400 shadow-emerald-400/60" },
+  { name: "G", frequency: 392.0, color: "from-blue-500 to-blue-600", activeColor: "from-blue-300 to-blue-400 shadow-blue-400/60" },
+  { name: "A", frequency: 440.0, color: "from-indigo-500 to-indigo-600", activeColor: "from-indigo-300 to-indigo-400 shadow-indigo-400/60" },
+  { name: "B", frequency: 493.88, color: "from-purple-500 to-purple-600", activeColor: "from-purple-300 to-purple-400 shadow-purple-400/60" },
+  { name: "C2", frequency: 523.25, color: "from-pink-500 to-pink-600", activeColor: "from-pink-300 to-pink-400 shadow-pink-400/60" },
 ];
 
 const translations = {
@@ -361,26 +361,31 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
               disabled={gameState !== "input"}
               className={`
                 relative aspect-square rounded-2xl font-bold text-lg md:text-xl
-                transition-all duration-150
-                bg-gradient-to-br ${note.color}
-                ${activeNote === index ? "scale-95 brightness-125 shadow-lg ring-4 ring-white/50" : ""}
-                ${gameState === "input" ? "hover:scale-105 hover:brightness-110 cursor-pointer" : "cursor-default opacity-70"}
+                transition-all duration-100
+                ${activeNote === index 
+                  ? `bg-gradient-to-br ${note.activeColor} scale-110 shadow-2xl ring-4 ring-white` 
+                  : `bg-gradient-to-br ${note.color}`
+                }
+                ${gameState === "input" ? "hover:scale-105 hover:brightness-110 cursor-pointer active:scale-95" : "cursor-default opacity-80"}
                 disabled:opacity-50
               `}
               whileTap={gameState === "input" ? { scale: 0.9 } : {}}
               animate={activeNote === index ? { 
-                boxShadow: ["0 0 20px rgba(255,255,255,0.5)", "0 0 40px rgba(255,255,255,0.8)", "0 0 20px rgba(255,255,255,0.5)"]
-              } : {}}
+                scale: [1, 1.15, 1.1],
+              } : { scale: 1 }}
+              transition={{ duration: 0.15 }}
             >
-              <span className="text-white drop-shadow-md">{note.name}</span>
+              <span className={`drop-shadow-lg ${activeNote === index ? "text-gray-800 font-black" : "text-white"}`}>
+                {note.name}
+              </span>
               
-              {/* Glow effect when active */}
+              {/* Intense glow effect when active */}
               {activeNote === index && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1.2 }}
+                  animate={{ opacity: 1, scale: 1.4 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 rounded-2xl bg-white/30 blur-md"
+                  className="absolute inset-0 rounded-2xl bg-white/50 blur-xl -z-10"
                 />
               )}
             </motion.button>
