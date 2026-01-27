@@ -12,23 +12,21 @@ interface MusicalMemoryCardProps {
 const translations = {
   fr: {
     title: "Mémoire Musicale",
-    subtitle: "Quiz Simon",
     level: "Niveau",
     discount: "de réduction",
     play: "Jouer",
-    level1Desc: "6 notes • 3 séries",
-    level2Desc: "8 notes",
-    level3Desc: "10 notes • Multi-instruments",
+    level1Desc: "5 notes",
+    level2Desc: "7 notes",
+    level3Desc: "9 notes",
   },
   en: {
     title: "Musical Memory",
-    subtitle: "Simon Quiz",
     level: "Level",
     discount: "discount",
     play: "Play",
-    level1Desc: "6 notes • 3 series",
-    level2Desc: "8 notes",
-    level3Desc: "10 notes • Multi-instruments",
+    level1Desc: "5 notes",
+    level2Desc: "7 notes",
+    level3Desc: "9 notes",
   },
 };
 
@@ -87,7 +85,7 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
         {t.title}
       </h3>
       <p className="text-base md:text-lg text-muted-foreground mb-6">
-        {t.subtitle} • {getLevelDesc()}
+        {getLevelDesc()}
       </p>
 
       <Button
