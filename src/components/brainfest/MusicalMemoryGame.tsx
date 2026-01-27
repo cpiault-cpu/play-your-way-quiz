@@ -111,9 +111,9 @@ const translations = {
     back: "Retour",
     start: "Commencer",
     instructions: "Écoutez la séquence de notes et reproduisez-la en cliquant sur les touches colorées dans le bon ordre.",
-    level1Desc: "4 exercices • 5 notes",
-    level2Desc: "4 exercices • 7 notes",
-    level3Desc: "4 exercices • 9 notes",
+    level1Desc: "3 exercices • 5 notes",
+    level2Desc: "3 exercices • 7 notes",
+    level3Desc: "3 exercices • 9 notes",
     of: "sur",
     couponTitle: "Félicitations !",
     couponText: "Voici votre code de réduction :",
@@ -136,9 +136,9 @@ const translations = {
     back: "Back",
     start: "Start",
     instructions: "Listen to the sequence of notes and reproduce it by clicking the colored keys in the correct order.",
-    level1Desc: "4 exercises • 5 notes",
-    level2Desc: "4 exercises • 7 notes",
-    level3Desc: "4 exercises • 9 notes",
+    level1Desc: "3 exercises • 5 notes",
+    level2Desc: "3 exercises • 7 notes",
+    level3Desc: "3 exercises • 9 notes",
     of: "of",
     couponTitle: "Congratulations!",
     couponText: "Here is your discount code:",
@@ -146,11 +146,11 @@ const translations = {
   },
 };
 
-// Level configuration - 4 exercises per level
+// Level configuration - 3 exercises per level
 const LEVEL_CONFIG = {
-  1: { notesPerSequence: 5, exercisesToWin: 4, useInstruments: true },
-  2: { notesPerSequence: 7, exercisesToWin: 4, useInstruments: true },
-  3: { notesPerSequence: 9, exercisesToWin: 4, useInstruments: true },
+  1: { notesPerSequence: 5, exercisesToWin: 3, useInstruments: true },
+  2: { notesPerSequence: 7, exercisesToWin: 3, useInstruments: true },
+  3: { notesPerSequence: 9, exercisesToWin: 3, useInstruments: true },
 };
 
 // Discount codes per level
@@ -648,11 +648,30 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
       }
     }
     
-    // Fallback: return a completely random sequence
-    const fallbackSequence: number[] = [];
-    for (let i = 0; i < length; i++) {
-      fallbackSequence.push(Math.floor(Math.random() * notes.length));
+    // Fallback: return a completely random sequence that is still different from previously used ones
+    const makeRandomSequence = () => {
+      const seq: number[] = [];
+      for (let i = 0; i < length; i++) {
+        seq.push(Math.floor(Math.random() * notes.length));
+      }
+      return seq;
+    };
+
+    let fallbackSequence = makeRandomSequence();
+    let fallbackKey = fallbackSequence.join(",");
+    let guard = 0;
+
+    while (previousSequences.includes(fallbackKey) && guard < 200) {
+      fallbackSequence = makeRandomSequence();
+      fallbackKey = fallbackSequence.join(",");
+      guard++;
     }
+
+    // Last resort: force a difference even if we kept colliding
+    if (previousSequences.includes(fallbackKey) && fallbackSequence.length > 0) {
+      fallbackSequence[0] = (fallbackSequence[0] + 1) % notes.length;
+    }
+
     return fallbackSequence;
   }, [notes.length, config.useInstruments]);
 
