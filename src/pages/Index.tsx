@@ -119,40 +119,51 @@ const Index = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="px-4 py-6 md:py-8"
+        className="px-4 py-8 md:py-10"
       >
-        {/* Title and intro - compact for mobile */}
-        <div className="max-w-2xl mx-auto text-center mb-6">
-          <h1 className="font-serif text-2xl md:text-4xl lg:text-5xl font-bold text-foreground mb-2 flex items-center justify-center gap-2">
-            <span className="text-xl md:text-2xl">{language === "fr" ? "🇫🇷" : "🇬🇧"}</span>
+        {/* Title and intro - larger for visibility */}
+        <div className="max-w-3xl mx-auto text-center mb-8">
+          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-3 flex items-center justify-center gap-3">
+            <span className="text-2xl md:text-3xl">{language === "fr" ? "🇫🇷" : "🇬🇧"}</span>
             {t.title}
           </h1>
-          <p className="text-sm md:text-lg text-foreground/80 mb-2">
+          <p className="text-base md:text-xl lg:text-2xl text-foreground/80 mb-3">
             {t.subtitle}
           </p>
-          <p className="text-xs md:text-base text-primary font-medium mb-2">
+          <p className="text-sm md:text-lg text-primary font-semibold mb-3">
             🎁 {t.discountInfo}
           </p>
-          <p className="text-xs md:text-sm text-muted-foreground italic mb-4">
+          <p className="text-sm md:text-base text-muted-foreground italic mb-5">
             {t.warning}
           </p>
 
           <button
             onClick={handleToggleLanguage}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm md:text-base rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-md hover:shadow-lg active:scale-95"
+            className="inline-flex items-center gap-2 px-6 py-3 text-base md:text-lg rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-md hover:shadow-lg active:scale-95 font-medium"
           >
             {language === "fr" ? "🇬🇧" : "🇫🇷"} {t.switchLang}
           </button>
         </div>
 
-        {/* Category Navigation - scrollable on mobile */}
-        <div className="mb-6 -mx-4 px-4">
-          <div className="flex gap-2 justify-start md:justify-center overflow-x-auto pb-2 scrollbar-hide">
+        {/* Category Navigation - with scroll hint */}
+        <div className="mb-8 -mx-4 px-4">
+          {/* Scroll hint for mobile */}
+          <div className="flex items-center justify-between mb-3 md:hidden">
+            <p className="text-sm text-muted-foreground font-medium">
+              {language === "fr" ? "Catégories" : "Categories"}
+            </p>
+            <div className="flex items-center gap-1 text-primary animate-pulse">
+              <span className="text-sm font-medium">{language === "fr" ? "Glisser" : "Swipe"}</span>
+              <span className="text-lg">→</span>
+            </div>
+          </div>
+          
+          <div className="flex gap-3 justify-start md:justify-center overflow-x-auto pb-3 scrollbar-hide">
             <button
               onClick={() => setSelectedCategory(null)}
-              className={`category-pill flex-shrink-0 px-4 py-2.5 rounded-full text-sm font-medium shadow-sm ${
+              className={`category-pill flex-shrink-0 px-5 py-3 rounded-full text-base md:text-lg font-semibold shadow-sm transition-all ${
                 selectedCategory === null 
-                  ? "bg-primary text-primary-foreground shadow-md" 
+                  ? "bg-primary text-primary-foreground shadow-lg scale-105" 
                   : "bg-muted text-muted-foreground hover:bg-muted/80"
               }`}
             >
@@ -162,9 +173,9 @@ const Index = () => {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`category-pill flex-shrink-0 px-4 py-2.5 rounded-full text-sm font-medium shadow-sm whitespace-nowrap ${
+                className={`category-pill flex-shrink-0 px-5 py-3 rounded-full text-base md:text-lg font-semibold shadow-sm whitespace-nowrap transition-all ${
                   selectedCategory === cat.id 
-                    ? "bg-primary text-primary-foreground shadow-md" 
+                    ? "bg-primary text-primary-foreground shadow-lg scale-105" 
                     : "bg-muted text-muted-foreground hover:bg-muted/80"
                 }`}
               >
@@ -180,7 +191,7 @@ const Index = () => {
       </motion.div>
 
       {/* Quiz Levels */}
-      <main className="max-w-6xl mx-auto px-4 pb-12">
+      <main className="max-w-6xl mx-auto px-4 pb-16">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -188,12 +199,12 @@ const Index = () => {
         >
           {/* Show Musical Memory section when Memory category is selected or when showing all */}
           {(selectedCategory === null || selectedCategory === "memory") && (
-            <section className="mb-8">
-              <h2 className="font-serif text-xl md:text-2xl lg:text-3xl font-semibold text-foreground mb-4 flex items-center gap-2">
-                <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-lg">🎹</span>
+            <section className="mb-10">
+              <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-semibold text-foreground mb-5 flex items-center gap-3">
+                <span className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center text-xl md:text-2xl">🎹</span>
                 {language === "fr" ? "Mémoire Musicale" : "Musical Memory"}
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
                 <MusicalMemoryCard level={1} language={language} onPlay={handlePlayMusicalMemory} />
                 <MusicalMemoryCard level={2} language={language} onPlay={handlePlayMusicalMemory} />
                 <MusicalMemoryCard level={3} language={language} onPlay={handlePlayMusicalMemory} />
