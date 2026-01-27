@@ -20,7 +20,7 @@ const LevelSection = ({ level, quizzes, language, onPlayQuiz }: LevelSectionProp
       </h2>
 
       {/* Mobile: vertical stack (no horizontal scroll) */}
-      <div className="md:hidden flex flex-col gap-4">
+      <div className="md:hidden flex flex-col gap-4 min-w-0">
         {levelQuizzes.map((quiz) => (
           <QuizCard
             key={quiz.id}
@@ -32,7 +32,7 @@ const LevelSection = ({ level, quizzes, language, onPlayQuiz }: LevelSectionProp
       </div>
 
       {/* Desktop: grid */}
-      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 min-w-0">
         {levelQuizzes.map((quiz) => (
           <QuizCard
             key={quiz.id}

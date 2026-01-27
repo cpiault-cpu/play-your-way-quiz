@@ -63,7 +63,7 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
   };
 
   return (
-    <div className="quiz-card rounded-xl p-4 sm:p-6 md:p-8 border border-border relative overflow-hidden">
+    <div className="quiz-card w-full max-w-full min-w-0 rounded-xl p-4 sm:p-6 md:p-8 border border-border relative overflow-hidden">
       {/* Musical Brain Icon */}
       <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
         <div className="relative">
@@ -90,10 +90,10 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
 
       <Button
         onClick={() => onPlay(level)}
-        className="w-full btn-primary-custom text-white font-medium hover:opacity-90 transition-opacity text-sm sm:text-base md:text-lg h-12 sm:h-14 md:h-16"
+        className="w-full min-w-0 btn-primary-custom text-white font-medium hover:opacity-90 transition-opacity text-sm sm:text-base md:text-lg h-12 sm:h-14 md:h-16"
       >
         <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
-        <span>{t.play}</span>
+        <span className="min-w-0">{t.play}</span>
       </Button>
     </div>
   );
