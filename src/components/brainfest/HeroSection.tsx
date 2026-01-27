@@ -61,8 +61,8 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
 
             <p className="text-base sm:text-lg md:text-lg text-amber-400 font-semibold">
               🎁 {language === "fr" 
-                ? "Répondez correctement pour débloquer des réductions."
-                : "Answer correctly to unlock discounts."
+                ? "Apprendre, Jouez, Gagnez."
+                : "Learn, Play, Win."
               }
             </p>
           </motion.div>
@@ -89,8 +89,8 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             
             <p className="text-base sm:text-lg md:text-lg text-white/90 font-medium leading-relaxed">
               {language === "fr" 
-                ? "De nouveaux quiz et produits d'excellence seront proposés régulièrement."
-                : "New quizzes and premium products will be offered regularly."
+                ? "De nouveaux quiz régulièrement. Vous serez prévenu par mail ou sur la page instagram"
+                : "New quizzes regularly. You'll be notified by email or on our Instagram page"
               }
             </p>
           </motion.div>
