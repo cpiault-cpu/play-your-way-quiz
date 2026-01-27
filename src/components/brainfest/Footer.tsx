@@ -10,6 +10,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 interface FooterProps {
   language: Language;
@@ -17,6 +19,7 @@ interface FooterProps {
 
 const Footer = ({ language }: FooterProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -24,16 +27,32 @@ const Footer = ({ language }: FooterProps) => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the data to your backend
-    console.log("Form submitted:", formData);
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsOpen(false);
-      setIsSubmitted(false);
-      setFormData({ firstName: "", lastName: "", email: "" });
-    }, 2000);
+    setIsLoading(true);
+    
+    try {
+      const { error } = await supabase
+        .from('signups')
+        .insert({
+          email: formData.email,
+          quiz_id: `signup_${formData.firstName}_${formData.lastName}`,
+        });
+
+      if (error) throw error;
+
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsOpen(false);
+        setIsSubmitted(false);
+        setFormData({ firstName: "", lastName: "", email: "" });
+      }, 2000);
+    } catch (error) {
+      console.error('Error saving signup:', error);
+      toast.error(language === "fr" ? "Erreur lors de l'inscription" : "Error during signup");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
