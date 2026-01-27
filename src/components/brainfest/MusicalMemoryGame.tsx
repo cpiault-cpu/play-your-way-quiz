@@ -891,21 +891,21 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
           )}
         </AnimatePresence>
 
-        {/* Keys/Instruments Grid */}
-        <div className={`grid gap-2 sm:gap-3 md:gap-4 ${config.useInstruments ? "grid-cols-4" : "grid-cols-4"}`}>
+        {/* Keys/Instruments Grid - 8 notes, 4 per row for better visibility */}
+        <div className="grid grid-cols-4 gap-3 sm:gap-4 md:gap-5">
           {notes.map((note, index) => (
             <motion.button
               key={note.name}
               onClick={() => handleNoteClick(index)}
               disabled={gameState !== "input"}
               className={`
-                relative aspect-square rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm md:text-lg
-                transition-all duration-100
+                relative aspect-square rounded-2xl font-bold
+                transition-all duration-100 min-w-0
                 ${activeNote === index 
-                  ? `bg-gradient-to-br ${note.activeColor} scale-105 sm:scale-110 shadow-xl sm:shadow-2xl ring-2 sm:ring-4 ring-white` 
+                  ? `bg-gradient-to-br ${note.activeColor} scale-105 shadow-2xl ring-4 ring-white` 
                   : `bg-gradient-to-br ${note.color}`
                 }
-                ${gameState === "input" ? "hover:scale-105 hover:brightness-110 cursor-pointer active:scale-95" : "cursor-default opacity-80"}
+                ${gameState === "input" ? "cursor-pointer active:scale-95" : "cursor-default opacity-80"}
                 disabled:opacity-50
               `}
               whileTap={gameState === "input" ? { scale: 0.9 } : {}}
@@ -914,11 +914,11 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
               } : { scale: 1 }}
               transition={{ duration: 0.15 }}
             >
-              <div className="flex flex-col items-center justify-center h-full p-1">
+              <div className="flex flex-col items-center justify-center h-full p-2">
                 {config.useInstruments ? (
-                  <span className="text-xl sm:text-2xl md:text-4xl">{(note as InstrumentNote).emoji}</span>
+                  <span className="text-3xl sm:text-4xl md:text-5xl">{(note as InstrumentNote).emoji}</span>
                 ) : (
-                  <span className={`drop-shadow-lg text-sm sm:text-lg md:text-xl font-bold ${activeNote === index ? "text-gray-800" : "text-white"}`}>
+                  <span className={`drop-shadow-lg text-lg sm:text-xl md:text-2xl font-bold ${activeNote === index ? "text-gray-800" : "text-white"}`}>
                     {(note as typeof PIANO_NOTES[0]).name}
                   </span>
                 )}
@@ -930,7 +930,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1.4 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 rounded-xl sm:rounded-2xl bg-white/50 blur-xl -z-10"
+                  className="absolute inset-0 rounded-2xl bg-white/50 blur-xl -z-10"
                 />
               )}
             </motion.button>
