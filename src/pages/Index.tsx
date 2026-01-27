@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Language, quizzes, translations, Quiz } from "@/data/quizData";
-import Header from "@/components/brainfest/Header";
+import { Language, quizzes, Quiz } from "@/data/quizData";
+import HeroSection from "@/components/brainfest/HeroSection";
 import LevelSection from "@/components/brainfest/LevelSection";
 import QuizGame from "@/components/brainfest/QuizGame";
 import MusicalMemoryGame from "@/components/brainfest/MusicalMemoryGame";
@@ -45,7 +45,7 @@ const Index = () => {
   const [activeMusicalMemoryLevel, setActiveMusicalMemoryLevel] = useState<1 | 2 | 3 | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>(null);
 
-  const t = translations[language];
+  
 
   const handleToggleLanguage = () => {
     setLanguage((prev) => (prev === "fr" ? "en" : "fr"));
@@ -90,63 +90,18 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section with background image */}
-      <section className="hero-section relative">
-        {/* Floating content on hero for mobile */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="absolute inset-0 z-10 flex items-center justify-center"
-        >
-          <a 
-            href="https://www.peita.fr" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="floating-logo bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-2xl"
-          >
-            <img 
-              src="/images/peita-logo.png" 
-              alt="PEITA Logo" 
-              className="h-14 md:h-20 object-contain"
-            />
-          </a>
-        </motion.div>
-      </section>
+      {/* Hero Section with gradient background */}
+      <HeroSection language={language} onToggleLanguage={handleToggleLanguage} />
 
-      {/* Main content section */}
+      {/* Category Navigation */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
         className="px-4 py-8 md:py-10"
       >
-        {/* Title and intro - larger for visibility */}
-        <div className="max-w-3xl mx-auto text-center mb-8">
-          <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl font-bold text-foreground mb-3">
-            {t.title}
-          </h1>
-          <p className="text-base md:text-xl lg:text-2xl text-foreground/80 mb-3">
-            {t.subtitle}
-          </p>
-          <p className="text-sm md:text-lg text-primary font-semibold mb-3">
-            🎁 {t.discountInfo}
-          </p>
-          <p className="text-sm md:text-base text-muted-foreground italic mb-5">
-            {t.warning}
-          </p>
-
-          <button
-            onClick={handleToggleLanguage}
-            className="inline-flex items-center gap-2 px-5 py-3 text-2xl md:text-3xl rounded-full bg-primary/10 hover:bg-primary/20 transition-all shadow-md hover:shadow-lg active:scale-95"
-            aria-label={t.switchLang}
-          >
-            {language === "fr" ? "🇬🇧" : "🇫🇷"}
-          </button>
-        </div>
-
         {/* Category Navigation - vertical on mobile, horizontal on desktop */}
-        <div className="mb-8">
+        <div className="max-w-6xl mx-auto mb-8">
           {/* Mobile: vertical stack */}
           <div className="flex flex-col gap-2 md:hidden">
             {categories.map((cat) => (
