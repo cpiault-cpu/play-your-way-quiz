@@ -143,7 +143,7 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
   };
 
   return (
-    <div className="min-h-screen forest-bg">
+    <div className="min-h-screen forest-bg overflow-x-hidden">
       <div className="relative z-10 max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
         <Button
           variant="ghost"
@@ -196,8 +196,10 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
             >
               {/* Progress and Timer */}
               <div className="quiz-card rounded-xl p-3 sm:p-4 border border-border">
-                <div className="flex justify-between items-center text-xs sm:text-sm text-muted-foreground mb-2">
-                  <span>{t.question} {currentQuestionIndex + 1} {t.of} {quiz.questions.length}</span>
+                <div className="flex flex-wrap justify-between items-start gap-2 text-xs sm:text-sm text-muted-foreground mb-2">
+                  <span className="min-w-0">
+                    {t.question} {currentQuestionIndex + 1} {t.of} {quiz.questions.length}
+                  </span>
                   <div className={`flex items-center gap-1.5 sm:gap-2 font-medium ${
                     timeLeft <= 10 ? "text-destructive" : timeLeft <= 20 ? "text-warning" : "text-foreground"
                   }`}>
@@ -246,7 +248,7 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                       whileTap={!isAnswered ? { scale: 0.99 } : {}}
                       onClick={() => handleSelectAnswer(index)}
                       disabled={isAnswered}
-                      className={`w-full p-3 sm:p-4 rounded-lg border-2 transition-all duration-300 flex items-start sm:items-center gap-2.5 sm:gap-4 text-left ${getOptionClass(index)}`}
+                      className={`w-full min-w-0 p-3 sm:p-4 rounded-lg border-2 transition-all duration-300 flex items-start sm:items-center gap-2.5 sm:gap-4 text-left ${getOptionClass(index)}`}
                     >
                       <span className={`w-6 h-6 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center font-semibold text-xs sm:text-sm flex-shrink-0 ${
                         isAnswered && index === currentQuestion.correctAnswer
@@ -263,7 +265,7 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                           String.fromCharCode(65 + index)
                         )}
                       </span>
-                      <span className="text-sm sm:text-base text-foreground leading-snug">{option}</span>
+                      <span className="text-sm sm:text-base text-foreground leading-snug min-w-0 break-words">{option}</span>
                     </motion.button>
                   ))}
                 </div>

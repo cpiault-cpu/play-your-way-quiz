@@ -56,7 +56,7 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
         </span>
       </div>
 
-      <h3 className="font-serif text-base sm:text-lg md:text-xl font-semibold text-foreground mb-4 sm:mb-6 pr-12 sm:pr-14 leading-tight">
+      <h3 className="font-serif text-base sm:text-lg md:text-xl font-semibold text-foreground mb-4 sm:mb-6 pr-12 sm:pr-14 leading-tight break-words">
         {quiz.title[language]}
       </h3>
 

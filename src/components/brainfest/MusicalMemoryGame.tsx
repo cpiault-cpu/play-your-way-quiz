@@ -694,7 +694,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
   };
 
   return (
-    <div className="min-h-screen bg-background py-4 sm:py-6 px-3 sm:px-4">
+    <div className="min-h-screen bg-background py-4 sm:py-6 px-3 sm:px-4 overflow-x-hidden">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
