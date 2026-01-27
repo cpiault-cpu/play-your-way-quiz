@@ -144,9 +144,9 @@ const translations = {
 
 // Level configuration
 const LEVEL_CONFIG = {
-  1: { notesPerSequence: 6, seriesToWin: 3, useInstruments: false },
-  2: { notesPerSequence: 8, seriesToWin: 1, useInstruments: false },
-  3: { notesPerSequence: [8, 9, 10], seriesToWin: 3, useInstruments: true },
+  1: { notesPerSequence: 5, seriesToWin: 1, useInstruments: true },
+  2: { notesPerSequence: 7, seriesToWin: 1, useInstruments: true },
+  3: { notesPerSequence: 9, seriesToWin: 1, useInstruments: true },
 };
 
 const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) => {
