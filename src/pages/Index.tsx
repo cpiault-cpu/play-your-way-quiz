@@ -25,7 +25,7 @@ const Index = () => {
   const [language, setLanguage] = useState<Language>("fr");
   const [activeQuizId, setActiveQuizId] = useState<string | null>(null);
   const [activeMusicalMemoryLevel, setActiveMusicalMemoryLevel] = useState<1 | 2 | 3 | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory"); // Default to memory category
 
   
 
