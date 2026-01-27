@@ -15,6 +15,14 @@ interface QuizGameProps {
 
 type GameState = "email" | "playing" | "results";
 
+// Track wrong answers for review at the end
+interface WrongAnswer {
+  questionIndex: number;
+  question: string;
+  userAnswer: string | null;
+  correctAnswer: string;
+}
+
 const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
   const t = translations[language];
   const [gameState, setGameState] = useState<GameState>("email");
@@ -25,6 +33,7 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
   const [score, setScore] = useState(0);
   const [copied, setCopied] = useState(false);
   const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
+  const [wrongAnswers, setWrongAnswers] = useState<WrongAnswer[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const currentQuestion = quiz.questions[currentQuestionIndex];
   const isLastQuestion = currentQuestionIndex === quiz.questions.length - 1;
@@ -51,9 +60,20 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
 
       if (index === currentQuestion.correctAnswer) {
         setScore((prev) => prev + 1);
+      } else {
+        // Track wrong answer for review
+        setWrongAnswers((prev) => [
+          ...prev,
+          {
+            questionIndex: currentQuestionIndex,
+            question: currentQuestion.question[language],
+            userAnswer: index >= 0 ? currentQuestion.options[language][index] : null,
+            correctAnswer: currentQuestion.options[language][currentQuestion.correctAnswer],
+          },
+        ]);
       }
     },
-    [isAnswered, currentQuestion]
+    [isAnswered, currentQuestion, currentQuestionIndex, language]
   );
 
   const handleNext = useCallback(() => {
@@ -71,13 +91,23 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
     }
   }, [isLastQuestion]);
 
-  // Handle time out - auto-select wrong answer
+  // Handle time out - auto-select wrong answer and track it
   const handleTimeOut = useCallback(() => {
     if (!isAnswered) {
       setIsAnswered(true);
       setSelectedAnswer(-1); // No answer selected
+      // Track timeout as wrong answer
+      setWrongAnswers((prev) => [
+        ...prev,
+        {
+          questionIndex: currentQuestionIndex,
+          question: currentQuestion.question[language],
+          userAnswer: null, // Time ran out
+          correctAnswer: currentQuestion.options[language][currentQuestion.correctAnswer],
+        },
+      ]);
     }
-  }, [isAnswered]);
+  }, [isAnswered, currentQuestion, currentQuestionIndex, language]);
 
   // Timer effect
   useEffect(() => {
@@ -320,7 +350,32 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                 {t.score}: <span className="font-bold text-primary">{score}/{quiz.questions.length}</span>
               </p>
 
-              {score >= Math.ceil(quiz.questions.length * 0.6) && (
+              {/* Show wrong answers review if any */}
+              {wrongAnswers.length > 0 && (
+                <div className="bg-destructive/10 rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 text-left">
+                  <h3 className="text-sm sm:text-base font-semibold text-destructive mb-3">
+                    {language === "fr" ? "Vos erreurs :" : "Your mistakes:"}
+                  </h3>
+                  <div className="space-y-3">
+                    {wrongAnswers.map((wa, idx) => (
+                      <div key={idx} className="bg-background rounded-md p-3 border border-destructive/20">
+                        <p className="text-xs sm:text-sm font-medium text-foreground mb-1">
+                          {language === "fr" ? "Question" : "Question"} {wa.questionIndex + 1}: {wa.question}
+                        </p>
+                        <p className="text-xs text-destructive">
+                          {language === "fr" ? "Votre réponse" : "Your answer"}: {wa.userAnswer || (language === "fr" ? "Temps écoulé" : "Time ran out")}
+                        </p>
+                        <p className="text-xs text-success">
+                          {language === "fr" ? "Bonne réponse" : "Correct answer"}: {wa.correctAnswer}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Discount code only for PERFECT score */}
+              {score === quiz.questions.length && (
                 <div className="bg-muted rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
                   <p className="text-xs sm:text-sm text-muted-foreground mb-2">{t.discountCode}</p>
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
