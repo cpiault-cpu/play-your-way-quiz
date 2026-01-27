@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Language } from "@/data/quizData";
-import ginkgoLeaf from "@/assets/ginkgo-leaf.png";
+import GinkgoLeafIcon from "./icons/GinkgoLeafIcon";
 
 type CategoryId = "micronutrition" | "biology" | "plants" | "memory";
 
@@ -81,11 +81,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               rel="noopener noreferrer"
               className="inline-block mb-4"
             >
-              <img 
-                src={ginkgoLeaf} 
-                alt="Ginkgo Biloba" 
-                className="h-16 md:h-20 lg:h-24 object-contain mx-auto md:ml-auto md:mr-0 drop-shadow-lg"
-              />
+              <GinkgoLeafIcon className="h-20 md:h-24 lg:h-28 w-auto mx-auto md:ml-auto md:mr-0 drop-shadow-lg" />
             </a>
             
             <p className="text-base md:text-lg text-white/90 font-medium leading-relaxed">
