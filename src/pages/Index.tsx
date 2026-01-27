@@ -109,25 +109,26 @@ const Index = () => {
             </section>
           )}
 
-          {/* Filter quizzes by category if selected */}
-          {[1, 2, 3].map((level) => {
-            const filteredQuizzes = selectedCategory 
-              ? quizzes.filter(q => q.level === level && getCategoryForQuiz(q) === selectedCategory)
-              : quizzes.filter(q => q.level === level);
-            
-            // Don't show empty level sections
-            if (filteredQuizzes.length === 0) return null;
-            
-            return (
-              <LevelSection
-                key={level}
-                level={level as 1 | 2 | 3}
-                quizzes={filteredQuizzes}
-                language={language}
-                onPlayQuiz={handlePlayQuiz}
-              />
-            );
-          })}
+          {/* Quizzes list (hidden when “Mémoire” is selected to avoid duplicating Level 2/3 under the Musical Memory cards) */}
+          {selectedCategory !== "memory" &&
+            [1, 2, 3].map((level) => {
+              const filteredQuizzes = selectedCategory
+                ? quizzes.filter((q) => q.level === level && getCategoryForQuiz(q) === selectedCategory)
+                : quizzes.filter((q) => q.level === level);
+
+              // Don't show empty level sections
+              if (filteredQuizzes.length === 0) return null;
+
+              return (
+                <LevelSection
+                  key={level}
+                  level={level as 1 | 2 | 3}
+                  quizzes={filteredQuizzes}
+                  language={language}
+                  onPlayQuiz={handlePlayQuiz}
+                />
+              );
+            })}
         </motion.div>
       </main>
 
