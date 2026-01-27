@@ -17,7 +17,7 @@ const translations = {
     play: "Jouer",
     level1Desc: "3 exercices • 5 notes",
     level2Desc: "3 exercices • 7 notes",
-    level3Desc: "3 exercices • 9 notes",
+    level3Desc: "3 exercices • 8 notes",
   },
   en: {
     title: "Musical Memory",
@@ -26,7 +26,7 @@ const translations = {
     play: "Play",
     level1Desc: "3 exercises • 5 notes",
     level2Desc: "3 exercises • 7 notes",
-    level3Desc: "3 exercises • 9 notes",
+    level3Desc: "3 exercises • 8 notes",
   },
 };
 
