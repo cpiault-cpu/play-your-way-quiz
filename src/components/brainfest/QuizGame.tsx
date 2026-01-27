@@ -131,15 +131,15 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
 
   const getOptionClass = (index: number) => {
     if (!isAnswered) {
-      return "bg-card border-border hover:border-primary/50 hover:bg-muted/50";
+      return "bg-white border-gray-200 hover:border-primary/50 hover:bg-gray-50";
     }
     if (index === currentQuestion.correctAnswer) {
-      return "bg-success/20 border-success";
+      return "bg-green-50 border-success";
     }
     if (index === selectedAnswer && index !== currentQuestion.correctAnswer) {
-      return "bg-destructive/20 border-destructive";
+      return "bg-red-50 border-destructive";
     }
-    return "bg-card border-border opacity-50";
+    return "bg-white border-gray-200 opacity-50";
   };
 
   return (
@@ -234,9 +234,9 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                 key={currentQuestion.id}
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="quiz-card rounded-xl p-4 sm:p-6 md:p-8 border border-border"
+                className="bg-white rounded-xl p-4 sm:p-6 md:p-8 border border-border shadow-lg"
               >
-                <h3 className="font-serif text-base sm:text-lg md:text-2xl font-semibold text-foreground mb-4 sm:mb-6 md:mb-8 leading-snug">
+                <h3 className="font-serif text-base sm:text-lg md:text-2xl font-semibold text-gray-900 mb-4 sm:mb-6 md:mb-8 leading-snug">
                   {currentQuestion.question[language]}
                 </h3>
 
@@ -252,10 +252,10 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                     >
                       <span className={`w-6 h-6 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center font-semibold text-xs sm:text-sm flex-shrink-0 ${
                         isAnswered && index === currentQuestion.correctAnswer
-                          ? "bg-success text-success-foreground"
+                          ? "bg-success text-white"
                           : isAnswered && index === selectedAnswer && index !== currentQuestion.correctAnswer
-                          ? "bg-destructive text-destructive-foreground"
-                          : "bg-muted text-foreground"
+                          ? "bg-destructive text-white"
+                          : "bg-gray-100 text-gray-900"
                       }`}>
                         {isAnswered && index === currentQuestion.correctAnswer ? (
                           <Check className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -265,7 +265,7 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                           String.fromCharCode(65 + index)
                         )}
                       </span>
-                      <span className="text-sm sm:text-base text-foreground leading-snug min-w-0 break-words">{option}</span>
+                      <span className="text-sm sm:text-base text-gray-900 leading-snug min-w-0 break-words">{option}</span>
                     </motion.button>
                   ))}
                 </div>
