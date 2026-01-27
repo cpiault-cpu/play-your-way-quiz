@@ -86,8 +86,8 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             
             <p className="text-base md:text-lg text-white/90 font-medium leading-relaxed">
               {language === "fr" 
-                ? "De nouveaux produits intéressants seront proposés régulièrement. Inscrivez-vous pour être tenus au courant."
-                : "New interesting products will be offered regularly. Sign up to stay informed."
+                ? "De nouveaux quiz et produits d'excellence seront proposés régulièrement."
+                : "New quizzes and premium products will be offered regularly."
               }
             </p>
           </motion.div>
