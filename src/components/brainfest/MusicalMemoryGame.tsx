@@ -109,7 +109,7 @@ const translations = {
     back: "Retour",
     start: "Commencer",
     instructions: "Écoutez la séquence de notes et reproduisez-la en cliquant sur les touches colorées dans le bon ordre.",
-    level1Desc: "3 exercices • 5 notes",
+    level1Desc: "3 exercices • 4 notes",
     level2Desc: "3 exercices • 7 notes",
     level3Desc: "3 exercices • 8 notes",
     of: "sur",
@@ -134,7 +134,7 @@ const translations = {
     back: "Back",
     start: "Start",
     instructions: "Listen to the sequence of notes and reproduce it by clicking the colored keys in the correct order.",
-    level1Desc: "3 exercises • 5 notes",
+    level1Desc: "3 exercises • 4 notes",
     level2Desc: "3 exercises • 7 notes",
     level3Desc: "3 exercises • 8 notes",
     of: "of",
@@ -146,7 +146,7 @@ const translations = {
 
 // Level configuration - 3 exercises per level
 const LEVEL_CONFIG = {
-  1: { notesPerSequence: 5, exercisesToWin: 3, useInstruments: true },
+  1: { notesPerSequence: 4, exercisesToWin: 3, useInstruments: true },
   2: { notesPerSequence: 7, exercisesToWin: 3, useInstruments: true },
   3: { notesPerSequence: 8, exercisesToWin: 3, useInstruments: true },
 };
