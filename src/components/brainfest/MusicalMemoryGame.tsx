@@ -547,8 +547,9 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
       let newSequence: number[];
       
-      // For level 3, use predefined famous melodies but shuffle them slightly
-      if (config.useInstruments && round !== undefined) {
+      // Level 3 only: use predefined famous melodies (8/9/10 notes)
+      // Other levels must respect `length` (e.g. level 1 = 4 notes)
+      if (level === 3 && config.useInstruments && round !== undefined) {
         if (round === 1) newSequence = [...FAMOUS_MELODIES.round1];
         else if (round === 2) newSequence = [...FAMOUS_MELODIES.round2];
         else if (round === 3) newSequence = [...FAMOUS_MELODIES.round3];
@@ -599,7 +600,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
     }
 
     return fallbackSequence;
-  }, [notes.length, config.useInstruments]);
+  }, [notes.length, config.useInstruments, level]);
 
   // Get notes per sequence for current round (level 3 has progressive difficulty)
   const getNotesForRound = useCallback((round: number) => {
