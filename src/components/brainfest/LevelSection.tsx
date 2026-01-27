@@ -40,20 +40,20 @@ const LevelSection = ({ level, quizzes, language, onPlayQuiz }: LevelSectionProp
   };
 
   return (
-    <section className="mb-10">
-      <h2 className="font-serif text-xl md:text-2xl lg:text-3xl font-semibold text-foreground mb-4 flex items-center gap-2">
-        <span className="w-2 h-2 rounded-full bg-primary" />
+    <section className="mb-8 sm:mb-10">
+      <h2 className="font-serif text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-foreground mb-3 sm:mb-4 flex items-center gap-2">
+        <span className="w-2 h-2 rounded-full bg-primary flex-shrink-0" />
         {t.level} {level}
       </h2>
 
       {/* Mobile: horizontal scroll with pagination dots */}
-      <div className="md:hidden -mx-4 px-4">
+      <div className="md:hidden -mx-3 px-3 sm:-mx-4 sm:px-4">
         <div 
           ref={scrollContainerRef}
-          className="flex gap-4 overflow-x-auto pb-3 scrollbar-hide snap-x snap-mandatory"
+          className="flex gap-3 sm:gap-4 overflow-x-auto pb-3 scrollbar-hide snap-x snap-mandatory"
         >
           {levelQuizzes.map((quiz) => (
-            <div key={quiz.id} className="flex-shrink-0 w-[85vw] snap-start">
+            <div key={quiz.id} className="flex-shrink-0 w-[80vw] sm:w-[75vw] snap-start">
               <QuizCard
                 quiz={quiz}
                 language={language}

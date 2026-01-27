@@ -132,6 +132,7 @@
   .btn-primary-custom {
     background: var(--gradient-button);
     box-shadow: var(--shadow-button);
+    color: white !important;
   }
 
   .molecule-icon {
