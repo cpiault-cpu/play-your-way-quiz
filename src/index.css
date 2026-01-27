@@ -84,20 +84,32 @@
   .hero-section {
     position: relative;
     background: url('/images/classroom-bg.png') center/cover no-repeat;
-    min-height: 50vh;
+    min-height: 35vh;
+  }
+
+  @media (min-width: 768px) {
+    .hero-section {
+      min-height: 50vh;
+    }
   }
 
   .hero-section::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: var(--gradient-hero);
+    background: linear-gradient(180deg, hsl(0 0% 0% / 0.3) 0%, hsl(0 0% 0% / 0.6) 100%);
     z-index: 0;
   }
 
   .quiz-card {
     background: var(--gradient-card);
     box-shadow: var(--shadow-card);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .quiz-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px -15px hsl(220 15% 20% / 0.2);
   }
 
   .level-badge-1 {
@@ -119,5 +131,51 @@
 
   .molecule-icon {
     opacity: 0.15;
+  }
+
+  /* Mobile-first visual enhancements */
+  .glass-card {
+    background: hsl(0 0% 100% / 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid hsl(0 0% 100% / 0.5);
+    box-shadow: 0 8px 32px hsl(220 15% 20% / 0.1);
+  }
+
+  .category-pill {
+    transition: all 0.2s ease;
+  }
+
+  .category-pill:active {
+    transform: scale(0.95);
+  }
+
+  .floating-logo {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .shine-effect {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shine-effect::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsl(0 0% 100% / 0.2), transparent);
+    animation: shine 3s infinite;
+  }
+
+  @keyframes shine {
+    0% { left: -100%; }
+    50%, 100% { left: 150%; }
   }
 }

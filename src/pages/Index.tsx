@@ -90,98 +90,110 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section with background image only */}
-      <section className="hero-section" />
+      {/* Hero Section with background image */}
+      <section className="hero-section relative">
+        {/* Floating content on hero for mobile */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="absolute inset-0 z-10 flex items-center justify-center"
+        >
+          <a 
+            href="https://www.peita.fr" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="floating-logo bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-2xl"
+          >
+            <img 
+              src="/images/peita-logo.png" 
+              alt="PEITA Logo" 
+              className="h-14 md:h-20 object-contain"
+            />
+          </a>
+        </motion.div>
+      </section>
 
-      {/* Logo and text content below the background image */}
+      {/* Main content section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="max-w-6xl mx-auto px-4 py-8 text-center"
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="px-4 py-6 md:py-8"
       >
-        <a href="https://www.peita.fr" target="_blank" rel="noopener noreferrer" className="inline-block mb-6">
-          <img 
-            src="/images/peita-logo.png" 
-            alt="PEITA Logo" 
-            className="h-12 md:h-14 object-contain mx-auto"
-          />
-        </a>
-
-        <div className="max-w-2xl mx-auto">
-          <h1 className="font-serif text-3xl md:text-5xl font-bold text-foreground mb-3 flex items-center justify-center gap-3">
-            <span>{language === "fr" ? "🇫🇷" : "🇬🇧"}</span>
+        {/* Title and intro - compact for mobile */}
+        <div className="max-w-2xl mx-auto text-center mb-6">
+          <h1 className="font-serif text-2xl md:text-4xl lg:text-5xl font-bold text-foreground mb-2 flex items-center justify-center gap-2">
+            <span className="text-xl md:text-2xl">{language === "fr" ? "🇫🇷" : "🇬🇧"}</span>
             {t.title}
           </h1>
-          <p className="text-base md:text-xl text-foreground/90 mb-3">
+          <p className="text-sm md:text-lg text-foreground/80 mb-2">
             {t.subtitle}
           </p>
-          <p className="text-sm md:text-lg text-foreground/80 mb-3">
-            {t.discountInfo}
+          <p className="text-xs md:text-base text-primary font-medium mb-2">
+            🎁 {t.discountInfo}
           </p>
-          <p className="text-sm md:text-base text-foreground/70 italic mb-6">
+          <p className="text-xs md:text-sm text-muted-foreground italic mb-4">
             {t.warning}
           </p>
 
           <button
             onClick={handleToggleLanguage}
-            className="inline-flex items-center gap-2 px-5 py-2.5 text-base md:text-lg rounded-full bg-primary/20 border border-primary/30 text-foreground hover:bg-primary/30 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm md:text-base rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-md hover:shadow-lg active:scale-95"
           >
             {language === "fr" ? "🇬🇧" : "🇫🇷"} {t.switchLang}
           </button>
         </div>
-      </motion.div>
 
-      {/* Category Navigation */}
-      <div className="max-w-6xl mx-auto px-4 py-6">
-        <div className="flex flex-wrap gap-3 justify-center">
-          <button
-            onClick={() => setSelectedCategory(null)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              selectedCategory === null 
-                ? "bg-primary text-primary-foreground" 
-                : "bg-muted text-muted-foreground hover:bg-muted/80"
-            }`}
-          >
-            {language === "fr" ? "Tous" : "All"}
-          </button>
-          {categories.map((cat) => (
+        {/* Category Navigation - scrollable on mobile */}
+        <div className="mb-6 -mx-4 px-4">
+          <div className="flex gap-2 justify-start md:justify-center overflow-x-auto pb-2 scrollbar-hide">
             <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                selectedCategory === cat.id 
-                  ? "bg-primary text-primary-foreground" 
+              onClick={() => setSelectedCategory(null)}
+              className={`category-pill flex-shrink-0 px-4 py-2.5 rounded-full text-sm font-medium shadow-sm ${
+                selectedCategory === null 
+                  ? "bg-primary text-primary-foreground shadow-md" 
                   : "bg-muted text-muted-foreground hover:bg-muted/80"
               }`}
             >
-              {cat.name[language]}
-              {cat.subcategories && (
-                <span className="ml-1 text-xs opacity-70">
-                  ({cat.subcategories.map(s => s.name[language]).join(", ")})
-                </span>
-              )}
+              {language === "fr" ? "✨ Tous" : "✨ All"}
             </button>
-          ))}
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`category-pill flex-shrink-0 px-4 py-2.5 rounded-full text-sm font-medium shadow-sm whitespace-nowrap ${
+                  selectedCategory === cat.id 
+                    ? "bg-primary text-primary-foreground shadow-md" 
+                    : "bg-muted text-muted-foreground hover:bg-muted/80"
+                }`}
+              >
+                {cat.id === "micronutrition" && "💊 "}
+                {cat.id === "biology" && "🧬 "}
+                {cat.id === "plants" && "🌿 "}
+                {cat.id === "memory" && "🎵 "}
+                {cat.name[language]}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Quiz Levels */}
-      <main className="max-w-6xl mx-auto px-4 py-12">
+      <main className="max-w-6xl mx-auto px-4 pb-12">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
         >
           {/* Show Musical Memory section when Memory category is selected or when showing all */}
           {(selectedCategory === null || selectedCategory === "memory") && (
-            <section className="mb-12">
-              <h2 className="font-serif text-2xl md:text-3xl font-semibold text-foreground mb-6 flex items-center gap-3">
-                <span className="w-2 h-2 rounded-full bg-primary" />
-                {language === "fr" ? "Mémoire Musicale" : "Musical Memory"} 
-                <span className="text-sm font-normal text-muted-foreground">(Simon)</span>
+            <section className="mb-8">
+              <h2 className="font-serif text-xl md:text-2xl lg:text-3xl font-semibold text-foreground mb-4 flex items-center gap-2">
+                <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-lg">🎹</span>
+                {language === "fr" ? "Mémoire Musicale" : "Musical Memory"}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <MusicalMemoryCard level={1} language={language} onPlay={handlePlayMusicalMemory} />
                 <MusicalMemoryCard level={2} language={language} onPlay={handlePlayMusicalMemory} />
                 <MusicalMemoryCard level={3} language={language} onPlay={handlePlayMusicalMemory} />
