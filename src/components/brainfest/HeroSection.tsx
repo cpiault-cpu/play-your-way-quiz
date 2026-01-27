@@ -81,9 +81,9 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               className="inline-block mb-3 md:mb-4"
             >
               <img 
-                src="https://www.peita.fr/wp-content/uploads/2023/09/LOGO-PEITA-SMALL-sans-fond.png" 
+                src="/images/peita-logo-transparent.png" 
                 alt="PEITA Logo" 
-                className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto mx-auto md:ml-auto md:mr-0 drop-shadow-lg opacity-90"
+                className="h-24 sm:h-28 md:h-32 lg:h-36 w-auto mx-auto md:ml-auto md:mr-0 drop-shadow-lg opacity-80"
               />
             </a>
             
