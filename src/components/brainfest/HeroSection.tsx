@@ -98,11 +98,11 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             <p className="text-base sm:text-lg md:text-lg text-white/90 font-medium leading-relaxed">
               {language === "fr" ? (
                 <>
-                  Une mémoire en pleine forme se cultive à la fois par l'alimentation et dans l'exercice. Une alimentation anti-inflammatoire, riche en oméga-3, est capitale.
+                  Une mémoire en bonne santé se construit grâce à l'alliance d'une alimentation adaptée et d'un entraînement mental régulier. Une nutrition anti-inflammatoire, riche en oméga-3, joue un rôle capital dans le bon fonctionnement du cerveau.
                   <br /><br />
-                  Apprendre, stimuler sa mémoire et se lancer de nouveaux défis tout au long de la vie est aussi capital pour garder l'esprit vif et curieux.
+                  Il est tout aussi essentiel de rester intellectuellement actif : apprendre, solliciter sa mémoire et explorer de nouvelles idées tout au long de la vie permet de préserver vivacité et curiosité.
                   <br /><br />
-                  C'est pourquoi nous avons créé cette série de quiz pensés pour entretenir votre cerveau avec le sourire.
+                  C'est dans cet esprit que nous avons créé cette série de quiz, conçue pour entraîner le cerveau de façon stimulante et fun.
                 </>
               ) : (
                 <>
