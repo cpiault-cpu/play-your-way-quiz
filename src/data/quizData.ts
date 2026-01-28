@@ -182,12 +182,12 @@ export const quizzes: Quiz[] = [
       {
         id: 2,
         question: { 
-          fr: 'Le curcuma est principalement connu pour ses propriétés :',
-          en: 'Turmeric is mainly known for its properties:'
+          fr: 'La camomille est principalement connue pour ses propriétés :',
+          en: 'Chamomile is mainly known for its properties:'
         },
         options: {
-          fr: ['Laxatives', 'Anti-inflammatoires', 'Diurétiques', 'Stimulantes'],
-          en: ['Laxative', 'Anti-inflammatory', 'Diuretic', 'Stimulant']
+          fr: ['Stimulantes', 'Apaisantes', 'Laxatives', 'Tonifiantes'],
+          en: ['Stimulating', 'Soothing', 'Laxative', 'Toning']
         },
         correctAnswer: 1,
       },
@@ -206,24 +206,12 @@ export const quizzes: Quiz[] = [
       {
         id: 4,
         question: { 
-          fr: 'Le ginkgo biloba est réputé pour améliorer :',
-          en: 'Ginkgo biloba is known to improve:'
+          fr: 'Le thym est traditionnellement utilisé pour :',
+          en: 'Thyme is traditionally used for:'
         },
         options: {
-          fr: ['La digestion', 'La circulation sanguine', 'Le sommeil', 'L\'appétit'],
-          en: ['Digestion', 'Blood circulation', 'Sleep', 'Appetite']
-        },
-        correctAnswer: 1,
-      },
-      {
-        id: 5,
-        question: { 
-          fr: 'Quelle partie du millepertuis est utilisée en phytothérapie ?',
-          en: 'Which part of St. John\'s Wort is used in herbal medicine?'
-        },
-        options: {
-          fr: ['Les racines', 'Les fleurs', 'Les graines', 'L\'écorce'],
-          en: ['The roots', 'The flowers', 'The seeds', 'The bark']
+          fr: ['Le stress', 'Les troubles respiratoires', 'La vue', 'Les douleurs articulaires'],
+          en: ['Stress', 'Respiratory issues', 'Vision', 'Joint pain']
         },
         correctAnswer: 1,
       },
@@ -440,6 +428,64 @@ export const quizzes: Quiz[] = [
       },
     ],
   },
+  {
+    id: '2.4',
+    level: 2,
+    title: { fr: 'Quiz 2.4 - Plantes médicinales', en: 'Quiz 2.4 - Medicinal Plants' },
+    category: { fr: 'Plantes médicinales', en: 'Medicinal Plants' },
+    discount: '10%',
+    icon: 'plant',
+    questions: [
+      {
+        id: 1,
+        question: { 
+          fr: 'Le curcuma est principalement connu pour ses propriétés :',
+          en: 'Turmeric is mainly known for its properties:'
+        },
+        options: {
+          fr: ['Laxatives', 'Anti-inflammatoires', 'Diurétiques', 'Stimulantes'],
+          en: ['Laxative', 'Anti-inflammatory', 'Diuretic', 'Stimulant']
+        },
+        correctAnswer: 1,
+      },
+      {
+        id: 2,
+        question: { 
+          fr: 'Le ginkgo biloba est réputé pour améliorer :',
+          en: 'Ginkgo biloba is known to improve:'
+        },
+        options: {
+          fr: ['La digestion', 'La circulation sanguine et la mémoire', 'Le sommeil', 'L\'appétit'],
+          en: ['Digestion', 'Blood circulation and memory', 'Sleep', 'Appetite']
+        },
+        correctAnswer: 1,
+      },
+      {
+        id: 3,
+        question: { 
+          fr: 'Quelle partie du millepertuis est utilisée en phytothérapie ?',
+          en: 'Which part of St. John\'s Wort is used in herbal medicine?'
+        },
+        options: {
+          fr: ['Les racines', 'Les sommités fleuries', 'Les graines', 'L\'écorce'],
+          en: ['The roots', 'The flowering tops', 'The seeds', 'The bark']
+        },
+        correctAnswer: 1,
+      },
+      {
+        id: 4,
+        question: { 
+          fr: 'La mélisse est traditionnellement utilisée pour :',
+          en: 'Lemon balm is traditionally used for:'
+        },
+        options: {
+          fr: ['Stimuler l\'énergie', 'Calmer l\'anxiété et favoriser la digestion', 'Renforcer les os', 'Améliorer la vue'],
+          en: ['Boost energy', 'Calm anxiety and aid digestion', 'Strengthen bones', 'Improve vision']
+        },
+        correctAnswer: 1,
+      },
+    ],
+  },
   // Niveau 3
   {
     id: '3.1',
@@ -557,18 +603,6 @@ export const quizzes: Quiz[] = [
       },
       {
         id: 4,
-        question: { 
-          fr: 'Les ginsénosides sont les principes actifs du :',
-          en: 'Ginsenosides are the active compounds of:'
-        },
-        options: {
-          fr: ['Ginkgo', 'Ginseng', 'Guarana', 'Gotu kola'],
-          en: ['Ginkgo', 'Ginseng', 'Guarana', 'Gotu kola']
-        },
-        correctAnswer: 1,
-      },
-      {
-        id: 5,
         question: { 
           fr: 'Le bacopa monnieri est traditionnellement utilisé pour :',
           en: 'Bacopa monnieri is traditionally used for:'
