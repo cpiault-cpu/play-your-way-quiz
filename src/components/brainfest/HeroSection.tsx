@@ -89,8 +89,8 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             
             <p className="text-base sm:text-lg md:text-lg text-white/90 font-medium leading-relaxed">
               {language === "fr" 
-                ? <>De nouveaux quiz régulièrement. Vous serez prévenu par mail ou sur la page <a href="https://www.instagram.com/maison_peita/" target="_blank" rel="noopener noreferrer" className="text-amber-400 underline hover:text-amber-300 transition-colors">Instagram</a></>
-                : <>New quizzes regularly. You'll be notified by email or on our <a href="https://www.instagram.com/maison_peita/" target="_blank" rel="noopener noreferrer" className="text-amber-400 underline hover:text-amber-300 transition-colors">Instagram page</a></>
+                ? <>De nouveaux quiz régulièrement. Vous serez prévenu par mail ou sur la page <a href="https://www.instagram.com/maison_peita/" target="_blank" rel="noopener noreferrer" className="text-amber-400 underline hover:text-amber-300 transition-colors font-normal">Instagram</a></>
+                : <>New quizzes regularly. You'll be notified by email or on our <a href="https://www.instagram.com/maison_peita/" target="_blank" rel="noopener noreferrer" className="text-amber-400 underline hover:text-amber-300 transition-colors font-normal">Instagram page</a></>
               }
             </p>
           </motion.div>
