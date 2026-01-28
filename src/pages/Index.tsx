@@ -145,8 +145,8 @@ const Index = () => {
                 {/* Explanatory text about memory type */}
                 <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-5 leading-relaxed">
                   {language === "fr" 
-                    ? "Ce jeu fait travailler votre mémoire visuo-spatiale : la capacité à mémoriser et retrouver la position d'éléments dans l'espace. En associant les plantes médicinales à leur emplacement, vous renforcez également votre mémoire de travail et votre concentration."
-                    : "This game exercises your visuo-spatial memory: the ability to memorize and recall the position of elements in space. By associating medicinal plants with their location, you also strengthen your working memory and concentration."
+                    ? "Ce quiz de reconnaissance de paires sollicite la mémoire de travail et la mémoire visuelle en mobilisant des processus d'attention soutenue et d'encodage rapide. La contrainte temporelle de 30 secondes favorise l'activation des mécanismes de consolidation et de récupération de l'information."
+                    : "This pair recognition quiz engages working memory and visual memory by mobilizing sustained attention and rapid encoding processes. The 30-second time constraint promotes the activation of information consolidation and retrieval mechanisms."
                   }
                 </p>
                 {/* Mobile: vertical stack */}
