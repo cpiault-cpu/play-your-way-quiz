@@ -25,77 +25,104 @@ interface HeroSectionProps {
 
 const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCategory }: HeroSectionProps) => {
   return (
-    <section className="bg-[#3E5D58] relative overflow-hidden">
-      <div className="relative z-10 max-w-6xl mx-auto px-3 sm:px-4 py-6 md:py-12">
+    <section className="hero-gradient relative overflow-hidden">
+      {/* Animated background shapes */}
+      <div className="hero-shapes">
+        <div className="hero-shape hero-shape-1" />
+        <div className="hero-shape hero-shape-2" />
+        <div className="hero-shape hero-shape-3" />
+      </div>
+
+      {/* Decorative leaf pattern - subtle */}
+      <div className="absolute inset-0 opacity-5 pointer-events-none">
+        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <pattern id="leafPattern" patternUnits="userSpaceOnUse" width="20" height="20">
+            <path d="M10 2 Q15 10 10 18 Q5 10 10 2" fill="currentColor" className="text-white" />
+          </pattern>
+          <rect width="100%" height="100%" fill="url(#leafPattern)" />
+        </svg>
+      </div>
+
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-14">
         {/* Top bar with language toggle */}
-        <div className="flex flex-col items-end mb-4 md:mb-6">
-          <button
+        <div className="flex flex-col items-end mb-6 md:mb-8">
+          <motion.button
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
             onClick={onToggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all"
+            className="category-pill flex items-center gap-2 px-4 py-2 text-sm rounded-full bg-white/10 backdrop-blur-sm text-white border border-white/20"
             aria-label={language === "fr" ? "Switch to English" : "Passer en Français"}
           >
-            <span className="text-base">{language === "fr" ? "🇬🇧" : "🇫🇷"}</span>
-            <span className="font-medium text-xs sm:text-sm">{language === "fr" ? "EN" : "FR"}</span>
-          </button>
+            <span className="text-lg">{language === "fr" ? "🇬🇧" : "🇫🇷"}</span>
+            <span className="font-medium">{language === "fr" ? "EN" : "FR"}</span>
+          </motion.button>
           
           {/* Logo below flag - visible only on mobile */}
-          <a 
+          <motion.a 
             href="https://www.peita.fr" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="md:hidden mt-3"
+            className="md:hidden mt-4 floating-logo"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
             <img 
               src="/images/peita-logo-transparent.png" 
               alt="PEITA Logo" 
-              className="h-12 w-auto drop-shadow-lg opacity-80"
+              className="h-14 w-auto drop-shadow-xl"
             />
-          </a>
+          </motion.a>
         </div>
 
-        {/* Content - Stack on mobile, side by side on desktop */}
-        <div className="flex flex-col md:grid md:grid-cols-2 gap-4 md:gap-12 items-center mb-6 md:mb-8">
-          {/* Left column - Title and text */}
+        {/* Main content */}
+        <div className="flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-12 items-start mb-8 md:mb-10">
+          {/* Left column - Title and tagline */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
             className="text-left w-full"
           >
-            <h1 className="text-4xl sm:text-4xl md:text-4xl lg:text-5xl font-normal text-white mb-3 md:mb-4 tracking-tight leading-tight">
+            <h1 className="display-heading text-4xl sm:text-5xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6">
               {language === "fr" ? "Testez vos connaissances et votre mémoire" : "Test your knowledge and memory"}
             </h1>
             
-
-            <p className="text-base sm:text-lg md:text-lg text-amber-400">
-              🎁 {language === "fr" 
-                ? "Apprendre, Jouez, Gagnez."
-                : "Learn, Play, Win."
-              }
-            </p>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 backdrop-blur-sm border border-accent/30"
+            >
+              <span className="text-xl">🎁</span>
+              <p className="text-lg sm:text-xl font-semibold text-accent">
+                {language === "fr" ? "Apprendre, Jouez, Gagnez." : "Learn, Play, Win."}
+              </p>
+            </motion.div>
           </motion.div>
 
-          {/* Right column - Logo and info */}
+          {/* Right column - Logo and description */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
             className="text-left md:text-right w-full"
           >
             <a 
               href="https://www.peita.fr" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hidden md:inline-block mb-3 md:mb-4"
+              className="hidden md:inline-block mb-4 md:mb-6 floating-logo"
             >
               <img 
                 src="/images/peita-logo-transparent.png" 
                 alt="PEITA Logo" 
-                className="h-20 lg:h-24 w-auto ml-auto drop-shadow-lg opacity-80"
+                className="h-20 lg:h-24 w-auto ml-auto drop-shadow-xl"
               />
             </a>
             
-            <p className="text-base sm:text-lg md:text-lg text-white/90 font-medium leading-relaxed">
+            <p className="text-base sm:text-lg text-white/85 font-normal leading-relaxed">
               {language === "fr" ? (
                 <>
                   Une mémoire en bonne santé se construit grâce à l'alliance d'une alimentation adaptée et d'un entraînement mental régulier. Une nutrition anti-inflammatoire, riche en oméga-3, joue un rôle capital dans le bon fonctionnement du cerveau.
@@ -119,38 +146,45 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
 
         {/* Warning message */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="text-center mb-4 md:mb-6"
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-center mb-6 md:mb-8"
         >
-          <p className="text-sm sm:text-base md:text-base text-white/70 italic px-2">
-            ⚠️ {language === "fr" 
-              ? "Attention, vous ne pouvez faire chaque quiz qu'une seule fois avec votre adresse mail."
-              : "Warning, you can only take each quiz once with your email address."
-            }
-          </p>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
+            <span className="text-lg">⚠️</span>
+            <p className="text-sm sm:text-base text-white/70 italic">
+              {language === "fr" 
+                ? "Attention, vous ne pouvez faire chaque quiz qu'une seule fois avec votre adresse mail."
+                : "Warning, you can only take each quiz once with your email address."
+              }
+            </p>
+          </div>
         </motion.div>
 
         {/* Category buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="flex flex-wrap justify-center gap-1.5 sm:gap-2 md:gap-3"
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="flex flex-wrap justify-center gap-2 sm:gap-3"
         >
-          {categories.map((cat) => (
-            <button
+          {categories.map((cat, index) => (
+            <motion.button
               key={cat.id}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
               onClick={() => onSelectCategory(cat.id)}
-              className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm md:text-base font-semibold transition-all ${
+              className={`category-pill px-4 sm:px-5 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-semibold backdrop-blur-sm ${
                 selectedCategory === cat.id 
-                  ? "bg-amber-400 text-[#3E5D58] shadow-lg" 
-                  : "bg-white/10 text-white hover:bg-white/20 border border-white/20"
+                  ? "bg-accent text-accent-foreground shadow-lg shadow-accent/30" 
+                  : "bg-white/10 text-white border border-white/20"
               }`}
             >
-              {cat.emoji} {cat.name[language]}
-            </button>
+              <span className="mr-1.5">{cat.emoji}</span>
+              {cat.name[language]}
+            </motion.button>
           ))}
         </motion.div>
       </div>
