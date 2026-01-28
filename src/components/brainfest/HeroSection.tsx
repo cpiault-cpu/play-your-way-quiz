@@ -96,10 +96,23 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             </a>
             
             <p className="text-base sm:text-lg md:text-lg text-white/90 font-medium leading-relaxed">
-              {language === "fr" 
-                ? "Une mémoire en pleine forme se cultive à la fois par l'alimentation et dans l'exercice. Une alimentation anti-inflammatoire, riche en oméga-3, est capitale. Apprendre, stimuler sa mémoire et se lancer de nouveaux défis tout au long de la vie est aussi capital pour garder l'esprit vif et curieux. C'est pourquoi nous avons créé cette série de quiz pensés pour entretenir votre cerveau avec le sourire."
-                : "A healthy memory is cultivated through both nutrition and exercise. An anti-inflammatory diet rich in omega-3s is essential. Learning, stimulating your memory, and taking on new challenges throughout life is also essential to keep your mind sharp and curious. That's why we created this series of quizzes designed to train your brain with a smile."
-              }
+              {language === "fr" ? (
+                <>
+                  Une mémoire en pleine forme se cultive à la fois par l'alimentation et dans l'exercice. Une alimentation anti-inflammatoire, riche en oméga-3, est capitale.
+                  <br /><br />
+                  Apprendre, stimuler sa mémoire et se lancer de nouveaux défis tout au long de la vie est aussi capital pour garder l'esprit vif et curieux.
+                  <br /><br />
+                  C'est pourquoi nous avons créé cette série de quiz pensés pour entretenir votre cerveau avec le sourire.
+                </>
+              ) : (
+                <>
+                  A healthy memory is cultivated through both nutrition and exercise. An anti-inflammatory diet rich in omega-3s is essential.
+                  <br /><br />
+                  Learning, stimulating your memory, and taking on new challenges throughout life is also essential to keep your mind sharp and curious.
+                  <br /><br />
+                  That's why we created this series of quizzes designed to train your brain with a smile.
+                </>
+              )}
             </p>
           </motion.div>
         </div>
