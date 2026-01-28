@@ -27,11 +27,25 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
   return (
     <section className="bg-[#3E5D58] relative overflow-hidden">
       <div className="relative z-10 max-w-6xl mx-auto px-3 sm:px-4 py-6 md:py-12">
-        {/* Top bar with language toggle */}
-        <div className="flex justify-end mb-4 md:mb-6">
+        {/* Top bar with language toggle and logo on mobile */}
+        <div className="flex justify-between items-center mb-4 md:mb-6">
+          {/* Logo - visible only on mobile */}
+          <a 
+            href="https://www.peita.fr" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="md:hidden"
+          >
+            <img 
+              src="/images/peita-logo-transparent.png" 
+              alt="PEITA Logo" 
+              className="h-10 w-auto drop-shadow-lg opacity-80"
+            />
+          </a>
+          
           <button
             onClick={onToggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all ml-auto"
             aria-label={language === "fr" ? "Switch to English" : "Passer en Français"}
           >
             <span className="text-base">{language === "fr" ? "🇬🇧" : "🇫🇷"}</span>
@@ -72,12 +86,12 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               href="https://www.peita.fr" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-block mb-3 md:mb-4"
+              className="hidden md:inline-block mb-3 md:mb-4"
             >
               <img 
                 src="/images/peita-logo-transparent.png" 
                 alt="PEITA Logo" 
-                className="h-12 sm:h-16 md:h-20 lg:h-24 w-auto mx-auto md:ml-auto md:mr-0 drop-shadow-lg opacity-80"
+                className="h-20 lg:h-24 w-auto ml-auto drop-shadow-lg opacity-80"
               />
             </a>
             
