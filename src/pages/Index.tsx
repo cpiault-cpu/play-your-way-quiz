@@ -237,8 +237,8 @@ const Index = () => {
             >
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-3xl">
                 {language === "fr" 
-                  ? "Rien n'est plus merveilleux que les rouages du vivant, et explorer ce qui se passe sous la surface."
-                  : "Nothing is more wonderful than the inner workings of life, and exploring what happens beneath the surface."
+                  ? "Rien n'est plus merveilleux que les rouages du vivant, et explorer ce qui se passe sous la surface. Si le sujet vous passionne comme nous, ces quiz vont vous plaire."
+                  : "Nothing is more wonderful than the inner workings of life, and exploring what happens beneath the surface. If you're as passionate about this subject as we are, you'll love these quizzes."
                 }
               </p>
             </motion.div>
