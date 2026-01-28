@@ -6,6 +6,8 @@ import LevelSection from "@/components/brainfest/LevelSection";
 import QuizGame from "@/components/brainfest/QuizGame";
 import MusicalMemoryGame from "@/components/brainfest/MusicalMemoryGame";
 import MusicalMemoryCard from "@/components/brainfest/MusicalMemoryCard";
+import MemoryPairsGame from "@/components/brainfest/MemoryPairsGame";
+import MemoryPairsCard from "@/components/brainfest/MemoryPairsCard";
 import Footer from "@/components/brainfest/Footer";
 
 // Category type
@@ -25,6 +27,7 @@ const Index = () => {
   const [language, setLanguage] = useState<Language>("fr");
   const [activeQuizId, setActiveQuizId] = useState<string | null>(null);
   const [activeMusicalMemoryLevel, setActiveMusicalMemoryLevel] = useState<1 | 2 | 3 | null>(null);
+  const [activeMemoryPairsLevel, setActiveMemoryPairsLevel] = useState<1 | 2 | 3 | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory"); // Default to memory category
 
   
@@ -41,12 +44,28 @@ const Index = () => {
     setActiveMusicalMemoryLevel(level);
   };
 
+  const handlePlayMemoryPairs = (level: 1 | 2 | 3) => {
+    setActiveMemoryPairsLevel(level);
+  };
+
   const handleBackToHome = () => {
     setActiveQuizId(null);
     setActiveMusicalMemoryLevel(null);
+    setActiveMemoryPairsLevel(null);
   };
 
   const activeQuiz = quizzes.find((q) => q.id === activeQuizId);
+
+  // Show Memory Pairs Game
+  if (activeMemoryPairsLevel) {
+    return (
+      <MemoryPairsGame
+        language={language}
+        level={activeMemoryPairsLevel}
+        onBack={handleBackToHome}
+      />
+    );
+  }
 
   // Show Musical Memory Game
   if (activeMusicalMemoryLevel) {
@@ -87,26 +106,49 @@ const Index = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.5 }}
         >
-          {/* Show Musical Memory section when Memory category is selected or when showing all */}
+          {/* Show Memory games section when Memory category is selected */}
           {(selectedCategory === null || selectedCategory === "memory") && (
-            <section className="mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10">
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-foreground mb-4 sm:mb-5 flex items-center gap-2 sm:gap-3">
-                <span className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center text-lg sm:text-xl md:text-2xl flex-shrink-0">🎹</span>
-                <span className="truncate">{language === "fr" ? "Mémoire Musicale" : "Musical Memory"}</span>
-              </h2>
-              {/* Mobile: vertical stack */}
-              <div className="md:hidden flex flex-col gap-4 min-w-0">
-                <MusicalMemoryCard level={1} language={language} onPlay={handlePlayMusicalMemory} />
-                <MusicalMemoryCard level={2} language={language} onPlay={handlePlayMusicalMemory} />
-                <MusicalMemoryCard level={3} language={language} onPlay={handlePlayMusicalMemory} />
-              </div>
-              {/* Desktop: grid */}
-              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-                <MusicalMemoryCard level={1} language={language} onPlay={handlePlayMusicalMemory} />
-                <MusicalMemoryCard level={2} language={language} onPlay={handlePlayMusicalMemory} />
-                <MusicalMemoryCard level={3} language={language} onPlay={handlePlayMusicalMemory} />
-              </div>
-            </section>
+            <>
+              {/* Musical Memory Section */}
+              <section className="mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10">
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-foreground mb-4 sm:mb-5 flex items-center gap-2 sm:gap-3">
+                  <span className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center text-lg sm:text-xl md:text-2xl flex-shrink-0">🎹</span>
+                  <span className="truncate">{language === "fr" ? "Mémoire Musicale" : "Musical Memory"}</span>
+                </h2>
+                {/* Mobile: vertical stack */}
+                <div className="md:hidden flex flex-col gap-4 min-w-0">
+                  <MusicalMemoryCard level={1} language={language} onPlay={handlePlayMusicalMemory} />
+                  <MusicalMemoryCard level={2} language={language} onPlay={handlePlayMusicalMemory} />
+                  <MusicalMemoryCard level={3} language={language} onPlay={handlePlayMusicalMemory} />
+                </div>
+                {/* Desktop: grid */}
+                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+                  <MusicalMemoryCard level={1} language={language} onPlay={handlePlayMusicalMemory} />
+                  <MusicalMemoryCard level={2} language={language} onPlay={handlePlayMusicalMemory} />
+                  <MusicalMemoryCard level={3} language={language} onPlay={handlePlayMusicalMemory} />
+                </div>
+              </section>
+
+              {/* Memory Pairs Section */}
+              <section className="mb-8 sm:mb-10">
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-foreground mb-4 sm:mb-5 flex items-center gap-2 sm:gap-3">
+                  <span className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center text-lg sm:text-xl md:text-2xl flex-shrink-0">🌿</span>
+                  <span className="truncate">{language === "fr" ? "Memory Plantes" : "Plant Memory"}</span>
+                </h2>
+                {/* Mobile: vertical stack */}
+                <div className="md:hidden flex flex-col gap-4 min-w-0">
+                  <MemoryPairsCard level={1} language={language} onPlay={handlePlayMemoryPairs} />
+                  <MemoryPairsCard level={2} language={language} onPlay={handlePlayMemoryPairs} />
+                  <MemoryPairsCard level={3} language={language} onPlay={handlePlayMemoryPairs} />
+                </div>
+                {/* Desktop: grid */}
+                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+                  <MemoryPairsCard level={1} language={language} onPlay={handlePlayMemoryPairs} />
+                  <MemoryPairsCard level={2} language={language} onPlay={handlePlayMemoryPairs} />
+                  <MemoryPairsCard level={3} language={language} onPlay={handlePlayMemoryPairs} />
+                </div>
+              </section>
+            </>
           )}
 
           {/* Quizzes list (hidden when “Mémoire” is selected to avoid duplicating Level 2/3 under the Musical Memory cards) */}
