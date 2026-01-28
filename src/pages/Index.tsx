@@ -28,9 +28,7 @@ const Index = () => {
   const [activeQuizId, setActiveQuizId] = useState<string | null>(null);
   const [activeMusicalMemoryLevel, setActiveMusicalMemoryLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeMemoryPairsLevel, setActiveMemoryPairsLevel] = useState<1 | 2 | 3 | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory"); // Default to memory category
-
-  
+  const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory");
 
   const handleToggleLanguage = () => {
     setLanguage((prev) => (prev === "fr" ? "en" : "fr"));
@@ -90,7 +88,7 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col overflow-x-hidden">
+    <div className="min-h-screen bg-background flex flex-col overflow-x-hidden page-transition">
       {/* Hero Section with categories */}
       <HeroSection 
         language={language} 
@@ -100,7 +98,7 @@ const Index = () => {
       />
 
       {/* Quiz Levels */}
-      <main className="max-w-6xl mx-auto px-3 sm:px-4 pb-12 sm:pb-16 flex-grow">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20 flex-grow">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -110,76 +108,132 @@ const Index = () => {
           {(selectedCategory === null || selectedCategory === "memory") && (
             <>
               {/* Musical Memory Section */}
-              <section className="mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10">
-                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-foreground mb-3 sm:mb-4 flex items-center gap-2 sm:gap-3">
-                  <span className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center text-lg sm:text-xl md:text-2xl flex-shrink-0">🎹</span>
-                  <span className="truncate">{language === "fr" ? "Mémoire Musicale" : "Musical Memory"}</span>
-                </h2>
-                {/* Explanatory text about memory type */}
-                <p className="text-sm sm:text-base text-foreground/70 mb-4 sm:mb-5 leading-relaxed">
+              <motion.section 
+                className="mt-10 sm:mt-12 md:mt-14 mb-10 sm:mb-12"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                  <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/15 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
+                    🎹
+                  </span>
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+                    {language === "fr" ? "Mémoire Musicale" : "Musical Memory"}
+                  </h2>
+                  <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
+                </div>
+                
+                {/* Description */}
+                <p className="text-sm sm:text-base text-muted-foreground mb-6 leading-relaxed max-w-3xl">
                   {language === "fr" 
                     ? "Ce quiz de reproduction de suites sonores évalue la mémoire auditive séquentielle et la capacité à maintenir une information dans le temps court. La répétition progressive des motifs renforce les mécanismes d'anticipation et d'apprentissage implicite."
                     : "This sound sequence reproduction quiz evaluates sequential auditory memory and the ability to maintain information over a short period. The progressive repetition of patterns reinforces anticipation mechanisms and implicit learning."
                   }
                 </p>
+                
                 {/* Mobile: vertical stack */}
                 <div className="md:hidden flex flex-col gap-4 min-w-0">
-                  <MusicalMemoryCard level={1} language={language} onPlay={handlePlayMusicalMemory} />
-                  <MusicalMemoryCard level={2} language={language} onPlay={handlePlayMusicalMemory} />
-                  <MusicalMemoryCard level={3} language={language} onPlay={handlePlayMusicalMemory} />
+                  {[1, 2, 3].map((level, index) => (
+                    <motion.div
+                      key={level}
+                      initial={{ opacity: 0, y: 15 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                    >
+                      <MusicalMemoryCard level={level as 1 | 2 | 3} language={language} onPlay={handlePlayMusicalMemory} />
+                    </motion.div>
+                  ))}
                 </div>
+                
                 {/* Desktop: grid */}
-                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-                  <MusicalMemoryCard level={1} language={language} onPlay={handlePlayMusicalMemory} />
-                  <MusicalMemoryCard level={2} language={language} onPlay={handlePlayMusicalMemory} />
-                  <MusicalMemoryCard level={3} language={language} onPlay={handlePlayMusicalMemory} />
+                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[1, 2, 3].map((level, index) => (
+                    <motion.div
+                      key={level}
+                      initial={{ opacity: 0, y: 15 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                    >
+                      <MusicalMemoryCard level={level as 1 | 2 | 3} language={language} onPlay={handlePlayMusicalMemory} />
+                    </motion.div>
+                  ))}
                 </div>
-              </section>
+              </motion.section>
 
-              {/* Visual separator - prominent line */}
-              <div className="my-8 sm:my-10 flex items-center gap-4">
-                <div className="flex-1 h-1 bg-primary/40 rounded-full"></div>
+              {/* Decorative separator */}
+              <div className="section-divider my-10 sm:my-12">
                 <span className="text-primary text-3xl">🌿</span>
-                <div className="flex-1 h-1 bg-primary/40 rounded-full"></div>
               </div>
 
-              {/* Memory Pairs Section - with distinct green background */}
-              <section className="mb-8 sm:mb-10 bg-primary/10 -mx-3 sm:-mx-4 px-3 sm:px-4 py-6 sm:py-8 rounded-2xl border-2 border-primary/30">
-                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-foreground mb-3 sm:mb-4 flex items-center gap-2 sm:gap-3">
-                  <span className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-primary/30 flex items-center justify-center text-lg sm:text-xl md:text-2xl flex-shrink-0">🌿</span>
-                  <span className="truncate">{language === "fr" ? "Memory Plantes Médicinales" : "Medicinal Plant Memory"}</span>
-                </h2>
-                {/* Explanatory text about memory type */}
-                <p className="text-sm sm:text-base text-foreground/70 mb-4 sm:mb-5 leading-relaxed">
+              {/* Memory Pairs Section */}
+              <motion.section 
+                className="memory-section mb-10 sm:mb-12 -mx-4 sm:-mx-6 px-4 sm:px-6 py-6 sm:py-8"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+              >
+                <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                  <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/20 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
+                    🌿
+                  </span>
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+                    {language === "fr" ? "Memory Plantes Médicinales" : "Medicinal Plant Memory"}
+                  </h2>
+                </div>
+                
+                {/* Description */}
+                <p className="text-sm sm:text-base text-muted-foreground mb-6 leading-relaxed max-w-3xl">
                   {language === "fr" 
                     ? "Ce quiz de reconnaissance de paires sollicite la mémoire de travail et la mémoire visuelle en mobilisant des processus d'attention soutenue et d'encodage rapide. La contrainte temporelle de 30 secondes favorise l'activation des mécanismes de consolidation et de récupération de l'information."
                     : "This pair recognition quiz engages working memory and visual memory by mobilizing sustained attention and rapid encoding processes. The 30-second time constraint promotes the activation of information consolidation and retrieval mechanisms."
                   }
                 </p>
+                
                 {/* Mobile: vertical stack */}
                 <div className="md:hidden flex flex-col gap-4 min-w-0">
-                  <MemoryPairsCard level={1} language={language} onPlay={handlePlayMemoryPairs} />
-                  <MemoryPairsCard level={2} language={language} onPlay={handlePlayMemoryPairs} />
-                  <MemoryPairsCard level={3} language={language} onPlay={handlePlayMemoryPairs} />
+                  {[1, 2, 3].map((level, index) => (
+                    <motion.div
+                      key={level}
+                      initial={{ opacity: 0, y: 15 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                    >
+                      <MemoryPairsCard level={level as 1 | 2 | 3} language={language} onPlay={handlePlayMemoryPairs} />
+                    </motion.div>
+                  ))}
                 </div>
+                
                 {/* Desktop: grid */}
-                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-                  <MemoryPairsCard level={1} language={language} onPlay={handlePlayMemoryPairs} />
-                  <MemoryPairsCard level={2} language={language} onPlay={handlePlayMemoryPairs} />
-                  <MemoryPairsCard level={3} language={language} onPlay={handlePlayMemoryPairs} />
+                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[1, 2, 3].map((level, index) => (
+                    <motion.div
+                      key={level}
+                      initial={{ opacity: 0, y: 15 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                    >
+                      <MemoryPairsCard level={level as 1 | 2 | 3} language={language} onPlay={handlePlayMemoryPairs} />
+                    </motion.div>
+                  ))}
                 </div>
-              </section>
+              </motion.section>
             </>
           )}
 
-          {/* Quizzes list (hidden when “Mémoire” is selected to avoid duplicating Level 2/3 under the Musical Memory cards) */}
+          {/* Quizzes list */}
           {selectedCategory !== "memory" &&
             [1, 2, 3].map((level) => {
               const filteredQuizzes = selectedCategory
                 ? quizzes.filter((q) => q.level === level && getCategoryForQuiz(q) === selectedCategory)
                 : quizzes.filter((q) => q.level === level);
 
-              // Don't show empty level sections
               if (filteredQuizzes.length === 0) return null;
 
               return (

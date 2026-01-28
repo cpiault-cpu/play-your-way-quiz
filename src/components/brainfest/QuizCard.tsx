@@ -1,4 +1,5 @@
 import { Play } from "lucide-react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Quiz, Language, translations } from "@/data/quizData";
 import MoleculeIcon from "./icons/MoleculeIcon";
@@ -29,45 +30,50 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
   };
 
   const getIcon = () => {
+    const iconClass = "molecule-icon w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 absolute top-4 right-4";
     switch (quiz.icon) {
       case 'molecule':
-        return <MoleculeIcon className="molecule-icon w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 absolute top-3 right-3 sm:top-4 sm:right-4" />;
+        return <MoleculeIcon className={iconClass} />;
       case 'plant':
-        return <PlantIcon className="molecule-icon w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 absolute top-3 right-3 sm:top-4 sm:right-4" />;
+        return <PlantIcon className={iconClass} />;
       case 'music':
-        return <MusicIcon className="molecule-icon w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 absolute top-3 right-3 sm:top-4 sm:right-4" />;
+        return <MusicIcon className={iconClass} />;
       case 'biology':
-        return <BiologyIcon className="molecule-icon w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 absolute top-3 right-3 sm:top-4 sm:right-4" />;
+        return <BiologyIcon className={iconClass} />;
       default:
         return null;
     }
   };
 
   return (
-    <div className="quiz-card w-full max-w-full min-w-0 rounded-xl p-4 sm:p-5 md:p-6 border border-border relative overflow-hidden">
+    <motion.div 
+      className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-5 sm:p-6"
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    >
       {getIcon()}
       
-      <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <span className={`${getLevelBadgeClass()} text-xs font-semibold px-2.5 sm:px-3 py-1 rounded-full text-primary-foreground`}>
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
+        <span className={`${getLevelBadgeClass()} text-xs font-bold px-3 py-1.5 rounded-full text-white`}>
           {t.level} {quiz.level}
         </span>
-        <span className="text-xs sm:text-sm text-muted-foreground">
+        <span className="text-xs sm:text-sm text-muted-foreground font-medium">
           {quiz.discount} {t.discount}
         </span>
       </div>
 
-      <h3 className="font-serif text-base sm:text-lg md:text-xl font-semibold text-foreground mb-4 sm:mb-6 pr-12 sm:pr-14 leading-tight break-words">
+      <h3 className="text-lg sm:text-xl font-bold text-foreground mb-5 pr-14 leading-snug break-words">
         {quiz.title[language]}
       </h3>
 
       <Button
         onClick={() => onPlay(quiz.id)}
-        className="w-full min-w-0 btn-primary-custom text-white font-medium hover:opacity-90 transition-opacity text-sm sm:text-base py-2.5 sm:py-3"
+        className="w-full min-w-0 btn-primary-custom text-white font-semibold text-sm sm:text-base py-3 rounded-xl"
       >
         <Play className="w-4 h-4 mr-2 flex-shrink-0" />
         <span className="truncate min-w-0">{t.play}</span>
       </Button>
-    </div>
+    </motion.div>
   );
 };
 

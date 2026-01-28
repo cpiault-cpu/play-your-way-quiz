@@ -1,4 +1,5 @@
 import { Play, Volume2 } from "lucide-react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Language } from "@/data/quizData";
 import BrainIcon from "./icons/BrainIcon";
@@ -63,39 +64,43 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
   };
 
   return (
-    <div className="quiz-card w-full max-w-full min-w-0 rounded-xl p-4 sm:p-6 md:p-8 border border-border relative overflow-hidden">
+    <motion.div 
+      className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-5 sm:p-6 md:p-7"
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    >
       {/* Musical Brain Icon */}
-      <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
+      <div className="absolute top-4 right-4">
         <div className="relative">
-          <BrainIcon className="molecule-icon w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20" />
-          <Volume2 className="absolute -bottom-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary" />
+          <BrainIcon className="molecule-icon w-14 h-14 sm:w-16 sm:h-16" />
+          <Volume2 className="absolute -bottom-1 -right-1 w-5 h-5 text-primary" />
         </div>
       </div>
       
-      <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <span className={`${getLevelBadgeClass()} text-xs sm:text-sm md:text-base font-semibold px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-primary-foreground`}>
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
+        <span className={`${getLevelBadgeClass()} text-xs font-bold px-3 py-1.5 rounded-full text-white`}>
           {t.level} {level}
         </span>
-        <span className="text-sm sm:text-base md:text-lg text-muted-foreground font-medium">
+        <span className="text-xs sm:text-sm text-muted-foreground font-medium">
           {getDiscount()} {t.discount}
         </span>
       </div>
 
-      <h3 className="font-serif text-lg sm:text-xl md:text-2xl font-semibold text-foreground mb-1 sm:mb-2 pr-14 sm:pr-16 break-words">
+      <h3 className="text-lg sm:text-xl font-bold text-foreground mb-1 pr-16 break-words">
         {t.title}
       </h3>
-      <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-4 sm:mb-6">
+      <p className="text-sm text-muted-foreground mb-5">
         {getLevelDesc()}
       </p>
 
       <Button
         onClick={() => onPlay(level)}
-        className="w-full min-w-0 overflow-hidden btn-primary-custom text-white font-medium hover:opacity-90 transition-opacity text-sm sm:text-base md:text-lg h-12 sm:h-14 md:h-16"
+        className="w-full min-w-0 btn-primary-custom text-white font-semibold text-sm sm:text-base py-3 rounded-xl"
       >
-        <Play className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
+        <Play className="w-4 h-4 mr-2 flex-shrink-0" />
         <span className="min-w-0 truncate">{t.play}</span>
       </Button>
-    </div>
+    </motion.div>
   );
 };
 

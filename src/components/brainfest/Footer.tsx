@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Language } from "@/data/quizData";
 import { Instagram, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -56,28 +57,40 @@ const Footer = ({ language }: FooterProps) => {
   };
 
   return (
-    <footer className="bg-[#3E5D58] py-8 px-4">
-      <div className="max-w-5xl mx-auto">
+    <footer className="hero-gradient relative overflow-hidden py-10 px-4 sm:py-12">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 opacity-5 pointer-events-none">
+        <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-accent/30 blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-primary/30 blur-3xl" />
+      </div>
+
+      <div className="relative z-10 max-w-5xl mx-auto">
         {/* Signup Button */}
-        <div className="flex justify-center mb-6">
+        <motion.div 
+          className="flex justify-center mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
               <Button 
                 size="lg"
-                className="bg-amber-400 hover:bg-amber-500 text-[#3E5D58] font-bold px-8 py-6 text-lg rounded-full shadow-lg"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold px-8 py-6 text-lg rounded-full shadow-lg shadow-accent/30 transition-all hover:shadow-xl hover:shadow-accent/40"
               >
                 {language === "fr" ? "S'inscrire" : "Sign Up"}
               </Button>
             </DialogTrigger>
-            <DialogContent className="bg-[#3E5D58] border-white/20 text-white">
+            <DialogContent className="hero-gradient border-white/20 text-white">
               <DialogHeader>
-                <DialogTitle className="text-2xl font-black text-center">
+                <DialogTitle className="text-2xl font-bold text-center">
                   {language === "fr" ? "Inscription" : "Sign Up"}
                 </DialogTitle>
               </DialogHeader>
               {isSubmitted ? (
                 <div className="text-center py-8">
-                  <p className="text-xl text-amber-400 font-semibold">
+                  <p className="text-xl text-accent font-semibold">
                     {language === "fr" ? "Merci pour votre inscription !" : "Thank you for signing up!"}
                   </p>
                 </div>
@@ -92,7 +105,7 @@ const Footer = ({ language }: FooterProps) => {
                       required
                       value={formData.firstName}
                       onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                      className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                      className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-accent"
                       placeholder={language === "fr" ? "Votre prénom" : "Your first name"}
                     />
                   </div>
@@ -105,7 +118,7 @@ const Footer = ({ language }: FooterProps) => {
                       required
                       value={formData.lastName}
                       onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                      className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                      className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-accent"
                       placeholder={language === "fr" ? "Votre nom" : "Your last name"}
                     />
                   </div>
@@ -118,43 +131,64 @@ const Footer = ({ language }: FooterProps) => {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                      className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-accent"
                       placeholder={language === "fr" ? "votre@email.com" : "your@email.com"}
                     />
                   </div>
                   <Button 
                     type="submit"
-                    className="w-full bg-amber-400 hover:bg-amber-500 text-[#3E5D58] font-bold py-3"
+                    disabled={isLoading}
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold py-3 rounded-xl"
                   >
-                    {language === "fr" ? "S'inscrire" : "Sign Up"}
+                    {isLoading 
+                      ? (language === "fr" ? "Envoi..." : "Sending...") 
+                      : (language === "fr" ? "S'inscrire" : "Sign Up")
+                    }
                   </Button>
                 </form>
               )}
             </DialogContent>
           </Dialog>
-        </div>
+        </motion.div>
 
         {/* Social Links */}
-        <div className="flex justify-center items-center gap-6">
+        <motion.div 
+          className="flex flex-wrap justify-center items-center gap-6 sm:gap-8"
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           <a
             href="https://www.instagram.com/maison_peita/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-white/80 hover:text-amber-400 transition-colors"
+            className="flex items-center gap-2 text-white/80 hover:text-accent transition-colors group"
           >
-            <Instagram className="w-6 h-6" />
+            <Instagram className="w-6 h-6 group-hover:scale-110 transition-transform" />
             <span className="font-medium">@maison_peita</span>
           </a>
           <a
             href="https://www.peita.fr/boutique"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-white/80 hover:text-amber-400 transition-colors"
+            className="flex items-center gap-2 text-white/80 hover:text-accent transition-colors group"
           >
-            <ShoppingBag className="w-6 h-6" />
+            <ShoppingBag className="w-6 h-6 group-hover:scale-110 transition-transform" />
             <span className="font-medium">{language === "fr" ? "Boutique" : "Shop"}</span>
           </a>
-        </div>
+        </motion.div>
+
+        {/* Copyright */}
+        <motion.p 
+          className="text-center text-white/50 text-sm mt-8"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          © 2024 PEITA. {language === "fr" ? "Tous droits réservés." : "All rights reserved."}
+        </motion.p>
       </div>
     </footer>
   );
