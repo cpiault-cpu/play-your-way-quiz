@@ -46,7 +46,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center md:text-left w-full"
+            className="text-left w-full"
           >
             <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-black text-white mb-3 md:mb-4 tracking-tight leading-tight">
               {language === "fr" ? "Santé & Bien-être" : "Health & Wellness"}
@@ -72,7 +72,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-center md:text-right w-full"
+            className="text-left md:text-right w-full"
           >
             <a 
               href="https://www.peita.fr" 
