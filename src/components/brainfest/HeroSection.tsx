@@ -95,10 +95,10 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               />
             </a>
             
-            <p className="text-base sm:text-lg md:text-lg text-white/90 font-medium leading-relaxed">
+            <p className="text-sm sm:text-base md:text-base text-white/90 font-medium leading-relaxed">
               {language === "fr" 
-                ? <>De nouveaux quiz régulièrement. Vous serez prévenu par mail ou sur la page <a href="https://www.instagram.com/maison_peita/" target="_blank" rel="noopener noreferrer" className="text-amber-400 underline hover:text-amber-300 transition-colors font-normal">Instagram</a></>
-                : <>New quizzes regularly. You'll be notified by email or on our <a href="https://www.instagram.com/maison_peita/" target="_blank" rel="noopener noreferrer" className="text-amber-400 underline hover:text-amber-300 transition-colors font-normal">Instagram page</a></>
+                ? "Une mémoire en pleine forme se cultive à la fois par l'alimentation et dans l'exercice. Une alimentation anti-inflammatoire, riche en oméga-3, est capitale. Apprendre, stimuler sa mémoire et se lancer de nouveaux défis tout au long de la vie est aussi capital pour garder l'esprit vif et curieux. C'est pourquoi nous avons créé cette série de quiz pensés pour entraîner son cerveau avec le sourire."
+                : "A healthy memory is cultivated through both nutrition and exercise. An anti-inflammatory diet rich in omega-3s is essential. Learning, stimulating your memory, and taking on new challenges throughout life is also essential to keep your mind sharp and curious. That's why we created this series of quizzes designed to train your brain with a smile."
               }
             </p>
           </motion.div>
