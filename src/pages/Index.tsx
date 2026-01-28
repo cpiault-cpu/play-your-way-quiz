@@ -138,10 +138,17 @@ const Index = () => {
 
               {/* Memory Pairs Section - with distinct green background */}
               <section className="mb-8 sm:mb-10 bg-primary/10 -mx-3 sm:-mx-4 px-3 sm:px-4 py-6 sm:py-8 rounded-2xl border-2 border-primary/30">
-                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-foreground mb-4 sm:mb-5 flex items-center gap-2 sm:gap-3">
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-foreground mb-3 sm:mb-4 flex items-center gap-2 sm:gap-3">
                   <span className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-primary/30 flex items-center justify-center text-lg sm:text-xl md:text-2xl flex-shrink-0">🌿</span>
                   <span className="truncate">{language === "fr" ? "Memory Plantes Médicinales" : "Medicinal Plant Memory"}</span>
                 </h2>
+                {/* Explanatory text about memory type */}
+                <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-5 leading-relaxed">
+                  {language === "fr" 
+                    ? "Ce jeu fait travailler votre mémoire visuo-spatiale : la capacité à mémoriser et retrouver la position d'éléments dans l'espace. En associant les plantes médicinales à leur emplacement, vous renforcez également votre mémoire de travail et votre concentration."
+                    : "This game exercises your visuo-spatial memory: the ability to memorize and recall the position of elements in space. By associating medicinal plants with their location, you also strengthen your working memory and concentration."
+                  }
+                </p>
                 {/* Mobile: vertical stack */}
                 <div className="md:hidden flex flex-col gap-4 min-w-0">
                   <MemoryPairsCard level={1} language={language} onPlay={handlePlayMemoryPairs} />
