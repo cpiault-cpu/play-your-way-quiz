@@ -2,8 +2,10 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Play, Volume2, RotateCcw, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Language } from "@/data/quizData";
+import { toast } from "sonner";
 import confetti from "canvas-confetti";
 
 // Confetti celebration function
@@ -116,6 +118,9 @@ const translations = {
     couponTitle: "Félicitations !",
     couponText: "Voici votre code de réduction :",
     couponCopied: "Code copié !",
+    enterEmail: "Entrez votre adresse email pour commencer",
+    emailPlaceholder: "votre@email.com",
+    invalidEmail: "Veuillez entrer une adresse email valide",
   },
   en: {
     title: "Musical Memory",
@@ -141,6 +146,9 @@ const translations = {
     couponTitle: "Congratulations!",
     couponText: "Here is your discount code:",
     couponCopied: "Code copied!",
+    enterEmail: "Enter your email address to start",
+    emailPlaceholder: "your@email.com",
+    invalidEmail: "Please enter a valid email address",
   },
 };
 
@@ -170,13 +178,27 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
   const config = LEVEL_CONFIG[level];
   const notes = config.useInstruments ? INSTRUMENT_NOTES : PIANO_NOTES;
   
-  const [gameState, setGameState] = useState<"idle" | "playing" | "listening" | "input" | "success" | "failure" | "gameover" | "victory">("idle");
+  const [gameState, setGameState] = useState<"email" | "idle" | "playing" | "listening" | "input" | "success" | "failure" | "gameover" | "victory">("email");
+  const [email, setEmail] = useState("");
   const [sequence, setSequence] = useState<number[]>([]);
   const [playerInput, setPlayerInput] = useState<number[]>([]);
   const [currentSeries, setCurrentSeries] = useState(0);
   const [activeNote, setActiveNote] = useState<number | null>(null);
   const [seriesCompleted, setSeriesCompleted] = useState(0);
   const [usedSequences, setUsedSequences] = useState<string[]>([]); // Track used sequences to avoid repetition
+
+  // Email validation
+  const validateEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const handleEmailSubmit = () => {
+    if (!validateEmail(email)) {
+      toast.error(t.invalidEmail);
+      return;
+    }
+    setGameState("idle");
+  };
 
   // Initialize AudioContext
   const initAudio = useCallback(() => {
@@ -908,6 +930,39 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
 
         {/* Game Status */}
         <AnimatePresence mode="wait">
+          {gameState === "email" && (
+            <motion.div
+              key="email"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="text-center mb-6"
+            >
+              <div className="bg-card border border-border rounded-xl p-4 sm:p-6 md:p-8 mb-4 sm:mb-6">
+                <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-semibold text-foreground mb-2 leading-tight">
+                  {t.title} - Niveau {level}
+                </h2>
+                <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8">{t.enterEmail}</p>
+
+                <div className="space-y-3 sm:space-y-4 max-w-md mx-auto">
+                  <Input
+                    type="email"
+                    placeholder={t.emailPlaceholder}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 text-base"
+                  />
+                  <Button
+                    onClick={handleEmailSubmit}
+                    className="w-full btn-primary-custom text-white font-medium text-sm sm:text-base py-2.5 sm:py-3"
+                  >
+                    {t.start}
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
           {gameState === "idle" && (
             <motion.div
               key="idle"
