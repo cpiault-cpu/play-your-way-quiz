@@ -651,6 +651,76 @@ export const quizzes: Quiz[] = [
       },
     ],
   },
+  {
+    id: '3.4',
+    level: 3,
+    title: { fr: 'Quiz 3.4 - Biologie avancée', en: 'Quiz 3.4 - Advanced Biology' },
+    category: { fr: 'Biologie', en: 'Biology' },
+    discount: '15%',
+    icon: 'biology',
+    questions: [
+      {
+        id: 1,
+        question: { 
+          fr: 'L\'ADN mitochondrial est transmis exclusivement par :',
+          en: 'Mitochondrial DNA is transmitted exclusively by:'
+        },
+        options: {
+          fr: ['Le père', 'La mère', 'Les deux parents', 'Ni l\'un ni l\'autre'],
+          en: ['The father', 'The mother', 'Both parents', 'Neither']
+        },
+        correctAnswer: 1,
+      },
+      {
+        id: 2,
+        question: { 
+          fr: 'L\'autophagie, processus récompensé par le Prix Nobel 2016, est :',
+          en: 'Autophagy, the process awarded the 2016 Nobel Prize, is:'
+        },
+        options: {
+          fr: ['La destruction des cellules voisines', 'Le recyclage des composants cellulaires endommagés', 'La division cellulaire rapide', 'La mort cellulaire programmée'],
+          en: ['The destruction of neighboring cells', 'The recycling of damaged cellular components', 'Rapid cell division', 'Programmed cell death']
+        },
+        correctAnswer: 1,
+      },
+      {
+        id: 3,
+        question: { 
+          fr: 'La télomérase est une enzyme qui :',
+          en: 'Telomerase is an enzyme that:'
+        },
+        options: {
+          fr: ['Raccourcit les télomères', 'Allonge les télomères', 'Détruit les chromosomes', 'Répare les mutations génétiques'],
+          en: ['Shortens telomeres', 'Lengthens telomeres', 'Destroys chromosomes', 'Repairs genetic mutations']
+        },
+        correctAnswer: 1,
+      },
+      {
+        id: 4,
+        question: { 
+          fr: 'La méthylation de l\'ADN est un mécanisme épigénétique qui :',
+          en: 'DNA methylation is an epigenetic mechanism that:'
+        },
+        options: {
+          fr: ['Modifie la séquence d\'ADN', 'Régule l\'expression des gènes sans modifier la séquence', 'Augmente le nombre de chromosomes', 'Provoque des mutations'],
+          en: ['Modifies the DNA sequence', 'Regulates gene expression without modifying the sequence', 'Increases the number of chromosomes', 'Causes mutations']
+        },
+        correctAnswer: 1,
+      },
+      {
+        id: 5,
+        question: { 
+          fr: 'CRISPR-Cas9, récompensé par le Prix Nobel 2020, fonctionne comme :',
+          en: 'CRISPR-Cas9, awarded the 2020 Nobel Prize, works as:'
+        },
+        options: {
+          fr: ['Un microscope moléculaire', 'Des ciseaux moléculaires pour l\'ADN', 'Un amplificateur de gènes', 'Un vaccin génétique'],
+          en: ['A molecular microscope', 'Molecular scissors for DNA', 'A gene amplifier', 'A genetic vaccine']
+        },
+        correctAnswer: 1,
+      },
+    ],
+  },
 ];
 
 export const translations = {
