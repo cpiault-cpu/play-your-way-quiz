@@ -227,6 +227,23 @@ const Index = () => {
             </>
           )}
 
+          {/* Biology category intro */}
+          {selectedCategory === "biology" && (
+            <motion.div
+              className="mt-8 sm:mt-10 mb-6"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-3xl">
+                {language === "fr" 
+                  ? "Rien n'est plus merveilleux que les rouages du vivant, et explorer ce qui se passe sous la surface."
+                  : "Nothing is more wonderful than the inner workings of life, and exploring what happens beneath the surface."
+                }
+              </p>
+            </motion.div>
+          )}
+
           {/* Quizzes list */}
           {selectedCategory !== "memory" &&
             [1, 2, 3].map((level) => {
