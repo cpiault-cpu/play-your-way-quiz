@@ -48,8 +48,8 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             transition={{ duration: 0.6 }}
             className="text-left w-full"
           >
-            <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-black text-white mb-3 md:mb-4 tracking-tight leading-tight">
-              {language === "fr" ? "Santé & Bien-être" : "Health & Wellness"}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal text-white mb-3 md:mb-4 tracking-tight leading-tight">
+              {language === "fr" ? "Testez vos connaissances et votre mémoire" : "Test your knowledge and memory"}
             </h1>
             
             <p className="text-lg sm:text-xl md:text-xl text-white/90 mb-3 md:mb-4 font-medium leading-relaxed">
