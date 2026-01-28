@@ -52,12 +52,6 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               {language === "fr" ? "Testez vos connaissances et votre mémoire" : "Test your knowledge and memory"}
             </h1>
             
-            <p className="text-lg sm:text-xl md:text-xl text-white/90 mb-3 md:mb-4 font-medium leading-relaxed">
-              {language === "fr" 
-                ? "Testez vos connaissances et votre mémoire."
-                : "Test your knowledge and memory."
-              }
-            </p>
 
             <p className="text-base sm:text-lg md:text-lg text-amber-400">
               🎁 {language === "fr" 
