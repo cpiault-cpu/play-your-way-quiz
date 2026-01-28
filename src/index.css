@@ -6,9 +6,9 @@
 
 @layer base {
   :root {
-    /* Dark blue theme inspired by reference */
-    --background: 230 25% 12%;
-    --foreground: 0 0% 100%;
+    /* White background theme */
+    --background: 0 0% 100%;
+    --foreground: 220 15% 20%;
 
     --card: 230 30% 18%;
     --card-foreground: 0 0% 100%;
