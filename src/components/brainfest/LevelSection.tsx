@@ -13,7 +13,7 @@ const LevelSection = ({ level, quizzes, language, onPlayQuiz }: LevelSectionProp
   const levelQuizzes = quizzes.filter(q => q.level === level);
 
   return (
-    <section className="mb-8 sm:mb-10">
+    <section className="mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10">
       <h2 className="font-serif text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-foreground mb-3 sm:mb-4 flex items-center gap-2">
         <span className="w-2 h-2 rounded-full bg-primary flex-shrink-0" />
         {t.level} {level}
