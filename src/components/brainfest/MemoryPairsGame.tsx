@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, RotateCcw } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
+import { ArrowLeft, RotateCcw, Clock, ExternalLink } from "lucide-react";
 import { Language } from "@/data/quizData";
+import { toast } from "sonner";
 import confetti from "canvas-confetti";
 
 // Import plant images
@@ -45,50 +48,140 @@ const translations = {
     title: "Memory Plantes",
     moves: "Coups",
     pairs: "Paires",
+    game: "Partie",
     victory: "Bravo !",
-    victoryMsg: "Vous avez trouvé toutes les paires !",
+    victoryMsg: "Vous avez réussi les 3 parties !",
+    gameOver: "Temps écoulé !",
+    gameOverMsg: "Vous n'avez pas trouvé toutes les paires à temps.",
     playAgain: "Rejouer",
     back: "Retour",
-    instructions: "Retournez les cartes pour trouver les paires de plantes identiques. Mémorisez leur position pour les retrouver !",
+    instructions: "Trouvez toutes les paires de plantes identiques en 30 secondes ! Mémorisez leur position. Réussissez 3 parties pour gagner votre code de réduction.",
+    timeLeft: "Temps restant",
+    enterEmail: "Entrez votre email pour commencer",
+    emailPlaceholder: "votre@email.com",
+    start: "Commencer",
+    invalidEmail: "Veuillez entrer un email valide",
+    couponTitle: "Félicitations !",
+    couponText: "Voici votre code de réduction :",
+    couponCopied: "Code copié !",
+    visitShop: "Visiter la boutique",
+    nextGame: "Partie suivante",
+    gameSuccess: "Partie réussie !",
   },
   en: {
     title: "Plant Memory",
     moves: "Moves",
     pairs: "Pairs",
+    game: "Game",
     victory: "Congratulations!",
-    victoryMsg: "You found all the pairs!",
+    victoryMsg: "You completed all 3 games!",
+    gameOver: "Time's up!",
+    gameOverMsg: "You didn't find all pairs in time.",
     playAgain: "Play Again",
     back: "Back",
-    instructions: "Flip the cards to find matching plant pairs. Remember their positions to find them again!",
+    instructions: "Find all matching plant pairs in 30 seconds! Remember their positions. Complete 3 games to win your discount code.",
+    timeLeft: "Time left",
+    enterEmail: "Enter your email to start",
+    emailPlaceholder: "your@email.com",
+    start: "Start",
+    invalidEmail: "Please enter a valid email",
+    couponTitle: "Congratulations!",
+    couponText: "Here is your discount code:",
+    couponCopied: "Code copied!",
+    visitShop: "Visit the shop",
+    nextGame: "Next game",
+    gameSuccess: "Game completed!",
   },
+};
+
+// Level configuration
+const LEVEL_CONFIG = {
+  1: { pairsCount: 4, gamesToWin: 3 },
+  2: { pairsCount: 6, gamesToWin: 3 },
+  3: { pairsCount: 8, gamesToWin: 3 },
+};
+
+// Discount codes per level
+const DISCOUNT_CODES = {
+  1: "PLANTES5",
+  2: "PLANTES10",
+  3: "PLANTES15",
+};
+
+const DISCOUNT_AMOUNTS = {
+  1: "5%",
+  2: "10%",
+  3: "15%",
+};
+
+const GAME_DURATION = 30; // 30 seconds per game
+
+// Confetti celebration function
+const fireConfetti = () => {
+  const duration = 3000;
+  const animationEnd = Date.now() + duration;
+  const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
+
+  const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
+
+  const interval = setInterval(() => {
+    const timeLeft = animationEnd - Date.now();
+
+    if (timeLeft <= 0) {
+      return clearInterval(interval);
+    }
+
+    const particleCount = 50 * (timeLeft / duration);
+
+    confetti({
+      ...defaults,
+      particleCount,
+      origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+      colors: ['#22c55e', '#16a34a', '#15803d', '#166534', '#14532d'],
+    });
+    confetti({
+      ...defaults,
+      particleCount,
+      origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+      colors: ['#22c55e', '#16a34a', '#15803d', '#166534', '#14532d'],
+    });
+  }, 250);
 };
 
 const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
   const t = translations[language];
+  const config = LEVEL_CONFIG[level];
   
-  const getPairsCount = () => {
-    switch (level) {
-      case 1: return 4;
-      case 2: return 6;
-      case 3: return 8;
-    }
-  };
-
-  const pairsCount = getPairsCount();
-  
+  const [gameState, setGameState] = useState<"email" | "playing" | "gameSuccess" | "gameOver" | "victory">("email");
+  const [email, setEmail] = useState("");
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
   const [matchedPairs, setMatchedPairs] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
-  const [gameWon, setGameWon] = useState(false);
+  const [currentGame, setCurrentGame] = useState(1);
+  const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const initializeGame = () => {
-    const selectedPlants = plants.slice(0, pairsCount);
+  // Email validation
+  const validateEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const handleEmailSubmit = () => {
+    if (!validateEmail(email)) {
+      toast.error(t.invalidEmail);
+      return;
+    }
+    initializeGame();
+    setGameState("playing");
+  };
+
+  const initializeGame = useCallback(() => {
+    const selectedPlants = plants.slice(0, config.pairsCount);
     const cardPairs: Card[] = [];
     
     selectedPlants.forEach((plant, index) => {
-      // Create two cards for each plant
       cardPairs.push({
         id: index * 2,
         plantId: plant.id,
@@ -114,15 +207,60 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
     setMoves(0);
     setMatchedPairs(0);
     setIsLocked(false);
-    setGameWon(false);
+    setTimeLeft(GAME_DURATION);
+  }, [config.pairsCount]);
+
+  // Timer effect
+  useEffect(() => {
+    if (gameState === "playing" && timeLeft > 0) {
+      timerRef.current = setTimeout(() => {
+        setTimeLeft(prev => prev - 1);
+      }, 1000);
+    } else if (gameState === "playing" && timeLeft === 0) {
+      // Time's up!
+      setGameState("gameOver");
+    }
+
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, [gameState, timeLeft]);
+
+  // Check for game win
+  useEffect(() => {
+    if (gameState === "playing" && matchedPairs === config.pairsCount) {
+      // Clear timer
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+      
+      if (currentGame >= config.gamesToWin) {
+        // All games completed!
+        setGameState("victory");
+        fireConfetti();
+      } else {
+        // Move to next game
+        setGameState("gameSuccess");
+      }
+    }
+  }, [matchedPairs, config.pairsCount, currentGame, config.gamesToWin, gameState]);
+
+  const handleNextGame = () => {
+    setCurrentGame(prev => prev + 1);
+    initializeGame();
+    setGameState("playing");
   };
 
-  useEffect(() => {
+  const handleRestart = () => {
+    setCurrentGame(1);
     initializeGame();
-  }, [level]);
+    setGameState("playing");
+  };
 
   const handleCardClick = (cardId: number) => {
-    if (isLocked) return;
+    if (isLocked || gameState !== "playing") return;
     
     const card = cards.find(c => c.id === cardId);
     if (!card || card.isFlipped || card.isMatched) return;
@@ -151,21 +289,10 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
               ? { ...c, isMatched: true } 
               : c
           ));
-          setMatchedPairs(m => {
-            const newCount = m + 1;
-            if (newCount === pairsCount) {
-              setGameWon(true);
-              confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
-              });
-            }
-            return newCount;
-          });
+          setMatchedPairs(m => m + 1);
           setFlippedCards([]);
           setIsLocked(false);
-        }, 500);
+        }, 300);
       } else {
         // No match - flip back
         setTimeout(() => {
@@ -176,13 +303,18 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
           ));
           setFlippedCards([]);
           setIsLocked(false);
-        }, 1000);
+        }, 800);
       }
     }
   };
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(DISCOUNT_CODES[level]);
+    toast.success(t.couponCopied);
+  };
+
   const getGridCols = () => {
-    switch (pairsCount) {
+    switch (config.pairsCount) {
       case 4: return "grid-cols-4";
       case 6: return "grid-cols-4";
       case 8: return "grid-cols-4";
@@ -190,25 +322,96 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
     }
   };
 
-  if (gameWon) {
+  const getTimerColor = () => {
+    if (timeLeft > 20) return "bg-green-500";
+    if (timeLeft > 10) return "bg-orange-500";
+    return "bg-red-500";
+  };
+
+  // Email input screen
+  if (gameState === "email") {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="max-w-md mx-auto text-center">
+          <div className="text-6xl mb-4">🌿</div>
+          <h1 className="font-serif text-2xl font-bold text-foreground mb-4">
+            {t.title} - {language === "fr" ? "Niveau" : "Level"} {level}
+          </h1>
+          <p className="text-muted-foreground mb-6 text-sm px-2 bg-primary/5 py-3 rounded-lg border border-primary/10">
+            {t.instructions}
+          </p>
+          <div className="space-y-4">
+            <Input
+              type="email"
+              placeholder={t.emailPlaceholder}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="text-center"
+            />
+            <Button
+              onClick={handleEmailSubmit}
+              className="w-full btn-primary-custom text-white"
+            >
+              {t.start}
+            </Button>
+            <Button
+              onClick={onBack}
+              variant="outline"
+              className="w-full"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              {t.back}
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Game success screen (between games)
+  if (gameState === "gameSuccess") {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="text-center max-w-md mx-auto">
-          <div className="text-6xl mb-4">🏆</div>
-          <h2 className="font-serif text-3xl font-bold text-foreground mb-2">
-            {t.victory}
+          <div className="text-6xl mb-4">✅</div>
+          <h2 className="font-serif text-2xl font-bold text-foreground mb-2">
+            {t.gameSuccess}
           </h2>
           <p className="text-muted-foreground text-lg mb-2">
-            {t.victoryMsg}
+            {t.game} {currentGame}/{config.gamesToWin}
           </p>
-          <p className="text-primary text-xl font-semibold mb-6">
+          <p className="text-primary text-lg font-semibold mb-6">
             {t.moves}: {moves}
+          </p>
+          
+          <Button
+            onClick={handleNextGame}
+            className="w-full btn-primary-custom text-white"
+          >
+            {t.nextGame}
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Game over screen
+  if (gameState === "gameOver") {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="text-center max-w-md mx-auto">
+          <div className="text-6xl mb-4">⏱️</div>
+          <h2 className="font-serif text-2xl font-bold text-foreground mb-2">
+            {t.gameOver}
+          </h2>
+          <p className="text-muted-foreground text-lg mb-6">
+            {t.gameOverMsg}
           </p>
           
           <div className="flex flex-col gap-3">
             <Button
-              onClick={initializeGame}
-              className="btn-primary-custom text-white w-full"
+              onClick={handleRestart}
+              className="w-full btn-primary-custom text-white"
             >
               <RotateCcw className="w-4 h-4 mr-2" />
               {t.playAgain}
@@ -227,11 +430,66 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
     );
   }
 
+  // Victory screen with coupon
+  if (gameState === "victory") {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <div className="text-center max-w-md mx-auto">
+          <div className="text-6xl mb-4">🏆</div>
+          <h2 className="font-serif text-3xl font-bold text-foreground mb-2">
+            {t.victory}
+          </h2>
+          <p className="text-muted-foreground text-lg mb-6">
+            {t.victoryMsg}
+          </p>
+          
+          {/* Coupon section */}
+          <div className="bg-primary/10 border-2 border-primary rounded-xl p-6 mb-6">
+            <p className="text-foreground font-medium mb-2">{t.couponText}</p>
+            <button
+              onClick={copyToClipboard}
+              className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-bold text-xl hover:bg-primary/90 transition-colors"
+            >
+              {DISCOUNT_CODES[level]} (-{DISCOUNT_AMOUNTS[level]})
+            </button>
+          </div>
+          
+          <div className="flex flex-col gap-3">
+            <Button
+              onClick={() => window.open("https://www.peita.fr/boutique", "_blank")}
+              className="w-full btn-primary-custom text-white"
+            >
+              <ExternalLink className="w-4 h-4 mr-2" />
+              {t.visitShop}
+            </Button>
+            <Button
+              onClick={handleRestart}
+              variant="outline"
+              className="w-full"
+            >
+              <RotateCcw className="w-4 h-4 mr-2" />
+              {t.playAgain}
+            </Button>
+            <Button
+              onClick={onBack}
+              variant="ghost"
+              className="w-full"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              {t.back}
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Main game screen
   return (
     <div className="min-h-screen bg-background p-4">
       <div className="max-w-lg mx-auto">
         {/* Header */}
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-3">
           <Button
             onClick={onBack}
             variant="ghost"
@@ -242,12 +500,12 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
             {t.back}
           </Button>
           
-          <h1 className="font-serif text-xl font-bold text-foreground">
-            {t.title}
+          <h1 className="font-serif text-lg font-bold text-foreground">
+            {t.game} {currentGame}/{config.gamesToWin}
           </h1>
           
           <Button
-            onClick={initializeGame}
+            onClick={handleRestart}
             variant="ghost"
             size="sm"
             className="text-muted-foreground"
@@ -256,10 +514,22 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
           </Button>
         </div>
 
-        {/* Instructions */}
-        <p className="text-center text-sm text-muted-foreground mb-4 px-2 bg-primary/5 py-3 rounded-lg border border-primary/10">
-          {t.instructions}
-        </p>
+        {/* Timer */}
+        <div className="mb-4">
+          <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+              <Clock className="w-4 h-4" />
+              <span>{t.timeLeft}</span>
+            </div>
+            <span className={`text-lg font-bold ${timeLeft <= 10 ? 'text-red-500' : 'text-foreground'}`}>
+              {timeLeft}s
+            </span>
+          </div>
+          <Progress 
+            value={(timeLeft / GAME_DURATION) * 100} 
+            className="h-2"
+          />
+        </div>
 
         {/* Stats */}
         <div className="flex justify-center gap-8 mb-4">
@@ -268,7 +538,7 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
             <p className="text-sm text-muted-foreground">{t.moves}</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold text-primary">{matchedPairs}/{pairsCount}</p>
+            <p className="text-2xl font-bold text-primary">{matchedPairs}/{config.pairsCount}</p>
             <p className="text-sm text-muted-foreground">{t.pairs}</p>
           </div>
         </div>
