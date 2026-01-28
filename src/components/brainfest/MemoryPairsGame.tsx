@@ -1,8 +1,18 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, RotateCcw, Trophy } from "lucide-react";
+import { ArrowLeft, RotateCcw } from "lucide-react";
 import { Language } from "@/data/quizData";
 import confetti from "canvas-confetti";
+
+// Import plant images
+import lavenderImg from "@/assets/plants/lavender.png";
+import chamomileImg from "@/assets/plants/chamomile.png";
+import mintImg from "@/assets/plants/mint.png";
+import gingerImg from "@/assets/plants/ginger.png";
+import echinaceaImg from "@/assets/plants/echinacea.png";
+import thymeImg from "@/assets/plants/thyme.png";
+import rosemaryImg from "@/assets/plants/rosemary.png";
+import sageImg from "@/assets/plants/sage.png";
 
 interface MemoryPairsGameProps {
   level: 1 | 2 | 3;
@@ -14,20 +24,20 @@ interface Card {
   id: number;
   plantId: number;
   name: { fr: string; en: string };
-  emoji: string;
+  image: string;
   isFlipped: boolean;
   isMatched: boolean;
 }
 
 const plants = [
-  { id: 1, name: { fr: "Lavande", en: "Lavender" }, emoji: "💜" },
-  { id: 2, name: { fr: "Camomille", en: "Chamomile" }, emoji: "🌼" },
-  { id: 3, name: { fr: "Menthe", en: "Mint" }, emoji: "🌿" },
-  { id: 4, name: { fr: "Gingembre", en: "Ginger" }, emoji: "🫚" },
-  { id: 5, name: { fr: "Échinacée", en: "Echinacea" }, emoji: "🌸" },
-  { id: 6, name: { fr: "Thym", en: "Thyme" }, emoji: "🌱" },
-  { id: 7, name: { fr: "Romarin", en: "Rosemary" }, emoji: "🪻" },
-  { id: 8, name: { fr: "Sauge", en: "Sage" }, emoji: "🍃" },
+  { id: 1, name: { fr: "Lavande", en: "Lavender" }, image: lavenderImg },
+  { id: 2, name: { fr: "Camomille", en: "Chamomile" }, image: chamomileImg },
+  { id: 3, name: { fr: "Menthe", en: "Mint" }, image: mintImg },
+  { id: 4, name: { fr: "Gingembre", en: "Ginger" }, image: gingerImg },
+  { id: 5, name: { fr: "Échinacée", en: "Echinacea" }, image: echinaceaImg },
+  { id: 6, name: { fr: "Thym", en: "Thyme" }, image: thymeImg },
+  { id: 7, name: { fr: "Romarin", en: "Rosemary" }, image: rosemaryImg },
+  { id: 8, name: { fr: "Sauge", en: "Sage" }, image: sageImg },
 ];
 
 const translations = {
@@ -39,7 +49,7 @@ const translations = {
     victoryMsg: "Vous avez trouvé toutes les paires !",
     playAgain: "Rejouer",
     back: "Retour",
-    clickToStart: "Cliquez sur une carte pour commencer",
+    instructions: "Retournez les cartes pour trouver les paires de plantes identiques. Mémorisez leur position pour les retrouver !",
   },
   en: {
     title: "Plant Memory",
@@ -49,7 +59,7 @@ const translations = {
     victoryMsg: "You found all the pairs!",
     playAgain: "Play Again",
     back: "Back",
-    clickToStart: "Click a card to start",
+    instructions: "Flip the cards to find matching plant pairs. Remember their positions to find them again!",
   },
 };
 
@@ -83,7 +93,7 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
         id: index * 2,
         plantId: plant.id,
         name: plant.name,
-        emoji: plant.emoji,
+        image: plant.image,
         isFlipped: false,
         isMatched: false,
       });
@@ -91,7 +101,7 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
         id: index * 2 + 1,
         plantId: plant.id,
         name: plant.name,
-        emoji: plant.emoji,
+        image: plant.image,
         isFlipped: false,
         isMatched: false,
       });
@@ -221,7 +231,7 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
     <div className="min-h-screen bg-background p-4">
       <div className="max-w-lg mx-auto">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-4">
           <Button
             onClick={onBack}
             variant="ghost"
@@ -246,8 +256,13 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
           </Button>
         </div>
 
+        {/* Instructions */}
+        <p className="text-center text-sm text-muted-foreground mb-4 px-2 bg-primary/5 py-3 rounded-lg border border-primary/10">
+          {t.instructions}
+        </p>
+
         {/* Stats */}
-        <div className="flex justify-center gap-8 mb-6">
+        <div className="flex justify-center gap-8 mb-4">
           <div className="text-center">
             <p className="text-2xl font-bold text-primary">{moves}</p>
             <p className="text-sm text-muted-foreground">{t.moves}</p>
@@ -266,20 +281,24 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
               onClick={() => handleCardClick(card.id)}
               disabled={card.isFlipped || card.isMatched || isLocked}
               className={`
-                aspect-square rounded-xl text-4xl sm:text-5xl
+                aspect-square rounded-xl
                 transition-all duration-300 transform
                 ${card.isFlipped || card.isMatched
-                  ? "bg-primary/20 border-2 border-primary scale-100"
-                  : "bg-muted border-2 border-border hover:border-primary/50 hover:scale-105"
+                  ? "bg-white border-2 border-primary scale-100 shadow-md"
+                  : "bg-gradient-to-br from-primary/20 to-primary/40 border-2 border-primary/30 hover:border-primary/60 hover:scale-105"
                 }
-                ${card.isMatched ? "opacity-60" : ""}
-                flex flex-col items-center justify-center
+                ${card.isMatched ? "opacity-70" : ""}
+                flex flex-col items-center justify-center p-1 overflow-hidden
               `}
             >
               {card.isFlipped || card.isMatched ? (
                 <>
-                  <span className="text-3xl sm:text-4xl">{card.emoji}</span>
-                  <span className="text-[10px] sm:text-xs text-foreground mt-1 font-medium">
+                  <img 
+                    src={card.image} 
+                    alt={card.name[language]} 
+                    className="w-full h-3/4 object-contain"
+                  />
+                  <span className="text-[8px] sm:text-[10px] text-foreground font-medium truncate w-full text-center">
                     {card.name[language]}
                   </span>
                 </>
@@ -289,10 +308,6 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
             </button>
           ))}
         </div>
-
-        <p className="text-center text-sm text-muted-foreground mt-6">
-          {t.clickToStart}
-        </p>
       </div>
     </div>
   );

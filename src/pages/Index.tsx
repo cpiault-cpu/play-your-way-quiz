@@ -129,11 +129,18 @@ const Index = () => {
                 </div>
               </section>
 
-              {/* Memory Pairs Section */}
-              <section className="mb-8 sm:mb-10">
+              {/* Visual separator */}
+              <div className="my-8 sm:my-10 flex items-center gap-4">
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+                <span className="text-primary/50 text-2xl">🌿</span>
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+              </div>
+
+              {/* Memory Pairs Section - with different background */}
+              <section className="mb-8 sm:mb-10 bg-accent/30 -mx-3 sm:-mx-4 px-3 sm:px-4 py-6 sm:py-8 rounded-2xl border border-primary/20">
                 <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-foreground mb-4 sm:mb-5 flex items-center gap-2 sm:gap-3">
-                  <span className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center text-lg sm:text-xl md:text-2xl flex-shrink-0">🌿</span>
-                  <span className="truncate">{language === "fr" ? "Memory Plantes" : "Plant Memory"}</span>
+                  <span className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-primary/20 flex items-center justify-center text-lg sm:text-xl md:text-2xl flex-shrink-0">🌿</span>
+                  <span className="truncate">{language === "fr" ? "Memory Plantes Médicinales" : "Medicinal Plant Memory"}</span>
                 </h2>
                 {/* Mobile: vertical stack */}
                 <div className="md:hidden flex flex-col gap-4 min-w-0">
