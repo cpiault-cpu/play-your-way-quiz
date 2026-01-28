@@ -116,7 +116,7 @@ const Index = () => {
                   <span className="truncate">{language === "fr" ? "Mémoire Musicale" : "Musical Memory"}</span>
                 </h2>
                 {/* Explanatory text about memory type */}
-                <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-5 leading-relaxed">
+                <p className="text-sm sm:text-base text-foreground/70 mb-4 sm:mb-5 leading-relaxed">
                   {language === "fr" 
                     ? "Ce quiz de reproduction de suites sonores évalue la mémoire auditive séquentielle et la capacité à maintenir une information dans le temps court. La répétition progressive des motifs renforce les mécanismes d'anticipation et d'apprentissage implicite."
                     : "This sound sequence reproduction quiz evaluates sequential auditory memory and the ability to maintain information over a short period. The progressive repetition of patterns reinforces anticipation mechanisms and implicit learning."
@@ -150,7 +150,7 @@ const Index = () => {
                   <span className="truncate">{language === "fr" ? "Memory Plantes Médicinales" : "Medicinal Plant Memory"}</span>
                 </h2>
                 {/* Explanatory text about memory type */}
-                <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-5 leading-relaxed">
+                <p className="text-sm sm:text-base text-foreground/70 mb-4 sm:mb-5 leading-relaxed">
                   {language === "fr" 
                     ? "Ce quiz de reconnaissance de paires sollicite la mémoire de travail et la mémoire visuelle en mobilisant des processus d'attention soutenue et d'encodage rapide. La contrainte temporelle de 30 secondes favorise l'activation des mécanismes de consolidation et de récupération de l'information."
                     : "This pair recognition quiz engages working memory and visual memory by mobilizing sustained attention and rapid encoding processes. The 30-second time constraint promotes the activation of information consolidation and retrieval mechanisms."
