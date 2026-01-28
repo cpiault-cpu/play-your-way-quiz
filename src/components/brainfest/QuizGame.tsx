@@ -199,12 +199,12 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
               <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8">{t.enterEmail}</p>
 
               <div className="space-y-3 sm:space-y-4">
-                <Input
+              <Input
                   type="email"
                   placeholder={t.emailPlaceholder}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-muted border-border text-foreground text-base"
+                  className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 text-base"
                 />
                 <Button
                   onClick={handleStartQuiz}
