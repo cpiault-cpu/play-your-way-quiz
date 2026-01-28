@@ -59,7 +59,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               }
             </p>
 
-            <p className="text-base sm:text-lg md:text-lg text-amber-400 font-semibold">
+            <p className="text-base sm:text-lg md:text-lg text-amber-400">
               🎁 {language === "fr" 
                 ? "Apprendre, Jouez, Gagnez."
                 : "Learn, Play, Win."
