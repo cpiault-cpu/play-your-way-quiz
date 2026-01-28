@@ -27,30 +27,30 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
   return (
     <section className="bg-[#3E5D58] relative overflow-hidden">
       <div className="relative z-10 max-w-6xl mx-auto px-3 sm:px-4 py-6 md:py-12">
-        {/* Top bar with language toggle and logo on mobile */}
-        <div className="flex justify-between items-center mb-4 md:mb-6">
-          {/* Logo - visible only on mobile */}
-          <a 
-            href="https://www.peita.fr" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="md:hidden"
-          >
-            <img 
-              src="/images/peita-logo-transparent.png" 
-              alt="PEITA Logo" 
-              className="h-10 w-auto drop-shadow-lg opacity-80"
-            />
-          </a>
-          
+        {/* Top bar with language toggle */}
+        <div className="flex flex-col items-end mb-4 md:mb-6">
           <button
             onClick={onToggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all ml-auto"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all"
             aria-label={language === "fr" ? "Switch to English" : "Passer en Français"}
           >
             <span className="text-base">{language === "fr" ? "🇬🇧" : "🇫🇷"}</span>
             <span className="font-medium text-xs sm:text-sm">{language === "fr" ? "EN" : "FR"}</span>
           </button>
+          
+          {/* Logo below flag - visible only on mobile */}
+          <a 
+            href="https://www.peita.fr" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="md:hidden mt-3"
+          >
+            <img 
+              src="/images/peita-logo-transparent.png" 
+              alt="PEITA Logo" 
+              className="h-12 w-auto drop-shadow-lg opacity-80"
+            />
+          </a>
         </div>
 
         {/* Content - Stack on mobile, side by side on desktop */}
@@ -62,7 +62,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             transition={{ duration: 0.6 }}
             className="text-left w-full"
           >
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-normal text-white mb-3 md:mb-4 tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-normal text-white mb-3 md:mb-4 tracking-tight leading-tight">
               {language === "fr" ? "Testez vos connaissances et votre mémoire" : "Test your knowledge and memory"}
             </h1>
             
