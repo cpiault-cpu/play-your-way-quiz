@@ -106,11 +106,11 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                 </>
               ) : (
                 <>
-                  A healthy memory is cultivated through both nutrition and exercise. An anti-inflammatory diet rich in omega-3s is essential.
+                  A healthy memory is shaped by both nutrition and mental exercise. An anti-inflammatory diet rich in omega-3s plays a key role in supporting brain health.
                   <br /><br />
-                  Learning, stimulating your memory, and taking on new challenges throughout life is also essential to keep your mind sharp and curious.
+                  Just as important is staying mentally active learning, challenging your memory, and exploring new ideas throughout life helps keep the mind sharp and curious.
                   <br /><br />
-                  That's why we created this series of quizzes designed to train your brain with a smile.
+                  That's why we created this series of quizzes, designed to train your brain in a playful and engaging way.
                 </>
               )}
             </p>
