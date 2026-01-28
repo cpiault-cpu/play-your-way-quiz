@@ -261,6 +261,23 @@ const Index = () => {
             </motion.div>
           )}
 
+          {/* Plants category intro */}
+          {selectedCategory === "plants" && (
+            <motion.div
+              className="mt-8 sm:mt-10 mb-6"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-3xl">
+                {language === "fr" 
+                  ? "Les plantes médicinales murmurent depuis toujours leurs secrets à ceux qui savent les écouter."
+                  : "Medicinal plants have always whispered their secrets to those who know how to listen."
+                }
+              </p>
+            </motion.div>
+          )}
+
           {/* Quizzes list */}
           {selectedCategory !== "memory" &&
             [1, 2, 3].map((level) => {
