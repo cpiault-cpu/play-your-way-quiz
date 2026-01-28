@@ -244,6 +244,23 @@ const Index = () => {
             </motion.div>
           )}
 
+          {/* Micronutrition category intro */}
+          {selectedCategory === "micronutrition" && (
+            <motion.div
+              className="mt-8 sm:mt-10 mb-6"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-3xl">
+                {language === "fr" 
+                  ? "Comment vitamines, minéraux et oligo-éléments influencent chaque fonction du corps. Ces équilibres invisibles qui nous soutiennent chaque jour. Affinez vos connaissances pour avoir des échanges encore plus intéressants quand vous discutez avec votre naturopathe."
+                  : "How vitamins, minerals and trace elements influence every function of the body. These invisible balances that support us every day. Sharpen your knowledge to have even more interesting conversations with your naturopath."
+                }
+              </p>
+            </motion.div>
+          )}
+
           {/* Quizzes list */}
           {selectedCategory !== "memory" &&
             [1, 2, 3].map((level) => {
