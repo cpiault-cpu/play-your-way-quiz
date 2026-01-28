@@ -47,6 +47,7 @@ const LevelSection = ({ level, quizzes, language, onPlayQuiz }: LevelSectionProp
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
+            className="h-full"
           >
             <QuizCard
               quiz={quiz}
@@ -58,7 +59,7 @@ const LevelSection = ({ level, quizzes, language, onPlayQuiz }: LevelSectionProp
       </div>
 
       {/* Desktop: grid */}
-      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 min-w-0">
+      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 min-w-0 items-stretch">
         {levelQuizzes.map((quiz, index) => (
           <motion.div
             key={quiz.id}
@@ -66,6 +67,7 @@ const LevelSection = ({ level, quizzes, language, onPlayQuiz }: LevelSectionProp
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
+            className="h-full"
           >
             <QuizCard
               quiz={quiz}

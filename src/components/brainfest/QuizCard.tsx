@@ -47,7 +47,7 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
 
   return (
     <motion.div 
-      className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-5 sm:p-6"
+      className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-5 sm:p-6 h-full flex flex-col"
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
@@ -62,7 +62,7 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
         </span>
       </div>
 
-      <h3 className="text-lg sm:text-xl font-bold text-foreground mb-5 pr-14 leading-snug break-words">
+      <h3 className="text-lg sm:text-xl font-bold text-foreground mb-5 pr-14 leading-snug break-words flex-grow min-h-[3.5rem]">
         {quiz.title[language]}
       </h3>
 
