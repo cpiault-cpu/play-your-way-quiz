@@ -404,6 +404,18 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                 </div>
               )}
 
+              {/* Always show shop button at the end */}
+              {score < quiz.questions.length && (
+                <Button
+                  className="btn-primary-custom text-white w-full mb-4 text-sm sm:text-base"
+                  asChild
+                >
+                  <a href="https://www.peita.fr/boutique" target="_blank" rel="noopener noreferrer">
+                    {language === "fr" ? "Visiter la boutique" : "Visit the shop"}
+                  </a>
+                </Button>
+              )}
+
               <Button
                 onClick={onBack}
                 className="btn-primary-custom text-white w-full sm:w-auto text-sm sm:text-base"
