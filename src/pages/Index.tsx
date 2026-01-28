@@ -126,13 +126,14 @@ const Index = () => {
                 </div>
                 
                 {/* Description */}
-                <p className="text-sm sm:text-base text-muted-foreground mb-6 leading-relaxed max-w-3xl">
-                  {language === "fr" 
-                    ? "Ce quiz de reproduction de suites sonores évalue la mémoire auditive séquentielle et la capacité à maintenir une information dans le temps court. La répétition progressive des motifs renforce les mécanismes d'anticipation et d'apprentissage implicite."
-                    : "This sound sequence reproduction quiz evaluates sequential auditory memory and the ability to maintain information over a short period. The progressive repetition of patterns reinforces anticipation mechanisms and implicit learning."
-                  }
-                </p>
-                
+                <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
+                  <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
+                    {language === "fr" 
+                      ? "Ce quiz de reproduction de suites sonores évalue la mémoire auditive séquentielle et la capacité à maintenir une information dans le temps court. La répétition progressive des motifs renforce les mécanismes d'anticipation et d'apprentissage implicite."
+                      : "This sound sequence reproduction quiz evaluates sequential auditory memory and the ability to maintain information over a short period. The progressive repetition of patterns reinforces anticipation mechanisms and implicit learning."
+                    }
+                  </p>
+                </div>
                 {/* Mobile: vertical stack */}
                 <div className="md:hidden flex flex-col gap-4 min-w-0">
                   {[1, 2, 3].map((level, index) => (
@@ -187,12 +188,14 @@ const Index = () => {
                 </div>
                 
                 {/* Description */}
-                <p className="text-sm sm:text-base text-muted-foreground mb-6 leading-relaxed max-w-3xl">
-                  {language === "fr" 
-                    ? "Ce quiz de reconnaissance de paires sollicite la mémoire de travail et la mémoire visuelle en mobilisant des processus d'attention soutenue et d'encodage rapide. La contrainte temporelle de 30 secondes favorise l'activation des mécanismes de consolidation et de récupération de l'information."
-                    : "This pair recognition quiz engages working memory and visual memory by mobilizing sustained attention and rapid encoding processes. The 30-second time constraint promotes the activation of information consolidation and retrieval mechanisms."
-                  }
-                </p>
+                <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
+                  <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
+                    {language === "fr" 
+                      ? "Ce quiz de reconnaissance de paires sollicite la mémoire de travail et la mémoire visuelle en mobilisant des processus d'attention soutenue et d'encodage rapide. La contrainte temporelle de 30 secondes favorise l'activation des mécanismes de consolidation et de récupération de l'information."
+                      : "This pair recognition quiz engages working memory and visual memory by mobilizing sustained attention and rapid encoding processes. The 30-second time constraint promotes the activation of information consolidation and retrieval mechanisms."
+                    }
+                  </p>
+                </div>
                 
                 {/* Mobile: vertical stack */}
                 <div className="md:hidden flex flex-col gap-4 min-w-0">
@@ -235,12 +238,14 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-3xl">
-                {language === "fr" 
-                  ? "Rien n'est plus merveilleux que les rouages du vivant, et explorer ce qui se passe sous la surface. Si le sujet vous passionne comme nous, ces quiz vont vous plaire."
-                  : "Nothing is more wonderful than the inner workings of life, and exploring what happens beneath the surface. If you're as passionate about this subject as we are, you'll love these quizzes."
-                }
-              </p>
+              <div className="bg-white rounded-xl p-4 shadow-sm border border-border/30">
+                <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
+                  {language === "fr" 
+                    ? "Rien n'est plus merveilleux que les rouages du vivant, et explorer ce qui se passe sous la surface. Si le sujet vous passionne comme nous, ces quiz vont vous plaire."
+                    : "Nothing is more wonderful than the inner workings of life, and exploring what happens beneath the surface. If you're as passionate about this subject as we are, you'll love these quizzes."
+                  }
+                </p>
+              </div>
             </motion.div>
           )}
 
@@ -252,12 +257,14 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-3xl">
-                {language === "fr" 
-                  ? "Comment vitamines, minéraux et oligo-éléments influencent chaque fonction du corps. Ces équilibres invisibles qui nous soutiennent chaque jour. Affinez vos connaissances pour avoir des échanges encore plus intéressants quand vous discutez avec votre naturopathe."
-                  : "How vitamins, minerals and trace elements influence every function of the body. These invisible balances that support us every day. Sharpen your knowledge to have even more interesting conversations with your naturopath."
-                }
-              </p>
+              <div className="bg-white rounded-xl p-4 shadow-sm border border-border/30">
+                <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
+                  {language === "fr" 
+                    ? "Comment vitamines, minéraux et oligo-éléments influencent chaque fonction du corps. Ces équilibres invisibles qui nous soutiennent chaque jour. Affinez vos connaissances pour avoir des échanges encore plus intéressants quand vous discutez avec votre naturopathe."
+                    : "How vitamins, minerals and trace elements influence every function of the body. These invisible balances that support us every day. Sharpen your knowledge to have even more interesting conversations with your naturopath."
+                  }
+                </p>
+              </div>
             </motion.div>
           )}
 
@@ -269,12 +276,14 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
             >
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-3xl">
-                {language === "fr" 
-                  ? "Les plantes médicinales murmurent depuis toujours leurs secrets à ceux qui savent les écouter."
-                  : "Medicinal plants have always whispered their secrets to those who know how to listen."
-                }
-              </p>
+              <div className="bg-white rounded-xl p-4 shadow-sm border border-border/30">
+                <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
+                  {language === "fr" 
+                    ? "Les plantes médicinales murmurent depuis toujours leurs secrets à ceux qui savent les écouter."
+                    : "Medicinal plants have always whispered their secrets to those who know how to listen."
+                  }
+                </p>
+              </div>
             </motion.div>
           )}
 
