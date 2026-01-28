@@ -111,10 +111,17 @@ const Index = () => {
             <>
               {/* Musical Memory Section */}
               <section className="mt-8 sm:mt-10 md:mt-12 mb-8 sm:mb-10">
-                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-foreground mb-4 sm:mb-5 flex items-center gap-2 sm:gap-3">
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-foreground mb-3 sm:mb-4 flex items-center gap-2 sm:gap-3">
                   <span className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center text-lg sm:text-xl md:text-2xl flex-shrink-0">🎹</span>
                   <span className="truncate">{language === "fr" ? "Mémoire Musicale" : "Musical Memory"}</span>
                 </h2>
+                {/* Explanatory text about memory type */}
+                <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-5 leading-relaxed">
+                  {language === "fr" 
+                    ? "Ce quiz de reproduction de suites sonores évalue la mémoire auditive séquentielle et la capacité à maintenir une information dans le temps court. La répétition progressive des motifs renforce les mécanismes d'anticipation et d'apprentissage implicite."
+                    : "This sound sequence reproduction quiz evaluates sequential auditory memory and the ability to maintain information over a short period. The progressive repetition of patterns reinforces anticipation mechanisms and implicit learning."
+                  }
+                </p>
                 {/* Mobile: vertical stack */}
                 <div className="md:hidden flex flex-col gap-4 min-w-0">
                   <MusicalMemoryCard level={1} language={language} onPlay={handlePlayMusicalMemory} />
