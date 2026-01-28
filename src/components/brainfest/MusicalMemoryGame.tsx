@@ -109,9 +109,9 @@ const translations = {
     back: "Retour",
     start: "Commencer",
     instructions: "Écoutez la séquence de notes et reproduisez-la en cliquant sur les touches colorées dans le bon ordre.",
-    level1Desc: "3 exercices • 4 notes",
-    level2Desc: "3 exercices • 7 notes",
-    level3Desc: "3 exercices • 8 notes",
+    level1Desc: "4 exercices • 4 notes",
+    level2Desc: "4 exercices • 5 notes",
+    level3Desc: "4 exercices • 6 notes",
     of: "sur",
     couponTitle: "Félicitations !",
     couponText: "Voici votre code de réduction :",
@@ -134,9 +134,9 @@ const translations = {
     back: "Back",
     start: "Start",
     instructions: "Listen to the sequence of notes and reproduce it by clicking the colored keys in the correct order.",
-    level1Desc: "3 exercises • 4 notes",
-    level2Desc: "3 exercises • 7 notes",
-    level3Desc: "3 exercises • 8 notes",
+    level1Desc: "4 exercises • 4 notes",
+    level2Desc: "4 exercises • 5 notes",
+    level3Desc: "4 exercises • 6 notes",
     of: "of",
     couponTitle: "Congratulations!",
     couponText: "Here is your discount code:",
@@ -144,11 +144,11 @@ const translations = {
   },
 };
 
-// Level configuration - 3 exercises per level
+// Level configuration - 4 exercises per level
 const LEVEL_CONFIG = {
-  1: { notesPerSequence: 4, exercisesToWin: 3, useInstruments: true },
-  2: { notesPerSequence: 7, exercisesToWin: 3, useInstruments: true },
-  3: { notesPerSequence: 8, exercisesToWin: 3, useInstruments: true },
+  1: { notesPerSequence: 4, exercisesToWin: 4, useInstruments: true },
+  2: { notesPerSequence: 5, exercisesToWin: 4, useInstruments: true },
+  3: { notesPerSequence: 6, exercisesToWin: 4, useInstruments: true },
 };
 
 // Discount codes per level
@@ -186,309 +186,503 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
     return audioContextRef.current;
   }, []);
 
-  // Play instrument sound based on type - improved rich synthesis
+  // Play instrument sound based on type - enhanced with reverb and richer synthesis
   const playInstrumentSound = useCallback((instrument: InstrumentType, frequency: number, audioContext: AudioContext) => {
     const currentTime = audioContext.currentTime;
     
-    // Create master gain for all instruments
+    // Create master gain for all instruments - increased volume
     const masterGain = audioContext.createGain();
-    masterGain.gain.setValueAtTime(0.6, currentTime);
-    masterGain.connect(audioContext.destination);
+    masterGain.gain.setValueAtTime(0.75, currentTime);
+    
+    // Create a simple reverb using delay and feedback
+    const convolver = audioContext.createConvolver();
+    const reverbGain = audioContext.createGain();
+    const dryGain = audioContext.createGain();
+    
+    // Create impulse response for reverb
+    const impulseLength = audioContext.sampleRate * 0.8;
+    const impulse = audioContext.createBuffer(2, impulseLength, audioContext.sampleRate);
+    for (let channel = 0; channel < 2; channel++) {
+      const channelData = impulse.getChannelData(channel);
+      for (let i = 0; i < impulseLength; i++) {
+        channelData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / impulseLength, 2.5);
+      }
+    }
+    convolver.buffer = impulse;
+    
+    reverbGain.gain.setValueAtTime(0.25, currentTime);
+    dryGain.gain.setValueAtTime(0.85, currentTime);
+    
+    masterGain.connect(dryGain);
+    masterGain.connect(convolver);
+    convolver.connect(reverbGain);
+    dryGain.connect(audioContext.destination);
+    reverbGain.connect(audioContext.destination);
     
     switch (instrument) {
       case "piano": {
-        // Rich piano with harmonics
+        // Rich grand piano with harmonics and resonance
         const fundamentalGain = audioContext.createGain();
         const osc1 = audioContext.createOscillator();
         const osc2 = audioContext.createOscillator();
         const osc3 = audioContext.createOscillator();
+        const osc4 = audioContext.createOscillator();
         
         osc1.type = "sine";
         osc2.type = "sine";
         osc3.type = "sine";
+        osc4.type = "triangle";
         osc1.frequency.setValueAtTime(frequency, currentTime);
         osc2.frequency.setValueAtTime(frequency * 2, currentTime);
         osc3.frequency.setValueAtTime(frequency * 3, currentTime);
+        osc4.frequency.setValueAtTime(frequency * 4, currentTime);
         
         const gain1 = audioContext.createGain();
         const gain2 = audioContext.createGain();
         const gain3 = audioContext.createGain();
+        const gain4 = audioContext.createGain();
         
-        gain1.gain.setValueAtTime(0.5, currentTime);
-        gain2.gain.setValueAtTime(0.2, currentTime);
-        gain3.gain.setValueAtTime(0.1, currentTime);
+        gain1.gain.setValueAtTime(0.55, currentTime);
+        gain2.gain.setValueAtTime(0.25, currentTime);
+        gain3.gain.setValueAtTime(0.12, currentTime);
+        gain4.gain.setValueAtTime(0.06, currentTime);
         
+        // Hammer attack simulation
         fundamentalGain.gain.setValueAtTime(0, currentTime);
-        fundamentalGain.gain.linearRampToValueAtTime(0.7, currentTime + 0.01);
-        fundamentalGain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.2);
+        fundamentalGain.gain.linearRampToValueAtTime(0.8, currentTime + 0.005);
+        fundamentalGain.gain.setValueAtTime(0.75, currentTime + 0.02);
+        fundamentalGain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.5);
         
         osc1.connect(gain1).connect(fundamentalGain);
         osc2.connect(gain2).connect(fundamentalGain);
         osc3.connect(gain3).connect(fundamentalGain);
+        osc4.connect(gain4).connect(fundamentalGain);
         fundamentalGain.connect(masterGain);
         
         osc1.start(currentTime);
         osc2.start(currentTime);
         osc3.start(currentTime);
-        osc1.stop(currentTime + 1.2);
-        osc2.stop(currentTime + 1.2);
-        osc3.stop(currentTime + 1.2);
+        osc4.start(currentTime);
+        osc1.stop(currentTime + 1.5);
+        osc2.stop(currentTime + 1.5);
+        osc3.stop(currentTime + 1.5);
+        osc4.stop(currentTime + 1.5);
         break;
       }
       case "violin": {
-        // Warm violin with vibrato
+        // Rich violin with vibrato and bowing texture
         const osc = audioContext.createOscillator();
+        const osc2 = audioContext.createOscillator();
         const vibrato = audioContext.createOscillator();
         const vibratoGain = audioContext.createGain();
         const gain = audioContext.createGain();
         const filter = audioContext.createBiquadFilter();
+        const highPass = audioContext.createBiquadFilter();
         
-        vibrato.frequency.setValueAtTime(5, currentTime);
-        vibratoGain.gain.setValueAtTime(3, currentTime);
+        // Expressive vibrato
+        vibrato.frequency.setValueAtTime(0, currentTime);
+        vibrato.frequency.linearRampToValueAtTime(5.5, currentTime + 0.3);
+        vibratoGain.gain.setValueAtTime(0, currentTime);
+        vibratoGain.gain.linearRampToValueAtTime(4, currentTime + 0.3);
+        vibrato.connect(vibratoGain);
+        vibratoGain.connect(osc.frequency);
+        vibratoGain.connect(osc2.frequency);
+        
+        osc.type = "sawtooth";
+        osc2.type = "triangle";
+        osc.frequency.setValueAtTime(frequency, currentTime);
+        osc2.frequency.setValueAtTime(frequency * 2.01, currentTime);
+        
+        const osc2Gain = audioContext.createGain();
+        osc2Gain.gain.setValueAtTime(0.15, currentTime);
+        
+        filter.type = "lowpass";
+        filter.frequency.setValueAtTime(2500, currentTime);
+        filter.Q.setValueAtTime(0.8, currentTime);
+        
+        highPass.type = "highpass";
+        highPass.frequency.setValueAtTime(180, currentTime);
+        
+        // Smooth bowing attack
+        gain.gain.setValueAtTime(0, currentTime);
+        gain.gain.linearRampToValueAtTime(0.42, currentTime + 0.12);
+        gain.gain.setValueAtTime(0.38, currentTime + 0.6);
+        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.3);
+        
+        osc.connect(filter);
+        osc2.connect(osc2Gain).connect(filter);
+        filter.connect(highPass);
+        highPass.connect(gain);
+        gain.connect(masterGain);
+        
+        vibrato.start(currentTime);
+        osc.start(currentTime);
+        osc2.start(currentTime);
+        vibrato.stop(currentTime + 1.3);
+        osc.stop(currentTime + 1.3);
+        osc2.stop(currentTime + 1.3);
+        break;
+      }
+      case "flute": {
+        // Crystal clear flute with breath and overtones
+        const osc = audioContext.createOscillator();
+        const osc2 = audioContext.createOscillator();
+        const breathNoise = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        const breathGain = audioContext.createGain();
+        const filter = audioContext.createBiquadFilter();
+        const vibrato = audioContext.createOscillator();
+        const vibratoGain = audioContext.createGain();
+        
+        // Subtle vibrato
+        vibrato.frequency.setValueAtTime(4.5, currentTime);
+        vibratoGain.gain.setValueAtTime(2, currentTime);
         vibrato.connect(vibratoGain);
         vibratoGain.connect(osc.frequency);
         
-        osc.type = "sawtooth";
+        osc.type = "sine";
+        osc2.type = "sine";
         osc.frequency.setValueAtTime(frequency, currentTime);
+        osc2.frequency.setValueAtTime(frequency * 2, currentTime);
         
-        filter.type = "lowpass";
-        filter.frequency.setValueAtTime(2000, currentTime);
-        filter.Q.setValueAtTime(1, currentTime);
+        const osc2Gain = audioContext.createGain();
+        osc2Gain.gain.setValueAtTime(0.12, currentTime);
         
+        // Breath texture
+        breathNoise.type = "triangle";
+        breathNoise.frequency.setValueAtTime(frequency * 3, currentTime);
+        breathGain.gain.setValueAtTime(0, currentTime);
+        breathGain.gain.linearRampToValueAtTime(0.06, currentTime + 0.05);
+        breathGain.gain.exponentialRampToValueAtTime(0.02, currentTime + 0.3);
+        
+        filter.type = "bandpass";
+        filter.frequency.setValueAtTime(frequency * 1.5, currentTime);
+        filter.Q.setValueAtTime(1.5, currentTime);
+        
+        // Soft attack
         gain.gain.setValueAtTime(0, currentTime);
-        gain.gain.linearRampToValueAtTime(0.35, currentTime + 0.15);
-        gain.gain.setValueAtTime(0.3, currentTime + 0.5);
+        gain.gain.linearRampToValueAtTime(0.45, currentTime + 0.08);
+        gain.gain.setValueAtTime(0.4, currentTime + 0.4);
         gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1);
         
         osc.connect(filter);
+        osc2.connect(osc2Gain).connect(filter);
+        breathNoise.connect(breathGain).connect(filter);
         filter.connect(gain);
         gain.connect(masterGain);
         
         vibrato.start(currentTime);
         osc.start(currentTime);
+        osc2.start(currentTime);
+        breathNoise.start(currentTime);
         vibrato.stop(currentTime + 1);
         osc.stop(currentTime + 1);
-        break;
-      }
-      case "flute": {
-        // Breathy flute
-        const osc = audioContext.createOscillator();
-        const noise = audioContext.createOscillator();
-        const gain = audioContext.createGain();
-        const noiseGain = audioContext.createGain();
-        const filter = audioContext.createBiquadFilter();
-        
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(frequency, currentTime);
-        
-        noise.type = "triangle";
-        noise.frequency.setValueAtTime(frequency * 2, currentTime);
-        noiseGain.gain.setValueAtTime(0.08, currentTime);
-        
-        filter.type = "bandpass";
-        filter.frequency.setValueAtTime(frequency, currentTime);
-        filter.Q.setValueAtTime(2, currentTime);
-        
-        gain.gain.setValueAtTime(0, currentTime);
-        gain.gain.linearRampToValueAtTime(0.4, currentTime + 0.1);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.8);
-        
-        osc.connect(filter);
-        noise.connect(noiseGain);
-        noiseGain.connect(filter);
-        filter.connect(gain);
-        gain.connect(masterGain);
-        
-        osc.start(currentTime);
-        noise.start(currentTime);
-        osc.stop(currentTime + 0.8);
-        noise.stop(currentTime + 0.8);
+        osc2.stop(currentTime + 1);
+        breathNoise.stop(currentTime + 1);
         break;
       }
       case "clarinet": {
-        // Clarinet with odd harmonics
+        // Warm clarinet with characteristic odd harmonics and woody tone
         const osc1 = audioContext.createOscillator();
         const osc2 = audioContext.createOscillator();
         const osc3 = audioContext.createOscillator();
+        const osc4 = audioContext.createOscillator();
         const gain = audioContext.createGain();
         const filter = audioContext.createBiquadFilter();
+        const filter2 = audioContext.createBiquadFilter();
         
         osc1.type = "square";
         osc2.type = "square";
         osc3.type = "square";
+        osc4.type = "sine";
         osc1.frequency.setValueAtTime(frequency, currentTime);
         osc2.frequency.setValueAtTime(frequency * 3, currentTime);
         osc3.frequency.setValueAtTime(frequency * 5, currentTime);
+        osc4.frequency.setValueAtTime(frequency * 7, currentTime);
         
         const gain1 = audioContext.createGain();
         const gain2 = audioContext.createGain();
         const gain3 = audioContext.createGain();
-        gain1.gain.setValueAtTime(0.3, currentTime);
-        gain2.gain.setValueAtTime(0.15, currentTime);
-        gain3.gain.setValueAtTime(0.05, currentTime);
+        const gain4 = audioContext.createGain();
+        gain1.gain.setValueAtTime(0.35, currentTime);
+        gain2.gain.setValueAtTime(0.18, currentTime);
+        gain3.gain.setValueAtTime(0.08, currentTime);
+        gain4.gain.setValueAtTime(0.03, currentTime);
         
+        // Woody resonance
         filter.type = "lowpass";
-        filter.frequency.setValueAtTime(1500, currentTime);
+        filter.frequency.setValueAtTime(1800, currentTime);
+        filter.Q.setValueAtTime(0.7, currentTime);
         
+        filter2.type = "peaking";
+        filter2.frequency.setValueAtTime(1200, currentTime);
+        filter2.gain.setValueAtTime(3, currentTime);
+        filter2.Q.setValueAtTime(2, currentTime);
+        
+        // Smooth reed attack
         gain.gain.setValueAtTime(0, currentTime);
-        gain.gain.linearRampToValueAtTime(0.25, currentTime + 0.08);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.9);
+        gain.gain.linearRampToValueAtTime(0.32, currentTime + 0.06);
+        gain.gain.setValueAtTime(0.28, currentTime + 0.5);
+        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.1);
         
         osc1.connect(gain1).connect(filter);
         osc2.connect(gain2).connect(filter);
         osc3.connect(gain3).connect(filter);
-        filter.connect(gain);
+        osc4.connect(gain4).connect(filter);
+        filter.connect(filter2);
+        filter2.connect(gain);
         gain.connect(masterGain);
         
         osc1.start(currentTime);
         osc2.start(currentTime);
         osc3.start(currentTime);
-        osc1.stop(currentTime + 0.9);
-        osc2.stop(currentTime + 0.9);
-        osc3.stop(currentTime + 0.9);
+        osc4.start(currentTime);
+        osc1.stop(currentTime + 1.1);
+        osc2.stop(currentTime + 1.1);
+        osc3.stop(currentTime + 1.1);
+        osc4.stop(currentTime + 1.1);
         break;
       }
       case "xylophone": {
-        // Bright xylophone with quick decay
+        // Crystal bright xylophone with resonance and shimmer
         const osc = audioContext.createOscillator();
         const osc2 = audioContext.createOscillator();
-        const gain = audioContext.createGain();
-        
-        osc.type = "sine";
-        osc2.type = "sine";
-        osc.frequency.setValueAtTime(frequency, currentTime);
-        osc2.frequency.setValueAtTime(frequency * 4, currentTime);
-        
-        const gain2 = audioContext.createGain();
-        gain2.gain.setValueAtTime(0.3, currentTime);
-        
-        gain.gain.setValueAtTime(0.6, currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.5);
-        
-        osc.connect(gain);
-        osc2.connect(gain2).connect(gain);
-        gain.connect(masterGain);
-        
-        osc.start(currentTime);
-        osc2.start(currentTime);
-        osc.stop(currentTime + 0.5);
-        osc2.stop(currentTime + 0.5);
-        break;
-      }
-      case "trumpet": {
-        // Bright trumpet with brass character
-        const osc = audioContext.createOscillator();
-        const osc2 = audioContext.createOscillator();
+        const osc3 = audioContext.createOscillator();
         const gain = audioContext.createGain();
         const filter = audioContext.createBiquadFilter();
         
-        osc.type = "sawtooth";
-        osc2.type = "square";
+        osc.type = "sine";
+        osc2.type = "sine";
+        osc3.type = "triangle";
         osc.frequency.setValueAtTime(frequency, currentTime);
-        osc2.frequency.setValueAtTime(frequency * 2, currentTime);
+        osc2.frequency.setValueAtTime(frequency * 4, currentTime);
+        osc3.frequency.setValueAtTime(frequency * 5.5, currentTime);
         
-        filter.type = "lowpass";
-        filter.frequency.setValueAtTime(500, currentTime);
-        filter.frequency.linearRampToValueAtTime(3000, currentTime + 0.1);
+        const gain2 = audioContext.createGain();
+        const gain3 = audioContext.createGain();
+        gain2.gain.setValueAtTime(0.25, currentTime);
+        gain3.gain.setValueAtTime(0.08, currentTime);
         
-        const oscGain = audioContext.createGain();
-        const osc2Gain = audioContext.createGain();
-        oscGain.gain.setValueAtTime(0.3, currentTime);
-        osc2Gain.gain.setValueAtTime(0.15, currentTime);
+        // Bright resonance
+        filter.type = "highshelf";
+        filter.frequency.setValueAtTime(2000, currentTime);
+        filter.gain.setValueAtTime(4, currentTime);
         
-        gain.gain.setValueAtTime(0, currentTime);
-        gain.gain.linearRampToValueAtTime(0.35, currentTime + 0.05);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.8);
+        // Sharp attack, singing decay
+        gain.gain.setValueAtTime(0.7, currentTime);
+        gain.gain.setValueAtTime(0.65, currentTime + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.7);
         
-        osc.connect(oscGain).connect(filter);
-        osc2.connect(osc2Gain).connect(filter);
+        osc.connect(filter);
+        osc2.connect(gain2).connect(filter);
+        osc3.connect(gain3).connect(filter);
         filter.connect(gain);
         gain.connect(masterGain);
         
         osc.start(currentTime);
         osc2.start(currentTime);
-        osc.stop(currentTime + 0.8);
-        osc2.stop(currentTime + 0.8);
+        osc3.start(currentTime);
+        osc.stop(currentTime + 0.7);
+        osc2.stop(currentTime + 0.7);
+        osc3.stop(currentTime + 0.7);
         break;
       }
-      case "guitar": {
-        // Acoustic guitar pluck
-        const osc1 = audioContext.createOscillator();
+      case "trumpet": {
+        // Bright brassy trumpet with punch and brilliance
+        const osc = audioContext.createOscillator();
         const osc2 = audioContext.createOscillator();
         const osc3 = audioContext.createOscillator();
         const gain = audioContext.createGain();
         const filter = audioContext.createBiquadFilter();
+        const filter2 = audioContext.createBiquadFilter();
+        
+        osc.type = "sawtooth";
+        osc2.type = "square";
+        osc3.type = "sawtooth";
+        osc.frequency.setValueAtTime(frequency, currentTime);
+        osc2.frequency.setValueAtTime(frequency * 2, currentTime);
+        osc3.frequency.setValueAtTime(frequency * 3, currentTime);
+        
+        // Brass "blat" attack - filter opens quickly
+        filter.type = "lowpass";
+        filter.frequency.setValueAtTime(400, currentTime);
+        filter.frequency.linearRampToValueAtTime(3500, currentTime + 0.08);
+        filter.frequency.setValueAtTime(2800, currentTime + 0.2);
+        filter.Q.setValueAtTime(1.5, currentTime);
+        
+        // Brass resonance
+        filter2.type = "peaking";
+        filter2.frequency.setValueAtTime(1500, currentTime);
+        filter2.gain.setValueAtTime(4, currentTime);
+        filter2.Q.setValueAtTime(2, currentTime);
+        
+        const oscGain = audioContext.createGain();
+        const osc2Gain = audioContext.createGain();
+        const osc3Gain = audioContext.createGain();
+        oscGain.gain.setValueAtTime(0.32, currentTime);
+        osc2Gain.gain.setValueAtTime(0.18, currentTime);
+        osc3Gain.gain.setValueAtTime(0.08, currentTime);
+        
+        // Bold attack
+        gain.gain.setValueAtTime(0, currentTime);
+        gain.gain.linearRampToValueAtTime(0.42, currentTime + 0.04);
+        gain.gain.setValueAtTime(0.38, currentTime + 0.4);
+        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1);
+        
+        osc.connect(oscGain).connect(filter);
+        osc2.connect(osc2Gain).connect(filter);
+        osc3.connect(osc3Gain).connect(filter);
+        filter.connect(filter2);
+        filter2.connect(gain);
+        gain.connect(masterGain);
+        
+        osc.start(currentTime);
+        osc2.start(currentTime);
+        osc3.start(currentTime);
+        osc.stop(currentTime + 1);
+        osc2.stop(currentTime + 1);
+        osc3.stop(currentTime + 1);
+        break;
+      }
+      case "guitar": {
+        // Rich acoustic guitar with body resonance and string harmonics
+        const osc1 = audioContext.createOscillator();
+        const osc2 = audioContext.createOscillator();
+        const osc3 = audioContext.createOscillator();
+        const osc4 = audioContext.createOscillator();
+        const osc5 = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        const filter = audioContext.createBiquadFilter();
+        const bodyResonance = audioContext.createBiquadFilter();
         
         osc1.type = "triangle";
         osc2.type = "sawtooth";
         osc3.type = "sine";
+        osc4.type = "sine";
+        osc5.type = "triangle";
         osc1.frequency.setValueAtTime(frequency, currentTime);
         osc2.frequency.setValueAtTime(frequency * 2, currentTime);
         osc3.frequency.setValueAtTime(frequency * 3, currentTime);
+        osc4.frequency.setValueAtTime(frequency * 4, currentTime);
+        osc5.frequency.setValueAtTime(frequency * 5, currentTime);
         
         const gain1 = audioContext.createGain();
         const gain2 = audioContext.createGain();
         const gain3 = audioContext.createGain();
-        gain1.gain.setValueAtTime(0.4, currentTime);
-        gain2.gain.setValueAtTime(0.2, currentTime);
-        gain3.gain.setValueAtTime(0.1, currentTime);
+        const gain4 = audioContext.createGain();
+        const gain5 = audioContext.createGain();
+        gain1.gain.setValueAtTime(0.45, currentTime);
+        gain2.gain.setValueAtTime(0.22, currentTime);
+        gain3.gain.setValueAtTime(0.12, currentTime);
+        gain4.gain.setValueAtTime(0.06, currentTime);
+        gain5.gain.setValueAtTime(0.03, currentTime);
         
+        // String brightness decay
         filter.type = "lowpass";
-        filter.frequency.setValueAtTime(3000, currentTime);
-        filter.frequency.exponentialRampToValueAtTime(800, currentTime + 0.5);
+        filter.frequency.setValueAtTime(4000, currentTime);
+        filter.frequency.exponentialRampToValueAtTime(600, currentTime + 0.6);
+        filter.Q.setValueAtTime(0.8, currentTime);
         
-        gain.gain.setValueAtTime(0.5, currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.8);
+        // Body resonance around 100-200Hz
+        bodyResonance.type = "peaking";
+        bodyResonance.frequency.setValueAtTime(150, currentTime);
+        bodyResonance.gain.setValueAtTime(5, currentTime);
+        bodyResonance.Q.setValueAtTime(3, currentTime);
+        
+        // Sharp pluck attack with natural decay
+        gain.gain.setValueAtTime(0.6, currentTime);
+        gain.gain.setValueAtTime(0.55, currentTime + 0.005);
+        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.2);
         
         osc1.connect(gain1).connect(filter);
         osc2.connect(gain2).connect(filter);
         osc3.connect(gain3).connect(filter);
+        osc4.connect(gain4).connect(filter);
+        osc5.connect(gain5).connect(filter);
+        filter.connect(bodyResonance);
+        bodyResonance.connect(gain);
+        gain.connect(masterGain);
+        
+        osc1.start(currentTime);
+        osc2.start(currentTime);
+        osc3.start(currentTime);
+        osc4.start(currentTime);
+        osc5.start(currentTime);
+        osc1.stop(currentTime + 1.2);
+        osc2.stop(currentTime + 1.2);
+        osc3.stop(currentTime + 1.2);
+        osc4.stop(currentTime + 1.2);
+        osc5.stop(currentTime + 1.2);
+        break;
+      }
+      case "bell": {
+        // Rich church bell with shimmer and long resonance
+        const osc1 = audioContext.createOscillator();
+        const osc2 = audioContext.createOscillator();
+        const osc3 = audioContext.createOscillator();
+        const osc4 = audioContext.createOscillator();
+        const osc5 = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        const filter = audioContext.createBiquadFilter();
+        
+        osc1.type = "sine";
+        osc2.type = "sine";
+        osc3.type = "sine";
+        osc4.type = "sine";
+        osc5.type = "triangle";
+        // Inharmonic bell partials for authentic timbre
+        osc1.frequency.setValueAtTime(frequency, currentTime);
+        osc2.frequency.setValueAtTime(frequency * 2.0, currentTime);
+        osc3.frequency.setValueAtTime(frequency * 2.4, currentTime);
+        osc4.frequency.setValueAtTime(frequency * 3.0, currentTime);
+        osc5.frequency.setValueAtTime(frequency * 5.95, currentTime);
+        
+        const gain1 = audioContext.createGain();
+        const gain2 = audioContext.createGain();
+        const gain3 = audioContext.createGain();
+        const gain4 = audioContext.createGain();
+        const gain5 = audioContext.createGain();
+        
+        // Different decay rates for partials
+        gain1.gain.setValueAtTime(0.45, currentTime);
+        gain1.gain.exponentialRampToValueAtTime(0.01, currentTime + 2.2);
+        gain2.gain.setValueAtTime(0.28, currentTime);
+        gain2.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.8);
+        gain3.gain.setValueAtTime(0.22, currentTime);
+        gain3.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.5);
+        gain4.gain.setValueAtTime(0.15, currentTime);
+        gain4.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.2);
+        gain5.gain.setValueAtTime(0.08, currentTime);
+        gain5.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.8);
+        
+        // Slight high-frequency boost for shimmer
+        filter.type = "highshelf";
+        filter.frequency.setValueAtTime(2000, currentTime);
+        filter.gain.setValueAtTime(3, currentTime);
+        
+        // Strong strike attack
+        gain.gain.setValueAtTime(0.65, currentTime);
+        gain.gain.setValueAtTime(0.6, currentTime + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 2.5);
+        
+        osc1.connect(gain1).connect(filter);
+        osc2.connect(gain2).connect(filter);
+        osc3.connect(gain3).connect(filter);
+        osc4.connect(gain4).connect(filter);
+        osc5.connect(gain5).connect(filter);
         filter.connect(gain);
         gain.connect(masterGain);
         
         osc1.start(currentTime);
         osc2.start(currentTime);
         osc3.start(currentTime);
-        osc1.stop(currentTime + 0.8);
-        osc2.stop(currentTime + 0.8);
-        osc3.stop(currentTime + 0.8);
-        break;
-      }
-      case "bell": {
-        // Church bell with inharmonic partials
-        const osc1 = audioContext.createOscillator();
-        const osc2 = audioContext.createOscillator();
-        const osc3 = audioContext.createOscillator();
-        const gain = audioContext.createGain();
-        
-        osc1.type = "sine";
-        osc2.type = "sine";
-        osc3.type = "sine";
-        osc1.frequency.setValueAtTime(frequency, currentTime);
-        osc2.frequency.setValueAtTime(frequency * 2.4, currentTime);
-        osc3.frequency.setValueAtTime(frequency * 5.95, currentTime);
-        
-        const gain1 = audioContext.createGain();
-        const gain2 = audioContext.createGain();
-        const gain3 = audioContext.createGain();
-        gain1.gain.setValueAtTime(0.4, currentTime);
-        gain2.gain.setValueAtTime(0.25, currentTime);
-        gain3.gain.setValueAtTime(0.15, currentTime);
-        
-        gain.gain.setValueAtTime(0.5, currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 1.8);
-        
-        osc1.connect(gain1).connect(gain);
-        osc2.connect(gain2).connect(gain);
-        osc3.connect(gain3).connect(gain);
-        gain.connect(masterGain);
-        
-        osc1.start(currentTime);
-        osc2.start(currentTime);
-        osc3.start(currentTime);
-        osc1.stop(currentTime + 1.8);
-        osc2.stop(currentTime + 1.8);
-        osc3.stop(currentTime + 1.8);
+        osc4.start(currentTime);
+        osc5.start(currentTime);
+        osc1.stop(currentTime + 2.5);
+        osc2.stop(currentTime + 2.5);
+        osc3.stop(currentTime + 2.5);
+        osc4.stop(currentTime + 2.5);
+        osc5.stop(currentTime + 2.5);
         break;
       }
     }
