@@ -1,4 +1,4 @@
-import { Play, ExternalLink } from "lucide-react";
+import { Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Quiz, Language, translations } from "@/data/quizData";
 import MoleculeIcon from "./icons/MoleculeIcon";
@@ -60,26 +60,13 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
         {quiz.title[language]}
       </h3>
 
-      <div className="space-y-2 sm:space-y-3">
-        <Button
-          onClick={() => onPlay(quiz.id)}
-          className="w-full min-w-0 btn-primary-custom text-white font-medium hover:opacity-90 transition-opacity text-sm sm:text-base py-2.5 sm:py-3"
-        >
-          <Play className="w-4 h-4 mr-2 flex-shrink-0" />
-          <span className="truncate min-w-0">{t.play}</span>
-        </Button>
-
-        <Button
-          variant="outline"
-          className="w-full min-w-0 border-border text-foreground hover:bg-muted text-sm sm:text-base py-2.5 sm:py-3"
-          asChild
-        >
-          <a href="https://www.peita.fr/boutique" target="_blank" rel="noopener noreferrer">
-            <ExternalLink className="w-4 h-4 mr-2 flex-shrink-0" />
-            <span className="truncate min-w-0">{t.visitShop}</span>
-          </a>
-        </Button>
-      </div>
+      <Button
+        onClick={() => onPlay(quiz.id)}
+        className="w-full min-w-0 btn-primary-custom text-white font-medium hover:opacity-90 transition-opacity text-sm sm:text-base py-2.5 sm:py-3"
+      >
+        <Play className="w-4 h-4 mr-2 flex-shrink-0" />
+        <span className="truncate min-w-0">{t.play}</span>
+      </Button>
     </div>
   );
 };

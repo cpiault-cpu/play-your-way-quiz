@@ -1064,6 +1064,15 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                 <p className="text-muted-foreground text-sm sm:text-lg mb-4 sm:mb-6">
                   {t.finalScore}
                 </p>
+                <Button
+                  className="btn-primary-custom text-white w-full text-sm sm:text-lg px-4 sm:px-6 py-4 sm:py-5 mb-4"
+                  asChild
+                >
+                  <a href="https://www.peita.fr/boutique" target="_blank" rel="noopener noreferrer">
+                    {language === "fr" ? "Visiter la boutique" : "Visit the shop"}
+                  </a>
+                </Button>
+
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                   <Button
                     onClick={startGame}
@@ -1117,6 +1126,17 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                   className="btn-primary-custom text-white text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 mb-4"
                 >
                   📋 {language === "fr" ? "Copier le code" : "Copy code"}
+                </Button>
+
+                <Button
+                  className="btn-primary-custom text-white w-full text-sm sm:text-lg px-4 sm:px-6 py-4 sm:py-5 mb-4"
+                  asChild
+                >
+                  <a href="https://www.peita.fr/boutique" target="_blank" rel="noopener noreferrer">
+                    {language === "fr" 
+                      ? "Copiez votre coupon et utilisez-le lors de votre commande" 
+                      : "Copy your coupon and use it at checkout"}
+                  </a>
                 </Button>
                 
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
