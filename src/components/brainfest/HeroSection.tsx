@@ -128,7 +128,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               className="inline-flex items-center px-4 py-2 rounded-full bg-accent/20 backdrop-blur-sm border border-accent/30"
             >
               <p className="text-lg sm:text-xl font-semibold text-accent">
-                {language === "fr" ? "Apprendre, Jouez, Gagnez." : "Learn, Play, Win."}
+                {language === "fr" ? "Apprenez. Jouez. Gagnez." : "Learn. Play. Win."}
               </p>
             </motion.div>
           </motion.div>
