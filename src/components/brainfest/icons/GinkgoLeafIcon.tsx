@@ -6,147 +6,59 @@ const GinkgoLeafIcon = ({ className = "h-20 w-20" }: { className?: string }) => 
     xmlns="http://www.w3.org/2000/svg"
   >
     <defs>
-      <linearGradient id="ginkgoGradientNew" x1="20%" y1="0%" x2="80%" y2="100%">
-        <stop offset="0%" stopColor="#A8D08D" />
-        <stop offset="30%" stopColor="#8BC34A" />
-        <stop offset="60%" stopColor="#7CB342" />
-        <stop offset="100%" stopColor="#689F38" />
+      <linearGradient id="ginkgoLeafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#9CCC65" />
+        <stop offset="40%" stopColor="#8BC34A" />
+        <stop offset="100%" stopColor="#7CB342" />
       </linearGradient>
-      <linearGradient id="ginkgoStemGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stopColor="#8D6E63" />
-        <stop offset="100%" stopColor="#6D4C41" />
-      </linearGradient>
-      <filter id="ginkgoShadow" x="-20%" y="-20%" width="140%" height="140%">
-        <feDropShadow dx="0" dy="3" stdDeviation="3" floodColor="#33691E" floodOpacity="0.25"/>
+      <filter id="leafShadow" x="-10%" y="-10%" width="120%" height="120%">
+        <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#558B2F" floodOpacity="0.3"/>
       </filter>
     </defs>
     
-    {/* Left fan lobe */}
+    {/* Feuille de ginkgo - forme en éventail avec encoche centrale */}
     <path
-      d="M50 88 
-         C50 88 48 65 46 55
-         C44 45 35 35 20 25
-         C25 28 32 30 40 28
-         C45 27 48 24 50 20"
-      fill="url(#ginkgoGradientNew)"
-      stroke="#558B2F"
-      strokeWidth="0.8"
-      filter="url(#ginkgoShadow)"
+      d="M50 92 
+         L50 55
+         C50 55 48 50 45 45
+         C40 38 30 30 18 22
+         C22 24 28 26 35 26
+         C42 26 47 23 50 18
+         C53 23 58 26 65 26
+         C72 26 78 24 82 22
+         C70 30 60 38 55 45
+         C52 50 50 55 50 55
+         L50 92 Z"
+      fill="url(#ginkgoLeafGrad)"
+      stroke="#689F38"
+      strokeWidth="1"
+      filter="url(#leafShadow)"
     />
     
-    {/* Right fan lobe */}
+    {/* Encoche centrale caractéristique */}
     <path
-      d="M50 88 
-         C50 88 52 65 54 55
-         C56 45 65 35 80 25
-         C75 28 68 30 60 28
-         C55 27 52 24 50 20"
-      fill="url(#ginkgoGradientNew)"
-      stroke="#558B2F"
-      strokeWidth="0.8"
-      filter="url(#ginkgoShadow)"
+      d="M50 18 L50 40"
+      stroke="#689F38"
+      strokeWidth="1.2"
+      strokeLinecap="round"
     />
     
-    {/* Central notch fill to connect lobes */}
-    <path
-      d="M46 55 C48 45 50 35 50 20 C50 35 52 45 54 55 C52 60 50 70 50 88 C50 70 48 60 46 55"
-      fill="url(#ginkgoGradientNew)"
-    />
+    {/* Nervures en éventail - gauche */}
+    <path d="M50 55 Q42 42 25 28" stroke="#689F38" strokeWidth="0.7" opacity="0.5" fill="none"/>
+    <path d="M50 55 Q44 44 32 32" stroke="#689F38" strokeWidth="0.6" opacity="0.4" fill="none"/>
+    <path d="M50 55 Q46 46 38 36" stroke="#689F38" strokeWidth="0.5" opacity="0.35" fill="none"/>
     
-    {/* Elegant vein pattern - left side */}
-    <path
-      d="M50 75 C45 60 38 48 28 35"
-      stroke="#558B2F"
-      strokeWidth="0.6"
-      strokeLinecap="round"
-      opacity="0.5"
-      fill="none"
-    />
-    <path
-      d="M50 65 C46 55 42 47 35 40"
-      stroke="#558B2F"
-      strokeWidth="0.5"
-      strokeLinecap="round"
-      opacity="0.4"
-      fill="none"
-    />
-    <path
-      d="M50 55 C48 48 45 42 40 36"
-      stroke="#558B2F"
-      strokeWidth="0.4"
-      strokeLinecap="round"
-      opacity="0.35"
-      fill="none"
-    />
+    {/* Nervures en éventail - droite */}
+    <path d="M50 55 Q58 42 75 28" stroke="#689F38" strokeWidth="0.7" opacity="0.5" fill="none"/>
+    <path d="M50 55 Q56 44 68 32" stroke="#689F38" strokeWidth="0.6" opacity="0.4" fill="none"/>
+    <path d="M50 55 Q54 46 62 36" stroke="#689F38" strokeWidth="0.5" opacity="0.35" fill="none"/>
     
-    {/* Elegant vein pattern - right side */}
+    {/* Tige */}
     <path
-      d="M50 75 C55 60 62 48 72 35"
-      stroke="#558B2F"
-      strokeWidth="0.6"
-      strokeLinecap="round"
-      opacity="0.5"
-      fill="none"
-    />
-    <path
-      d="M50 65 C54 55 58 47 65 40"
-      stroke="#558B2F"
-      strokeWidth="0.5"
-      strokeLinecap="round"
-      opacity="0.4"
-      fill="none"
-    />
-    <path
-      d="M50 55 C52 48 55 42 60 36"
-      stroke="#558B2F"
-      strokeWidth="0.4"
-      strokeLinecap="round"
-      opacity="0.35"
-      fill="none"
-    />
-    
-    {/* Central vein */}
-    <path
-      d="M50 20 L50 50"
-      stroke="#558B2F"
-      strokeWidth="0.8"
-      strokeLinecap="round"
-      opacity="0.6"
-    />
-    
-    {/* Stem */}
-    <path
-      d="M50 88 C50 88 49 92 50 95 C51 92 50 88 50 88"
-      fill="url(#ginkgoStemGradient)"
-    />
-    <line
-      x1="50"
-      y1="88"
-      x2="50"
-      y2="98"
-      stroke="url(#ginkgoStemGradient)"
+      d="M50 92 L50 55"
+      stroke="#795548"
       strokeWidth="3"
       strokeLinecap="round"
-    />
-    
-    {/* Subtle highlight on left lobe */}
-    <path
-      d="M35 35 C38 40 42 45 45 55"
-      stroke="#C5E1A5"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      opacity="0.4"
-      fill="none"
-    />
-    
-    {/* Subtle highlight on right lobe */}
-    <path
-      d="M65 35 C62 40 58 45 55 55"
-      stroke="#C5E1A5"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      opacity="0.4"
-      fill="none"
     />
   </svg>
 );
