@@ -2,7 +2,7 @@ import { Play } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Language } from "@/data/quizData";
-import PlantIcon from "./icons/PlantIcon";
+import GinkgoLeafIcon from "./icons/GinkgoLeafIcon";
 
 interface MemoryPairsCardProps {
   level: 1 | 2 | 3;
@@ -47,12 +47,10 @@ const MemoryPairsCard = ({ level, language, onPlay }: MemoryPairsCardProps) => {
     }
   };
 
-  const getDiscount = () => {
-    switch (level) {
-      case 1: return "5%";
-      case 2: return "10%";
-      case 3: return "15%";
-    }
+  const getDiscountText = () => {
+    const discounts = { 1: "5%", 2: "10%", 3: "15%" };
+    const value = discounts[level];
+    return language === "fr" ? `gagnez ${value}` : `win ${value}`;
   };
 
   const getLevelDesc = () => {
@@ -77,7 +75,7 @@ const MemoryPairsCard = ({ level, language, onPlay }: MemoryPairsCardProps) => {
           {t.level} {level}
         </span>
         <span className="text-sm md:text-sm text-muted-foreground font-medium">
-          {getDiscount()} {t.discount}
+          {getDiscountText()}
         </span>
       </div>
 
@@ -90,7 +88,7 @@ const MemoryPairsCard = ({ level, language, onPlay }: MemoryPairsCardProps) => {
 
       {/* Large icon centered below description */}
       <div className="flex-grow flex items-center justify-center py-4">
-        <PlantIcon className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28" />
+        <GinkgoLeafIcon className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28" />
       </div>
 
       <Button

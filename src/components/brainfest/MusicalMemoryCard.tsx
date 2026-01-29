@@ -1,8 +1,8 @@
-import { Play, Volume2 } from "lucide-react";
+import { Play } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Language } from "@/data/quizData";
-import BrainIcon from "./icons/BrainIcon";
+import MusicNoteIcon from "./icons/MusicNoteIcon";
 
 interface MusicalMemoryCardProps {
   level: 1 | 2 | 3;
@@ -47,12 +47,10 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
     }
   };
 
-  const getDiscount = () => {
-    switch (level) {
-      case 1: return "5%";
-      case 2: return "10%";
-      case 3: return "15%";
-    }
+  const getDiscountText = () => {
+    const discounts = { 1: "5%", 2: "10%", 3: "15%" };
+    const value = discounts[level];
+    return language === "fr" ? `gagnez ${value}` : `win ${value}`;
   };
 
   const getLevelDesc = () => {
@@ -77,7 +75,7 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
           {t.level} {level}
         </span>
         <span className="text-sm md:text-sm text-muted-foreground font-medium">
-          {getDiscount()} {t.discount}
+          {getDiscountText()}
         </span>
       </div>
 
@@ -90,10 +88,7 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
 
       {/* Large icon centered below description */}
       <div className="flex-grow flex items-center justify-center py-4">
-        <div className="relative">
-          <BrainIcon className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28" />
-          <Volume2 className="absolute -bottom-1 -right-1 w-8 h-8 sm:w-10 sm:h-10 text-primary" />
-        </div>
+        <MusicNoteIcon className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28" />
       </div>
 
       <Button
