@@ -65,22 +65,14 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
 
   return (
     <motion.div 
-      className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-6 sm:p-6 md:p-7 min-h-[45vh] md:min-h-0 flex flex-col"
+      className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-6 sm:p-6 md:p-7 min-h-[50vh] md:min-h-0 flex flex-col"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, ease: "easeOut" }}
       whileHover={{ scale: 1.02 }}
     >
-      {/* Musical Brain Icon */}
-      <div className="absolute top-4 right-4">
-        <div className="relative">
-          <BrainIcon className="molecule-icon w-16 h-16 md:w-16 md:h-16" />
-          <Volume2 className="absolute -bottom-1 -right-1 w-6 h-6 md:w-5 md:h-5 text-primary" />
-        </div>
-      </div>
-      
-      <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-5 md:mb-4">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
         <span className={`${getLevelBadgeClass()} text-sm md:text-xs font-bold px-4 py-2 md:px-3 md:py-1.5 rounded-full text-white`}>
           {t.level} {level}
         </span>
@@ -89,16 +81,24 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
         </span>
       </div>
 
-      <h3 className="text-xl md:text-xl font-bold text-foreground mb-3 md:mb-1 pr-16 break-words">
+      <h3 className="text-xl md:text-xl font-bold text-foreground mb-3 md:mb-2 break-words">
         {t.title}
       </h3>
-      <p className="text-base md:text-sm text-muted-foreground mb-6 md:mb-5 flex-grow leading-relaxed">
+      <p className="text-base md:text-sm text-muted-foreground mb-4 leading-relaxed">
         {getLevelDesc()}
       </p>
 
+      {/* Large icon centered below description */}
+      <div className="flex-grow flex items-center justify-center py-4">
+        <div className="relative">
+          <BrainIcon className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28" />
+          <Volume2 className="absolute -bottom-1 -right-1 w-8 h-8 sm:w-10 sm:h-10 text-primary" />
+        </div>
+      </div>
+
       <Button
         onClick={() => onPlay(level)}
-        className="w-full min-w-0 btn-primary-custom text-white font-semibold text-base md:text-base py-4 md:py-3 rounded-xl"
+        className="w-full min-w-0 btn-primary-custom text-white font-semibold text-base md:text-base py-4 md:py-3 rounded-xl mt-auto"
       >
         <Play className="w-5 h-5 md:w-4 md:h-4 mr-2 flex-shrink-0" />
         <span className="min-w-0 truncate">{t.play}</span>

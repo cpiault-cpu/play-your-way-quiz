@@ -30,7 +30,7 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
   };
 
   const getIcon = () => {
-    const iconClass = "molecule-icon w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 absolute top-4 right-4";
+    const iconClass = "w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28";
     switch (quiz.icon) {
       case 'molecule':
         return <MoleculeIcon className={iconClass} />;
@@ -47,16 +47,14 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
 
   return (
     <motion.div 
-      className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-6 sm:p-6 h-full flex flex-col min-h-[45vh] md:min-h-0"
+      className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-6 sm:p-6 h-full flex flex-col min-h-[50vh] md:min-h-0"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, ease: "easeOut" }}
       whileHover={{ scale: 1.02 }}
     >
-      {getIcon()}
-      
-      <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-5 md:mb-4">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
         <span className={`${getLevelBadgeClass()} text-sm md:text-xs font-bold px-4 py-2 md:px-3 md:py-1.5 rounded-full text-white`}>
           {t.level} {quiz.level}
         </span>
@@ -65,21 +63,24 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
         </span>
       </div>
 
-      <h3 className="text-xl md:text-xl font-bold text-foreground mb-3 md:mb-2 pr-14 leading-snug break-words">
+      <h3 className="text-xl md:text-xl font-bold text-foreground mb-3 md:mb-2 leading-snug break-words">
         {quiz.title[language]}
       </h3>
+      
       {quiz.description && (
-        <p className="text-base md:text-sm text-muted-foreground mb-6 md:mb-5 flex-grow leading-relaxed">
+        <p className="text-base md:text-sm text-muted-foreground mb-4 leading-relaxed">
           {quiz.description[language]}
         </p>
       )}
-      {!quiz.description && (
-        <div className="flex-grow" />
-      )}
+
+      {/* Large icon centered below description */}
+      <div className="flex-grow flex items-center justify-center py-4">
+        {getIcon()}
+      </div>
 
       <Button
         onClick={() => onPlay(quiz.id)}
-        className="w-full min-w-0 btn-primary-custom text-white font-semibold text-base md:text-base py-4 md:py-3 rounded-xl"
+        className="w-full min-w-0 btn-primary-custom text-white font-semibold text-base md:text-base py-4 md:py-3 rounded-xl mt-auto"
       >
         <Play className="w-5 h-5 md:w-4 md:h-4 mr-2 flex-shrink-0" />
         <span className="truncate min-w-0">{t.play}</span>

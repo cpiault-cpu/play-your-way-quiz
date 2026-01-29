@@ -456,7 +456,7 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
           
           <div className="flex flex-col gap-3">
             <Button
-              onClick={() => window.open("https://www.peita.fr/boutique", "_blank")}
+              onClick={() => window.open("https://www.peita.fr/product-page/8-boites-de-petites-sardines", "_blank")}
               className="w-full btn-primary-custom text-white"
             >
               <ExternalLink className="w-4 h-4 mr-2" />

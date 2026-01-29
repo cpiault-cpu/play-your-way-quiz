@@ -395,7 +395,7 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                     className="btn-primary-custom text-white w-full mt-4 text-sm sm:text-base"
                     asChild
                   >
-                    <a href="https://www.peita.fr/boutique" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.peita.fr/product-page/8-boites-de-petites-sardines" target="_blank" rel="noopener noreferrer">
                       {language === "fr" 
                         ? "Copiez votre coupon et utilisez-le lors de votre commande" 
                         : "Copy your coupon and use it at checkout"}
@@ -410,7 +410,7 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                   className="btn-primary-custom text-white w-full mb-4 text-sm sm:text-base"
                   asChild
                 >
-                  <a href="https://www.peita.fr/boutique" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.peita.fr/product-page/8-boites-de-petites-sardines" target="_blank" rel="noopener noreferrer">
                     {language === "fr" ? "Visiter la boutique" : "Visit the shop"}
                   </a>
                 </Button>
