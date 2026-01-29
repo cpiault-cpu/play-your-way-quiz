@@ -30,7 +30,7 @@ const heroTexts = {
       text: "The mind also needs to be nourished: learning, exercising memory and opening up to new ideas throughout life maintains vitality, curiosity and joy."
     },
     {
-      text: "That's why we created this series of quizzes, designed to train the brain while having fun, and share knowledge about the wonderful workings of life."
+      text: "That's why we created this series of quizzes, designed to train the brain while having fun, and share knowledge about the beautiful workings of life."
     }
   ]
 };
