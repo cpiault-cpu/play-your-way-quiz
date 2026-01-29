@@ -48,8 +48,11 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
   return (
     <motion.div 
       className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-6 sm:p-6 h-full flex flex-col min-h-[45vh] md:min-h-0"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       whileHover={{ scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
       {getIcon()}
       

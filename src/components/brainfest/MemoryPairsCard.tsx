@@ -65,8 +65,11 @@ const MemoryPairsCard = ({ level, language, onPlay }: MemoryPairsCardProps) => {
   return (
     <motion.div 
       className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-6 sm:p-6 md:p-7 min-h-[45vh] md:min-h-0 flex flex-col"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       whileHover={{ scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
       {/* Plant Icon */}
       <div className="absolute top-4 right-4">
