@@ -47,7 +47,7 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
 
   return (
     <motion.div 
-      className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-6 sm:p-6 h-full flex flex-col"
+      className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-6 sm:p-6 h-full flex flex-col min-h-[45vh] md:min-h-0"
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
@@ -62,9 +62,17 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
         </span>
       </div>
 
-      <h3 className="text-xl md:text-xl font-bold text-foreground mb-6 md:mb-5 pr-14 leading-snug break-words flex-grow min-h-[4rem] md:min-h-[3.5rem]">
+      <h3 className="text-xl md:text-xl font-bold text-foreground mb-3 md:mb-2 pr-14 leading-snug break-words">
         {quiz.title[language]}
       </h3>
+      {quiz.description && (
+        <p className="text-base md:text-sm text-muted-foreground mb-6 md:mb-5 flex-grow leading-relaxed">
+          {quiz.description[language]}
+        </p>
+      )}
+      {!quiz.description && (
+        <div className="flex-grow" />
+      )}
 
       <Button
         onClick={() => onPlay(quiz.id)}

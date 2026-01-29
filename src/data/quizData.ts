@@ -11,6 +11,7 @@ export interface Quiz {
   id: string;
   level: 1 | 2 | 3;
   title: { fr: string; en: string };
+  description?: { fr: string; en: string };
   category: { fr: string; en: string };
   discount: string;
   icon: 'molecule' | 'plant' | 'music' | 'biology';
@@ -23,6 +24,10 @@ export const quizzes: Quiz[] = [
     id: '1.1',
     level: 1,
     title: { fr: 'Quiz 1.1 - Micronutrition', en: 'Quiz 1.1 - Micronutrition' },
+    description: { 
+      fr: '4 questions sur les vitamines et minéraux essentiels. Testez vos connaissances en nutrition !',
+      en: '4 questions about essential vitamins and minerals. Test your nutrition knowledge!'
+    },
     category: { fr: 'Micronutrition', en: 'Micronutrition' },
     discount: '5%',
     icon: 'molecule',
@@ -93,6 +98,10 @@ export const quizzes: Quiz[] = [
     id: '1.2',
     level: 1,
     title: { fr: 'Quiz 1.2 - Biologie', en: 'Quiz 1.2 - Biology' },
+    description: { 
+      fr: '4 questions sur le corps humain et ses mécanismes. Explorez les secrets de la vie !',
+      en: '4 questions about the human body and its mechanisms. Explore the secrets of life!'
+    },
     category: { fr: 'Biologie', en: 'Biology' },
     discount: '5%',
     icon: 'biology',
@@ -163,6 +172,10 @@ export const quizzes: Quiz[] = [
     id: '1.3',
     level: 1,
     title: { fr: 'Quiz 1.3 - Plantes médicinales', en: 'Quiz 1.3 - Medicinal Plants' },
+    description: { 
+      fr: '4 questions sur les plantes et leurs bienfaits. Découvrez la pharmacopée naturelle !',
+      en: '4 questions about plants and their benefits. Discover natural remedies!'
+    },
     category: { fr: 'Plantes médicinales', en: 'Medicinal Plants' },
     discount: '5%',
     icon: 'plant',
@@ -222,6 +235,10 @@ export const quizzes: Quiz[] = [
     id: '2.1',
     level: 2,
     title: { fr: 'Quiz 2.1 - Micronutrition', en: 'Quiz 2.1 - Micronutrition' },
+    description: { 
+      fr: '4 questions avancées sur les nutriments et leur biodisponibilité. Niveau intermédiaire !',
+      en: '4 advanced questions about nutrients and bioavailability. Intermediate level!'
+    },
     category: { fr: 'Micronutrition', en: 'Micronutrition' },
     discount: '10%',
     icon: 'molecule',
@@ -292,6 +309,10 @@ export const quizzes: Quiz[] = [
     id: '2.2',
     level: 2,
     title: { fr: 'Quiz 2.2 - Biologie', en: 'Quiz 2.2 - Biology' },
+    description: { 
+      fr: '4 questions sur les neurotransmetteurs et le microbiote. Approfondissez vos connaissances !',
+      en: '4 questions about neurotransmitters and microbiota. Deepen your knowledge!'
+    },
     category: { fr: 'Biologie', en: 'Biology' },
     discount: '10%',
     icon: 'biology',
@@ -362,6 +383,10 @@ export const quizzes: Quiz[] = [
     id: '2.3',
     level: 2,
     title: { fr: 'Quiz 2.3 - Musique et santé', en: 'Quiz 2.3 - Music and Health' },
+    description: { 
+      fr: '4 questions sur les bienfaits de la musique sur le cerveau. Découvrez la musicothérapie !',
+      en: '4 questions about the benefits of music on the brain. Discover music therapy!'
+    },
     category: { fr: 'Musique et santé', en: 'Music and Health' },
     discount: '10%',
     icon: 'music',
@@ -432,6 +457,10 @@ export const quizzes: Quiz[] = [
     id: '2.4',
     level: 2,
     title: { fr: 'Quiz 2.4 - Plantes médicinales', en: 'Quiz 2.4 - Medicinal Plants' },
+    description: { 
+      fr: '4 questions sur les plantes phares de la phytothérapie. Niveau intermédiaire !',
+      en: '4 questions about key herbs in phytotherapy. Intermediate level!'
+    },
     category: { fr: 'Plantes médicinales', en: 'Medicinal Plants' },
     discount: '10%',
     icon: 'plant',
@@ -491,6 +520,10 @@ export const quizzes: Quiz[] = [
     id: '3.1',
     level: 3,
     title: { fr: 'Quiz 3.1 - Micronutrition avancée', en: 'Quiz 3.1 - Advanced Micronutrition' },
+    description: { 
+      fr: '4 questions expert sur les antioxydants et la bioénergétique. Le niveau ultime !',
+      en: '4 expert questions about antioxidants and bioenergetics. The ultimate level!'
+    },
     category: { fr: 'Micronutrition avancée', en: 'Advanced Micronutrition' },
     discount: '15%',
     icon: 'molecule',
@@ -561,6 +594,10 @@ export const quizzes: Quiz[] = [
     id: '3.2',
     level: 3,
     title: { fr: 'Quiz 3.2 - Plantes médicinales', en: 'Quiz 3.2 - Medicinal Plants' },
+    description: { 
+      fr: '4 questions expert sur les adaptogènes et plantes avancées. Niveau expert !',
+      en: '4 expert questions about adaptogens and advanced herbs. Expert level!'
+    },
     category: { fr: 'Plantes médicinales', en: 'Medicinal Plants' },
     discount: '15%',
     icon: 'plant',
@@ -619,6 +656,10 @@ export const quizzes: Quiz[] = [
     id: '3.3',
     level: 3,
     title: { fr: 'Quiz 3.3 - Biologie & Musique', en: 'Quiz 3.3 - Biology & Music' },
+    description: { 
+      fr: '4 questions sur les effets neurologiques de la musique. Science et art réunis !',
+      en: '4 questions about the neurological effects of music. Science meets art!'
+    },
     category: { fr: 'Biologie & Musique', en: 'Biology & Music' },
     discount: '15%',
     icon: 'music',
@@ -689,6 +730,10 @@ export const quizzes: Quiz[] = [
     id: '3.4',
     level: 3,
     title: { fr: 'Quiz 3.4 - Biologie avancée', en: 'Quiz 3.4 - Advanced Biology' },
+    description: { 
+      fr: '4 questions sur les découvertes Nobel : ADN, autophagie, CRISPR. Niveau expert !',
+      en: '4 questions about Nobel discoveries: DNA, autophagy, CRISPR. Expert level!'
+    },
     category: { fr: 'Biologie', en: 'Biology' },
     discount: '15%',
     icon: 'biology',
