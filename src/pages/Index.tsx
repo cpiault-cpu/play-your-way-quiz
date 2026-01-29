@@ -307,7 +307,7 @@ const Index = () => {
 
               {/* Series 2: Mitochondrie */}
               <motion.section 
-                className="mb-10 sm:mb-12 -mx-4 sm:-mx-6 px-4 sm:px-6 py-8 sm:py-10 bg-gradient-to-br from-orange-50 to-amber-50 rounded-none sm:rounded-2xl"
+                className="mb-10 sm:mb-12 -mx-4 sm:-mx-6 px-4 sm:px-6 py-8 sm:py-10 bg-gradient-to-br from-orange-200 via-amber-200 to-yellow-100 rounded-none sm:rounded-2xl"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

@@ -45,7 +45,7 @@ export const healthQuizSeries: HealthQuizSeries[] = [
       en: "Discover the secrets of our cells' powerhouse. Mitochondria produce ATP, the essential fuel for all cellular activity. Memorize the information then test your knowledge."
     },
     icon: '⚡',
-    bgClass: 'bg-gradient-to-br from-orange-100 to-amber-100'
+    bgClass: 'bg-gradient-to-br from-orange-200 via-amber-200 to-yellow-100'
   }
 ];
 
