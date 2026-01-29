@@ -6,57 +6,111 @@ const MemoryCardsIcon = ({ className = "h-20 w-20" }: { className?: string }) =>
     xmlns="http://www.w3.org/2000/svg"
   >
     <defs>
-      <linearGradient id="cardFaceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#4CAF50" />
-        <stop offset="100%" stopColor="#2E7D32" />
+      <linearGradient id="cardBackGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#8ECFB3" />
+        <stop offset="100%" stopColor="#6BB89D" />
       </linearGradient>
-      <linearGradient id="cardBackGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#1565C0" />
-        <stop offset="100%" stopColor="#0D47A1" />
-      </linearGradient>
-      <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="130%">
-        <feDropShadow dx="1" dy="2" stdDeviation="2" floodColor="#000" floodOpacity="0.2"/>
+      <filter id="cardShadowMem" x="-5%" y="-5%" width="110%" height="115%">
+        <feDropShadow dx="0" dy="1" stdDeviation="1" floodColor="#000" floodOpacity="0.15"/>
       </filter>
     </defs>
     
-    {/* Grille de cartes 2x2 */}
+    {/* Grille 4x2 de cartes comme dans le jeu */}
     
-    {/* Carte 1 - retournée (dos bleu) - haut gauche */}
-    <g filter="url(#cardShadow)">
-      <rect x="8" y="12" width="28" height="34" rx="3" fill="url(#cardBackGrad)" stroke="#0D47A1" strokeWidth="0.5"/>
-      <rect x="12" y="16" width="20" height="26" rx="1" fill="none" stroke="#1976D2" strokeWidth="0.8" opacity="0.5"/>
-      <text x="22" y="33" textAnchor="middle" fontSize="14" fill="#64B5F6">?</text>
+    {/* Rangée 1 */}
+    {/* Carte 1 - dos vert avec feuille */}
+    <g filter="url(#cardShadowMem)">
+      <rect x="4" y="8" width="20" height="26" rx="3" fill="url(#cardBackGreen)"/>
+      <g transform="translate(8, 14)">
+        <path d="M6 12 L6 8 M4 6 C4 4 5 3 6 4 C7 3 8 4 8 6 M3 8 C2 7 3 5 5 6 M9 8 C10 7 9 5 7 6" stroke="#4CAF50" strokeWidth="1" strokeLinecap="round" fill="none"/>
+      </g>
     </g>
     
-    {/* Carte 2 - face visible (plante) - haut droite */}
-    <g filter="url(#cardShadow)">
-      <rect x="42" y="12" width="28" height="34" rx="3" fill="#FFFFFF" stroke="#E0E0E0" strokeWidth="0.5"/>
-      {/* Mini plante */}
-      <path d="M56 38 L56 28 M56 28 C52 25 50 20 54 18 C58 20 56 25 56 28 M56 28 C60 25 62 20 58 18" stroke="#4CAF50" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
-      <circle cx="56" cy="22" r="4" fill="#81C784" opacity="0.6"/>
+    {/* Carte 2 - dos vert avec feuille */}
+    <g filter="url(#cardShadowMem)">
+      <rect x="28" y="8" width="20" height="26" rx="3" fill="url(#cardBackGreen)"/>
+      <g transform="translate(32, 14)">
+        <path d="M6 12 L6 8 M4 6 C4 4 5 3 6 4 C7 3 8 4 8 6 M3 8 C2 7 3 5 5 6 M9 8 C10 7 9 5 7 6" stroke="#4CAF50" strokeWidth="1" strokeLinecap="round" fill="none"/>
+      </g>
     </g>
     
-    {/* Carte 3 - face visible (plante identique) - bas gauche */}
-    <g filter="url(#cardShadow)">
-      <rect x="8" y="52" width="28" height="34" rx="3" fill="#FFFFFF" stroke="#E0E0E0" strokeWidth="0.5"/>
-      {/* Mini plante identique */}
-      <path d="M22 78 L22 68 M22 68 C18 65 16 60 20 58 C24 60 22 65 22 68 M22 68 C26 65 28 60 24 58" stroke="#4CAF50" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
-      <circle cx="22" cy="62" r="4" fill="#81C784" opacity="0.6"/>
+    {/* Carte 3 - dos vert avec feuille */}
+    <g filter="url(#cardShadowMem)">
+      <rect x="52" y="8" width="20" height="26" rx="3" fill="url(#cardBackGreen)"/>
+      <g transform="translate(56, 14)">
+        <path d="M6 12 L6 8 M4 6 C4 4 5 3 6 4 C7 3 8 4 8 6 M3 8 C2 7 3 5 5 6 M9 8 C10 7 9 5 7 6" stroke="#4CAF50" strokeWidth="1" strokeLinecap="round" fill="none"/>
+      </g>
     </g>
     
-    {/* Carte 4 - retournée (dos bleu) - bas droite */}
-    <g filter="url(#cardShadow)">
-      <rect x="42" y="52" width="28" height="34" rx="3" fill="url(#cardBackGrad)" stroke="#0D47A1" strokeWidth="0.5"/>
-      <rect x="46" y="56" width="20" height="26" rx="1" fill="none" stroke="#1976D2" strokeWidth="0.8" opacity="0.5"/>
-      <text x="56" y="73" textAnchor="middle" fontSize="14" fill="#64B5F6">?</text>
+    {/* Carte 4 - dos vert avec feuille */}
+    <g filter="url(#cardShadowMem)">
+      <rect x="76" y="8" width="20" height="26" rx="3" fill="url(#cardBackGreen)"/>
+      <g transform="translate(80, 14)">
+        <path d="M6 12 L6 8 M4 6 C4 4 5 3 6 4 C7 3 8 4 8 6 M3 8 C2 7 3 5 5 6 M9 8 C10 7 9 5 7 6" stroke="#4CAF50" strokeWidth="1" strokeLinecap="round" fill="none"/>
+      </g>
     </g>
     
-    {/* Indicateur de match - petites étoiles */}
-    <circle cx="85" cy="30" r="6" fill="#FFD54F" opacity="0.9"/>
-    <text x="85" y="33" textAnchor="middle" fontSize="8" fill="#F57F17">✓</text>
+    {/* Rangée 2 */}
+    {/* Carte 5 - dos vert avec feuille */}
+    <g filter="url(#cardShadowMem)">
+      <rect x="4" y="40" width="20" height="26" rx="3" fill="url(#cardBackGreen)"/>
+      <g transform="translate(8, 46)">
+        <path d="M6 12 L6 8 M4 6 C4 4 5 3 6 4 C7 3 8 4 8 6 M3 8 C2 7 3 5 5 6 M9 8 C10 7 9 5 7 6" stroke="#4CAF50" strokeWidth="1" strokeLinecap="round" fill="none"/>
+      </g>
+    </g>
     
-    {/* Effet de brillance sur une carte */}
-    <path d="M44 14 L48 14 L44 20 Z" fill="white" opacity="0.3"/>
+    {/* Carte 6 - RÉVÉLÉE (blanche avec gingembre) */}
+    <g filter="url(#cardShadowMem)">
+      <rect x="28" y="40" width="20" height="26" rx="3" fill="#FFFFFF" stroke="#4CAF50" strokeWidth="1.5"/>
+      {/* Gingembre stylisé */}
+      <path d="M38 48 C36 50 35 54 36 58 C37 56 39 55 40 57 C41 55 40 52 38 48" fill="#E8C07D" stroke="#C9A050" strokeWidth="0.5"/>
+      <text x="38" y="64" textAnchor="middle" fontSize="3.5" fill="#666" fontFamily="sans-serif">Gingembre</text>
+    </g>
+    
+    {/* Carte 7 - dos vert avec feuille */}
+    <g filter="url(#cardShadowMem)">
+      <rect x="52" y="40" width="20" height="26" rx="3" fill="url(#cardBackGreen)"/>
+      <g transform="translate(56, 46)">
+        <path d="M6 12 L6 8 M4 6 C4 4 5 3 6 4 C7 3 8 4 8 6 M3 8 C2 7 3 5 5 6 M9 8 C10 7 9 5 7 6" stroke="#4CAF50" strokeWidth="1" strokeLinecap="round" fill="none"/>
+      </g>
+    </g>
+    
+    {/* Carte 8 - dos vert avec feuille */}
+    <g filter="url(#cardShadowMem)">
+      <rect x="76" y="40" width="20" height="26" rx="3" fill="url(#cardBackGreen)"/>
+      <g transform="translate(80, 46)">
+        <path d="M6 12 L6 8 M4 6 C4 4 5 3 6 4 C7 3 8 4 8 6 M3 8 C2 7 3 5 5 6 M9 8 C10 7 9 5 7 6" stroke="#4CAF50" strokeWidth="1" strokeLinecap="round" fill="none"/>
+      </g>
+    </g>
+    
+    {/* Rangée 3 - optionnelle pour montrer plus de cartes */}
+    <g filter="url(#cardShadowMem)">
+      <rect x="4" y="72" width="20" height="26" rx="3" fill="url(#cardBackGreen)"/>
+      <g transform="translate(8, 78)">
+        <path d="M6 12 L6 8 M4 6 C4 4 5 3 6 4 C7 3 8 4 8 6 M3 8 C2 7 3 5 5 6 M9 8 C10 7 9 5 7 6" stroke="#4CAF50" strokeWidth="1" strokeLinecap="round" fill="none"/>
+      </g>
+    </g>
+    
+    <g filter="url(#cardShadowMem)">
+      <rect x="28" y="72" width="20" height="26" rx="3" fill="url(#cardBackGreen)"/>
+      <g transform="translate(32, 78)">
+        <path d="M6 12 L6 8 M4 6 C4 4 5 3 6 4 C7 3 8 4 8 6 M3 8 C2 7 3 5 5 6 M9 8 C10 7 9 5 7 6" stroke="#4CAF50" strokeWidth="1" strokeLinecap="round" fill="none"/>
+      </g>
+    </g>
+    
+    <g filter="url(#cardShadowMem)">
+      <rect x="52" y="72" width="20" height="26" rx="3" fill="url(#cardBackGreen)"/>
+      <g transform="translate(56, 78)">
+        <path d="M6 12 L6 8 M4 6 C4 4 5 3 6 4 C7 3 8 4 8 6 M3 8 C2 7 3 5 5 6 M9 8 C10 7 9 5 7 6" stroke="#4CAF50" strokeWidth="1" strokeLinecap="round" fill="none"/>
+      </g>
+    </g>
+    
+    <g filter="url(#cardShadowMem)">
+      <rect x="76" y="72" width="20" height="26" rx="3" fill="url(#cardBackGreen)"/>
+      <g transform="translate(80, 78)">
+        <path d="M6 12 L6 8 M4 6 C4 4 5 3 6 4 C7 3 8 4 8 6 M3 8 C2 7 3 5 5 6 M9 8 C10 7 9 5 7 6" stroke="#4CAF50" strokeWidth="1" strokeLinecap="round" fill="none"/>
+      </g>
+    </g>
   </svg>
 );
 
