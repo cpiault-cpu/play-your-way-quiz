@@ -13,30 +13,24 @@ interface Category {
 const heroTexts = {
   fr: [
     {
-      emoji: "🧠",
-      text: "Une mémoire en bonne santé se construit grâce à l'alliance d'une alimentation adaptée et d'un entraînement mental régulier. Une nutrition anti-inflammatoire, riche en oméga-3, joue un rôle capital dans le bon fonctionnement du cerveau."
+      text: "Une bonne alimentation joue un rôle primordial dans le soutien d'un cerveau qui fonctionne bien. Une alimentation anti-inflammatoire, riche en oméga-3."
     },
     {
-      emoji: "💡",
-      text: "Il est tout aussi essentiel de rester intellectuellement actif : apprendre, solliciter sa mémoire et explorer de nouvelles idées tout au long de la vie permet de préserver vivacité et curiosité."
+      text: "L'esprit aussi a besoin d'être nourri : apprendre, exercer sa mémoire et s'ouvrir à de nouvelles idées tout au long de la vie entretient la vivacité et la curiosité et le plaisir."
     },
     {
-      emoji: "🎮",
-      text: "C'est dans cet esprit que nous avons créé cette série de quiz, conçue pour entraîner le cerveau de façon stimulante et fun."
+      text: "C'est pourquoi nous avons créé cette série de quiz, conçue pour entraîner le cerveau en s'amusant, et partager des connaissances sur le merveilleux fonctionnement du vivant."
     }
   ],
   en: [
     {
-      emoji: "🧠",
-      text: "A healthy memory is shaped by both nutrition and mental exercise. An anti-inflammatory diet rich in omega-3s plays a key role in supporting brain health."
+      text: "Good nutrition plays a key role in supporting a healthy brain. An anti-inflammatory diet, rich in omega-3s."
     },
     {
-      emoji: "💡",
-      text: "Just as important is staying mentally active — learning, challenging your memory, and exploring new ideas throughout life helps keep the mind sharp and curious."
+      text: "The mind also needs to be nourished: learning, exercising memory and opening up to new ideas throughout life maintains vitality, curiosity and joy."
     },
     {
-      emoji: "🎮",
-      text: "That's why we created this series of quizzes, designed to train your brain in a playful and engaging way."
+      text: "That's why we created this series of quizzes, designed to train the brain while having fun, and share knowledge about the wonderful workings of life."
     }
   ]
 };
@@ -172,12 +166,9 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                 className="flex-shrink-0 w-[85vw] sm:w-[45%] md:w-[32%] first:ml-4 sm:first:ml-0 last:mr-4 sm:last:mr-0 snap-center"
               >
                 <div className="h-full bg-white/95 backdrop-blur-sm rounded-2xl p-5 shadow-lg border border-white/50">
-                  <div className="flex items-start gap-3">
-                    <span className="text-3xl flex-shrink-0">{item.emoji}</span>
-                    <p className="text-base sm:text-base text-foreground leading-relaxed">
-                      {item.text}
-                    </p>
-                  </div>
+                  <p className="text-base sm:text-base text-foreground leading-relaxed">
+                    {item.text}
+                  </p>
                 </div>
               </motion.div>
             ))}
