@@ -76,8 +76,8 @@ const Footer = ({ language }: FooterProps) => {
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
               <Button 
-                size="lg"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold px-8 py-6 text-lg rounded-full shadow-lg shadow-accent/30 transition-all hover:shadow-xl hover:shadow-accent/40"
+                size="default"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground font-normal px-6 py-2 text-sm rounded-full shadow-lg shadow-accent/30 transition-all hover:shadow-xl hover:shadow-accent/40"
               >
                 {language === "fr" ? "S'inscrire" : "Sign Up"}
               </Button>
