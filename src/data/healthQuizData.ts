@@ -1,5 +1,7 @@
 export type Language = 'fr' | 'en';
 
+export type HealthQuizSeriesId = 'nutrition' | 'mitochondria';
+
 export interface HealthQuizQuestion {
   question: { fr: string; en: string };
   options: { fr: string[]; en: string[] };
@@ -8,6 +10,7 @@ export interface HealthQuizQuestion {
 
 export interface HealthQuizLevel {
   level: 1 | 2 | 3;
+  seriesId: HealthQuizSeriesId;
   text: { fr: string; en: string };
   readingTime: number; // seconds
   questions: HealthQuizQuestion[];
@@ -15,9 +18,42 @@ export interface HealthQuizLevel {
   discountPercent: string;
 }
 
+export interface HealthQuizSeries {
+  id: HealthQuizSeriesId;
+  title: { fr: string; en: string };
+  description: { fr: string; en: string };
+  icon: string;
+  bgClass: string;
+}
+
+export const healthQuizSeries: HealthQuizSeries[] = [
+  {
+    id: 'nutrition',
+    title: { fr: 'Nutriments essentiels', en: 'Essential Nutrients' },
+    description: {
+      fr: "Ce quiz évalue votre mémoire à court terme et votre capacité de rétention d'informations nutritionnelles. Lisez attentivement le texte affiché pendant quelques secondes, puis répondez aux questions de mémoire.",
+      en: "This quiz evaluates your short-term memory and your ability to retain nutritional information. Carefully read the text displayed for a few seconds, then answer the memory questions."
+    },
+    icon: '❤️',
+    bgClass: 'bg-gradient-to-br from-red-50 to-orange-50'
+  },
+  {
+    id: 'mitochondria',
+    title: { fr: 'Le fonctionnement de la mitochondrie', en: 'How Mitochondria Work' },
+    description: {
+      fr: "Découvrez les secrets de la centrale énergétique de nos cellules. La mitochondrie produit l'ATP, carburant essentiel à toute activité cellulaire. Mémorisez les informations puis testez vos connaissances.",
+      en: "Discover the secrets of our cells' powerhouse. Mitochondria produce ATP, the essential fuel for all cellular activity. Memorize the information then test your knowledge."
+    },
+    icon: '⚡',
+    bgClass: 'bg-gradient-to-br from-orange-100 to-amber-100'
+  }
+];
+
 export const healthQuizLevels: HealthQuizLevel[] = [
+  // === NUTRITION SERIES ===
   {
     level: 1,
+    seriesId: 'nutrition',
     readingTime: 20,
     text: {
       fr: `Le calcium contribue à la solidité des os et des dents, mais il intervient aussi dans la contraction musculaire.
@@ -86,6 +122,7 @@ In adults, protein requirements average about 0.8 g per kilogram of body weight 
   },
   {
     level: 2,
+    seriesId: 'nutrition',
     readingTime: 25,
     text: {
       fr: `Le calcium ne sert pas uniquement à la structure osseuse : il est aussi indispensable à l'activité musculaire.
@@ -154,6 +191,7 @@ Protein needs change with age and physical activity, but remain around 0.8 g/kg/
   },
   {
     level: 3,
+    seriesId: 'nutrition',
     readingTime: 30,
     text: {
       fr: `Le calcium est essentiel aux os, mais aussi à la transmission des signaux musculaires.
@@ -218,6 +256,215 @@ Recommended protein intake in adults is around 0.8 g/kg/day, with higher needs f
       }
     ],
     couponCode: "SANTE15",
+    discountPercent: "15%"
+  },
+  
+  // === MITOCHONDRIA SERIES ===
+  {
+    level: 1,
+    seriesId: 'mitochondria',
+    readingTime: 20,
+    text: {
+      fr: `La mitochondrie est un organite présent dans la majorité des cellules humaines et joue un rôle central dans la production d'énergie.
+
+Elle produit de l'ATP, une molécule indispensable au fonctionnement des cellules.
+
+Les mitochondries utilisent principalement les nutriments issus des glucides et des lipides pour produire cette énergie.
+
+Les cellules très actives, comme les muscles ou le cerveau, contiennent un grand nombre de mitochondries.`,
+      en: `Mitochondria are organelles present in most human cells and play a central role in energy production.
+
+They produce ATP, a molecule essential for cell function.
+
+Mitochondria primarily use nutrients from carbohydrates and lipids to produce this energy.
+
+Highly active cells, such as muscles or the brain, contain a large number of mitochondria.`
+    },
+    questions: [
+      {
+        question: { 
+          fr: "Le rôle principal de la mitochondrie est de…",
+          en: "The main role of mitochondria is to…"
+        },
+        options: {
+          fr: ["Stocker l'oxygène", "Produire de l'énergie sous forme d'ATP", "Protéger l'ADN", "Fabriquer des protéines"],
+          en: ["Store oxygen", "Produce energy in the form of ATP", "Protect DNA", "Make proteins"]
+        },
+        correctAnswer: 1
+      },
+      {
+        question: { 
+          fr: "L'ATP est…",
+          en: "ATP is…"
+        },
+        options: {
+          fr: ["Une vitamine", "Une hormone", "Une molécule d'énergie cellulaire", "Un minéral"],
+          en: ["A vitamin", "A hormone", "A cellular energy molecule", "A mineral"]
+        },
+        correctAnswer: 2
+      },
+      {
+        question: { 
+          fr: "Les mitochondries utilisent surtout…",
+          en: "Mitochondria mainly use…"
+        },
+        options: {
+          fr: ["Les protéines uniquement", "Les vitamines", "Les glucides et les lipides", "L'eau"],
+          en: ["Only proteins", "Vitamins", "Carbohydrates and lipids", "Water"]
+        },
+        correctAnswer: 2
+      },
+      {
+        question: { 
+          fr: "Où trouve-t-on le plus de mitochondries ?",
+          en: "Where are the most mitochondria found?"
+        },
+        options: {
+          fr: ["Dans les cellules peu actives", "Dans les cellules mortes", "Dans les muscles et le cerveau", "Dans le plasma sanguin"],
+          en: ["In inactive cells", "In dead cells", "In muscles and the brain", "In blood plasma"]
+        },
+        correctAnswer: 2
+      }
+    ],
+    couponCode: "MITO5",
+    discountPercent: "5%"
+  },
+  {
+    level: 2,
+    seriesId: 'mitochondria',
+    readingTime: 25,
+    text: {
+      fr: `Les mitochondries produisent l'ATP grâce à un processus appelé respiration cellulaire.
+
+Cette production d'énergie nécessite de l'oxygène, ce qui explique le lien entre mitochondries et respiration.
+
+Les mitochondries possèdent leur propre ADN, distinct de l'ADN nucléaire.
+
+Leur nombre et leur efficacité influencent directement la vitalité cellulaire et la performance physique.`,
+      en: `Mitochondria produce ATP through a process called cellular respiration.
+
+This energy production requires oxygen, which explains the link between mitochondria and breathing.
+
+Mitochondria have their own DNA, distinct from nuclear DNA.
+
+Their number and efficiency directly influence cellular vitality and physical performance.`
+    },
+    questions: [
+      {
+        question: { 
+          fr: "Le processus utilisé par les mitochondries pour produire de l'ATP est…",
+          en: "The process used by mitochondria to produce ATP is…"
+        },
+        options: {
+          fr: ["La digestion cellulaire", "La fermentation", "La respiration cellulaire", "La photosynthèse"],
+          en: ["Cellular digestion", "Fermentation", "Cellular respiration", "Photosynthesis"]
+        },
+        correctAnswer: 2
+      },
+      {
+        question: { 
+          fr: "Pourquoi l'oxygène est-il important pour les mitochondries ?",
+          en: "Why is oxygen important for mitochondria?"
+        },
+        options: {
+          fr: ["Il hydrate la cellule", "Il permet la respiration cellulaire", "Il transporte le glucose", "Il active les enzymes digestives"],
+          en: ["It hydrates the cell", "It enables cellular respiration", "It transports glucose", "It activates digestive enzymes"]
+        },
+        correctAnswer: 1
+      },
+      {
+        question: { 
+          fr: "Une particularité des mitochondries est qu'elles…",
+          en: "A unique feature of mitochondria is that they…"
+        },
+        options: {
+          fr: ["N'ont pas d'ADN", "Utilisent l'ADN du noyau uniquement", "Possèdent leur propre ADN", "Ne se divisent jamais"],
+          en: ["Have no DNA", "Only use nuclear DNA", "Have their own DNA", "Never divide"]
+        },
+        correctAnswer: 2
+      },
+      {
+        question: { 
+          fr: "L'efficacité des mitochondries influence surtout…",
+          en: "Mitochondrial efficiency mainly influences…"
+        },
+        options: {
+          fr: ["La couleur des cellules", "La vitalité et la performance physique", "La taille des os", "La digestion intestinale"],
+          en: ["Cell color", "Vitality and physical performance", "Bone size", "Intestinal digestion"]
+        },
+        correctAnswer: 1
+      }
+    ],
+    couponCode: "MITO10",
+    discountPercent: "10%"
+  },
+  {
+    level: 3,
+    seriesId: 'mitochondria',
+    readingTime: 30,
+    text: {
+      fr: `La mitochondrie est le principal site de production de l'ATP via la chaîne respiratoire située dans sa membrane interne.
+
+Elle joue aussi un rôle clé dans la régulation du stress oxydatif et de l'apoptose, la mort cellulaire programmée.
+
+Le dysfonctionnement mitochondrial est associé au vieillissement et à de nombreuses maladies métaboliques et neurodégénératives.
+
+L'activité physique stimule la biogenèse mitochondriale, augmentant leur nombre et leur efficacité.`,
+      en: `Mitochondria are the main site of ATP production via the respiratory chain located in their inner membrane.
+
+They also play a key role in regulating oxidative stress and apoptosis, programmed cell death.
+
+Mitochondrial dysfunction is associated with aging and many metabolic and neurodegenerative diseases.
+
+Physical activity stimulates mitochondrial biogenesis, increasing their number and efficiency.`
+    },
+    questions: [
+      {
+        question: { 
+          fr: "Où se déroule principalement la production d'ATP dans la mitochondrie ?",
+          en: "Where does ATP production mainly occur in mitochondria?"
+        },
+        options: {
+          fr: ["Dans le cytoplasme", "Dans la membrane externe", "Dans la membrane interne (chaîne respiratoire)", "Dans le noyau"],
+          en: ["In the cytoplasm", "In the outer membrane", "In the inner membrane (respiratory chain)", "In the nucleus"]
+        },
+        correctAnswer: 2
+      },
+      {
+        question: { 
+          fr: "En plus de l'énergie, la mitochondrie participe à…",
+          en: "Besides energy, mitochondria participate in…"
+        },
+        options: {
+          fr: ["La digestion des protéines", "La synthèse des vitamines", "La régulation du stress oxydatif et de l'apoptose", "La photosynthèse cellulaire"],
+          en: ["Protein digestion", "Vitamin synthesis", "Regulating oxidative stress and apoptosis", "Cellular photosynthesis"]
+        },
+        correctAnswer: 2
+      },
+      {
+        question: { 
+          fr: "Le dysfonctionnement mitochondrial est lié à…",
+          en: "Mitochondrial dysfunction is linked to…"
+        },
+        options: {
+          fr: ["Uniquement aux blessures musculaires", "Le vieillissement et certaines maladies chroniques", "La croissance osseuse", "L'absorption intestinale"],
+          en: ["Only muscle injuries", "Aging and certain chronic diseases", "Bone growth", "Intestinal absorption"]
+        },
+        correctAnswer: 1
+      },
+      {
+        question: { 
+          fr: "Quel facteur augmente le nombre et l'efficacité des mitochondries ?",
+          en: "What factor increases the number and efficiency of mitochondria?"
+        },
+        options: {
+          fr: ["Le repos prolongé", "L'activité physique régulière", "Le jeûne hydrique seul", "Le sommeil uniquement"],
+          en: ["Prolonged rest", "Regular physical activity", "Water fasting alone", "Sleep only"]
+        },
+        correctAnswer: 1
+      }
+    ],
+    couponCode: "MITO15",
     discountPercent: "15%"
   }
 ];

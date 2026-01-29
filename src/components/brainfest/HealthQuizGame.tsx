@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Language } from "@/data/quizData";
-import { healthQuizLevels, healthQuizTranslations } from "@/data/healthQuizData";
+import { healthQuizLevels, healthQuizTranslations, HealthQuizSeriesId, healthQuizSeries } from "@/data/healthQuizData";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import { supabase } from "@/integrations/supabase/client";
@@ -45,6 +45,7 @@ const fireConfetti = () => {
 interface HealthQuizGameProps {
   language: Language;
   level: 1 | 2 | 3;
+  seriesId?: HealthQuizSeriesId;
   onBack: () => void;
 }
 
@@ -57,9 +58,10 @@ interface MistakeRecord {
 
 type GameState = "email" | "reading" | "quiz" | "feedback" | "results";
 
-const HealthQuizGame = ({ language, level, onBack }: HealthQuizGameProps) => {
+const HealthQuizGame = ({ language, level, seriesId = 'nutrition', onBack }: HealthQuizGameProps) => {
   const t = healthQuizTranslations[language];
-  const levelData = healthQuizLevels.find(l => l.level === level)!;
+  const levelData = healthQuizLevels.find(l => l.level === level && l.seriesId === seriesId)!;
+  const seriesData = healthQuizSeries.find(s => s.id === seriesId)!;
   
   const [gameState, setGameState] = useState<GameState>("email");
   const [email, setEmail] = useState("");
@@ -178,8 +180,12 @@ const HealthQuizGame = ({ language, level, onBack }: HealthQuizGameProps) => {
 
   // Email input screen
   if (gameState === "email") {
+    const bgClass = seriesId === 'mitochondria' 
+      ? 'bg-gradient-to-b from-orange-100 to-amber-50' 
+      : 'bg-gradient-to-b from-primary/10 to-background';
+    
     return (
-      <div className="min-h-screen bg-gradient-to-b from-primary/10 to-background flex flex-col">
+      <div className={`min-h-screen ${bgClass} flex flex-col`}>
         <div className="p-4">
           <Button variant="ghost" onClick={onBack} className="text-foreground">
             <ArrowLeft className="w-5 h-5 mr-2" />
@@ -195,15 +201,15 @@ const HealthQuizGame = ({ language, level, onBack }: HealthQuizGameProps) => {
           >
             <div className="text-center mb-6">
               <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
-                <span className="text-3xl">❤️</span>
+                <span className="text-3xl">{seriesData.icon}</span>
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">{t.title}</h2>
-              <p className="text-gray-600">{t.level} {level}</p>
+              <h2 className="text-2xl font-bold text-foreground mb-2">{seriesData.title[language]}</h2>
+              <p className="text-muted-foreground">{t.level} {level}</p>
             </div>
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   {t.enterEmail}
                 </label>
                 <Input
@@ -211,7 +217,7 @@ const HealthQuizGame = ({ language, level, onBack }: HealthQuizGameProps) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t.emailPlaceholder}
-                  className="w-full bg-white text-gray-900 border-gray-300"
+                  className="w-full bg-white text-foreground border-border"
                   onKeyDown={(e) => e.key === "Enter" && handleEmailSubmit()}
                 />
               </div>
@@ -232,9 +238,12 @@ const HealthQuizGame = ({ language, level, onBack }: HealthQuizGameProps) => {
   // Reading phase
   if (gameState === "reading") {
     const progressPercent = (readingTimeLeft / levelData.readingTime) * 100;
+    const bgClass = seriesId === 'mitochondria' 
+      ? 'bg-gradient-to-b from-orange-100 to-amber-50' 
+      : 'bg-gradient-to-b from-primary/10 to-background';
     
     return (
-      <div className="min-h-screen bg-gradient-to-b from-primary/10 to-background flex flex-col">
+      <div className={`min-h-screen ${bgClass} flex flex-col`}>
         <div className="p-4">
           <Button variant="ghost" onClick={onBack} className="text-foreground">
             <ArrowLeft className="w-5 h-5 mr-2" />
@@ -290,9 +299,12 @@ const HealthQuizGame = ({ language, level, onBack }: HealthQuizGameProps) => {
   // Quiz phase
   if (gameState === "quiz" || gameState === "feedback") {
     const question = levelData.questions[currentQuestion];
+    const bgClass = seriesId === 'mitochondria' 
+      ? 'bg-gradient-to-b from-orange-100 to-amber-50' 
+      : 'bg-gradient-to-b from-primary/10 to-background';
     
     return (
-      <div className="min-h-screen bg-gradient-to-b from-primary/10 to-background flex flex-col">
+      <div className={`min-h-screen ${bgClass} flex flex-col`}>
         <div className="p-4">
           <Button variant="ghost" onClick={onBack} className="text-foreground">
             <ArrowLeft className="w-5 h-5 mr-2" />
@@ -404,8 +416,12 @@ const HealthQuizGame = ({ language, level, onBack }: HealthQuizGameProps) => {
   }
 
   // Results phase
+  const resultsBgClass = seriesId === 'mitochondria' 
+    ? 'bg-gradient-to-b from-orange-100 to-amber-50' 
+    : 'bg-gradient-to-b from-primary/10 to-background';
+  
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary/10 to-background flex flex-col">
+    <div className={`min-h-screen ${resultsBgClass} flex flex-col`}>
       <div className="p-4">
         <Button variant="ghost" onClick={onBack} className="text-foreground">
           <ArrowLeft className="w-5 h-5 mr-2" />
