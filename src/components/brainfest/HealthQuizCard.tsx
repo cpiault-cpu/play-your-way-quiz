@@ -2,16 +2,18 @@ import { Play } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Language } from "@/data/quizData";
-import { healthQuizTranslations } from "@/data/healthQuizData";
+import { healthQuizTranslations, HealthQuizSeriesId } from "@/data/healthQuizData";
 import HealthIcon from "./icons/HealthIcon";
+import MitochondriaIcon from "./icons/MitochondriaIcon";
 
 interface HealthQuizCardProps {
   level: 1 | 2 | 3;
   language: Language;
-  onPlay: (level: 1 | 2 | 3) => void;
+  seriesId?: HealthQuizSeriesId;
+  onPlay: (level: 1 | 2 | 3, seriesId?: HealthQuizSeriesId) => void;
 }
 
-const HealthQuizCard = ({ level, language, onPlay }: HealthQuizCardProps) => {
+const HealthQuizCard = ({ level, language, seriesId = 'nutrition', onPlay }: HealthQuizCardProps) => {
   const t = healthQuizTranslations[language];
 
   const getLevelBadgeClass = () => {
@@ -41,6 +43,20 @@ const HealthQuizCard = ({ level, language, onPlay }: HealthQuizCardProps) => {
     }
   };
 
+  const getIcon = () => {
+    if (seriesId === 'mitochondria') {
+      return <MitochondriaIcon className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28" />;
+    }
+    return <HealthIcon className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28" />;
+  };
+
+  const getTitle = () => {
+    if (seriesId === 'mitochondria') {
+      return language === 'fr' ? 'Mitochondrie' : 'Mitochondria';
+    }
+    return t.title;
+  };
+
   return (
     <motion.div 
       className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-6 sm:p-6 md:p-7 min-h-[50vh] md:min-h-0 flex flex-col"
@@ -60,7 +76,7 @@ const HealthQuizCard = ({ level, language, onPlay }: HealthQuizCardProps) => {
       </div>
 
       <h3 className="text-xl md:text-xl font-bold text-foreground mb-3 md:mb-2 break-words">
-        {t.title}
+        {getTitle()}
       </h3>
       <p className="text-base md:text-sm text-muted-foreground mb-4 leading-relaxed">
         {getLevelDesc()}
@@ -68,11 +84,11 @@ const HealthQuizCard = ({ level, language, onPlay }: HealthQuizCardProps) => {
 
       {/* Large icon centered below description */}
       <div className="flex-grow flex items-center justify-center py-4">
-        <HealthIcon className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28" />
+        {getIcon()}
       </div>
 
       <Button
-        onClick={() => onPlay(level)}
+        onClick={() => onPlay(level, seriesId)}
         className="w-full min-w-0 btn-primary-custom text-white font-semibold text-base md:text-base py-4 md:py-3 rounded-xl mt-auto"
       >
         <Play className="w-5 h-5 md:w-4 md:h-4 mr-2 flex-shrink-0" />
