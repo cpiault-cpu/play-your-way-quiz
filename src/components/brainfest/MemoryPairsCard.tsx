@@ -15,18 +15,18 @@ const translations = {
     level: "Niveau",
     discount: "de réduction",
     play: "Jouer",
-    level1Desc: "3 parties • 4 paires • 30 sec",
-    level2Desc: "3 parties • 6 paires • 30 sec",
-    level3Desc: "3 parties • 8 paires • 30 sec",
+    level1Desc: "3 parties de 4 paires à retrouver en 30 secondes. Découvrez les plantes médicinales !",
+    level2Desc: "3 parties de 6 paires à associer en 30 secondes. Testez votre mémoire visuelle !",
+    level3Desc: "3 parties de 8 paires à identifier en 30 secondes. Le défi ultime des botanistes !",
   },
   en: {
     title: "Plant Memory",
     level: "Level",
     discount: "discount",
     play: "Play",
-    level1Desc: "3 games • 4 pairs • 30 sec",
-    level2Desc: "3 games • 6 pairs • 30 sec",
-    level3Desc: "3 games • 8 pairs • 30 sec",
+    level1Desc: "3 games with 4 pairs to find in 30 seconds. Discover medicinal plants!",
+    level2Desc: "3 games with 6 pairs to match in 30 seconds. Test your visual memory!",
+    level3Desc: "3 games with 8 pairs to identify in 30 seconds. The ultimate botanist challenge!",
   },
 };
 
@@ -64,7 +64,7 @@ const MemoryPairsCard = ({ level, language, onPlay }: MemoryPairsCardProps) => {
 
   return (
     <motion.div 
-      className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-6 sm:p-6 md:p-7"
+      className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-6 sm:p-6 md:p-7 min-h-[45vh] md:min-h-0 flex flex-col"
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
@@ -82,10 +82,10 @@ const MemoryPairsCard = ({ level, language, onPlay }: MemoryPairsCardProps) => {
         </span>
       </div>
 
-      <h3 className="text-xl md:text-xl font-bold text-foreground mb-2 md:mb-1 pr-16 break-words">
+      <h3 className="text-xl md:text-xl font-bold text-foreground mb-3 md:mb-1 pr-16 break-words">
         {t.title}
       </h3>
-      <p className="text-base md:text-sm text-muted-foreground mb-6 md:mb-5">
+      <p className="text-base md:text-sm text-muted-foreground mb-6 md:mb-5 flex-grow leading-relaxed">
         {getLevelDesc()}
       </p>
 

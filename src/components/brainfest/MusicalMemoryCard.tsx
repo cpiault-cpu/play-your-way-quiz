@@ -16,18 +16,18 @@ const translations = {
     level: "Niveau",
     discount: "de réduction",
     play: "Jouer",
-    level1Desc: "4 exercices • 4 notes",
-    level2Desc: "4 exercices • 5 notes",
-    level3Desc: "4 exercices • 8 notes",
+    level1Desc: "4 exercices d'une suite de 4 notes à deviner pour gagner. Entraînez votre mémoire auditive !",
+    level2Desc: "4 exercices d'une suite de 5 notes à mémoriser. Un défi pour votre oreille musicale !",
+    level3Desc: "4 exercices d'une suite de 8 notes à reproduire. Le niveau expert pour les virtuoses !",
   },
   en: {
     title: "Musical Memory",
     level: "Level",
     discount: "discount",
     play: "Play",
-    level1Desc: "4 exercises • 4 notes",
-    level2Desc: "4 exercises • 5 notes",
-    level3Desc: "4 exercises • 8 notes",
+    level1Desc: "4 exercises with 4-note sequences to guess. Train your auditory memory!",
+    level2Desc: "4 exercises with 5-note sequences to memorize. A challenge for your musical ear!",
+    level3Desc: "4 exercises with 8-note sequences to reproduce. Expert level for virtuosos!",
   },
 };
 
@@ -65,7 +65,7 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
 
   return (
     <motion.div 
-      className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-6 sm:p-6 md:p-7"
+      className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-6 sm:p-6 md:p-7 min-h-[45vh] md:min-h-0 flex flex-col"
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
@@ -86,10 +86,10 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
         </span>
       </div>
 
-      <h3 className="text-xl md:text-xl font-bold text-foreground mb-2 md:mb-1 pr-16 break-words">
+      <h3 className="text-xl md:text-xl font-bold text-foreground mb-3 md:mb-1 pr-16 break-words">
         {t.title}
       </h3>
-      <p className="text-base md:text-sm text-muted-foreground mb-6 md:mb-5">
+      <p className="text-base md:text-sm text-muted-foreground mb-6 md:mb-5 flex-grow leading-relaxed">
         {getLevelDesc()}
       </p>
 
