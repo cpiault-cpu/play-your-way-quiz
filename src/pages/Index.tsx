@@ -174,10 +174,10 @@ const Index = () => {
             >
               <div className="flex items-center gap-3 mb-5 sm:mb-6">
                 <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/20 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
-                  🌿
+                  🃏
                 </span>
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
-                  {language === "fr" ? "Memory Plantes Médicinales" : "Medicinal Plant Memory"}
+                  {language === "fr" ? "Memory Cartes" : "Memory Cards"}
                 </h2>
               </div>
               

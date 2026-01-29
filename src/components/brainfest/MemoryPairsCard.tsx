@@ -2,7 +2,7 @@ import { Play } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Language } from "@/data/quizData";
-import GinkgoLeafIcon from "./icons/GinkgoLeafIcon";
+import MemoryCardsIcon from "./icons/MemoryCardsIcon";
 
 interface MemoryPairsCardProps {
   level: 1 | 2 | 3;
@@ -12,18 +12,16 @@ interface MemoryPairsCardProps {
 
 const translations = {
   fr: {
-    title: "Memory Plantes",
+    title: "Memory Cartes",
     level: "Niveau",
-    discount: "de réduction",
     play: "Jouer",
     level1Desc: "3 parties de 4 paires à retrouver en 30 secondes. Découvrez les plantes médicinales !",
     level2Desc: "3 parties de 6 paires à associer en 30 secondes. Testez votre mémoire visuelle !",
     level3Desc: "3 parties de 8 paires à identifier en 30 secondes. Le défi ultime des botanistes !",
   },
   en: {
-    title: "Plant Memory",
+    title: "Memory Cards",
     level: "Level",
-    discount: "discount",
     play: "Play",
     level1Desc: "3 games with 4 pairs to find in 30 seconds. Discover medicinal plants!",
     level2Desc: "3 games with 6 pairs to match in 30 seconds. Test your visual memory!",
@@ -88,7 +86,7 @@ const MemoryPairsCard = ({ level, language, onPlay }: MemoryPairsCardProps) => {
 
       {/* Large icon centered below description */}
       <div className="flex-grow flex items-center justify-center py-4">
-        <GinkgoLeafIcon className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28" />
+        <MemoryCardsIcon className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32" />
       </div>
 
       <Button
