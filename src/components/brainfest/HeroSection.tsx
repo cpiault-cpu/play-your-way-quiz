@@ -20,6 +20,9 @@ const heroTexts = {
     },
     {
       text: "C'est pourquoi nous avons créé cette série de quiz, conçue pour entraîner le cerveau en s'amusant, et partager des connaissances sur le merveilleux fonctionnement du vivant."
+    },
+    {
+      text: "Et parce que les récompenses font toujours plaisir, la réussite des quiz vous permet de gagner des avantages sur nos produits et sur une sélection d'autres produits divers sélectionnés pour leur qualité parfaite."
     }
   ],
   en: [
@@ -31,6 +34,9 @@ const heroTexts = {
     },
     {
       text: "That's why we created this series of quizzes, designed to train the brain while having fun, and share knowledge about the beautiful workings of life."
+    },
+    {
+      text: "And because rewards are always a pleasure, completing the quizzes allows you to earn benefits on our products and on a selection of other products chosen for their perfect quality."
     }
   ]
 };
