@@ -174,8 +174,8 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               >
                 <div className="h-full bg-white/95 backdrop-blur-sm rounded-2xl p-5 shadow-lg border border-white/50">
                   <div className="flex items-start gap-3">
-                    <span className="text-2xl flex-shrink-0">{item.emoji}</span>
-                    <p className="text-sm sm:text-base text-foreground leading-relaxed">
+                    <span className="text-3xl flex-shrink-0">{item.emoji}</span>
+                    <p className="text-base sm:text-base text-foreground leading-relaxed">
                       {item.text}
                     </p>
                   </div>
