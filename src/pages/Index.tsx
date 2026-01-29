@@ -8,10 +8,12 @@ import MusicalMemoryGame from "@/components/brainfest/MusicalMemoryGame";
 import MusicalMemoryCard from "@/components/brainfest/MusicalMemoryCard";
 import MemoryPairsGame from "@/components/brainfest/MemoryPairsGame";
 import MemoryPairsCard from "@/components/brainfest/MemoryPairsCard";
+import HealthQuizGame from "@/components/brainfest/HealthQuizGame";
+import HealthQuizCard from "@/components/brainfest/HealthQuizCard";
 import Footer from "@/components/brainfest/Footer";
 
 // Category type - updated to match new navigation
-type CategoryId = "micronutrition" | "biology" | "plants" | "memory-music" | "memory-cards";
+type CategoryId = "micronutrition" | "biology" | "plants" | "memory-music" | "memory-cards" | "health-quiz";
 
 // Map quiz categories to our category IDs
 const getCategoryForQuiz = (quiz: Quiz): "micronutrition" | "biology" | "plants" => {
@@ -27,6 +29,7 @@ const Index = () => {
   const [activeQuizId, setActiveQuizId] = useState<string | null>(null);
   const [activeMusicalMemoryLevel, setActiveMusicalMemoryLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeMemoryPairsLevel, setActiveMemoryPairsLevel] = useState<1 | 2 | 3 | null>(null);
+  const [activeHealthQuizLevel, setActiveHealthQuizLevel] = useState<1 | 2 | 3 | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory-music");
 
   const handleToggleLanguage = () => {
@@ -45,13 +48,29 @@ const Index = () => {
     setActiveMemoryPairsLevel(level);
   };
 
+  const handlePlayHealthQuiz = (level: 1 | 2 | 3) => {
+    setActiveHealthQuizLevel(level);
+  };
+
   const handleBackToHome = () => {
     setActiveQuizId(null);
     setActiveMusicalMemoryLevel(null);
     setActiveMemoryPairsLevel(null);
+    setActiveHealthQuizLevel(null);
   };
 
   const activeQuiz = quizzes.find((q) => q.id === activeQuizId);
+
+  // Show Health Quiz Game
+  if (activeHealthQuizLevel) {
+    return (
+      <HealthQuizGame
+        language={language}
+        level={activeHealthQuizLevel}
+        onBack={handleBackToHome}
+      />
+    );
+  }
 
   // Show Memory Pairs Game
   if (activeMemoryPairsLevel) {
@@ -217,6 +236,67 @@ const Index = () => {
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                   >
                     <MemoryPairsCard level={level as 1 | 2 | 3} language={language} onPlay={handlePlayMemoryPairs} />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.section>
+          )}
+
+          {/* Show Health Quiz section when health-quiz is selected */}
+          {selectedCategory === "health-quiz" && (
+            <motion.section 
+              className="mt-10 sm:mt-12 md:mt-14 mb-10 sm:mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-red-100 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
+                  ❤️
+                </span>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+                  {language === "fr" ? "Quiz Santé" : "Health Quiz"}
+                </h2>
+                <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
+              </div>
+              
+              {/* Description */}
+              <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
+                <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
+                  {language === "fr" 
+                    ? "Ce quiz évalue votre mémoire à court terme et votre capacité de rétention d'informations nutritionnelles. Lisez attentivement le texte affiché pendant quelques secondes, puis répondez aux questions de mémoire."
+                    : "This quiz evaluates your short-term memory and your ability to retain nutritional information. Carefully read the text displayed for a few seconds, then answer the memory questions."
+                  }
+                </p>
+              </div>
+              
+              {/* Mobile: vertical stack */}
+              <div className="md:hidden flex flex-col gap-4 min-w-0">
+                {[1, 2, 3].map((level, index) => (
+                  <motion.div
+                    key={level}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <HealthQuizCard level={level as 1 | 2 | 3} language={language} onPlay={handlePlayHealthQuiz} />
+                  </motion.div>
+                ))}
+              </div>
+              
+              {/* Desktop: grid */}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3].map((level, index) => (
+                  <motion.div
+                    key={level}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <HealthQuizCard level={level as 1 | 2 | 3} language={language} onPlay={handlePlayHealthQuiz} />
                   </motion.div>
                 ))}
               </div>

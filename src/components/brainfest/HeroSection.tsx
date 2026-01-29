@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Language } from "@/data/quizData";
 
-type CategoryId = "micronutrition" | "biology" | "plants" | "memory-music" | "memory-cards";
+type CategoryId = "micronutrition" | "biology" | "plants" | "memory-music" | "memory-cards" | "health-quiz";
 
 interface Category {
   id: CategoryId;
@@ -49,6 +49,7 @@ const savoirCategories: Category[] = [
 const entrainerCategories: Category[] = [
   { id: "memory-music", name: { fr: "Musique", en: "Music" }, emoji: "🎵" },
   { id: "memory-cards", name: { fr: "Cartes", en: "Cards" }, emoji: "🃏" },
+  { id: "health-quiz", name: { fr: "Quiz Santé", en: "Health Quiz" }, emoji: "❤️" },
 ];
 
 interface HeroSectionProps {
