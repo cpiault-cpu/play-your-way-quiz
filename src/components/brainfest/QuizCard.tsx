@@ -15,6 +15,11 @@ interface QuizCardProps {
 
 const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
   const t = translations[language];
+  
+  const getDiscountText = () => {
+    const discountValue = quiz.discount;
+    return language === "fr" ? `gagnez ${discountValue}` : `win ${discountValue}`;
+  };
 
   const getLevelBadgeClass = () => {
     switch (quiz.level) {
@@ -59,7 +64,7 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
           {t.level} {quiz.level}
         </span>
         <span className="text-sm md:text-sm text-muted-foreground font-medium">
-          {quiz.discount} {t.discount}
+          {getDiscountText()}
         </span>
       </div>
 

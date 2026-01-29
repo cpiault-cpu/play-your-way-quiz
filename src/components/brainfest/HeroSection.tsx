@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
-import { useRef } from "react";
 import { Language } from "@/data/quizData";
 
-type CategoryId = "micronutrition" | "biology" | "plants" | "memory";
+type CategoryId = "micronutrition" | "biology" | "plants" | "memory-music" | "memory-cards";
 
 interface Category {
   id: CategoryId;
@@ -41,11 +40,15 @@ const heroTexts = {
   ]
 };
 
-const categories: Category[] = [
+const savoirCategories: Category[] = [
   { id: "micronutrition", name: { fr: "Micronutrition", en: "Micronutrition" }, emoji: "💊" },
   { id: "biology", name: { fr: "Biologie", en: "Biology" }, emoji: "🧬" },
   { id: "plants", name: { fr: "Plantes médicinales", en: "Medicinal Plants" }, emoji: "🌿" },
-  { id: "memory", name: { fr: "Mémoire", en: "Memory" }, emoji: "🎵" },
+];
+
+const entrainerCategories: Category[] = [
+  { id: "memory-music", name: { fr: "Musique", en: "Music" }, emoji: "🎵" },
+  { id: "memory-cards", name: { fr: "Cartes", en: "Cards" }, emoji: "🃏" },
 ];
 
 interface HeroSectionProps {
@@ -209,30 +212,64 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
           </div>
         </motion.div>
 
-        {/* Category buttons */}
+        {/* Category buttons - Two sections */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="flex flex-wrap justify-center gap-2 sm:gap-3"
+          className="grid grid-cols-2 gap-4 sm:gap-6"
         >
-          {categories.map((cat, index) => (
-            <motion.button
-              key={cat.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
-              onClick={() => onSelectCategory(cat.id)}
-              className={`category-pill px-4 sm:px-5 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-semibold backdrop-blur-sm ${
-                selectedCategory === cat.id 
-                  ? "bg-accent text-accent-foreground shadow-lg shadow-accent/30" 
-                  : "bg-white/10 text-white border border-white/20"
-              }`}
-            >
-              <span className="mr-1.5">{cat.emoji}</span>
-              {cat.name[language]}
-            </motion.button>
-          ))}
+          {/* Left section - SAVOIR */}
+          <div className="flex flex-col items-center">
+            <h3 className="text-white font-bold text-lg sm:text-xl mb-3 tracking-wide">
+              {language === "fr" ? "SAVOIR" : "LEARN"}
+            </h3>
+            <div className="flex flex-col gap-2 w-full max-w-xs">
+              {savoirCategories.map((cat, index) => (
+                <motion.button
+                  key={cat.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
+                  onClick={() => onSelectCategory(cat.id)}
+                  className={`category-pill w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-semibold backdrop-blur-sm ${
+                    selectedCategory === cat.id 
+                      ? "bg-accent text-accent-foreground shadow-lg shadow-accent/30" 
+                      : "bg-white/10 text-white border border-white/20"
+                  }`}
+                >
+                  <span className="mr-1.5">{cat.emoji}</span>
+                  {cat.name[language]}
+                </motion.button>
+              ))}
+            </div>
+          </div>
+
+          {/* Right section - S'ENTRAINER */}
+          <div className="flex flex-col items-center">
+            <h3 className="text-white font-bold text-lg sm:text-xl mb-3 tracking-wide">
+              {language === "fr" ? "S'ENTRAÎNER" : "PRACTICE"}
+            </h3>
+            <div className="flex flex-col gap-2 w-full max-w-xs">
+              {entrainerCategories.map((cat, index) => (
+                <motion.button
+                  key={cat.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
+                  onClick={() => onSelectCategory(cat.id)}
+                  className={`category-pill w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-semibold backdrop-blur-sm ${
+                    selectedCategory === cat.id 
+                      ? "bg-accent text-accent-foreground shadow-lg shadow-accent/30" 
+                      : "bg-white/10 text-white border border-white/20"
+                  }`}
+                >
+                  <span className="mr-1.5">{cat.emoji}</span>
+                  {cat.name[language]}
+                </motion.button>
+              ))}
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
