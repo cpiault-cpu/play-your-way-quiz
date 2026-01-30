@@ -11,6 +11,7 @@ import MemoryPairsGame from "@/components/brainfest/MemoryPairsGame";
 import MemoryPairsCard from "@/components/brainfest/MemoryPairsCard";
 import HealthQuizGame from "@/components/brainfest/HealthQuizGame";
 import HealthQuizCard from "@/components/brainfest/HealthQuizCard";
+import PremiumSection from "@/components/brainfest/PremiumSection";
 import Footer from "@/components/brainfest/Footer";
 
 // Category type - updated to match new navigation
@@ -439,6 +440,9 @@ const Index = () => {
             })}
         </motion.div>
       </main>
+
+      {/* Premium Section */}
+      <PremiumSection language={language} />
 
       {/* Footer */}
       <Footer language={language} />
