@@ -1,193 +1,57 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Language } from "@/data/quizData";
-import { Instagram, ShoppingBag } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
 
 interface FooterProps {
   language: Language;
 }
 
 const Footer = ({ language }: FooterProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-  });
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    try {
-      const { error } = await supabase
-        .from('signups')
-        .insert({
-          email: formData.email,
-          quiz_id: `signup_${formData.firstName}_${formData.lastName}`,
-        });
-
-      if (error) throw error;
-
-      setIsSubmitted(true);
-      setTimeout(() => {
-        setIsOpen(false);
-        setIsSubmitted(false);
-        setFormData({ firstName: "", lastName: "", email: "" });
-      }, 2000);
-    } catch (error) {
-      console.error('Error saving signup:', error);
-      toast.error(language === "fr" ? "Erreur lors de l'inscription" : "Error during signup");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
-    <footer className="hero-gradient relative overflow-hidden py-10 px-4 sm:py-12">
-      {/* Subtle background pattern */}
+    <footer className="bg-foreground relative overflow-hidden py-12 px-4 sm:py-16">
+      {/* Subtle texture */}
       <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-accent/30 blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-primary/30 blur-3xl" />
+        <div className="absolute top-0 right-0 w-60 h-60 rounded-full bg-primary/30 blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-40 h-40 rounded-full bg-accent/20 blur-3xl" />
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto">
-        {/* Signup Button */}
-        <motion.div 
-          className="flex justify-center mb-8"
+      <div className="relative z-10 max-w-4xl mx-auto text-center">
+        {/* Brand */}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
+          className="mb-8"
         >
-          <Dialog open={isOpen} onOpenChange={setIsOpen}>
-            <DialogTrigger asChild>
-              <Button 
-                size="default"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-normal px-6 py-2 text-sm rounded-full shadow-lg shadow-accent/30 transition-all hover:shadow-xl hover:shadow-accent/40"
-              >
-                {language === "fr" ? "S'inscrire" : "Sign Up"}
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="hero-gradient border-white/20 text-white">
-              <DialogHeader>
-                <DialogTitle className="text-2xl font-bold text-center">
-                  {language === "fr" ? "Inscription" : "Sign Up"}
-                </DialogTitle>
-              </DialogHeader>
-              {isSubmitted ? (
-                <div className="text-center py-8">
-                  <p className="text-xl text-accent font-semibold">
-                    {language === "fr" ? "Merci pour votre inscription !" : "Thank you for signing up!"}
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-1">
-                      {language === "fr" ? "Prénom" : "First Name"}
-                    </label>
-                    <Input
-                      type="text"
-                      required
-                      value={formData.firstName}
-                      onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                      className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-accent"
-                      placeholder={language === "fr" ? "Votre prénom" : "Your first name"}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">
-                      {language === "fr" ? "Nom" : "Last Name"}
-                    </label>
-                    <Input
-                      type="text"
-                      required
-                      value={formData.lastName}
-                      onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                      className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-accent"
-                      placeholder={language === "fr" ? "Votre nom" : "Your last name"}
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">
-                      {language === "fr" ? "Adresse email" : "Email Address"}
-                    </label>
-                    <Input
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-accent"
-                      placeholder={language === "fr" ? "votre@email.com" : "your@email.com"}
-                    />
-                  </div>
-                  <Button 
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold py-3 rounded-xl"
-                  >
-                    {isLoading 
-                      ? (language === "fr" ? "Envoi..." : "Sending...") 
-                      : (language === "fr" ? "S'inscrire" : "Sign Up")
-                    }
-                  </Button>
-                </form>
-              )}
-            </DialogContent>
-          </Dialog>
+          <h2 className="font-display text-3xl sm:text-4xl font-light text-white/90 mb-3">
+            Source Lab
+          </h2>
+          <p className="text-white/50 text-sm sm:text-base max-w-md mx-auto">
+            {language === "fr" 
+              ? "Les sources d'une bonne santé, accessibles à tous."
+              : "The sources of good health, accessible to all."
+            }
+          </p>
         </motion.div>
 
-        {/* Social Links */}
-        <motion.div 
-          className="flex flex-wrap justify-center items-center gap-6 sm:gap-8"
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
+        {/* Decorative line */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <a
-            href="https://www.instagram.com/maison_peita/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-white/80 hover:text-accent transition-colors group"
-          >
-            <Instagram className="w-6 h-6 group-hover:scale-110 transition-transform" />
-            <span className="font-medium">@maison_peita</span>
-          </a>
-          <a
-            href="https://www.peita.fr/boutique"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-white/80 hover:text-accent transition-colors group"
-          >
-            <ShoppingBag className="w-6 h-6 group-hover:scale-110 transition-transform" />
-            <span className="font-medium">{language === "fr" ? "Boutique" : "Shop"}</span>
-          </a>
-        </motion.div>
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="w-16 h-px bg-white/20 mx-auto mb-8"
+        />
 
         {/* Copyright */}
         <motion.p 
-          className="text-center text-white/50 text-sm mt-8"
+          className="text-white/30 text-xs sm:text-sm"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          © 2024 PEITA. {language === "fr" ? "Tous droits réservés." : "All rights reserved."}
+          © 2024 Source Lab. {language === "fr" ? "Tous droits réservés." : "All rights reserved."}
         </motion.p>
       </div>
     </footer>
