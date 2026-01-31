@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { Language, quizzes, Quiz } from "@/data/quizData";
 import { healthQuizSeries, HealthQuizSeriesId } from "@/data/healthQuizData";
 import { micronutritionQuizzes } from "@/data/micronutritionQuizData";
+import { biologyQuizzes } from "@/data/biologyQuizData";
+import { medicinalPlantsQuizzes } from "@/data/medicinalPlantsQuizData";
 import HeroSection from "@/components/brainfest/HeroSection";
 import LevelSection from "@/components/brainfest/LevelSection";
 import QuizGame from "@/components/brainfest/QuizGame";
@@ -14,6 +16,10 @@ import HealthQuizGame from "@/components/brainfest/HealthQuizGame";
 import HealthQuizCard from "@/components/brainfest/HealthQuizCard";
 import MicronutritionQuizCard from "@/components/brainfest/MicronutritionQuizCard";
 import MicronutritionQuizGame from "@/components/brainfest/MicronutritionQuizGame";
+import BiologyQuizCard from "@/components/brainfest/BiologyQuizCard";
+import BiologyQuizGame from "@/components/brainfest/BiologyQuizGame";
+import MedicinalPlantsQuizCard from "@/components/brainfest/MedicinalPlantsQuizCard";
+import MedicinalPlantsQuizGame from "@/components/brainfest/MedicinalPlantsQuizGame";
 import PremiumSection from "@/components/brainfest/PremiumSection";
 import Footer from "@/components/brainfest/Footer";
 
@@ -37,6 +43,8 @@ const Index = () => {
   const [activeHealthQuizLevel, setActiveHealthQuizLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeHealthQuizSeries, setActiveHealthQuizSeries] = useState<HealthQuizSeriesId>('nutrition');
   const [activeMicronutritionLevel, setActiveMicronutritionLevel] = useState<"1.1" | "1.2" | "1.3" | null>(null);
+  const [activeBiologyLevel, setActiveBiologyLevel] = useState<"1.1" | "1.2" | "1.3" | null>(null);
+  const [activeMedicinalPlantsLevel, setActiveMedicinalPlantsLevel] = useState<"1.1" | "1.2" | "1.3" | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory-music");
 
   const handleToggleLanguage = () => {
@@ -64,15 +72,47 @@ const Index = () => {
     setActiveMicronutritionLevel(levelId);
   };
 
+  const handlePlayBiologyQuiz = (levelId: "1.1" | "1.2" | "1.3") => {
+    setActiveBiologyLevel(levelId);
+  };
+
+  const handlePlayMedicinalPlantsQuiz = (levelId: "1.1" | "1.2" | "1.3") => {
+    setActiveMedicinalPlantsLevel(levelId);
+  };
+
   const handleBackToHome = () => {
     setActiveQuizId(null);
     setActiveMusicalMemoryLevel(null);
     setActiveMemoryPairsLevel(null);
     setActiveHealthQuizLevel(null);
     setActiveMicronutritionLevel(null);
+    setActiveBiologyLevel(null);
+    setActiveMedicinalPlantsLevel(null);
   };
 
   const activeQuiz = quizzes.find((q) => q.id === activeQuizId);
+
+  // Show Medicinal Plants Quiz Game
+  if (activeMedicinalPlantsLevel) {
+    return (
+      <MedicinalPlantsQuizGame
+        levelId={activeMedicinalPlantsLevel}
+        language={language}
+        onBack={handleBackToHome}
+      />
+    );
+  }
+
+  // Show Biology Quiz Game
+  if (activeBiologyLevel) {
+    return (
+      <BiologyQuizGame
+        levelId={activeBiologyLevel}
+        language={language}
+        onBack={handleBackToHome}
+      />
+    );
+  }
 
   // Show Micronutrition Quiz Game
   if (activeMicronutritionLevel) {
@@ -384,15 +424,27 @@ const Index = () => {
             </>
           )}
 
-          {/* Biology category intro */}
+          {/* Biology category - NEW STRUCTURE with levels 1.1, 1.2, 1.3 */}
           {selectedCategory === "biology" && (
-            <motion.div
-              className="mt-8 sm:mt-10 mb-6"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
+            <motion.section 
+              className="mt-10 sm:mt-12 md:mt-14 mb-10 sm:mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
             >
-              <div className="bg-white rounded-xl p-4 shadow-sm border border-border/30">
+              <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/15 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
+                  🧬
+                </span>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+                  {language === "fr" ? "Biologie" : "Biology"}
+                </h2>
+                <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
+              </div>
+              
+              {/* Description */}
+              <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
                 <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
                   {language === "fr" 
                     ? "Rien n'est plus merveilleux que les rouages du vivant, et explorer ce qui se passe sous la surface. Si le sujet vous passionne comme nous, ces quiz vont vous plaire."
@@ -400,7 +452,45 @@ const Index = () => {
                   }
                 </p>
               </div>
-            </motion.div>
+
+              {/* Mobile: vertical stack */}
+              <div className="md:hidden flex flex-col gap-4 min-w-0">
+                {(["1.1", "1.2", "1.3"] as const).map((levelId, index) => (
+                  <motion.div
+                    key={levelId}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <BiologyQuizCard 
+                      levelId={levelId} 
+                      language={language} 
+                      onPlay={handlePlayBiologyQuiz} 
+                    />
+                  </motion.div>
+                ))}
+              </div>
+              
+              {/* Desktop: grid */}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {(["1.1", "1.2", "1.3"] as const).map((levelId, index) => (
+                  <motion.div
+                    key={levelId}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <BiologyQuizCard 
+                      levelId={levelId} 
+                      language={language} 
+                      onPlay={handlePlayBiologyQuiz} 
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.section>
           )}
 
           {/* Micronutrition category - NEW STRUCTURE */}
@@ -472,15 +562,27 @@ const Index = () => {
             </motion.section>
           )}
 
-          {/* Plants category intro */}
+          {/* Plants category - NEW STRUCTURE with levels 1.1, 1.2, 1.3 */}
           {selectedCategory === "plants" && (
-            <motion.div
-              className="mt-8 sm:mt-10 mb-6"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
+            <motion.section 
+              className="mt-10 sm:mt-12 md:mt-14 mb-10 sm:mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
             >
-              <div className="bg-white rounded-xl p-4 shadow-sm border border-border/30">
+              <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
+                  🌿
+                </span>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+                  {language === "fr" ? "Plantes Médicinales" : "Medicinal Plants"}
+                </h2>
+                <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
+              </div>
+              
+              {/* Description */}
+              <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
                 <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
                   {language === "fr" 
                     ? "Les plantes médicinales murmurent depuis toujours leurs secrets à ceux qui savent les écouter."
@@ -488,26 +590,46 @@ const Index = () => {
                   }
                 </p>
               </div>
-            </motion.div>
+
+              {/* Mobile: vertical stack */}
+              <div className="md:hidden flex flex-col gap-4 min-w-0">
+                {(["1.1", "1.2", "1.3"] as const).map((levelId, index) => (
+                  <motion.div
+                    key={levelId}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <MedicinalPlantsQuizCard 
+                      levelId={levelId} 
+                      language={language} 
+                      onPlay={handlePlayMedicinalPlantsQuiz} 
+                    />
+                  </motion.div>
+                ))}
+              </div>
+              
+              {/* Desktop: grid */}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {(["1.1", "1.2", "1.3"] as const).map((levelId, index) => (
+                  <motion.div
+                    key={levelId}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <MedicinalPlantsQuizCard 
+                      levelId={levelId} 
+                      language={language} 
+                      onPlay={handlePlayMedicinalPlantsQuiz} 
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.section>
           )}
-
-          {/* Quizzes list - for Biology and Plants categories only */}
-          {(selectedCategory === "biology" || selectedCategory === "plants") &&
-            [1, 2, 3].map((level) => {
-              const filteredQuizzes = quizzes.filter((q) => q.level === level && getCategoryForQuiz(q) === selectedCategory);
-
-              if (filteredQuizzes.length === 0) return null;
-
-              return (
-                <LevelSection
-                  key={level}
-                  level={level as 1 | 2 | 3}
-                  quizzes={filteredQuizzes}
-                  language={language}
-                  onPlayQuiz={handlePlayQuiz}
-                />
-              );
-            })}
         </motion.div>
       </main>
 
