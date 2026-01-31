@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Language, quizzes, Quiz } from "@/data/quizData";
 import { healthQuizSeries, HealthQuizSeriesId } from "@/data/healthQuizData";
+import { micronutritionQuizzes } from "@/data/micronutritionQuizData";
 import HeroSection from "@/components/brainfest/HeroSection";
 import LevelSection from "@/components/brainfest/LevelSection";
 import QuizGame from "@/components/brainfest/QuizGame";
@@ -11,6 +12,8 @@ import MemoryPairsGame from "@/components/brainfest/MemoryPairsGame";
 import MemoryPairsCard from "@/components/brainfest/MemoryPairsCard";
 import HealthQuizGame from "@/components/brainfest/HealthQuizGame";
 import HealthQuizCard from "@/components/brainfest/HealthQuizCard";
+import MicronutritionQuizCard from "@/components/brainfest/MicronutritionQuizCard";
+import MicronutritionQuizGame from "@/components/brainfest/MicronutritionQuizGame";
 import PremiumSection from "@/components/brainfest/PremiumSection";
 import Footer from "@/components/brainfest/Footer";
 
@@ -33,6 +36,7 @@ const Index = () => {
   const [activeMemoryPairsLevel, setActiveMemoryPairsLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeHealthQuizLevel, setActiveHealthQuizLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeHealthQuizSeries, setActiveHealthQuizSeries] = useState<HealthQuizSeriesId>('nutrition');
+  const [activeMicronutritionLevel, setActiveMicronutritionLevel] = useState<"1.1" | "1.2" | "1.3" | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory-music");
 
   const handleToggleLanguage = () => {
@@ -56,14 +60,30 @@ const Index = () => {
     setActiveHealthQuizSeries(seriesId || 'nutrition');
   };
 
+  const handlePlayMicronutritionQuiz = (levelId: "1.1" | "1.2" | "1.3") => {
+    setActiveMicronutritionLevel(levelId);
+  };
+
   const handleBackToHome = () => {
     setActiveQuizId(null);
     setActiveMusicalMemoryLevel(null);
     setActiveMemoryPairsLevel(null);
     setActiveHealthQuizLevel(null);
+    setActiveMicronutritionLevel(null);
   };
 
   const activeQuiz = quizzes.find((q) => q.id === activeQuizId);
+
+  // Show Micronutrition Quiz Game
+  if (activeMicronutritionLevel) {
+    return (
+      <MicronutritionQuizGame
+        levelId={activeMicronutritionLevel}
+        language={language}
+        onBack={handleBackToHome}
+      />
+    );
+  }
 
   // Show Health Quiz Game
   if (activeHealthQuizLevel) {
@@ -383,15 +403,27 @@ const Index = () => {
             </motion.div>
           )}
 
-          {/* Micronutrition category intro */}
+          {/* Micronutrition category - NEW STRUCTURE */}
           {selectedCategory === "micronutrition" && (
-            <motion.div
-              className="mt-8 sm:mt-10 mb-6"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
+            <motion.section 
+              className="mt-10 sm:mt-12 md:mt-14 mb-10 sm:mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
             >
-              <div className="bg-white rounded-xl p-4 shadow-sm border border-border/30">
+              <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/15 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
+                  💊
+                </span>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
+                  {language === "fr" ? "Micronutrition" : "Micronutrition"}
+                </h2>
+                <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
+              </div>
+              
+              {/* Description */}
+              <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
                 <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
                   {language === "fr" 
                     ? "Comment vitamines, minéraux et oligo-éléments influencent chaque fonction du corps. Ces équilibres invisibles qui nous soutiennent chaque jour. Affinez vos connaissances pour avoir des échanges encore plus intéressants quand vous discutez avec votre naturopathe."
@@ -399,7 +431,45 @@ const Index = () => {
                   }
                 </p>
               </div>
-            </motion.div>
+
+              {/* Mobile: vertical stack */}
+              <div className="md:hidden flex flex-col gap-4 min-w-0">
+                {(["1.1", "1.2", "1.3"] as const).map((levelId, index) => (
+                  <motion.div
+                    key={levelId}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <MicronutritionQuizCard 
+                      levelId={levelId} 
+                      language={language} 
+                      onPlay={handlePlayMicronutritionQuiz} 
+                    />
+                  </motion.div>
+                ))}
+              </div>
+              
+              {/* Desktop: grid */}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {(["1.1", "1.2", "1.3"] as const).map((levelId, index) => (
+                  <motion.div
+                    key={levelId}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <MicronutritionQuizCard 
+                      levelId={levelId} 
+                      language={language} 
+                      onPlay={handlePlayMicronutritionQuiz} 
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.section>
           )}
 
           {/* Plants category intro */}
@@ -421,8 +491,8 @@ const Index = () => {
             </motion.div>
           )}
 
-          {/* Quizzes list - for SAVOIR categories only */}
-          {(selectedCategory === "micronutrition" || selectedCategory === "biology" || selectedCategory === "plants") &&
+          {/* Quizzes list - for Biology and Plants categories only */}
+          {(selectedCategory === "biology" || selectedCategory === "plants") &&
             [1, 2, 3].map((level) => {
               const filteredQuizzes = quizzes.filter((q) => q.level === level && getCategoryForQuiz(q) === selectedCategory);
 
