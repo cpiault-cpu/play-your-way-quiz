@@ -65,7 +65,7 @@ const Footer = ({ language }: FooterProps) => {
           style={{ 
             fontFamily: 'Montserrat, sans-serif', 
             fontWeight: 400, 
-            fontSize: '12px', 
+            fontSize: '16px', 
             color: '#000000',
             lineHeight: 1.5
           }}
