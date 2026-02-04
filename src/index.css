@@ -58,10 +58,14 @@
     --gradient-button: linear-gradient(135deg, hsl(160 45% 32%) 0%, hsl(165 50% 28%) 100%);
     --gradient-accent: linear-gradient(135deg, hsl(38 90% 55%) 0%, hsl(32 85% 50%) 100%);
     
-    /* Level badges with natural tones */
-    --gradient-level1: linear-gradient(135deg, hsl(160 50% 38%) 0%, hsl(165 45% 32%) 100%);
-    --gradient-level2: linear-gradient(135deg, hsl(38 80% 55%) 0%, hsl(32 75% 50%) 100%);
-    --gradient-level3: linear-gradient(135deg, hsl(15 65% 50%) 0%, hsl(8 60% 45%) 100%);
+    /* Level badges - User specified colors */
+    --level1-bg: 166 32% 60%; /* #7FB3A3 */
+    --level2-bg: 24 71% 70%; /* #E8A87C */
+    --level3-bg: 0 48% 65%; /* #D17B7B */
+    
+    /* Play button colors */
+    --play-button-bg: 110 23% 33%; /* #4A6741 */
+    --play-button-hover: 110 26% 26%; /* #3A5230 */
     
     /* Shadows with depth */
     --shadow-soft: 0 4px 20px -4px hsl(160 25% 18% / 0.08);
@@ -213,26 +217,29 @@
     }
   }
 
-  /* Level badges */
+  /* Level badges - User specified colors */
   .level-badge-1 {
-    background: var(--gradient-level1);
-    box-shadow: 0 2px 8px hsl(160 50% 38% / 0.3);
+    background-color: hsl(var(--level1-bg));
+    box-shadow: 0 2px 8px hsl(var(--level1-bg) / 0.3);
+    color: white;
   }
 
   .level-badge-2 {
-    background: var(--gradient-level2);
-    box-shadow: 0 2px 8px hsl(38 80% 55% / 0.3);
+    background-color: hsl(var(--level2-bg));
+    box-shadow: 0 2px 8px hsl(var(--level2-bg) / 0.3);
+    color: white;
   }
 
   .level-badge-3 {
-    background: var(--gradient-level3);
-    box-shadow: 0 2px 8px hsl(15 65% 50% / 0.3);
+    background-color: hsl(var(--level3-bg));
+    box-shadow: 0 2px 8px hsl(var(--level3-bg) / 0.3);
+    color: white;
   }
 
-  /* Primary button */
+  /* Play button - User specified colors */
   .btn-primary-custom {
-    background: var(--gradient-button);
-    box-shadow: var(--shadow-button);
+    background-color: hsl(var(--play-button-bg)) !important;
+    box-shadow: 0 4px 12px hsl(var(--play-button-bg) / 0.4);
     color: white !important;
     transition: all 0.3s ease;
     position: relative;
@@ -250,8 +257,9 @@
 
   @media (hover: hover) and (pointer: fine) {
     .btn-primary-custom:hover {
+      background-color: hsl(var(--play-button-hover)) !important;
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px -4px hsl(160 45% 32% / 0.5);
+      box-shadow: 0 8px 25px -4px hsl(var(--play-button-bg) / 0.5);
     }
     .btn-primary-custom:hover::after {
       transform: translateX(100%);
