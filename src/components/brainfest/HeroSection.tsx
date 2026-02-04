@@ -14,30 +14,24 @@ interface Category {
 const heroTexts = {
   fr: [
     {
-      text: "Une bonne alimentation joue un rôle primordial dans le soutien d'un cerveau qui fonctionne bien. Une alimentation anti-inflammatoire, riche en oméga-3."
+      text: "Une alimentation équilibrée est essentielle pour préserver un cerveau en pleine santé. Nous en parlons régulièrement. Une alimentation anti-inflammatoire et notamment riche en oméga-3 est une valeur fondamentale de l'ADN de Maison Peita."
     },
     {
-      text: "L'esprit aussi a besoin d'être nourri : apprendre, exercer sa mémoire et s'ouvrir à de nouvelles idées tout au long de la vie entretient la vivacité et la curiosité et le plaisir."
+      text: "L'esprit a aussi besoin de se nourrir : apprendre, stimuler sa mémoire, jouer et s'ouvrir à de nouvelles connaissances tout au long de la vie renforcent la vivacité, la curiosité et le plaisir d'apprendre."
     },
     {
-      text: "C'est pourquoi nous avons créé cette série de quiz, conçue pour entraîner le cerveau en s'amusant, et partager des connaissances sur le merveilleux fonctionnement du vivant."
-    },
-    {
-      text: "Et parce que les récompenses font toujours plaisir, la réussite des quiz vous permet de gagner des avantages sur nos produits et sur une sélection d'autres produits divers sélectionnés pour leur qualité parfaite."
+      text: "Formés en naturopathie et micronutrition depuis de nombreuses années, nous avons créé cette page pour vous proposer des jeux amusants d'entraînement du cerveau et pour partager avec vous des connaissances sur le merveilleux fonctionnement du vivant."
     }
   ],
   en: [
     {
-      text: "Good nutrition plays a key role in supporting a healthy brain. An anti-inflammatory diet, rich in omega-3s."
+      text: "A balanced diet is essential for maintaining optimal brain health. We talk about it regularly. An anti-inflammatory diet, particularly rich in omega-3, is a core value of Maison Peita's DNA."
     },
     {
-      text: "The mind also needs to be nourished: learning, exercising memory and opening up to new ideas throughout life maintains vitality, curiosity and joy."
+      text: "The mind also needs nourishment: learning, stimulating memory, playing, and exploring new knowledge throughout life enhance vitality, curiosity, and the joy of learning."
     },
     {
-      text: "That's why we created this series of quizzes, designed to train the brain while having fun, and share knowledge about the beautiful workings of life."
-    },
-    {
-      text: "And because rewards are always a pleasure, completing the quizzes allows you to earn benefits on our products and on a selection of other products chosen for their perfect quality."
+      text: "Trained in naturopathy and micronutrition for many years, we created this page to offer fun brain-training games and share knowledge about the wonderful workings of life."
     }
   ]
 };

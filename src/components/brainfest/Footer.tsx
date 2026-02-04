@@ -59,25 +59,46 @@ const Footer = ({ language }: FooterProps) => {
   return (
     <footer className="relative overflow-hidden py-10 px-4 sm:py-12" style={{ backgroundColor: '#B6BDB0' }}>
       <div className="max-w-5xl mx-auto">
-        {/* Signup Button */}
-        <motion.div 
-          className="flex justify-center mb-8"
-          initial={{ opacity: 0, y: 20 }}
+        {/* Footer description text */}
+        <motion.p
+          className="text-left mb-6"
+          style={{ 
+            fontFamily: 'Montserrat, sans-serif', 
+            fontWeight: 400, 
+            fontSize: '12px', 
+            color: '#000000',
+            lineHeight: 1.5
+          }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
+        >
+          {language === "fr" 
+            ? "Cette page sera renouvelée souvent avec de nouveaux jeux et des matières à étudier plus profondément. Inscrivez-vous pour être tenus au courant et suivez-nous sur Instagram."
+            : "This page will be updated frequently with new games and deeper study materials. Sign up to stay informed and follow us on Instagram."
+          }
+        </motion.p>
+
+        {/* Signup Button */}
+        <motion.div 
+          className="flex justify-start mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
         >
           <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
               <Button 
                 size="default"
-                className="bg-white hover:bg-gray-50 font-normal px-6 py-2 text-sm rounded-full shadow-lg transition-all hover:shadow-xl"
-                style={{ color: '#000000', border: '1px solid #B6BDB0' }}
+                className="bg-white hover:bg-gray-50 font-normal px-6 py-2 text-sm shadow-lg transition-all hover:shadow-xl"
+                style={{ color: '#000000', border: '1px solid #B6BDB0', borderRadius: '12px' }}
               >
                 {language === "fr" ? "S'inscrire" : "Sign Up"}
               </Button>
             </DialogTrigger>
-            <DialogContent className="hero-gradient border-white/20 text-white">
+            <DialogContent className="hero-gradient border-white/20 text-white" style={{ borderRadius: '12px' }}>
               <DialogHeader>
                 <DialogTitle className="text-2xl font-bold text-center">
                   {language === "fr" ? "Inscription" : "Sign Up"}
@@ -101,6 +122,7 @@ const Footer = ({ language }: FooterProps) => {
                       value={formData.firstName}
                       onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                       className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-accent"
+                      style={{ borderRadius: '12px' }}
                       placeholder={language === "fr" ? "Votre prénom" : "Your first name"}
                     />
                   </div>
@@ -114,6 +136,7 @@ const Footer = ({ language }: FooterProps) => {
                       value={formData.lastName}
                       onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                       className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-accent"
+                      style={{ borderRadius: '12px' }}
                       placeholder={language === "fr" ? "Votre nom" : "Your last name"}
                     />
                   </div>
@@ -127,13 +150,15 @@ const Footer = ({ language }: FooterProps) => {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-accent"
+                      style={{ borderRadius: '12px' }}
                       placeholder={language === "fr" ? "votre@email.com" : "your@email.com"}
                     />
                   </div>
                   <Button 
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold py-3 rounded-xl"
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold py-3"
+                    style={{ borderRadius: '12px' }}
                   >
                     {isLoading 
                       ? (language === "fr" ? "Envoi..." : "Sending...") 
