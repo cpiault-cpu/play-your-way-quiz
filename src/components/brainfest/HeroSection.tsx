@@ -249,31 +249,39 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                   msOverflowStyle: 'none'
                 }}
               >
-                {savoirCategories.map((cat, index) => (
-                  <motion.button
-                    key={cat.id}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
-                    onClick={() => onSelectCategory(cat.id)}
-                    className={`flex-shrink-0 w-[45%] h-[80px] md:w-full md:h-auto bg-white border transition-all flex items-center justify-center gap-2.5 px-4 ${
-                      selectedCategory === cat.id 
-                        ? "border-[#000000] bg-gray-50 ring-2 ring-black/20" 
-                        : "border-[#E0E0E0]"
-                    }`}
-                    style={{ 
-                      fontFamily: 'Montserrat, sans-serif', 
-                      fontWeight: 500, 
-                      fontSize: '14px', 
-                      color: '#000000',
-                      borderRadius: '12px',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
-                    }}
-                  >
-                    <span className="text-2xl">{cat.emoji}</span>
-                    <span className="whitespace-nowrap">{cat.name[language]}</span>
-                  </motion.button>
-                ))}
+                {savoirCategories.map((cat, index) => {
+                  const isPlantes = cat.id === 'plants';
+                  return (
+                    <motion.button
+                      key={cat.id}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
+                      onClick={() => onSelectCategory(cat.id)}
+                      className={`flex-shrink-0 w-[45%] h-[70px] md:w-full md:h-auto bg-white border transition-all flex items-center justify-center gap-2.5 px-3 ${
+                        selectedCategory === cat.id 
+                          ? "border-[#000000] bg-gray-50 ring-2 ring-black/20" 
+                          : "border-[#E0E0E0]"
+                      }`}
+                      style={{ 
+                        fontFamily: 'Montserrat, sans-serif', 
+                        fontWeight: 500, 
+                        fontSize: isPlantes ? '13px' : '14px', 
+                        color: '#000000',
+                        borderRadius: '12px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
+                      }}
+                    >
+                      <span className="text-2xl flex-shrink-0">{cat.emoji}</span>
+                      <span 
+                        className={isPlantes ? "text-center leading-tight" : "whitespace-nowrap"}
+                        style={isPlantes ? { lineHeight: '1.2' } : undefined}
+                      >
+                        {cat.name[language]}
+                      </span>
+                    </motion.button>
+                  );
+                })}
               </div>
             </div>
 
@@ -305,7 +313,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
                     onClick={() => onSelectCategory(cat.id)}
-                    className={`flex-shrink-0 w-[45%] h-[80px] md:w-full md:h-auto bg-white border transition-all flex items-center justify-center gap-2.5 px-4 ${
+                    className={`flex-shrink-0 w-[45%] h-[70px] md:w-full md:h-auto bg-white border transition-all flex items-center justify-center gap-2.5 px-3 ${
                       selectedCategory === cat.id 
                         ? "border-[#000000] bg-gray-50 ring-2 ring-black/20" 
                         : "border-[#E0E0E0]"
@@ -319,7 +327,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                       boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
                     }}
                   >
-                    <span className="text-2xl">{cat.emoji}</span>
+                    <span className="text-2xl flex-shrink-0">{cat.emoji}</span>
                     <span className="whitespace-nowrap">{cat.name[language]}</span>
                   </motion.button>
                 ))}
