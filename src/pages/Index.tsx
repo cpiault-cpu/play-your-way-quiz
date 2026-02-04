@@ -244,10 +244,10 @@ const Index = () => {
               
               {/* Description */}
               <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
-                <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
+                <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl whitespace-pre-line">
                   {language === "fr" 
-                    ? "Ce quiz de reproduction de suites sonores évalue la mémoire auditive séquentielle et la capacité à maintenir une information dans le temps court. La répétition progressive des motifs renforce les mécanismes d'anticipation et d'apprentissage implicite."
-                    : "This sound sequence reproduction quiz evaluates sequential auditory memory and the ability to maintain information over a short period. The progressive repetition of patterns reinforces anticipation mechanisms and implicit learning."
+                    ? "✨ Laissez-vous guider par le son…\nReproduisez des séquences musicales pour réveiller votre mémoire auditive et aiguiser votre intuition…"
+                    : "✨ Let the sound guide you…\nReproduce musical sequences to awaken your auditory memory and sharpen your intuition…"
                   }
                 </p>
               </div>
@@ -303,10 +303,10 @@ const Index = () => {
               
               {/* Description */}
               <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
-                <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
+                <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl whitespace-pre-line">
                   {language === "fr" 
-                    ? "Ce quiz de reconnaissance de paires sollicite la mémoire de travail et la mémoire visuelle en mobilisant des processus d'attention soutenue et d'encodage rapide. La contrainte temporelle de 30 secondes favorise l'activation des mécanismes de consolidation et de récupération de l'information."
-                    : "This pair recognition quiz engages working memory and visual memory by mobilizing sustained attention and rapid encoding processes. The 30-second time constraint promotes the activation of information consolidation and retrieval mechanisms."
+                    ? "Retrouvez les paires dissimulées en mobilisant votre mémoire visuelle et votre capacité à garder en tête plusieurs éléments à la fois.\nLe compte à rebours de 30 secondes n'est pas une course… mais une façon naturelle de réveiller votre mémoire."
+                    : "Find the hidden pairs by using your visual memory and your ability to keep several elements in mind at once.\nThe 30-second countdown is not a race… but a natural way to awaken your memory."
                   }
                 </p>
               </div>
@@ -436,10 +436,10 @@ const Index = () => {
               
               {/* Description */}
               <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
-                <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl">
+                <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl whitespace-pre-line">
                   {language === "fr" 
-                    ? "Un entraînement cérébral évolutif basé sur la mémorisation active. Lisez, mémorisez, et testez vos connaissances. Si vous n'obtenez pas 4/4, le texte est reformulé pour renforcer votre apprentissage."
-                    : "An evolving brain training based on active memorization. Read, memorize, and test your knowledge. If you don't get 4/4, the text is reformulated to reinforce your learning."
+                    ? "Lisez un court texte, laissez-le s'ancrer en vous, puis vérifiez ce que vous avez retenu.\nSi vous n'atteignez pas les 4 bonnes réponses, le texte se réinvente, pour vous accompagner dans votre progrès et approfondir. Le plaisir d'apprendre."
+                    : "Read a short text, let it settle within you, then check what you remember.\nIf you don't reach 4 correct answers, the text reinvents itself to support your progress and deepen your learning. The joy of learning."
                   }
                 </p>
               </div>
@@ -507,10 +507,10 @@ const Index = () => {
               
               {/* Description */}
               <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
-                <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl">
+                <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl whitespace-pre-line">
                   {language === "fr" 
-                    ? "Renforcez votre mémoire sur les plantes médicinales, leurs usages traditionnels et leurs principes actifs. Un quiz adaptatif qui s'ajuste à votre niveau."
-                    : "Strengthen your memory on medicinal plants, their traditional uses and active ingredients. An adaptive quiz that adjusts to your level."
+                    ? "Laissez les herbes murmurer. Elles savent des choses que Google ignore encore.\nDécouvrez, mémorisez, puis redécouvrez ces plantes qui soignent et gardent leurs secrets.\n\nAvancez à votre rythme, porté par une brise légère qui s'accorde au souffle des feuilles… et au vôtre."
+                    : "Let the herbs whisper. They know things Google still doesn't.\nDiscover, memorize, then rediscover these healing plants that keep their secrets.\n\nMove at your own pace, carried by a gentle breeze that matches the breath of the leaves… and yours."
                   }
                 </p>
               </div>
