@@ -200,11 +200,21 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
     setGameState("idle");
   };
 
-  // Initialize AudioContext
-  const initAudio = useCallback(() => {
+  // Initialize AudioContext - must resume on user interaction for mobile browsers
+  const initAudio = useCallback(async () => {
     if (!audioContextRef.current) {
       audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
     }
+    
+    // Resume audio context if it's suspended (required for mobile browsers)
+    if (audioContextRef.current.state === "suspended") {
+      try {
+        await audioContextRef.current.resume();
+      } catch (e) {
+        console.warn("Could not resume audio context:", e);
+      }
+    }
+    
     return audioContextRef.current;
   }, []);
 
@@ -711,30 +721,42 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
   }, []);
 
   // Play a note using Web Audio API
-  const playNote = useCallback((noteIndex: number, duration = 400) => {
-    const audioContext = initAudio();
+  const playNote = useCallback(async (noteIndex: number, duration = 400) => {
+    const audioContext = await initAudio();
     const note = notes[noteIndex];
     
     if (config.useInstruments) {
       const instrumentNote = note as InstrumentNote;
       playInstrumentSound(instrumentNote.instrument, instrumentNote.frequency, audioContext);
     } else {
-      // Standard piano sound
+      // Standard piano sound with richer harmonics
       const oscillator = audioContext.createOscillator();
+      const oscillator2 = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
+      const gain2 = audioContext.createGain();
+      const masterGain = audioContext.createGain();
       
       oscillator.type = "sine";
-      oscillator.frequency.setValueAtTime((note as typeof PIANO_NOTES[0]).frequency, audioContext.currentTime);
+      oscillator2.type = "triangle";
+      const freq = (note as typeof PIANO_NOTES[0]).frequency;
+      oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
+      oscillator2.frequency.setValueAtTime(freq * 2, audioContext.currentTime);
       
-      gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-      gainNode.gain.linearRampToValueAtTime(0.5, audioContext.currentTime + 0.05);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
+      gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+      gain2.gain.setValueAtTime(0.15, audioContext.currentTime);
       
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
+      masterGain.gain.setValueAtTime(0, audioContext.currentTime);
+      masterGain.gain.linearRampToValueAtTime(0.6, audioContext.currentTime + 0.02);
+      masterGain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration / 1000);
+      
+      oscillator.connect(gainNode).connect(masterGain);
+      oscillator2.connect(gain2).connect(masterGain);
+      masterGain.connect(audioContext.destination);
       
       oscillator.start(audioContext.currentTime);
+      oscillator2.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + duration / 1000);
+      oscillator2.stop(audioContext.currentTime + duration / 1000);
     }
     
     // Visual feedback
