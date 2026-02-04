@@ -57,14 +57,8 @@ const Footer = ({ language }: FooterProps) => {
   };
 
   return (
-    <footer className="hero-gradient relative overflow-hidden py-10 px-4 sm:py-12">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-accent/30 blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-primary/30 blur-3xl" />
-      </div>
-
-      <div className="relative z-10 max-w-5xl mx-auto">
+    <footer className="relative overflow-hidden py-10 px-4 sm:py-12" style={{ backgroundColor: '#B6BDB0' }}>
+      <div className="max-w-5xl mx-auto">
         {/* Signup Button */}
         <motion.div 
           className="flex justify-center mb-8"
@@ -77,7 +71,8 @@ const Footer = ({ language }: FooterProps) => {
             <DialogTrigger asChild>
               <Button 
                 size="default"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-normal px-6 py-2 text-sm rounded-full shadow-lg shadow-accent/30 transition-all hover:shadow-xl hover:shadow-accent/40"
+                className="bg-white hover:bg-gray-50 font-normal px-6 py-2 text-sm rounded-full shadow-lg transition-all hover:shadow-xl"
+                style={{ color: '#000000', border: '1px solid #B6BDB0' }}
               >
                 {language === "fr" ? "S'inscrire" : "Sign Up"}
               </Button>
@@ -163,19 +158,21 @@ const Footer = ({ language }: FooterProps) => {
             href="https://www.instagram.com/maison_peita/"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-white/80 hover:text-accent transition-colors group"
+            className="flex items-center gap-2 hover:opacity-70 transition-opacity group"
+            style={{ color: '#000000' }}
           >
             <Instagram className="w-6 h-6 group-hover:scale-110 transition-transform" />
-            <span className="font-medium">@maison_peita</span>
+            <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}>@maison_peita</span>
           </a>
           <a
             href="https://www.peita.fr/boutique"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-white/80 hover:text-accent transition-colors group"
+            className="flex items-center gap-2 hover:opacity-70 transition-opacity group"
+            style={{ color: '#000000' }}
           >
             <ShoppingBag className="w-6 h-6 group-hover:scale-110 transition-transform" />
-            <span className="font-medium">{language === "fr" ? "Boutique" : "Shop"}</span>
+            <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}>{language === "fr" ? "Boutique" : "Shop"}</span>
           </a>
         </motion.div>
 
