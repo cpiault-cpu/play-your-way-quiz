@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Language, quizzes, Quiz } from "@/data/quizData";
 import { healthQuizSeries, HealthQuizSeriesId } from "@/data/healthQuizData";
@@ -30,6 +30,8 @@ const getCategoryForQuiz = (quiz: Quiz): "micronutrition" | "biology" | "plants"
   return "micronutrition";
 };
 
+const MICRONUTRITION_PROGRESS_KEY = "micronutrition_progress";
+
 const Index = () => {
   const [language, setLanguage] = useState<Language>("fr");
   const [activeQuizId, setActiveQuizId] = useState<string | null>(null);
@@ -42,8 +44,17 @@ const Index = () => {
     level: 1 | 2 | 3;
   } | null>(null);
   const [activeMicronutritionLevel, setActiveMicronutritionLevel] = useState<1 | 2 | 3 | null>(null);
-  const [completedMicronutritionLevels, setCompletedMicronutritionLevels] = useState<number[]>([]);
+  const [completedMicronutritionLevels, setCompletedMicronutritionLevels] = useState<number[]>(() => {
+    // Load from localStorage on initial render
+    const saved = localStorage.getItem(MICRONUTRITION_PROGRESS_KEY);
+    return saved ? JSON.parse(saved) : [];
+  });
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory-music");
+
+  // Save micronutrition progress to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(MICRONUTRITION_PROGRESS_KEY, JSON.stringify(completedMicronutritionLevels));
+  }, [completedMicronutritionLevels]);
 
   const handleToggleLanguage = () => {
     setLanguage((prev) => (prev === "fr" ? "en" : "fr"));
