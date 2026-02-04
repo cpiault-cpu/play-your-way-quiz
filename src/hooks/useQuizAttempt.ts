@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { canSaveProgressGlobal } from "@/hooks/useGdprConsent";
 
 interface UseQuizAttemptResult {
   checkEmailUsed: (email: string, quizId: string) => Promise<boolean>;
@@ -12,6 +13,7 @@ interface UseQuizAttemptResult {
 /**
  * Hook to manage quiz attempts - checks if email already used for a quiz
  * and saves new attempts to the database.
+ * Respects GDPR consent - only saves data if user has accepted.
  */
 export const useQuizAttempt = (): UseQuizAttemptResult => {
   const [isChecking, setIsChecking] = useState(false);
@@ -52,8 +54,15 @@ export const useQuizAttempt = (): UseQuizAttemptResult => {
 
   /**
    * Save a new quiz attempt to the database
+   * Only saves if GDPR consent has been accepted
    */
   const saveAttempt = useCallback(async (email: string, quizId: string, score?: number | null): Promise<void> => {
+    // Only save if user has accepted GDPR consent
+    if (!canSaveProgressGlobal()) {
+      console.log("GDPR consent not given, skipping save");
+      return;
+    }
+
     try {
       const { error: insertError } = await supabase
         .from("signups")
@@ -75,8 +84,15 @@ export const useQuizAttempt = (): UseQuizAttemptResult => {
 
   /**
    * Update the score for an existing attempt
+   * Only updates if GDPR consent has been accepted
    */
   const updateScore = useCallback(async (email: string, quizId: string, score: number): Promise<void> => {
+    // Only update if user has accepted GDPR consent
+    if (!canSaveProgressGlobal()) {
+      console.log("GDPR consent not given, skipping score update");
+      return;
+    }
+
     try {
       const { error: updateError } = await supabase
         .from("signups")
