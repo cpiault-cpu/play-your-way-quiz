@@ -38,8 +38,8 @@ const heroTexts = {
 
 const savoirCategories: Category[] = [
   { id: "micronutrition", name: { fr: "Micronutrition", en: "Micronutrition" }, emoji: "💊" },
-  { id: "micronutrition2", name: { fr: "Micronutrition 2", en: "Micronutrition 2" }, emoji: "☀️" },
-  { id: "plants", name: { fr: "Plantes médicinales", en: "Medicinal Plants" }, emoji: "🌿" },
+  { id: "micronutrition2", name: { fr: "Vitamine D", en: "Vitamin D" }, emoji: "☀️" },
+  { id: "plants", name: { fr: "Plantes", en: "Plants" }, emoji: "🌿" },
 ];
 
 const entrainerCategories: Category[] = [
@@ -228,7 +228,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                   className="tracking-wide"
                   style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '18px', color: '#FFFFFF' }}
                 >
-                  {language === "fr" ? "SAVOIR" : "LEARN"}
+                  {language === "fr" ? "APPRENDRE" : "LEARN"}
                 </h3>
                 <ScrollIndicator scrollRef={savoirScrollRef} />
               </div>
@@ -286,7 +286,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                   className="tracking-wide"
                   style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '18px', color: '#FFFFFF' }}
                 >
-                  {language === "fr" ? "S'ENTRAÎNER" : "PRACTICE"}
+                  {language === "fr" ? "JOUER" : "PLAY"}
                 </h3>
                 <ScrollIndicator scrollRef={entrainerScrollRef} />
               </div>
