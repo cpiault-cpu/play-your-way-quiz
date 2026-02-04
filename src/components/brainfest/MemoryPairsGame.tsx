@@ -2,10 +2,11 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, RotateCcw, Clock, ExternalLink } from "lucide-react";
+import { ArrowLeft, RotateCcw, Clock, ExternalLink, Loader2 } from "lucide-react";
 import { Language } from "@/data/quizData";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
+import { useQuizAttempt } from "@/hooks/useQuizAttempt";
 
 // Import plant images
 import lavenderImg from "@/assets/plants/lavender.png";
@@ -151,6 +152,8 @@ const fireConfetti = () => {
 const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
   const t = translations[language];
   const config = LEVEL_CONFIG[level];
+  const { checkEmailUsed, saveAttempt, isChecking } = useQuizAttempt();
+  const quizId = `memory-pairs-${level}`;
   
   const [gameState, setGameState] = useState<"email" | "playing" | "gameSuccess" | "gameOver" | "victory">("email");
   const [email, setEmail] = useState("");
@@ -168,11 +171,30 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const handleEmailSubmit = () => {
+  const handleEmailSubmit = async () => {
     if (!validateEmail(email)) {
       toast.error(t.invalidEmail);
       return;
     }
+    
+    // Check if email already used for this game
+    const alreadyUsed = await checkEmailUsed(email, quizId);
+    if (alreadyUsed) {
+      toast.error(
+        language === "fr" 
+          ? "Vous avez déjà participé à ce jeu avec cette adresse email."
+          : "You have already participated in this game with this email address."
+      );
+      return;
+    }
+    
+    // Save the attempt
+    try {
+      await saveAttempt(email, quizId);
+    } catch (error) {
+      console.error("Error saving attempt:", error);
+    }
+    
     initializeGame();
     setGameState("playing");
   };
@@ -350,9 +372,17 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
             />
             <Button
               onClick={handleEmailSubmit}
+              disabled={isChecking}
               className="w-full btn-primary-custom text-white"
             >
-              {t.start}
+              {isChecking ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  {language === "fr" ? "Vérification..." : "Checking..."}
+                </>
+              ) : (
+                t.start
+              )}
             </Button>
             <Button
               onClick={onBack}

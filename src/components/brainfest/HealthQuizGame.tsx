@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Clock, CheckCircle, XCircle, Trophy, Copy, ExternalLink } from "lucide-react";
+import { ArrowLeft, Clock, CheckCircle, XCircle, Trophy, Copy, ExternalLink, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
@@ -8,7 +8,7 @@ import { Language } from "@/data/quizData";
 import { healthQuizLevels, healthQuizTranslations, HealthQuizSeriesId, healthQuizSeries } from "@/data/healthQuizData";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
-import { supabase } from "@/integrations/supabase/client";
+import { useQuizAttempt } from "@/hooks/useQuizAttempt";
 
 // Confetti celebration function
 const fireConfetti = () => {
@@ -60,8 +60,10 @@ type GameState = "email" | "reading" | "quiz" | "feedback" | "results";
 
 const HealthQuizGame = ({ language, level, seriesId = 'nutrition', onBack }: HealthQuizGameProps) => {
   const t = healthQuizTranslations[language];
+  const { checkEmailUsed, saveAttempt, updateScore, isChecking } = useQuizAttempt();
   const levelData = healthQuizLevels.find(l => l.level === level && l.seriesId === seriesId)!;
   const seriesData = healthQuizSeries.find(s => s.id === seriesId)!;
+  const quizId = `health-quiz-${seriesId}-${level}`;
   
   const [gameState, setGameState] = useState<GameState>("email");
   const [email, setEmail] = useState("");
@@ -83,13 +85,20 @@ const HealthQuizGame = ({ language, level, seriesId = 'nutrition', onBack }: Hea
       return;
     }
     
-    // Save email to Supabase
+    // Check if email already used for this quiz
+    const alreadyUsed = await checkEmailUsed(email, quizId);
+    if (alreadyUsed) {
+      toast.error(
+        language === "fr" 
+          ? "Vous avez déjà participé à ce quiz avec cette adresse email."
+          : "You have already participated in this quiz with this email address."
+      );
+      return;
+    }
+    
+    // Save email to database
     try {
-      await supabase.from("signups").insert({
-        email: email,
-        quiz_id: `health-quiz-${level}`,
-        score: null
-      });
+      await saveAttempt(email, quizId);
     } catch (error) {
       console.error("Error saving email:", error);
     }
@@ -150,11 +159,7 @@ const HealthQuizGame = ({ language, level, seriesId = 'nutrition', onBack }: Hea
       }
       
       // Update score in database
-      supabase.from("signups")
-        .update({ score: score + (isAnswerCorrect ? 1 : 0) })
-        .eq("email", email)
-        .eq("quiz_id", `health-quiz-${level}`)
-        .then(() => {});
+      updateScore(email, quizId, score + (isAnswerCorrect ? 1 : 0)).catch(console.error);
       
       setGameState("results");
     }
@@ -224,9 +229,17 @@ const HealthQuizGame = ({ language, level, seriesId = 'nutrition', onBack }: Hea
               
               <Button 
                 onClick={handleEmailSubmit}
+                disabled={isChecking}
                 className="w-full btn-primary-custom"
               >
-                {t.start}
+                {isChecking ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    {language === "fr" ? "Vérification..." : "Checking..."}
+                  </>
+                ) : (
+                  t.start
+                )}
               </Button>
             </div>
           </motion.div>

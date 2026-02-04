@@ -1,12 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Play, Volume2, RotateCcw, Trophy } from "lucide-react";
+import { ArrowLeft, Play, Volume2, RotateCcw, Trophy, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Language } from "@/data/quizData";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
+import { useQuizAttempt } from "@/hooks/useQuizAttempt";
 
 // Confetti celebration function
 const fireConfetti = () => {
@@ -177,6 +178,8 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
   const audioContextRef = useRef<AudioContext | null>(null);
   const config = LEVEL_CONFIG[level];
   const notes = config.useInstruments ? INSTRUMENT_NOTES : PIANO_NOTES;
+  const { checkEmailUsed, saveAttempt, isChecking } = useQuizAttempt();
+  const quizId = `musical-memory-${level}`;
   
   const [gameState, setGameState] = useState<"email" | "idle" | "playing" | "listening" | "input" | "success" | "failure" | "gameover" | "victory">("email");
   const [email, setEmail] = useState("");
@@ -192,11 +195,30 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const handleEmailSubmit = () => {
+  const handleEmailSubmit = async () => {
     if (!validateEmail(email)) {
       toast.error(t.invalidEmail);
       return;
     }
+    
+    // Check if email already used for this quiz
+    const alreadyUsed = await checkEmailUsed(email, quizId);
+    if (alreadyUsed) {
+      toast.error(
+        language === "fr" 
+          ? "Vous avez déjà participé à ce jeu avec cette adresse email."
+          : "You have already participated in this game with this email address."
+      );
+      return;
+    }
+    
+    // Save the attempt
+    try {
+      await saveAttempt(email, quizId);
+    } catch (error) {
+      console.error("Error saving attempt:", error);
+    }
+    
     setGameState("idle");
   };
 
@@ -1011,9 +1033,17 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                   />
                   <Button
                     onClick={handleEmailSubmit}
+                    disabled={isChecking}
                     className="w-full btn-primary-custom text-white font-medium text-sm sm:text-base py-2.5 sm:py-3"
                   >
-                    {t.start}
+                    {isChecking ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        {language === "fr" ? "Vérification..." : "Checking..."}
+                      </>
+                    ) : (
+                      t.start
+                    )}
                   </Button>
                 </div>
               </div>
