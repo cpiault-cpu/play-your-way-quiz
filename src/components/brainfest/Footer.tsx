@@ -181,13 +181,19 @@ const Footer = ({ language }: FooterProps) => {
 
         {/* Copyright */}
         <motion.p 
-          className="text-center text-white/50 text-sm mt-8"
+          className="text-center mt-8"
+          style={{ 
+            fontFamily: 'Montserrat, sans-serif', 
+            fontWeight: 400, 
+            fontSize: '14px', 
+            color: '#000000' 
+          }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          © 2024 PEITA. {language === "fr" ? "Tous droits réservés." : "All rights reserved."}
+          (c) La Troisième Note / Maison Peita
         </motion.p>
       </div>
     </footer>
