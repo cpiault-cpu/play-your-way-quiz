@@ -153,21 +153,49 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
           </motion.div>
         </div>
 
-        {/* Scrolling text cards - vertical on mobile, horizontal on desktop */}
+        {/* Text cards - scrollable on mobile, horizontal scroll on desktop */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-8 md:mb-10"
         >
-          <div className="flex flex-col gap-5 max-h-[200px] overflow-y-auto md:max-h-none md:overflow-y-visible md:flex-row md:gap-4 md:overflow-x-auto md:pb-4 md:px-1 md:snap-x md:snap-mandatory md:-mx-4 sm:mx-0">
+          {/* Mobile: vertical scroll container */}
+          <div className="md:hidden max-h-[250px] overflow-y-auto pr-2" style={{ WebkitOverflowScrolling: 'touch' }}>
+            <div className="flex flex-col gap-5">
+              {heroTexts[language].map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
+                  className="w-full"
+                >
+                  <div 
+                    className="bg-white rounded p-5 border border-[#B6BDB0]"
+                    style={{ 
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                      borderRadius: '4px'
+                    }}
+                  >
+                    <p style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 400, fontSize: '14px', color: '#000000', lineHeight: 1.6 }}>
+                      {item.text}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Desktop: horizontal scroll */}
+          <div className="hidden md:flex md:flex-row md:gap-4 md:overflow-x-auto md:pb-4 md:px-1 md:snap-x md:snap-mandatory">
             {heroTexts[language].map((item, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                className="w-full md:flex-shrink-0 md:w-[45%] lg:w-[32%] md:first:ml-4 sm:first:ml-0 md:last:mr-4 sm:last:mr-0 md:snap-center"
+                className="flex-shrink-0 w-[45%] lg:w-[32%] first:ml-4 last:mr-4 snap-center"
               >
                 <div 
                   className="h-full bg-white rounded p-5 border border-[#B6BDB0]"
