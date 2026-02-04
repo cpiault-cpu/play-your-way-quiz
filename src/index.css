@@ -387,4 +387,26 @@
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+  /* Hide scrollbar for horizontal scroll containers */
+  .category-scroll-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .category-scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Music note icons - force black color */
+  .note-musique,
+  .note-musique * {
+    color: #000000 !important;
+    fill: #000000 !important;
+  }
 }
