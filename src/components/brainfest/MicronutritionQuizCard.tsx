@@ -16,8 +16,8 @@ const MicronutritionQuizCard = ({ level, language, onPlay, isCompleted }: Micron
         return {
           title: { fr: "Fondations", en: "Foundations" },
           description: { 
-            fr: "Découvrez les bases essentielles de la micronutrition", 
-            en: "Discover the essential basics of micronutrition" 
+            fr: "Découvrez des bases intéressantes en micronutrition", 
+            en: "Discover interesting basics in micronutrition" 
           },
           emoji: "🟢",
           color: "#7FB3A3",
@@ -27,8 +27,8 @@ const MicronutritionQuizCard = ({ level, language, onPlay, isCompleted }: Micron
         return {
           title: { fr: "Consolidation", en: "Consolidation" },
           description: { 
-            fr: "Renforcez vos connaissances nutritionnelles", 
-            en: "Strengthen your nutritional knowledge" 
+            fr: "Renforcez ces connaissances maintenant", 
+            en: "Reinforce this knowledge now" 
           },
           emoji: "🟠",
           color: "#E8A87C",
@@ -38,8 +38,8 @@ const MicronutritionQuizCard = ({ level, language, onPlay, isCompleted }: Micron
         return {
           title: { fr: "Maîtrise", en: "Mastery" },
           description: { 
-            fr: "Atteignez le niveau expert en micronutrition", 
-            en: "Reach expert level in micronutrition" 
+            fr: "Vérifiez que tout est bien acquis", 
+            en: "Verify that everything is well acquired" 
           },
           emoji: "🔴",
           color: "#D17B7B",
