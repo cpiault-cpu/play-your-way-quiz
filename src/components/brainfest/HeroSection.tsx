@@ -3,7 +3,7 @@ import { Language } from "@/data/quizData";
 import { useRef } from "react";
 import ScrollIndicator from "./ScrollIndicator";
 
-type CategoryId = "micronutrition" | "biology" | "plants" | "memory-music" | "memory-cards" | "health-quiz";
+type CategoryId = "micronutrition" | "micronutrition2" | "plants" | "memory-music" | "memory-cards" | "health-quiz";
 
 interface Category {
   id: CategoryId;
@@ -38,7 +38,7 @@ const heroTexts = {
 
 const savoirCategories: Category[] = [
   { id: "micronutrition", name: { fr: "Micronutrition", en: "Micronutrition" }, emoji: "💊" },
-  { id: "biology", name: { fr: "Biologie", en: "Biology" }, emoji: "🧬" },
+  { id: "micronutrition2", name: { fr: "Micronutrition 2", en: "Micronutrition 2" }, emoji: "☀️" },
   { id: "plants", name: { fr: "Plantes médicinales", en: "Medicinal Plants" }, emoji: "🌿" },
 ];
 
