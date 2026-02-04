@@ -61,24 +61,7 @@ interface HeroSectionProps {
 
 const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCategory }: HeroSectionProps) => {
   return (
-    <section className="hero-gradient relative overflow-hidden">
-      {/* Animated background shapes */}
-      <div className="hero-shapes">
-        <div className="hero-shape hero-shape-1" />
-        <div className="hero-shape hero-shape-2" />
-        <div className="hero-shape hero-shape-3" />
-      </div>
-
-      {/* Decorative leaf pattern - subtle */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <pattern id="leafPattern" patternUnits="userSpaceOnUse" width="20" height="20">
-            <path d="M10 2 Q15 10 10 18 Q5 10 10 2" fill="currentColor" className="text-white" />
-          </pattern>
-          <rect width="100%" height="100%" fill="url(#leafPattern)" />
-        </svg>
-      </div>
-
+    <section className="relative overflow-hidden" style={{ backgroundColor: '#B6BDB0' }}>
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-14">
         {/* Top bar with language toggle */}
         <div className="flex flex-col items-end mb-6 md:mb-8">
@@ -87,7 +70,8 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             onClick={onToggleLanguage}
-            className="category-pill flex items-center gap-2 px-4 py-2 text-sm rounded-full bg-white/10 backdrop-blur-sm text-white border border-white/20"
+            className="flex items-center gap-2 px-4 py-2 text-sm rounded bg-white border border-[#B6BDB0] shadow-sm"
+            style={{ color: '#000000' }}
             aria-label={language === "fr" ? "Switch to English" : "Passer en Français"}
           >
             <span className="text-lg">{language === "fr" ? "🇬🇧" : "🇫🇷"}</span>
@@ -121,7 +105,16 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="text-left w-full"
           >
-            <h1 className="display-heading text-4xl sm:text-5xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6">
+            <h1 
+              className="mb-4 md:mb-6"
+              style={{ 
+                fontFamily: 'Montserrat, sans-serif', 
+                fontWeight: 600, 
+                fontSize: '36px', 
+                color: '#000000',
+                lineHeight: 1.2
+              }}
+            >
               {language === "fr" ? "Testez vos connaissances et votre mémoire" : "Test your knowledge and memory"}
             </h1>
             
@@ -129,9 +122,10 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="inline-flex items-center px-4 py-2 rounded-full bg-accent/20 backdrop-blur-sm border border-accent/30"
+              className="inline-flex items-center px-4 py-2 rounded bg-white border border-[#B6BDB0]"
+              style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
             >
-              <p className="text-lg sm:text-xl font-semibold text-accent">
+              <p style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 600, fontSize: '18px', color: '#000000' }}>
                 {language === "fr" ? "Apprenez. Jouez. Gagnez." : "Learn. Play. Win."}
               </p>
             </motion.div>
@@ -166,31 +160,27 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-8 md:mb-10"
         >
-          <div className="flex gap-4 overflow-x-auto pb-4 px-1 snap-x snap-mandatory scrollbar-hide -mx-4 sm:mx-0">
+          <div className="flex flex-col gap-5 md:flex-row md:gap-4 md:overflow-x-auto md:pb-4 md:px-1 md:snap-x md:snap-mandatory md:-mx-4 sm:mx-0">
             {heroTexts[language].map((item, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                className="flex-shrink-0 w-[85vw] sm:w-[45%] md:w-[32%] first:ml-4 sm:first:ml-0 last:mr-4 sm:last:mr-0 snap-center"
+                className="w-full md:flex-shrink-0 md:w-[45%] lg:w-[32%] md:first:ml-4 sm:first:ml-0 md:last:mr-4 sm:last:mr-0 md:snap-center"
               >
-                <div className="h-full bg-white/95 backdrop-blur-sm rounded-2xl p-5 shadow-lg border border-white/50">
-                  <p className="text-base sm:text-base text-foreground leading-relaxed">
+                <div 
+                  className="h-full bg-white rounded p-5 border border-[#B6BDB0]"
+                  style={{ 
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    borderRadius: '4px'
+                  }}
+                >
+                  <p style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 400, fontSize: '14px', color: '#000000', lineHeight: 1.6 }}>
                     {item.text}
                   </p>
                 </div>
               </motion.div>
-            ))}
-          </div>
-          
-          {/* Scroll indicator dots for mobile */}
-          <div className="flex justify-center gap-2 mt-3 md:hidden">
-            {heroTexts[language].map((_, index) => (
-              <div
-                key={index}
-                className="w-2 h-2 rounded-full bg-white/40"
-              />
             ))}
           </div>
         </motion.div>
@@ -202,9 +192,12 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
           transition={{ duration: 0.5, delay: 0.4 }}
           className="text-center mb-6 md:mb-8"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
+          <div 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded bg-white border border-[#B6BDB0]"
+            style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.1)', borderRadius: '4px' }}
+          >
             <span className="text-lg">⚠️</span>
-            <p className="text-sm sm:text-base text-white/70 italic">
+            <p style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 400, fontSize: '14px', color: '#000000', fontStyle: 'italic' }}>
               {language === "fr" 
                 ? "Attention, vous ne pouvez faire chaque quiz qu'une seule fois avec votre adresse mail."
                 : "Warning, you can only take each quiz once with your email address."
@@ -218,14 +211,17 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="grid grid-cols-2 gap-4 sm:gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6"
         >
           {/* Left section - SAVOIR */}
-          <div className="flex flex-col items-center">
-            <h3 className="text-white font-bold text-lg sm:text-xl mb-3 tracking-wide">
+          <div className="flex flex-col items-start w-full">
+            <h3 
+              className="mb-4 tracking-wide"
+              style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '18px', color: '#000000' }}
+            >
               {language === "fr" ? "SAVOIR" : "LEARN"}
             </h3>
-            <div className="flex flex-col gap-2 w-full max-w-xs">
+            <div className="flex flex-col gap-5 w-full">
               {savoirCategories.map((cat, index) => (
                 <motion.button
                   key={cat.id}
@@ -233,13 +229,22 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
                   onClick={() => onSelectCategory(cat.id)}
-                  className={`category-pill w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-semibold backdrop-blur-sm ${
+                  className={`w-full text-left px-5 py-3 bg-white border transition-all ${
                     selectedCategory === cat.id 
-                      ? "bg-accent text-accent-foreground shadow-lg shadow-accent/30" 
-                      : "bg-white/10 text-white border border-white/20"
+                      ? "border-[#000000] bg-gray-50" 
+                      : "border-[#B6BDB0]"
                   }`}
+                  style={{ 
+                    fontFamily: 'Montserrat, sans-serif', 
+                    fontWeight: 500, 
+                    fontSize: '16px', 
+                    color: '#000000',
+                    borderRadius: '4px',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    padding: '12px 20px'
+                  }}
                 >
-                  <span className="mr-1.5">{cat.emoji}</span>
+                  <span className="mr-2">{cat.emoji}</span>
                   {cat.name[language]}
                 </motion.button>
               ))}
@@ -247,11 +252,14 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
           </div>
 
           {/* Right section - S'ENTRAINER */}
-          <div className="flex flex-col items-center">
-            <h3 className="text-white font-bold text-lg sm:text-xl mb-3 tracking-wide">
+          <div className="flex flex-col items-start w-full">
+            <h3 
+              className="mb-4 tracking-wide"
+              style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '18px', color: '#000000' }}
+            >
               {language === "fr" ? "S'ENTRAÎNER" : "PRACTICE"}
             </h3>
-            <div className="flex flex-col gap-2 w-full max-w-xs">
+            <div className="flex flex-col gap-5 w-full">
               {entrainerCategories.map((cat, index) => (
                 <motion.button
                   key={cat.id}
@@ -259,13 +267,22 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
                   onClick={() => onSelectCategory(cat.id)}
-                  className={`category-pill w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-full text-sm sm:text-base font-semibold backdrop-blur-sm ${
+                  className={`w-full text-left px-5 py-3 bg-white border transition-all ${
                     selectedCategory === cat.id 
-                      ? "bg-accent text-accent-foreground shadow-lg shadow-accent/30" 
-                      : "bg-white/10 text-white border border-white/20"
+                      ? "border-[#000000] bg-gray-50" 
+                      : "border-[#B6BDB0]"
                   }`}
+                  style={{ 
+                    fontFamily: 'Montserrat, sans-serif', 
+                    fontWeight: 500, 
+                    fontSize: '16px', 
+                    color: '#000000',
+                    borderRadius: '4px',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    padding: '12px 20px'
+                  }}
                 >
-                  <span className="mr-1.5">{cat.emoji}</span>
+                  <span className="mr-2">{cat.emoji}</span>
                   {cat.name[language]}
                 </motion.button>
               ))}
