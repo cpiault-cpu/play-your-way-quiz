@@ -52,7 +52,8 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
 
   return (
     <motion.div 
-      className="quiz-card w-full max-w-full min-w-0 rounded-2xl p-6 sm:p-6 h-full flex flex-col min-h-[50vh] md:min-h-0"
+      className="quiz-card w-full max-w-full min-w-0 p-6 sm:p-6 h-full flex flex-col min-h-[50vh] md:min-h-0"
+      style={{ borderRadius: '12px' }}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
@@ -85,7 +86,8 @@ const QuizCard = ({ quiz, language, onPlay }: QuizCardProps) => {
 
       <Button
         onClick={() => onPlay(quiz.id)}
-        className="w-full min-w-0 btn-primary-custom text-white font-semibold text-base md:text-base py-4 md:py-3 rounded-xl mt-auto"
+        className="w-full min-w-0 btn-primary-custom text-white font-semibold text-base md:text-base py-4 md:py-3 mt-auto"
+        style={{ borderRadius: '12px' }}
       >
         <Play className="w-5 h-5 md:w-4 md:h-4 mr-2 flex-shrink-0" />
         <span className="truncate min-w-0">{t.play}</span>
