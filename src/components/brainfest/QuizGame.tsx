@@ -1,11 +1,11 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Check, X, ArrowLeft, Copy, CheckCircle, Clock } from "lucide-react";
+import { ArrowRight, Check, X, ArrowLeft, Copy, CheckCircle, Clock, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Quiz, Language, translations } from "@/data/quizData";
 import { toast } from "sonner";
-
+import { useQuizAttempt } from "@/hooks/useQuizAttempt";
 const TIMER_DURATION = 30; // seconds per question
 interface QuizGameProps {
   quiz: Quiz;
@@ -25,6 +25,7 @@ interface WrongAnswer {
 
 const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
   const t = translations[language];
+  const { checkEmailUsed, saveAttempt, updateScore, isChecking } = useQuizAttempt();
   const [gameState, setGameState] = useState<GameState>("email");
   const [email, setEmail] = useState("");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -43,11 +44,30 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const handleStartQuiz = () => {
+  const handleStartQuiz = async () => {
     if (!validateEmail(email)) {
       toast.error(t.invalidEmail);
       return;
     }
+
+    // Check if email already used for this quiz
+    const alreadyUsed = await checkEmailUsed(email, quiz.id);
+    if (alreadyUsed) {
+      toast.error(
+        language === "fr" 
+          ? "Vous avez déjà participé à ce quiz avec cette adresse email."
+          : "You have already participated in this quiz with this email address."
+      );
+      return;
+    }
+
+    // Save the attempt
+    try {
+      await saveAttempt(email, quiz.id);
+    } catch (error) {
+      console.error("Error saving attempt:", error);
+    }
+
     setGameState("playing");
   };
 
@@ -208,9 +228,17 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                 />
                 <Button
                   onClick={handleStartQuiz}
+                  disabled={isChecking}
                   className="w-full btn-primary-custom text-white font-medium text-sm sm:text-base py-2.5 sm:py-3"
                 >
-                  {t.startQuiz}
+                  {isChecking ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      {language === "fr" ? "Vérification..." : "Checking..."}
+                    </>
+                  ) : (
+                    t.startQuiz
+                  )}
                 </Button>
               </div>
             </motion.div>
