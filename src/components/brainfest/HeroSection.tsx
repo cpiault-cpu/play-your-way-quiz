@@ -153,14 +153,14 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
           </motion.div>
         </div>
 
-        {/* Horizontal scrolling text cards */}
+        {/* Scrolling text cards - vertical on mobile, horizontal on desktop */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-8 md:mb-10"
         >
-          <div className="flex flex-col gap-5 md:flex-row md:gap-4 md:overflow-x-auto md:pb-4 md:px-1 md:snap-x md:snap-mandatory md:-mx-4 sm:mx-0">
+          <div className="flex flex-col gap-5 max-h-[200px] overflow-y-auto md:max-h-none md:overflow-y-visible md:flex-row md:gap-4 md:overflow-x-auto md:pb-4 md:px-1 md:snap-x md:snap-mandatory md:-mx-4 sm:mx-0">
             {heroTexts[language].map((item, index) => (
               <motion.div
                 key={index}
