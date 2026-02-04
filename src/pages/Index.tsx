@@ -11,6 +11,8 @@ import MemoryPairsGame from "@/components/brainfest/MemoryPairsGame";
 import MemoryPairsCard from "@/components/brainfest/MemoryPairsCard";
 import HealthQuizGame from "@/components/brainfest/HealthQuizGame";
 import HealthQuizCard from "@/components/brainfest/HealthQuizCard";
+import AdvancedQuizGame from "@/components/brainfest/AdvancedQuizGame";
+import AdvancedQuizCard from "@/components/brainfest/AdvancedQuizCard";
 import Footer from "@/components/brainfest/Footer";
 import GdprBanner from "@/components/brainfest/GdprBanner";
 
@@ -33,6 +35,10 @@ const Index = () => {
   const [activeMemoryPairsLevel, setActiveMemoryPairsLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeHealthQuizLevel, setActiveHealthQuizLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeHealthQuizSeries, setActiveHealthQuizSeries] = useState<HealthQuizSeriesId>('nutrition');
+  const [activeAdvancedQuiz, setActiveAdvancedQuiz] = useState<{
+    category: "biology" | "micronutrition" | "plants";
+    level: 1 | 2 | 3;
+  } | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory-music");
 
   const handleToggleLanguage = () => {
@@ -56,14 +62,31 @@ const Index = () => {
     setActiveHealthQuizSeries(seriesId || 'nutrition');
   };
 
+  const handlePlayAdvancedQuiz = (category: "biology" | "micronutrition" | "plants", level: 1 | 2 | 3) => {
+    setActiveAdvancedQuiz({ category, level });
+  };
+
   const handleBackToHome = () => {
     setActiveQuizId(null);
     setActiveMusicalMemoryLevel(null);
     setActiveMemoryPairsLevel(null);
     setActiveHealthQuizLevel(null);
+    setActiveAdvancedQuiz(null);
   };
 
   const activeQuiz = quizzes.find((q) => q.id === activeQuizId);
+
+  // Show Advanced Quiz Game
+  if (activeAdvancedQuiz) {
+    return (
+      <AdvancedQuizGame
+        category={activeAdvancedQuiz.category}
+        level={activeAdvancedQuiz.level}
+        language={language}
+        onBack={handleBackToHome}
+      />
+    );
+  }
 
   // Show Health Quiz Game
   if (activeHealthQuizLevel) {
@@ -421,23 +444,68 @@ const Index = () => {
             </motion.div>
           )}
 
-          {/* Quizzes list - for SAVOIR categories only */}
-          {(selectedCategory === "micronutrition" || selectedCategory === "biology" || selectedCategory === "plants") &&
-            [1, 2, 3].map((level) => {
-              const filteredQuizzes = quizzes.filter((q) => q.level === level && getCategoryForQuiz(q) === selectedCategory);
-
-              if (filteredQuizzes.length === 0) return null;
-
-              return (
-                <LevelSection
+          {/* Advanced Quizzes - for SAVOIR categories only */}
+          {(selectedCategory === "micronutrition" || selectedCategory === "biology" || selectedCategory === "plants") && (
+            <>
+              {[1, 2, 3].map((level) => (
+                <motion.section 
                   key={level}
-                  level={level as 1 | 2 | 3}
-                  quizzes={filteredQuizzes}
-                  language={language}
-                  onPlayQuiz={handlePlayQuiz}
-                />
-              );
-            })}
+                  className="mt-8 sm:mt-10 mb-8 sm:mb-10"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                    <span 
+                      className="w-3 h-3 rounded-full flex-shrink-0"
+                      style={{ 
+                        backgroundColor: level === 1 ? '#7FB3A3' : level === 2 ? '#E8A87C' : '#D17B7B'
+                      }} 
+                    />
+                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                      {language === "fr" ? `Niveau ${level}` : `Level ${level}`}
+                    </h2>
+                    <div className="flex-1 h-px bg-border/50 ml-2" />
+                  </div>
+
+                  {/* Mobile: vertical stack */}
+                  <div className="md:hidden flex flex-col gap-4 min-w-0">
+                    <motion.div
+                      initial={{ opacity: 0, y: 15 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <AdvancedQuizCard 
+                        category={selectedCategory as "biology" | "micronutrition" | "plants"} 
+                        level={level as 1 | 2 | 3} 
+                        language={language} 
+                        onPlay={handlePlayAdvancedQuiz} 
+                      />
+                    </motion.div>
+                  </div>
+                  
+                  {/* Desktop: grid */}
+                  <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <motion.div
+                      initial={{ opacity: 0, y: 15 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      <AdvancedQuizCard 
+                        category={selectedCategory as "biology" | "micronutrition" | "plants"} 
+                        level={level as 1 | 2 | 3} 
+                        language={language} 
+                        onPlay={handlePlayAdvancedQuiz} 
+                      />
+                    </motion.div>
+                  </div>
+                </motion.section>
+              ))}
+            </>
+          )}
         </motion.div>
       </main>
 
