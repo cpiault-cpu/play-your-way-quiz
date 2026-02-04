@@ -13,6 +13,8 @@ import HealthQuizGame from "@/components/brainfest/HealthQuizGame";
 import HealthQuizCard from "@/components/brainfest/HealthQuizCard";
 import AdvancedQuizGame from "@/components/brainfest/AdvancedQuizGame";
 import AdvancedQuizCard from "@/components/brainfest/AdvancedQuizCard";
+import MicronutritionQuizGame from "@/components/brainfest/MicronutritionQuizGame";
+import MicronutritionQuizCard from "@/components/brainfest/MicronutritionQuizCard";
 import Footer from "@/components/brainfest/Footer";
 import GdprBanner from "@/components/brainfest/GdprBanner";
 
@@ -36,9 +38,11 @@ const Index = () => {
   const [activeHealthQuizLevel, setActiveHealthQuizLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeHealthQuizSeries, setActiveHealthQuizSeries] = useState<HealthQuizSeriesId>('nutrition');
   const [activeAdvancedQuiz, setActiveAdvancedQuiz] = useState<{
-    category: "biology" | "micronutrition" | "plants";
+    category: "biology" | "plants";
     level: 1 | 2 | 3;
   } | null>(null);
+  const [activeMicronutritionLevel, setActiveMicronutritionLevel] = useState<1 | 2 | 3 | null>(null);
+  const [completedMicronutritionLevels, setCompletedMicronutritionLevels] = useState<number[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory-music");
 
   const handleToggleLanguage = () => {
@@ -62,8 +66,21 @@ const Index = () => {
     setActiveHealthQuizSeries(seriesId || 'nutrition');
   };
 
-  const handlePlayAdvancedQuiz = (category: "biology" | "micronutrition" | "plants", level: 1 | 2 | 3) => {
+  const handlePlayAdvancedQuiz = (category: "biology" | "plants", level: 1 | 2 | 3) => {
     setActiveAdvancedQuiz({ category, level });
+  };
+
+  const handlePlayMicronutrition = (level: 1 | 2 | 3) => {
+    setActiveMicronutritionLevel(level);
+  };
+
+  const handleMicronutritionLevelComplete = (level: 1 | 2 | 3) => {
+    setCompletedMicronutritionLevels(prev => [...new Set([...prev, level])]);
+    if (level < 3) {
+      setActiveMicronutritionLevel((level + 1) as 1 | 2 | 3);
+    } else {
+      setActiveMicronutritionLevel(null);
+    }
   };
 
   const handleBackToHome = () => {
@@ -72,11 +89,24 @@ const Index = () => {
     setActiveMemoryPairsLevel(null);
     setActiveHealthQuizLevel(null);
     setActiveAdvancedQuiz(null);
+    setActiveMicronutritionLevel(null);
   };
 
   const activeQuiz = quizzes.find((q) => q.id === activeQuizId);
 
-  // Show Advanced Quiz Game
+  // Show Micronutrition Quiz Game
+  if (activeMicronutritionLevel) {
+    return (
+      <MicronutritionQuizGame
+        level={activeMicronutritionLevel}
+        language={language}
+        onBack={handleBackToHome}
+        onLevelComplete={handleMicronutritionLevelComplete}
+      />
+    );
+  }
+
+  // Show Advanced Quiz Game (biology & plants only now)
   if (activeAdvancedQuiz) {
     return (
       <AdvancedQuizGame
@@ -406,23 +436,75 @@ const Index = () => {
             </motion.div>
           )}
 
-          {/* Micronutrition category intro */}
+          {/* Micronutrition category - NEW ADAPTIVE QUIZ */}
           {selectedCategory === "micronutrition" && (
-            <motion.div
-              className="mt-8 sm:mt-10 mb-6"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
+            <motion.section 
+              className="mt-10 sm:mt-12 md:mt-14 mb-10 sm:mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
             >
-              <div className="bg-white rounded-xl p-4 shadow-sm border border-border/30">
-                <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
+              <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-emerald-100 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
+                  🧠
+                </span>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  {language === "fr" ? "Micronutrition" : "Micronutrition"}
+                </h2>
+                <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
+              </div>
+              
+              {/* Description */}
+              <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
+                <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl">
                   {language === "fr" 
-                    ? "Comment vitamines, minéraux et oligo-éléments influencent chaque fonction du corps. Ces équilibres invisibles qui nous soutiennent chaque jour. Affinez vos connaissances pour avoir des échanges encore plus intéressants quand vous discutez avec votre naturopathe."
-                    : "How vitamins, minerals and trace elements influence every function of the body. These invisible balances that support us every day. Sharpen your knowledge to have even more interesting conversations with your naturopath."
+                    ? "Un entraînement cérébral évolutif basé sur la mémorisation active. Lisez, mémorisez, et testez vos connaissances. Si vous n'obtenez pas 4/4, le texte est reformulé pour renforcer votre apprentissage."
+                    : "An evolving brain training based on active memorization. Read, memorize, and test your knowledge. If you don't get 4/4, the text is reformulated to reinforce your learning."
                   }
                 </p>
               </div>
-            </motion.div>
+              
+              {/* Mobile: vertical stack */}
+              <div className="md:hidden flex flex-col gap-4 min-w-0">
+                {[1, 2, 3].map((level, index) => (
+                  <motion.div
+                    key={level}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <MicronutritionQuizCard 
+                      level={level as 1 | 2 | 3} 
+                      language={language} 
+                      onPlay={handlePlayMicronutrition}
+                      isCompleted={completedMicronutritionLevels.includes(level)}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+              
+              {/* Desktop: grid */}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3].map((level, index) => (
+                  <motion.div
+                    key={level}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <MicronutritionQuizCard 
+                      level={level as 1 | 2 | 3} 
+                      language={language} 
+                      onPlay={handlePlayMicronutrition}
+                      isCompleted={completedMicronutritionLevels.includes(level)}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.section>
           )}
 
           {/* Plants category intro */}
@@ -434,7 +516,7 @@ const Index = () => {
               transition={{ duration: 0.4 }}
             >
               <div className="bg-white rounded-xl p-4 shadow-sm border border-border/30">
-                <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
+                <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl">
                   {language === "fr" 
                     ? "Les plantes médicinales murmurent depuis toujours leurs secrets à ceux qui savent les écouter."
                     : "Medicinal plants have always whispered their secrets to those who know how to listen."
@@ -444,8 +526,8 @@ const Index = () => {
             </motion.div>
           )}
 
-          {/* Advanced Quizzes - for SAVOIR categories only */}
-          {(selectedCategory === "micronutrition" || selectedCategory === "biology" || selectedCategory === "plants") && (
+          {/* Advanced Quizzes - for biology and plants only */}
+          {(selectedCategory === "biology" || selectedCategory === "plants") && (
             <>
               {[1, 2, 3].map((level) => (
                 <motion.section 
@@ -478,7 +560,7 @@ const Index = () => {
                       transition={{ duration: 0.4 }}
                     >
                       <AdvancedQuizCard 
-                        category={selectedCategory as "biology" | "micronutrition" | "plants"} 
+                        category={selectedCategory as "biology" | "plants"} 
                         level={level as 1 | 2 | 3} 
                         language={language} 
                         onPlay={handlePlayAdvancedQuiz} 
@@ -495,7 +577,7 @@ const Index = () => {
                       transition={{ duration: 0.4 }}
                     >
                       <AdvancedQuizCard 
-                        category={selectedCategory as "biology" | "micronutrition" | "plants"} 
+                        category={selectedCategory as "biology" | "plants"} 
                         level={level as 1 | 2 | 3} 
                         language={language} 
                         onPlay={handlePlayAdvancedQuiz} 

@@ -9,10 +9,10 @@ import PlantIcon from "./icons/PlantIcon";
 import BiologyIcon from "./icons/BiologyIcon";
 
 interface AdvancedQuizCardProps {
-  category: "biology" | "micronutrition" | "plants";
+  category: "biology" | "plants";
   level: 1 | 2 | 3;
   language: Language;
-  onPlay: (category: "biology" | "micronutrition" | "plants", level: 1 | 2 | 3) => void;
+  onPlay: (category: "biology" | "plants", level: 1 | 2 | 3) => void;
 }
 
 const AdvancedQuizCard = ({ category, level, language, onPlay }: AdvancedQuizCardProps) => {
@@ -41,8 +41,6 @@ const AdvancedQuizCard = ({ category, level, language, onPlay }: AdvancedQuizCar
     switch (category) {
       case 'biology':
         return <BiologyIcon className={iconClass} />;
-      case 'micronutrition':
-        return <MoleculeIcon className={iconClass} />;
       case 'plants':
         return <PlantIcon className={iconClass} />;
       default:
@@ -53,7 +51,6 @@ const AdvancedQuizCard = ({ category, level, language, onPlay }: AdvancedQuizCar
   const getCategoryTitle = () => {
     switch (category) {
       case "biology": return language === "fr" ? "Biologie" : "Biology";
-      case "micronutrition": return language === "fr" ? "Micronutrition" : "Micronutrition";
       case "plants": return language === "fr" ? "Plantes médicinales" : "Medicinal Plants";
     }
   };
