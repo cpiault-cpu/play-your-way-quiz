@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Language, quizzes, Quiz } from "@/data/quizData";
-import { healthQuizSeries, HealthQuizSeriesId } from "@/data/healthQuizData";
 import HeroSection from "@/components/brainfest/HeroSection";
 import LevelSection from "@/components/brainfest/LevelSection";
 import QuizGame from "@/components/brainfest/QuizGame";
@@ -9,8 +8,6 @@ import MusicalMemoryGame from "@/components/brainfest/MusicalMemoryGame";
 import MusicalMemoryCard from "@/components/brainfest/MusicalMemoryCard";
 import MemoryPairsGame from "@/components/brainfest/MemoryPairsGame";
 import MemoryPairsCard from "@/components/brainfest/MemoryPairsCard";
-import HealthQuizGame from "@/components/brainfest/HealthQuizGame";
-import HealthQuizCard from "@/components/brainfest/HealthQuizCard";
 import MicronutritionQuizGame from "@/components/brainfest/MicronutritionQuizGame";
 import MicronutritionQuizCard from "@/components/brainfest/MicronutritionQuizCard";
 import VitaminDQuizGame from "@/components/brainfest/VitaminDQuizGame";
@@ -21,7 +18,7 @@ import Footer from "@/components/brainfest/Footer";
 import GdprBanner from "@/components/brainfest/GdprBanner";
 
 // Category type - updated to match new navigation
-type CategoryId = "micronutrition" | "micronutrition2" | "plants" | "memory-music" | "memory-cards" | "health-quiz";
+type CategoryId = "micronutrition" | "micronutrition2" | "plants" | "memory-music" | "memory-cards";
 
 // Map quiz categories to our category IDs
 const getCategoryForQuiz = (quiz: Quiz): "micronutrition" | "micronutrition2" | "plants" => {
@@ -40,8 +37,6 @@ const Index = () => {
   const [activeQuizId, setActiveQuizId] = useState<string | null>(null);
   const [activeMusicalMemoryLevel, setActiveMusicalMemoryLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeMemoryPairsLevel, setActiveMemoryPairsLevel] = useState<1 | 2 | 3 | null>(null);
-  const [activeHealthQuizLevel, setActiveHealthQuizLevel] = useState<1 | 2 | 3 | null>(null);
-  const [activeHealthQuizSeries, setActiveHealthQuizSeries] = useState<HealthQuizSeriesId>('nutrition');
   const [activeMicronutritionLevel, setActiveMicronutritionLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeVitaminDLevel, setActiveVitaminDLevel] = useState<1 | 2 | 3 | null>(null);
   const [activePlantsLevel, setActivePlantsLevel] = useState<1 | 2 | 3 | null>(null);
@@ -90,10 +85,6 @@ const Index = () => {
     setActiveMemoryPairsLevel(level);
   };
 
-  const handlePlayHealthQuiz = (level: 1 | 2 | 3, seriesId?: HealthQuizSeriesId) => {
-    setActiveHealthQuizLevel(level);
-    setActiveHealthQuizSeries(seriesId || 'nutrition');
-  };
 
   const handlePlayMicronutrition = (level: 1 | 2 | 3) => {
     setActiveMicronutritionLevel(level);
@@ -138,7 +129,6 @@ const Index = () => {
     setActiveQuizId(null);
     setActiveMusicalMemoryLevel(null);
     setActiveMemoryPairsLevel(null);
-    setActiveHealthQuizLevel(null);
     setActiveMicronutritionLevel(null);
     setActiveVitaminDLevel(null);
     setActivePlantsLevel(null);
@@ -182,17 +172,6 @@ const Index = () => {
     );
   }
 
-  // Show Health Quiz Game
-  if (activeHealthQuizLevel) {
-    return (
-      <HealthQuizGame
-        language={language}
-        level={activeHealthQuizLevel}
-        seriesId={activeHealthQuizSeries}
-        onBack={handleBackToHome}
-      />
-    );
-  }
 
   // Show Memory Pairs Game
   if (activeMemoryPairsLevel) {
@@ -364,122 +343,6 @@ const Index = () => {
             </motion.section>
           )}
 
-          {/* Show Health Quiz section when health-quiz is selected */}
-          {selectedCategory === "health-quiz" && (
-            <>
-              {/* Series 1: Nutriments essentiels */}
-              <motion.section 
-                className="mt-10 sm:mt-12 md:mt-14 mb-10 sm:mb-12"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="flex items-center gap-3 mb-5 sm:mb-6">
-                  <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-red-100 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
-                    ❤️
-                  </span>
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
-                    {healthQuizSeries[0].title[language]}
-                  </h2>
-                  <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
-                </div>
-                
-                {/* Description */}
-                <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
-                  <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl">
-                    {healthQuizSeries[0].description[language]}
-                  </p>
-                </div>
-                
-                {/* Mobile: vertical stack */}
-                <div className="md:hidden flex flex-col gap-4 min-w-0">
-                  {[1, 2, 3].map((level, index) => (
-                    <motion.div
-                      key={level}
-                      initial={{ opacity: 0, y: 15 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: index * 0.1 }}
-                    >
-                      <HealthQuizCard level={level as 1 | 2 | 3} language={language} seriesId="nutrition" onPlay={handlePlayHealthQuiz} />
-                    </motion.div>
-                  ))}
-                </div>
-                
-                {/* Desktop: grid */}
-                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {[1, 2, 3].map((level, index) => (
-                    <motion.div
-                      key={level}
-                      initial={{ opacity: 0, y: 15 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: index * 0.1 }}
-                    >
-                      <HealthQuizCard level={level as 1 | 2 | 3} language={language} seriesId="nutrition" onPlay={handlePlayHealthQuiz} />
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.section>
-
-              {/* Series 2: Mitochondrie */}
-              <motion.section 
-                className="mb-10 sm:mb-12 -mx-4 sm:-mx-6 px-4 sm:px-6 py-8 sm:py-10 bg-gradient-to-br from-orange-200 via-amber-200 to-yellow-100 rounded-none sm:rounded-2xl"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="flex items-center gap-3 mb-5 sm:mb-6">
-                  <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-orange-200 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
-                    ⚡
-                  </span>
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
-                    {healthQuizSeries[1].title[language]}
-                  </h2>
-                  <div className="flex-1 h-px bg-orange-200 ml-2 hidden sm:block" />
-                </div>
-                
-                {/* Description */}
-                <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-orange-200">
-                  <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl">
-                    {healthQuizSeries[1].description[language]}
-                  </p>
-                </div>
-                
-                {/* Mobile: vertical stack */}
-                <div className="md:hidden flex flex-col gap-4 min-w-0">
-                  {[1, 2, 3].map((level, index) => (
-                    <motion.div
-                      key={level}
-                      initial={{ opacity: 0, y: 15 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: index * 0.1 }}
-                    >
-                      <HealthQuizCard level={level as 1 | 2 | 3} language={language} seriesId="mitochondria" onPlay={handlePlayHealthQuiz} />
-                    </motion.div>
-                  ))}
-                </div>
-                
-                {/* Desktop: grid */}
-                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {[1, 2, 3].map((level, index) => (
-                    <motion.div
-                      key={level}
-                      initial={{ opacity: 0, y: 15 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: index * 0.1 }}
-                    >
-                      <HealthQuizCard level={level as 1 | 2 | 3} language={language} seriesId="mitochondria" onPlay={handlePlayHealthQuiz} />
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.section>
-            </>
-          )}
 
           {/* Micronutrition 2 (Vitamin D) category */}
           {selectedCategory === "micronutrition2" && (
