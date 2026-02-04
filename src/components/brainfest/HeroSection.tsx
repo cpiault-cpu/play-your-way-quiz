@@ -245,25 +245,26 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               >
                 {savoirCategories.map((cat, index) => {
                   const isPlantes = cat.id === 'plants';
+                  const isSelected = selectedCategory === cat.id;
                   return (
                     <motion.button
                       key={cat.id}
                       initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
+                      animate={{ opacity: 1, scale: isSelected ? 1.05 : 1 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
+                      whileTap={{ scale: 0.95 }}
                       onClick={() => onSelectCategory(cat.id)}
-                      className={`flex-shrink-0 w-[45%] h-[70px] md:w-full md:h-auto bg-white border transition-all flex items-center justify-center gap-2.5 px-3 ${
-                        selectedCategory === cat.id 
-                          ? "border-[#000000] bg-gray-50 ring-2 ring-black/20" 
-                          : "border-[#E0E0E0]"
-                      }`}
+                      className="flex-shrink-0 w-[45%] h-[70px] md:w-full md:h-auto border flex items-center justify-center gap-2.5 px-3"
                       style={{ 
                         fontFamily: 'Montserrat, sans-serif', 
                         fontWeight: 500, 
                         fontSize: isPlantes ? '13px' : '14px', 
-                        color: '#000000',
+                        color: isSelected ? '#FFFFFF' : '#000000',
+                        backgroundColor: isSelected ? '#4A6741' : '#FFFFFF',
+                        borderColor: isSelected ? '#4A6741' : '#E0E0E0',
                         borderRadius: '12px',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
+                        boxShadow: isSelected ? '0 4px 12px rgba(74, 103, 65, 0.4)' : '0 2px 8px rgba(0,0,0,0.12)',
+                        transition: 'all 0.2s ease'
                       }}
                     >
                       <span className="text-2xl flex-shrink-0">{cat.emoji}</span>
@@ -300,31 +301,34 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                   msOverflowStyle: 'none'
                 }}
               >
-                {entrainerCategories.map((cat, index) => (
-                  <motion.button
-                    key={cat.id}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
-                    onClick={() => onSelectCategory(cat.id)}
-                    className={`flex-shrink-0 w-[45%] h-[70px] md:w-full md:h-auto bg-white border transition-all flex items-center justify-center gap-2.5 px-3 ${
-                      selectedCategory === cat.id 
-                        ? "border-[#000000] bg-gray-50 ring-2 ring-black/20" 
-                        : "border-[#E0E0E0]"
-                    }`}
-                    style={{ 
-                      fontFamily: 'Montserrat, sans-serif', 
-                      fontWeight: 500, 
-                      fontSize: '14px', 
-                      color: '#000000',
-                      borderRadius: '12px',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
-                    }}
-                  >
-                    <span className="text-2xl flex-shrink-0">{cat.emoji}</span>
-                    <span className="whitespace-nowrap">{cat.name[language]}</span>
-                  </motion.button>
-                ))}
+                {entrainerCategories.map((cat, index) => {
+                  const isSelected = selectedCategory === cat.id;
+                  return (
+                    <motion.button
+                      key={cat.id}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: isSelected ? 1.05 : 1 }}
+                      transition={{ duration: 0.2, ease: "easeOut" }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => onSelectCategory(cat.id)}
+                      className="flex-shrink-0 w-[45%] h-[70px] md:w-full md:h-auto border flex items-center justify-center gap-2.5 px-3"
+                      style={{ 
+                        fontFamily: 'Montserrat, sans-serif', 
+                        fontWeight: 500, 
+                        fontSize: '14px', 
+                        color: isSelected ? '#FFFFFF' : '#000000',
+                        backgroundColor: isSelected ? '#4A6741' : '#FFFFFF',
+                        borderColor: isSelected ? '#4A6741' : '#E0E0E0',
+                        borderRadius: '12px',
+                        boxShadow: isSelected ? '0 4px 12px rgba(74, 103, 65, 0.4)' : '0 2px 8px rgba(0,0,0,0.12)',
+                        transition: 'all 0.2s ease'
+                      }}
+                    >
+                      <span className="text-2xl flex-shrink-0">{cat.emoji}</span>
+                      <span className="whitespace-nowrap">{cat.name[language]}</span>
+                    </motion.button>
+                  );
+                })}
               </div>
             </div>
           </motion.div>
