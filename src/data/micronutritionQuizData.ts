@@ -665,12 +665,12 @@ export const micronutritionLevels: MicronutritionLevel[] = [
 
 export const successMessages = {
   levelComplete: {
-    fr: "🧠 Excellent. Votre mémoire vient de franchir un cap.\nPrêt à stimuler davantage votre cerveau ?",
-    en: "🧠 Excellent. Your memory has just reached a new level.\nReady to stimulate your brain further?"
+    fr: "Prêt à aller plus loin ?",
+    en: "Ready to go further?"
   },
   finalComplete: {
-    fr: "🧠 Niveau expert atteint.\nVotre cerveau vient de consolider des connaissances essentielles pour votre santé.",
-    en: "🧠 Expert level achieved.\nYour brain has just consolidated essential knowledge for your health."
+    fr: "Maîtrise acquise. Ces connaissances vous seront utiles.",
+    en: "Mastery acquired. This knowledge will be useful to you."
   },
   tryAgain: {
     fr: "Continuons à renforcer ces notions. Une nouvelle lecture vous attend.",
