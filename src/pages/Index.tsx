@@ -12,6 +12,7 @@ import MemoryPairsCard from "@/components/brainfest/MemoryPairsCard";
 import HealthQuizGame from "@/components/brainfest/HealthQuizGame";
 import HealthQuizCard from "@/components/brainfest/HealthQuizCard";
 import Footer from "@/components/brainfest/Footer";
+import GdprBanner from "@/components/brainfest/GdprBanner";
 
 // Category type - updated to match new navigation
 type CategoryId = "micronutrition" | "biology" | "plants" | "memory-music" | "memory-cards" | "health-quiz";
@@ -442,6 +443,9 @@ const Index = () => {
 
       {/* Footer */}
       <Footer language={language} />
+      
+      {/* GDPR Banner */}
+      <GdprBanner language={language} />
     </div>
   );
 };

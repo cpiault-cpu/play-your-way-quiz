@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Language } from "@/data/quizData";
-import { Instagram, ShoppingBag } from "lucide-react";
+import { Instagram, ShoppingBag, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -199,6 +200,16 @@ const Footer = ({ language }: FooterProps) => {
             <ShoppingBag className="w-6 h-6 group-hover:scale-110 transition-transform" />
             <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}>{language === "fr" ? "Boutique" : "Shop"}</span>
           </a>
+          <Link
+            to="/politique-de-confidentialite"
+            className="flex items-center gap-2 hover:opacity-70 transition-opacity group"
+            style={{ color: '#000000' }}
+          >
+            <FileText className="w-6 h-6 group-hover:scale-110 transition-transform" />
+            <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}>
+              {language === "fr" ? "Confidentialité" : "Privacy"}
+            </span>
+          </Link>
         </motion.div>
 
         {/* Copyright */}
