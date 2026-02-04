@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { Language } from "@/data/quizData";
+import { useRef } from "react";
+import ScrollIndicator from "./ScrollIndicator";
 
 type CategoryId = "micronutrition" | "biology" | "plants" | "memory-music" | "memory-cards" | "health-quiz";
 
@@ -60,6 +62,9 @@ interface HeroSectionProps {
 }
 
 const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCategory }: HeroSectionProps) => {
+  const savoirScrollRef = useRef<HTMLDivElement>(null);
+  const entrainerScrollRef = useRef<HTMLDivElement>(null);
+
   return (
     <>
       {/* Partie haute - fond #B6BDB0 */}
@@ -231,14 +236,18 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
           >
             {/* SAVOIR Section */}
             <div className="flex flex-col items-start w-full">
-              <h3 
-                className="mb-4 tracking-wide"
-                style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '18px', color: '#FFFFFF' }}
-              >
-                {language === "fr" ? "SAVOIR" : "LEARN"}
-              </h3>
+              <div className="flex items-center justify-between w-full mb-4">
+                <h3 
+                  className="tracking-wide"
+                  style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '18px', color: '#FFFFFF' }}
+                >
+                  {language === "fr" ? "SAVOIR" : "LEARN"}
+                </h3>
+                <ScrollIndicator scrollRef={savoirScrollRef} />
+              </div>
               {/* Mobile: Horizontal scroll | Desktop: Grid */}
               <div 
+                ref={savoirScrollRef}
                 className="flex md:grid md:grid-cols-3 gap-4 w-full overflow-x-auto md:overflow-visible pb-3 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0"
                 style={{ 
                   WebkitOverflowScrolling: 'touch',
@@ -276,14 +285,18 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
 
             {/* S'ENTRAINER Section */}
             <div className="flex flex-col items-start w-full">
-              <h3 
-                className="mb-4 tracking-wide"
-                style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '18px', color: '#FFFFFF' }}
-              >
-                {language === "fr" ? "S'ENTRAÎNER" : "PRACTICE"}
-              </h3>
+              <div className="flex items-center justify-between w-full mb-4">
+                <h3 
+                  className="tracking-wide"
+                  style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '18px', color: '#FFFFFF' }}
+                >
+                  {language === "fr" ? "S'ENTRAÎNER" : "PRACTICE"}
+                </h3>
+                <ScrollIndicator scrollRef={entrainerScrollRef} />
+              </div>
               {/* Mobile: Horizontal scroll | Desktop: Grid */}
               <div 
+                ref={entrainerScrollRef}
                 className="flex md:grid md:grid-cols-3 gap-4 w-full overflow-x-auto md:overflow-visible pb-3 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0"
                 style={{ 
                   WebkitOverflowScrolling: 'touch',
