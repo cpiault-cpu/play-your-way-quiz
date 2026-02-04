@@ -11,12 +11,12 @@ import MemoryPairsGame from "@/components/brainfest/MemoryPairsGame";
 import MemoryPairsCard from "@/components/brainfest/MemoryPairsCard";
 import HealthQuizGame from "@/components/brainfest/HealthQuizGame";
 import HealthQuizCard from "@/components/brainfest/HealthQuizCard";
-import AdvancedQuizGame from "@/components/brainfest/AdvancedQuizGame";
-import AdvancedQuizCard from "@/components/brainfest/AdvancedQuizCard";
 import MicronutritionQuizGame from "@/components/brainfest/MicronutritionQuizGame";
 import MicronutritionQuizCard from "@/components/brainfest/MicronutritionQuizCard";
 import VitaminDQuizGame from "@/components/brainfest/VitaminDQuizGame";
 import VitaminDQuizCard from "@/components/brainfest/VitaminDQuizCard";
+import PlantsQuizGame from "@/components/brainfest/PlantsQuizGame";
+import PlantsQuizCard from "@/components/brainfest/PlantsQuizCard";
 import Footer from "@/components/brainfest/Footer";
 import GdprBanner from "@/components/brainfest/GdprBanner";
 
@@ -33,6 +33,7 @@ const getCategoryForQuiz = (quiz: Quiz): "micronutrition" | "micronutrition2" | 
 
 const MICRONUTRITION_PROGRESS_KEY = "micronutrition_progress";
 const VITAMIND_PROGRESS_KEY = "vitamind_progress";
+const PLANTS_PROGRESS_KEY = "plants_progress";
 
 const Index = () => {
   const [language, setLanguage] = useState<Language>("fr");
@@ -41,18 +42,19 @@ const Index = () => {
   const [activeMemoryPairsLevel, setActiveMemoryPairsLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeHealthQuizLevel, setActiveHealthQuizLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeHealthQuizSeries, setActiveHealthQuizSeries] = useState<HealthQuizSeriesId>('nutrition');
-  const [activeAdvancedQuiz, setActiveAdvancedQuiz] = useState<{
-    category: "plants";
-    level: 1 | 2 | 3;
-  } | null>(null);
   const [activeMicronutritionLevel, setActiveMicronutritionLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeVitaminDLevel, setActiveVitaminDLevel] = useState<1 | 2 | 3 | null>(null);
+  const [activePlantsLevel, setActivePlantsLevel] = useState<1 | 2 | 3 | null>(null);
   const [completedMicronutritionLevels, setCompletedMicronutritionLevels] = useState<number[]>(() => {
     const saved = localStorage.getItem(MICRONUTRITION_PROGRESS_KEY);
     return saved ? JSON.parse(saved) : [];
   });
   const [completedVitaminDLevels, setCompletedVitaminDLevels] = useState<number[]>(() => {
     const saved = localStorage.getItem(VITAMIND_PROGRESS_KEY);
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [completedPlantsLevels, setCompletedPlantsLevels] = useState<number[]>(() => {
+    const saved = localStorage.getItem(PLANTS_PROGRESS_KEY);
     return saved ? JSON.parse(saved) : [];
   });
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory-music");
@@ -66,6 +68,11 @@ const Index = () => {
   useEffect(() => {
     localStorage.setItem(VITAMIND_PROGRESS_KEY, JSON.stringify(completedVitaminDLevels));
   }, [completedVitaminDLevels]);
+
+  // Save plants progress to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(PLANTS_PROGRESS_KEY, JSON.stringify(completedPlantsLevels));
+  }, [completedPlantsLevels]);
 
   const handleToggleLanguage = () => {
     setLanguage((prev) => (prev === "fr" ? "en" : "fr"));
@@ -88,16 +95,16 @@ const Index = () => {
     setActiveHealthQuizSeries(seriesId || 'nutrition');
   };
 
-  const handlePlayAdvancedQuiz = (category: "plants", level: 1 | 2 | 3) => {
-    setActiveAdvancedQuiz({ category, level });
-  };
-
   const handlePlayMicronutrition = (level: 1 | 2 | 3) => {
     setActiveMicronutritionLevel(level);
   };
 
   const handlePlayVitaminD = (level: 1 | 2 | 3) => {
     setActiveVitaminDLevel(level);
+  };
+
+  const handlePlayPlants = (level: 1 | 2 | 3) => {
+    setActivePlantsLevel(level);
   };
 
   const handleMicronutritionLevelComplete = (level: 1 | 2 | 3) => {
@@ -118,14 +125,23 @@ const Index = () => {
     }
   };
 
+  const handlePlantsLevelComplete = (level: 1 | 2 | 3) => {
+    setCompletedPlantsLevels(prev => [...new Set([...prev, level])]);
+    if (level < 3) {
+      setActivePlantsLevel((level + 1) as 1 | 2 | 3);
+    } else {
+      setActivePlantsLevel(null);
+    }
+  };
+
   const handleBackToHome = () => {
     setActiveQuizId(null);
     setActiveMusicalMemoryLevel(null);
     setActiveMemoryPairsLevel(null);
     setActiveHealthQuizLevel(null);
-    setActiveAdvancedQuiz(null);
     setActiveMicronutritionLevel(null);
     setActiveVitaminDLevel(null);
+    setActivePlantsLevel(null);
   };
 
   const activeQuiz = quizzes.find((q) => q.id === activeQuizId);
@@ -154,14 +170,14 @@ const Index = () => {
     );
   }
 
-  // Show Advanced Quiz Game (plants only now)
-  if (activeAdvancedQuiz) {
+  // Show Plants Quiz Game
+  if (activePlantsLevel) {
     return (
-      <AdvancedQuizGame
-        category={activeAdvancedQuiz.category}
-        level={activeAdvancedQuiz.level}
+      <PlantsQuizGame
+        level={activePlantsLevel}
         language={language}
         onBack={handleBackToHome}
+        onLevelComplete={handlePlantsLevelComplete}
       />
     );
   }
@@ -607,86 +623,75 @@ const Index = () => {
             </motion.section>
           )}
 
-          {/* Plants category intro */}
+          {/* Plants category - NEW ADAPTIVE QUIZ */}
           {selectedCategory === "plants" && (
-            <motion.div
-              className="mt-8 sm:mt-10 mb-6"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
+            <motion.section 
+              className="mt-10 sm:mt-12 md:mt-14 mb-10 sm:mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
             >
-              <div className="bg-white rounded-xl p-4 shadow-sm border border-border/30">
+              <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
+                  🌿
+                </span>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  {language === "fr" ? "Plantes médicinales" : "Medicinal Plants"}
+                </h2>
+                <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
+              </div>
+              
+              {/* Description */}
+              <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
                 <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl">
                   {language === "fr" 
-                    ? "Les plantes médicinales murmurent depuis toujours leurs secrets à ceux qui savent les écouter."
-                    : "Medicinal plants have always whispered their secrets to those who know how to listen."
+                    ? "Renforcez votre mémoire sur les plantes médicinales, leurs usages traditionnels et leurs principes actifs. Un quiz adaptatif qui s'ajuste à votre niveau."
+                    : "Strengthen your memory on medicinal plants, their traditional uses and active ingredients. An adaptive quiz that adjusts to your level."
                   }
                 </p>
               </div>
-            </motion.div>
-          )}
-
-          {/* Advanced Quizzes - for plants only */}
-          {selectedCategory === "plants" && (
-            <>
-              {[1, 2, 3].map((level) => (
-                <motion.section 
-                  key={level}
-                  className="mt-8 sm:mt-10 mb-8 sm:mb-10"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="flex items-center gap-3 mb-5 sm:mb-6">
-                    <span 
-                      className="w-3 h-3 rounded-full flex-shrink-0"
-                      style={{ 
-                        backgroundColor: level === 1 ? '#7FB3A3' : level === 2 ? '#E8A87C' : '#D17B7B'
-                      }} 
+              
+              {/* Mobile: vertical stack */}
+              <div className="md:hidden flex flex-col gap-4 min-w-0">
+                {[1, 2, 3].map((level, index) => (
+                  <motion.div
+                    key={level}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <PlantsQuizCard 
+                      level={level as 1 | 2 | 3} 
+                      language={language} 
+                      onPlay={handlePlayPlants}
+                      isCompleted={completedPlantsLevels.includes(level)}
                     />
-                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                      {language === "fr" ? `Niveau ${level}` : `Level ${level}`}
-                    </h2>
-                    <div className="flex-1 h-px bg-border/50 ml-2" />
-                  </div>
-
-                  {/* Mobile: vertical stack */}
-                  <div className="md:hidden flex flex-col gap-4 min-w-0">
-                    <motion.div
-                      initial={{ opacity: 0, y: 15 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4 }}
-                    >
-                      <AdvancedQuizCard 
-                        category="plants" 
-                        level={level as 1 | 2 | 3} 
-                        language={language} 
-                        onPlay={handlePlayAdvancedQuiz} 
-                      />
-                    </motion.div>
-                  </div>
-                  
-                  {/* Desktop: grid */}
-                  <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <motion.div
-                      initial={{ opacity: 0, y: 15 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4 }}
-                    >
-                      <AdvancedQuizCard 
-                        category="plants" 
-                        level={level as 1 | 2 | 3} 
-                        language={language} 
-                        onPlay={handlePlayAdvancedQuiz} 
-                      />
-                    </motion.div>
-                  </div>
-                </motion.section>
-              ))}
-            </>
+                  </motion.div>
+                ))}
+              </div>
+              
+              {/* Desktop: grid */}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3].map((level, index) => (
+                  <motion.div
+                    key={level}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <PlantsQuizCard 
+                      level={level as 1 | 2 | 3} 
+                      language={language} 
+                      onPlay={handlePlayPlants}
+                      isCompleted={completedPlantsLevels.includes(level)}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.section>
           )}
         </motion.div>
       </main>
