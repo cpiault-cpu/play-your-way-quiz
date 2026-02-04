@@ -202,21 +202,56 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
 
   // Initialize AudioContext - must resume on user interaction for mobile browsers
   const initAudio = useCallback(async () => {
+    // Create AudioContext if it doesn't exist
     if (!audioContextRef.current) {
-      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      audioContextRef.current = new AudioContextClass();
     }
     
-    // Resume audio context if it's suspended (required for mobile browsers)
-    if (audioContextRef.current.state === "suspended") {
+    const ctx = audioContextRef.current;
+    
+    // Resume audio context if it's suspended (CRITICAL for iOS/Android)
+    if (ctx.state === "suspended") {
       try {
-        await audioContextRef.current.resume();
+        await ctx.resume();
       } catch (e) {
         console.warn("Could not resume audio context:", e);
       }
     }
     
-    return audioContextRef.current;
+    // Double-check state after resume attempt (mobile Safari workaround)
+    if (ctx.state !== "running") {
+      try {
+        await ctx.resume();
+      } catch (e) {
+        console.warn("Second resume attempt failed:", e);
+      }
+    }
+    
+    return ctx;
   }, []);
+
+  // Pre-warm audio on first user interaction (essential for mobile)
+  useEffect(() => {
+    const warmUpAudio = async () => {
+      await initAudio();
+    };
+    
+    // Attach to multiple event types for maximum compatibility
+    const events = ['touchstart', 'touchend', 'click', 'keydown'];
+    
+    const handler = () => {
+      warmUpAudio();
+      // Remove listeners after first interaction
+      events.forEach(evt => document.removeEventListener(evt, handler));
+    };
+    
+    events.forEach(evt => document.addEventListener(evt, handler, { once: true, passive: true }));
+    
+    return () => {
+      events.forEach(evt => document.removeEventListener(evt, handler));
+    };
+  }, [initAudio]);
 
   // Play instrument sound based on type - enhanced with reverb and richer synthesis
   const playInstrumentSound = useCallback((instrument: InstrumentType, frequency: number, audioContext: AudioContext) => {
