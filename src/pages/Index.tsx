@@ -15,22 +15,24 @@ import AdvancedQuizGame from "@/components/brainfest/AdvancedQuizGame";
 import AdvancedQuizCard from "@/components/brainfest/AdvancedQuizCard";
 import MicronutritionQuizGame from "@/components/brainfest/MicronutritionQuizGame";
 import MicronutritionQuizCard from "@/components/brainfest/MicronutritionQuizCard";
+import VitaminDQuizGame from "@/components/brainfest/VitaminDQuizGame";
+import VitaminDQuizCard from "@/components/brainfest/VitaminDQuizCard";
 import Footer from "@/components/brainfest/Footer";
 import GdprBanner from "@/components/brainfest/GdprBanner";
 
 // Category type - updated to match new navigation
-type CategoryId = "micronutrition" | "biology" | "plants" | "memory-music" | "memory-cards" | "health-quiz";
+type CategoryId = "micronutrition" | "micronutrition2" | "plants" | "memory-music" | "memory-cards" | "health-quiz";
 
 // Map quiz categories to our category IDs
-const getCategoryForQuiz = (quiz: Quiz): "micronutrition" | "biology" | "plants" => {
+const getCategoryForQuiz = (quiz: Quiz): "micronutrition" | "micronutrition2" | "plants" => {
   const category = quiz.category.en.toLowerCase();
   if (category.includes("micronutrition")) return "micronutrition";
-  if (category.includes("biology") && !category.includes("music")) return "biology";
   if (category.includes("plant")) return "plants";
   return "micronutrition";
 };
 
 const MICRONUTRITION_PROGRESS_KEY = "micronutrition_progress";
+const VITAMIND_PROGRESS_KEY = "vitamind_progress";
 
 const Index = () => {
   const [language, setLanguage] = useState<Language>("fr");
@@ -40,13 +42,17 @@ const Index = () => {
   const [activeHealthQuizLevel, setActiveHealthQuizLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeHealthQuizSeries, setActiveHealthQuizSeries] = useState<HealthQuizSeriesId>('nutrition');
   const [activeAdvancedQuiz, setActiveAdvancedQuiz] = useState<{
-    category: "biology" | "plants";
+    category: "plants";
     level: 1 | 2 | 3;
   } | null>(null);
   const [activeMicronutritionLevel, setActiveMicronutritionLevel] = useState<1 | 2 | 3 | null>(null);
+  const [activeVitaminDLevel, setActiveVitaminDLevel] = useState<1 | 2 | 3 | null>(null);
   const [completedMicronutritionLevels, setCompletedMicronutritionLevels] = useState<number[]>(() => {
-    // Load from localStorage on initial render
     const saved = localStorage.getItem(MICRONUTRITION_PROGRESS_KEY);
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [completedVitaminDLevels, setCompletedVitaminDLevels] = useState<number[]>(() => {
+    const saved = localStorage.getItem(VITAMIND_PROGRESS_KEY);
     return saved ? JSON.parse(saved) : [];
   });
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory-music");
@@ -55,6 +61,11 @@ const Index = () => {
   useEffect(() => {
     localStorage.setItem(MICRONUTRITION_PROGRESS_KEY, JSON.stringify(completedMicronutritionLevels));
   }, [completedMicronutritionLevels]);
+
+  // Save vitamin D progress to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(VITAMIND_PROGRESS_KEY, JSON.stringify(completedVitaminDLevels));
+  }, [completedVitaminDLevels]);
 
   const handleToggleLanguage = () => {
     setLanguage((prev) => (prev === "fr" ? "en" : "fr"));
@@ -77,12 +88,16 @@ const Index = () => {
     setActiveHealthQuizSeries(seriesId || 'nutrition');
   };
 
-  const handlePlayAdvancedQuiz = (category: "biology" | "plants", level: 1 | 2 | 3) => {
+  const handlePlayAdvancedQuiz = (category: "plants", level: 1 | 2 | 3) => {
     setActiveAdvancedQuiz({ category, level });
   };
 
   const handlePlayMicronutrition = (level: 1 | 2 | 3) => {
     setActiveMicronutritionLevel(level);
+  };
+
+  const handlePlayVitaminD = (level: 1 | 2 | 3) => {
+    setActiveVitaminDLevel(level);
   };
 
   const handleMicronutritionLevelComplete = (level: 1 | 2 | 3) => {
@@ -94,6 +109,15 @@ const Index = () => {
     }
   };
 
+  const handleVitaminDLevelComplete = (level: 1 | 2 | 3) => {
+    setCompletedVitaminDLevels(prev => [...new Set([...prev, level])]);
+    if (level < 3) {
+      setActiveVitaminDLevel((level + 1) as 1 | 2 | 3);
+    } else {
+      setActiveVitaminDLevel(null);
+    }
+  };
+
   const handleBackToHome = () => {
     setActiveQuizId(null);
     setActiveMusicalMemoryLevel(null);
@@ -101,6 +125,7 @@ const Index = () => {
     setActiveHealthQuizLevel(null);
     setActiveAdvancedQuiz(null);
     setActiveMicronutritionLevel(null);
+    setActiveVitaminDLevel(null);
   };
 
   const activeQuiz = quizzes.find((q) => q.id === activeQuizId);
@@ -117,7 +142,19 @@ const Index = () => {
     );
   }
 
-  // Show Advanced Quiz Game (biology & plants only now)
+  // Show Vitamin D Quiz Game
+  if (activeVitaminDLevel) {
+    return (
+      <VitaminDQuizGame
+        level={activeVitaminDLevel}
+        language={language}
+        onBack={handleBackToHome}
+        onLevelComplete={handleVitaminDLevelComplete}
+      />
+    );
+  }
+
+  // Show Advanced Quiz Game (plants only now)
   if (activeAdvancedQuiz) {
     return (
       <AdvancedQuizGame
@@ -428,23 +465,75 @@ const Index = () => {
             </>
           )}
 
-          {/* Biology category intro */}
-          {selectedCategory === "biology" && (
-            <motion.div
-              className="mt-8 sm:mt-10 mb-6"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
+          {/* Micronutrition 2 (Vitamin D) category */}
+          {selectedCategory === "micronutrition2" && (
+            <motion.section 
+              className="mt-10 sm:mt-12 md:mt-14 mb-10 sm:mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
             >
-              <div className="bg-white rounded-xl p-4 shadow-sm border border-border/30">
-                <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
+              <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-amber-100 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
+                  ☀️
+                </span>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  {language === "fr" ? "Micronutrition 2 : Vitamine D" : "Micronutrition 2: Vitamin D"}
+                </h2>
+                <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
+              </div>
+              
+              {/* Description */}
+              <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
+                <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl">
                   {language === "fr" 
-                    ? "Rien n'est plus merveilleux que les rouages du vivant, et explorer ce qui se passe sous la surface. Si le sujet vous passionne comme nous, ces quiz vont vous plaire."
-                    : "Nothing is more wonderful than the inner workings of life, and exploring what happens beneath the surface. If you're as passionate about this subject as we are, you'll love these quizzes."
+                    ? "Renforcez votre mémoire active sur la vitamine D : ses rôles, ses sources et ses carences. Un quiz adaptatif qui s'ajuste à votre niveau."
+                    : "Strengthen your active memory on vitamin D: its roles, sources and deficiencies. An adaptive quiz that adjusts to your level."
                   }
                 </p>
               </div>
-            </motion.div>
+              
+              {/* Mobile: vertical stack */}
+              <div className="md:hidden flex flex-col gap-4 min-w-0">
+                {[1, 2, 3].map((level, index) => (
+                  <motion.div
+                    key={level}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <VitaminDQuizCard 
+                      level={level as 1 | 2 | 3} 
+                      language={language} 
+                      onPlay={handlePlayVitaminD}
+                      isCompleted={completedVitaminDLevels.includes(level)}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+              
+              {/* Desktop: grid */}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3].map((level, index) => (
+                  <motion.div
+                    key={level}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <VitaminDQuizCard 
+                      level={level as 1 | 2 | 3} 
+                      language={language} 
+                      onPlay={handlePlayVitaminD}
+                      isCompleted={completedVitaminDLevels.includes(level)}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.section>
           )}
 
           {/* Micronutrition category - NEW ADAPTIVE QUIZ */}
@@ -537,8 +626,8 @@ const Index = () => {
             </motion.div>
           )}
 
-          {/* Advanced Quizzes - for biology and plants only */}
-          {(selectedCategory === "biology" || selectedCategory === "plants") && (
+          {/* Advanced Quizzes - for plants only */}
+          {selectedCategory === "plants" && (
             <>
               {[1, 2, 3].map((level) => (
                 <motion.section 
@@ -571,7 +660,7 @@ const Index = () => {
                       transition={{ duration: 0.4 }}
                     >
                       <AdvancedQuizCard 
-                        category={selectedCategory as "biology" | "plants"} 
+                        category="plants" 
                         level={level as 1 | 2 | 3} 
                         language={language} 
                         onPlay={handlePlayAdvancedQuiz} 
@@ -588,7 +677,7 @@ const Index = () => {
                       transition={{ duration: 0.4 }}
                     >
                       <AdvancedQuizCard 
-                        category={selectedCategory as "biology" | "plants"} 
+                        category="plants" 
                         level={level as 1 | 2 | 3} 
                         language={language} 
                         onPlay={handlePlayAdvancedQuiz} 
