@@ -39,6 +39,18 @@ const MicronutritionQuizGame = ({ level, language, onBack, onLevelComplete }: Mi
   const [attemptCount, setAttemptCount] = useState(0);
 
   const levelData = micronutritionLevels.find(l => l.level === level);
+
+  // Reset state when level changes
+  useEffect(() => {
+    setPhase("intro");
+    setCurrentVersion("A");
+    setCurrentQuestionIndex(0);
+    setSelectedAnswer(null);
+    setAnswers([]);
+    setReadingTimeLeft(READING_TIME);
+    setShowFeedback(false);
+    setAttemptCount(0);
+  }, [level]);
   const currentVersionData = levelData?.versions[currentVersion];
   const questions = currentVersionData?.questions || [];
   const textLines = currentVersionData?.text[language] || [];
