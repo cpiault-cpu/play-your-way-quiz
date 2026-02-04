@@ -262,22 +262,22 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
                     onClick={() => onSelectCategory(cat.id)}
-                    className={`flex-shrink-0 w-[250px] h-[150px] md:w-full md:h-auto text-left px-5 py-4 bg-white border transition-all flex flex-col justify-center ${
+                    className={`flex-shrink-0 w-[45%] h-[80px] md:w-full md:h-auto bg-white border transition-all flex items-center justify-center gap-2.5 px-4 ${
                       selectedCategory === cat.id 
                         ? "border-[#000000] bg-gray-50 ring-2 ring-black/20" 
-                        : "border-[#B6BDB0]"
+                        : "border-[#E0E0E0]"
                     }`}
                     style={{ 
                       fontFamily: 'Montserrat, sans-serif', 
                       fontWeight: 500, 
-                      fontSize: '16px', 
+                      fontSize: '14px', 
                       color: '#000000',
-                      borderRadius: '8px',
+                      borderRadius: '12px',
                       boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
                     }}
                   >
-                    <span className="text-3xl mb-2">{cat.emoji}</span>
-                    <span className="whitespace-normal">{cat.name[language]}</span>
+                    <span className="text-2xl">{cat.emoji}</span>
+                    <span className="whitespace-nowrap">{cat.name[language]}</span>
                   </motion.button>
                 ))}
               </div>
@@ -311,22 +311,22 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
                     onClick={() => onSelectCategory(cat.id)}
-                    className={`flex-shrink-0 w-[250px] h-[150px] md:w-full md:h-auto text-left px-5 py-4 bg-white border transition-all flex flex-col justify-center ${
+                    className={`flex-shrink-0 w-[45%] h-[80px] md:w-full md:h-auto bg-white border transition-all flex items-center justify-center gap-2.5 px-4 ${
                       selectedCategory === cat.id 
                         ? "border-[#000000] bg-gray-50 ring-2 ring-black/20" 
-                        : "border-[#B6BDB0]"
+                        : "border-[#E0E0E0]"
                     }`}
                     style={{ 
                       fontFamily: 'Montserrat, sans-serif', 
                       fontWeight: 500, 
-                      fontSize: '16px', 
+                      fontSize: '14px', 
                       color: '#000000',
-                      borderRadius: '8px',
+                      borderRadius: '12px',
                       boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
                     }}
                   >
-                    <span className="text-3xl mb-2">{cat.emoji}</span>
-                    <span className="whitespace-normal">{cat.name[language]}</span>
+                    <span className="text-2xl">{cat.emoji}</span>
+                    <span className="whitespace-nowrap">{cat.name[language]}</span>
                   </motion.button>
                 ))}
               </div>
