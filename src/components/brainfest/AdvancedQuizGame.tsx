@@ -17,7 +17,7 @@ import { useQuizProgress } from "@/hooks/useQuizProgress";
 const TIMER_DURATION = 10; // 10 seconds per question
 
 interface AdvancedQuizGameProps {
-  category: "biology" | "micronutrition" | "plants";
+  category: "biology" | "plants";
   level: 1 | 2 | 3;
   language: Language;
   onBack: () => void;
@@ -271,7 +271,6 @@ const AdvancedQuizGame = ({ category, level, language, onBack }: AdvancedQuizGam
   const getCategoryTitle = () => {
     switch (category) {
       case "biology": return language === "fr" ? "Biologie" : "Biology";
-      case "micronutrition": return language === "fr" ? "Micronutrition" : "Micronutrition";
       case "plants": return language === "fr" ? "Plantes médicinales" : "Medicinal Plants";
     }
   };
