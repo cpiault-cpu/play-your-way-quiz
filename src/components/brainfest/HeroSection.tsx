@@ -227,9 +227,9 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6"
+            className="flex flex-col gap-8"
           >
-            {/* Left section - SAVOIR */}
+            {/* SAVOIR Section */}
             <div className="flex flex-col items-start w-full">
               <h3 
                 className="mb-4 tracking-wide"
@@ -237,7 +237,15 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               >
                 {language === "fr" ? "SAVOIR" : "LEARN"}
               </h3>
-              <div className="flex flex-col gap-5 w-full">
+              {/* Mobile: Horizontal scroll | Desktop: Grid */}
+              <div 
+                className="flex md:grid md:grid-cols-3 gap-4 w-full overflow-x-auto md:overflow-visible pb-3 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0"
+                style={{ 
+                  WebkitOverflowScrolling: 'touch',
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none'
+                }}
+              >
                 {savoirCategories.map((cat, index) => (
                   <motion.button
                     key={cat.id}
@@ -245,9 +253,9 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
                     onClick={() => onSelectCategory(cat.id)}
-                    className={`w-full text-left px-5 py-3 bg-white border transition-all ${
+                    className={`flex-shrink-0 w-[250px] h-[150px] md:w-full md:h-auto text-left px-5 py-4 bg-white border transition-all flex flex-col justify-center ${
                       selectedCategory === cat.id 
-                        ? "border-[#000000] bg-gray-50" 
+                        ? "border-[#000000] bg-gray-50 ring-2 ring-black/20" 
                         : "border-[#B6BDB0]"
                     }`}
                     style={{ 
@@ -255,19 +263,18 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                       fontWeight: 500, 
                       fontSize: '16px', 
                       color: '#000000',
-                      borderRadius: '4px',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                      padding: '12px 20px'
+                      borderRadius: '8px',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
                     }}
                   >
-                    <span className="mr-2">{cat.emoji}</span>
-                    {cat.name[language]}
+                    <span className="text-3xl mb-2">{cat.emoji}</span>
+                    <span className="whitespace-normal">{cat.name[language]}</span>
                   </motion.button>
                 ))}
               </div>
             </div>
 
-            {/* Right section - S'ENTRAINER */}
+            {/* S'ENTRAINER Section */}
             <div className="flex flex-col items-start w-full">
               <h3 
                 className="mb-4 tracking-wide"
@@ -275,7 +282,15 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               >
                 {language === "fr" ? "S'ENTRAÎNER" : "PRACTICE"}
               </h3>
-              <div className="flex flex-col gap-5 w-full">
+              {/* Mobile: Horizontal scroll | Desktop: Grid */}
+              <div 
+                className="flex md:grid md:grid-cols-3 gap-4 w-full overflow-x-auto md:overflow-visible pb-3 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0"
+                style={{ 
+                  WebkitOverflowScrolling: 'touch',
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none'
+                }}
+              >
                 {entrainerCategories.map((cat, index) => (
                   <motion.button
                     key={cat.id}
@@ -283,9 +298,9 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
                     onClick={() => onSelectCategory(cat.id)}
-                    className={`w-full text-left px-5 py-3 bg-white border transition-all ${
+                    className={`flex-shrink-0 w-[250px] h-[150px] md:w-full md:h-auto text-left px-5 py-4 bg-white border transition-all flex flex-col justify-center ${
                       selectedCategory === cat.id 
-                        ? "border-[#000000] bg-gray-50" 
+                        ? "border-[#000000] bg-gray-50 ring-2 ring-black/20" 
                         : "border-[#B6BDB0]"
                     }`}
                     style={{ 
@@ -293,13 +308,12 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                       fontWeight: 500, 
                       fontSize: '16px', 
                       color: '#000000',
-                      borderRadius: '4px',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                      padding: '12px 20px'
+                      borderRadius: '8px',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
                     }}
                   >
-                    <span className="mr-2">{cat.emoji}</span>
-                    {cat.name[language]}
+                    <span className="text-3xl mb-2">{cat.emoji}</span>
+                    <span className="whitespace-normal">{cat.name[language]}</span>
                   </motion.button>
                 ))}
               </div>

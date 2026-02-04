@@ -7,16 +7,16 @@ const MusicNoteIcon = ({ className = "h-20 w-20" }: { className?: string }) => (
   >
     <defs>
       <linearGradient id="musicNoteGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#7C3AED" />
-        <stop offset="50%" stopColor="#8B5CF6" />
-        <stop offset="100%" stopColor="#A78BFA" />
+        <stop offset="0%" stopColor="#000000" />
+        <stop offset="50%" stopColor="#1a1a1a" />
+        <stop offset="100%" stopColor="#333333" />
       </linearGradient>
       <linearGradient id="speakerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#F59E0B" />
-        <stop offset="100%" stopColor="#FBBF24" />
+        <stop offset="0%" stopColor="#000000" />
+        <stop offset="100%" stopColor="#333333" />
       </linearGradient>
       <filter id="musicShadow" x="-20%" y="-20%" width="140%" height="140%">
-        <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#7C3AED" floodOpacity="0.3"/>
+        <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000000" floodOpacity="0.2"/>
       </filter>
     </defs>
     
@@ -77,20 +77,20 @@ const MusicNoteIcon = ({ className = "h-20 w-20" }: { className?: string }) => (
       <path
         d="M5 12 L5 24 L12 24 L22 32 L22 4 L12 12 Z"
         fill="url(#speakerGradient)"
-        stroke="#D97706"
+        stroke="#1a1a1a"
         strokeWidth="1"
       />
       {/* Sound waves */}
       <path
         d="M26 11 C30 14 30 22 26 25"
-        stroke="#F59E0B"
+        stroke="#333333"
         strokeWidth="2.5"
         strokeLinecap="round"
         fill="none"
       />
       <path
         d="M30 6 C37 12 37 24 30 30"
-        stroke="#FBBF24"
+        stroke="#4a4a4a"
         strokeWidth="2"
         strokeLinecap="round"
         fill="none"
