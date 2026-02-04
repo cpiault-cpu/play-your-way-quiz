@@ -77,8 +77,8 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
               onClick={onToggleLanguage}
-              className="flex items-center gap-2 px-4 py-2 text-sm rounded bg-white border border-[#B6BDB0] shadow-sm"
-              style={{ color: '#000000' }}
+              className="flex items-center gap-2 px-4 py-2 text-sm bg-white border border-[#B6BDB0] shadow-sm"
+              style={{ borderRadius: '12px', color: '#000000' }}
               aria-label={language === "fr" ? "Switch to English" : "Passer en Français"}
             >
               <span className="text-lg">{language === "fr" ? "🇬🇧" : "🇫🇷"}</span>
@@ -129,8 +129,8 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="inline-flex items-center px-4 py-2 rounded bg-white border border-[#B6BDB0]"
-                style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}
+                className="inline-flex items-center px-4 py-2 bg-white border border-[#B6BDB0]"
+                style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.1)', borderRadius: '12px' }}
               >
                 <p style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 600, fontSize: '18px', color: '#000000' }}>
                   {language === "fr" ? "Apprenez. Jouez. Gagnez." : "Learn. Play. Win."}
@@ -180,10 +180,10 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                   className="flex-shrink-0 w-[85%] sm:w-[70%] md:w-[45%] lg:w-[32%] first:ml-4 last:mr-4 snap-center"
                 >
                   <div 
-                    className="h-full bg-white rounded p-5 border border-[#B6BDB0]"
+                    className="h-full bg-white p-5 border border-[#B6BDB0]"
                     style={{ 
                       boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                      borderRadius: '4px'
+                      borderRadius: '12px'
                     }}
                   >
                     <p style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 400, fontSize: '14px', color: '#000000', lineHeight: 1.6 }}>
@@ -200,20 +200,14 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="text-center pb-8"
+            className="text-center pb-8 py-2.5"
           >
-            <div 
-              className="inline-flex items-center gap-2 px-4 py-2 rounded bg-white border border-[#B6BDB0]"
-              style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.1)', borderRadius: '4px' }}
-            >
-              <span className="text-lg">⚠️</span>
-              <p style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 400, fontSize: '14px', color: '#000000', fontStyle: 'italic' }}>
-                {language === "fr" 
-                  ? "Attention, vous ne pouvez faire chaque quiz qu'une seule fois avec votre adresse mail."
-                  : "Warning, you can only take each quiz once with your email address."
-                }
-              </p>
-            </div>
+            <p style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 500, fontSize: '14px', color: '#000000' }}>
+              ⚠️ {language === "fr" 
+                ? "Attention, vous ne pouvez faire chaque quiz qu'une seule fois avec votre adresse mail."
+                : "Warning, you can only take each quiz once with your email address."
+              }
+            </p>
           </motion.div>
         </div>
       </section>
