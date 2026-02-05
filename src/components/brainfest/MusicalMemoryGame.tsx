@@ -49,7 +49,7 @@ interface MusicalMemoryGameProps {
   onBack: () => void;
 }
 
-// Piano notes for levels 1 & 2 - vivid colors for better visibility
+// Piano notes - 9 notes for 3x3 grid layout
 const PIANO_NOTES = [
   { name: "C", frequency: 261.63, color: "from-red-500 to-red-600", activeColor: "from-red-300 to-red-400 shadow-red-400/60" },
   { name: "D", frequency: 293.66, color: "from-orange-500 to-orange-600", activeColor: "from-orange-300 to-orange-400 shadow-orange-400/60" },
@@ -59,6 +59,7 @@ const PIANO_NOTES = [
   { name: "A", frequency: 440.0, color: "from-indigo-500 to-indigo-600", activeColor: "from-indigo-300 to-indigo-400 shadow-indigo-400/60" },
   { name: "B", frequency: 493.88, color: "from-purple-500 to-purple-600", activeColor: "from-purple-300 to-purple-400 shadow-purple-400/60" },
   { name: "C2", frequency: 523.25, color: "from-pink-500 to-pink-600", activeColor: "from-pink-300 to-pink-400 shadow-pink-400/60" },
+  { name: "D2", frequency: 587.33, color: "from-teal-500 to-teal-600", activeColor: "from-teal-300 to-teal-400 shadow-teal-400/60" },
 ];
 
 // Instrument sounds for level 3 - each note is a different instrument with rich sound synthesis
@@ -72,6 +73,7 @@ interface InstrumentNote {
   emoji: string;
 }
 
+// 9 instruments for 3x3 grid layout
 const INSTRUMENT_NOTES: InstrumentNote[] = [
   { instrument: "piano", frequency: 261.63, color: "from-slate-600 to-slate-700", activeColor: "from-slate-400 to-slate-500 shadow-slate-400/60", emoji: "🎹" },
   { instrument: "violin", frequency: 440.0, color: "from-amber-600 to-amber-700", activeColor: "from-amber-400 to-amber-500 shadow-amber-400/60", emoji: "🎻" },
@@ -81,6 +83,7 @@ const INSTRUMENT_NOTES: InstrumentNote[] = [
   { instrument: "trumpet", frequency: 392.0, color: "from-orange-500 to-orange-600", activeColor: "from-orange-300 to-orange-400 shadow-orange-400/60", emoji: "🎺" },
   { instrument: "guitar", frequency: 196.0, color: "from-rose-600 to-rose-700", activeColor: "from-rose-400 to-rose-500 shadow-rose-400/60", emoji: "🎸" },
   { instrument: "bell", frequency: 880.0, color: "from-teal-500 to-teal-600", activeColor: "from-teal-300 to-teal-400 shadow-teal-400/60", emoji: "🔔" },
+  { instrument: "piano", frequency: 523.25, color: "from-violet-500 to-violet-600", activeColor: "from-violet-300 to-violet-400 shadow-violet-400/60", emoji: "🎼" },
 ];
 
 // Famous melody patterns inspired by classical/jazz pieces
@@ -112,7 +115,7 @@ const translations = {
     back: "Retour",
     start: "Commencer",
     instructions: "Écoutez la séquence de notes et reproduisez-la en cliquant sur les touches colorées dans le bon ordre.",
-    level1Desc: "4 exercices • 4 notes",
+    level1Desc: "6 exercices • 4 notes",
     level2Desc: "4 exercices • 5 notes",
     level3Desc: "4 exercices • 6 notes",
     of: "sur",
@@ -140,7 +143,7 @@ const translations = {
     back: "Back",
     start: "Start",
     instructions: "Listen to the sequence of notes and reproduce it by clicking the colored keys in the correct order.",
-    level1Desc: "4 exercises • 4 notes",
+    level1Desc: "6 exercises • 4 notes",
     level2Desc: "4 exercises • 5 notes",
     level3Desc: "4 exercises • 6 notes",
     of: "of",
@@ -153,9 +156,9 @@ const translations = {
   },
 };
 
-// Level configuration - 4 exercises per level
+// Level configuration - level 1 has 6 exercises, levels 2 & 3 have 4
 const LEVEL_CONFIG = {
-  1: { notesPerSequence: 4, exercisesToWin: 4, useInstruments: true },
+  1: { notesPerSequence: 4, exercisesToWin: 6, useInstruments: true },
   2: { notesPerSequence: 5, exercisesToWin: 4, useInstruments: true },
   3: { notesPerSequence: 6, exercisesToWin: 4, useInstruments: true },
 };
@@ -984,8 +987,8 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
   };
 
   return (
-    <div className="min-h-screen bg-background py-4 sm:py-6 px-3 sm:px-4 overflow-x-hidden">
-      <div className="max-w-3xl mx-auto">
+    <div className="min-h-screen bg-background py-2 sm:py-6 px-2 sm:px-4 overflow-x-hidden flex flex-col">
+      <div className="max-w-3xl mx-auto w-full flex flex-col flex-1">
         {/* Header */}
         <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
           <Button
@@ -1077,7 +1080,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
               key="playing"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="mb-6"
+              className="mb-2 sm:mb-6"
             >
               {/* Exercise indicator */}
               <div className="flex items-center justify-between mb-3 sm:mb-4">
@@ -1248,8 +1251,8 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
           )}
         </AnimatePresence>
 
-        {/* Keys/Instruments Grid - 8 notes, 4 per row for better visibility */}
-        <div className="grid grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+        {/* Keys/Instruments Grid - 9 notes, 3x3 grid for full mobile screen usage */}
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-5 flex-1">
           {notes.map((note, index) => (
             <motion.button
               key={note.name}
