@@ -158,7 +158,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-8 md:mb-10"
+            className="mb-4 md:mb-10"
           >
             <div 
               className="flex flex-row gap-4 overflow-x-auto pb-4 px-1 snap-x snap-mandatory -mx-4 sm:mx-0"
@@ -193,9 +193,9 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="text-center pb-8 py-2.5"
+            className="text-center pb-4 md:pb-8 py-1.5 md:py-2.5"
           >
-            <p style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 500, fontSize: '14px', color: '#000000' }}>
+            <p style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 500, fontSize: '13px', color: '#000000' }} className="md:text-sm">
               ⚠️ {language === "fr" 
                 ? "Attention, vous ne pouvez faire chaque quiz qu'une seule fois avec votre adresse mail."
                 : "Warning, you can only take each quiz once with your email address."
@@ -213,20 +213,20 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
           borderTop: '1px solid #7A8278'
         }}
       >
-        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-10">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-4 md:py-10">
           {/* Category buttons - Two sections */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex flex-col gap-8"
+            className="flex flex-col gap-4 md:gap-8"
           >
             {/* SAVOIR Section */}
-            <div className="flex flex-col items-start w-full">
-              <div className="flex items-center justify-between w-full mb-4">
+            <div className="flex flex-col items-start w-full gap-2 md:gap-0">
+              <div className="flex items-center justify-between w-full mb-2 md:mb-4">
                 <h3 
-                  className="tracking-wide"
-                  style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '18px', color: '#FFFFFF' }}
+                  className="text-base md:text-lg tracking-wide"
+                  style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, color: '#FFFFFF' }}
                 >
                   {language === "fr" ? "APPRENDRE" : "LEARN"}
                 </h3>
@@ -235,7 +235,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               {/* Mobile: Horizontal scroll | Desktop: Grid */}
               <div 
                 ref={savoirScrollRef}
-                className="flex md:grid md:grid-cols-3 gap-4 w-full overflow-x-auto md:overflow-visible pb-3 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0"
+                className="flex md:grid md:grid-cols-3 gap-3 md:gap-4 w-full overflow-x-auto md:overflow-visible pb-2 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0"
                 style={{ 
                   WebkitOverflowScrolling: 'touch',
                   scrollbarWidth: 'none',
@@ -253,11 +253,11 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                       transition={{ duration: 0.2, ease: "easeOut" }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => onSelectCategory(cat.id)}
-                      className="flex-shrink-0 w-[45%] h-[70px] md:w-full md:h-auto border flex items-center justify-center gap-2.5 px-3"
+                        className="flex-shrink-0 w-[45%] h-[50px] md:h-auto md:w-full border flex items-center justify-center gap-2 md:gap-2.5 px-2 md:px-3 py-2 md:py-3"
                       style={{ 
                         fontFamily: 'Montserrat, sans-serif', 
                         fontWeight: 500, 
-                        fontSize: isPlantes ? '13px' : '14px', 
+                          fontSize: isPlantes ? '12px' : '13px', 
                         color: isSelected ? '#FFFFFF' : '#000000',
                         backgroundColor: isSelected ? '#4A6741' : '#FFFFFF',
                         borderColor: isSelected ? '#4A6741' : '#E0E0E0',
@@ -266,7 +266,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                         transition: 'all 0.2s ease'
                       }}
                     >
-                      <span className="text-2xl flex-shrink-0">{cat.emoji}</span>
+                        <span className="text-xl md:text-2xl flex-shrink-0">{cat.emoji}</span>
                       <span 
                         className={isPlantes ? "text-center leading-tight" : "whitespace-nowrap"}
                         style={isPlantes ? { lineHeight: '1.2' } : undefined}
@@ -280,11 +280,11 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             </div>
 
             {/* S'ENTRAINER Section */}
-            <div className="flex flex-col items-start w-full">
-              <div className="flex items-center justify-between w-full mb-4">
+            <div className="flex flex-col items-start w-full gap-2 md:gap-0">
+              <div className="flex items-center justify-between w-full mb-2 md:mb-4">
                 <h3 
-                  className="tracking-wide"
-                  style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, fontSize: '18px', color: '#FFFFFF' }}
+                  className="text-base md:text-lg tracking-wide"
+                  style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, color: '#FFFFFF' }}
                 >
                   {language === "fr" ? "JOUER" : "PLAY"}
                 </h3>
@@ -293,7 +293,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               {/* Mobile: Horizontal scroll | Desktop: Grid */}
               <div 
                 ref={entrainerScrollRef}
-                className="flex md:grid md:grid-cols-3 gap-4 w-full overflow-x-auto md:overflow-visible pb-3 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0"
+                className="flex md:grid md:grid-cols-3 gap-3 md:gap-4 w-full overflow-x-auto md:overflow-visible pb-2 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0"
                 style={{ 
                   WebkitOverflowScrolling: 'touch',
                   scrollbarWidth: 'none',
@@ -310,11 +310,11 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                       transition={{ duration: 0.2, ease: "easeOut" }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => onSelectCategory(cat.id)}
-                      className="flex-shrink-0 w-[45%] h-[70px] md:w-full md:h-auto border flex items-center justify-center gap-2.5 px-3"
+                      className="flex-shrink-0 w-[45%] h-[50px] md:h-auto md:w-full border flex items-center justify-center gap-2 md:gap-2.5 px-2 md:px-3 py-2 md:py-3"
                       style={{ 
                         fontFamily: 'Montserrat, sans-serif', 
                         fontWeight: 500, 
-                        fontSize: '14px', 
+                        fontSize: '13px', 
                         color: isSelected ? '#FFFFFF' : '#000000',
                         backgroundColor: isSelected ? '#4A6741' : '#FFFFFF',
                         borderColor: isSelected ? '#4A6741' : '#E0E0E0',
@@ -323,7 +323,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                         transition: 'all 0.2s ease'
                       }}
                     >
-                      <span className="text-2xl flex-shrink-0">{cat.emoji}</span>
+                      <span className="text-xl md:text-2xl flex-shrink-0">{cat.emoji}</span>
                       <span className="whitespace-nowrap">{cat.name[language]}</span>
                     </motion.button>
                   );
