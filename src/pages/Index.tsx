@@ -246,8 +246,8 @@ const Index = () => {
               <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
                 <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl whitespace-pre-line">
                   {language === "fr" 
-                    ? "✨ Laissez-vous guider par le son…\nReproduisez des séquences musicales pour réveiller votre mémoire auditive et aiguiser votre intuition…"
-                    : "✨ Let the sound guide you…\nReproduce musical sequences to awaken your auditory memory and sharpen your intuition…"
+                    ? "Écoutez, captez, jouez la suite… Comme le vent qui siffle entre les rochers ou les vagues qui dessinent leur rythme sur le sable, reproduisez ces enchaînements de notes pour réveiller votre oreille musicale. Un exercice malin pour aiguiser votre mémoire et transformer chaque essai en une petite victoire. Prêt à devenir le maestro de votre propre partition ?"
+                    : "Let the notes guide you… Like the wind weaving through the dunes or the ocean sketching rhythms on the shore, listen closely and replay these musical sequences. A playful way to sharpen your ear and trust your instincts no sheet music, just pure intuition. Ready to conduct your memory like a hidden symphony?"
                   }
                 </p>
               </div>
@@ -438,8 +438,8 @@ const Index = () => {
               <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
                 <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl whitespace-pre-line">
                   {language === "fr" 
-                    ? "Lisez un court texte, laissez-le s'ancrer en vous, puis vérifiez ce que vous avez retenu.\nSi vous n'atteignez pas les 4 bonnes réponses, le texte se réinvente, pour vous accompagner dans votre progrès et approfondir. Le plaisir d'apprendre."
-                    : "Read a short text, let it settle within you, then check what you remember.\nIf you don't reach 4 correct answers, the text reinvents itself to support your progress and deepen your learning. The joy of learning."
+                    ? "Un texte, un défi, et c'est parti ! Lisez un petit texte à votre rythme, laissez-le s'imprégner comme des petites sardines dans leur huile d'olive… Puis, vérifiez ce que vous en avez retenu avec quelques questions bien choisies. Si les réponses ne sont pas toutes là, pas de souci : le texte se réinvente, s'enrichit, et revient avec de nouveaux détails pour vous accompagner."
+                    : "Read. Soak it in. Test yourself! Take a moment with a short text, let it marinate like sardines in olive oil. Then, check what sticks with a few quick questions. If the answers don't all click, no problem: the text reinvents itself, adds new layers, and comes back to help you sharpen your recall. Because learning, like a well-preserved delicacy, only gets better with time."
                   }
                 </p>
               </div>
