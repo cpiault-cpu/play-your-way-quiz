@@ -3,7 +3,7 @@ import { Language } from "@/data/quizData";
 import { useRef } from "react";
 import ScrollIndicator from "./ScrollIndicator";
 
-type CategoryId = "micronutrition" | "micronutrition2" | "plants" | "memory-music" | "memory-cards" | "sardines" | "intelligence-sardines";
+type CategoryId = "micronutrition" | "micronutrition2" | "plants" | "memory-music" | "memory-cards" | "sardines" | "carre-cognitif";
 
 interface Category {
   id: CategoryId;
@@ -44,7 +44,7 @@ const savoirCategories: Category[] = [
 ];
 
 const entrainerCategories: Category[] = [
-  { id: "intelligence-sardines", name: { fr: "Sardines", en: "Sardines" }, emoji: "🐟" },
+  { id: "carre-cognitif", name: { fr: "Puzzle", en: "Puzzle" }, emoji: "🧩" },
   { id: "memory-music", name: { fr: "Musique", en: "Music" }, emoji: "🎵" },
   { id: "memory-cards", name: { fr: "Cartes", en: "Cards" }, emoji: "🃏" },
 ];
