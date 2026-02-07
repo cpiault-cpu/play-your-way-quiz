@@ -16,11 +16,13 @@ import PlantsQuizGame from "@/components/brainfest/PlantsQuizGame";
 import PlantsQuizCard from "@/components/brainfest/PlantsQuizCard";
 import SardinesQuizGame from "@/components/brainfest/SardinesQuizGame";
 import SardinesQuizCard from "@/components/brainfest/SardinesQuizCard";
+import IntelligenceSardinesQuizGame from "@/components/brainfest/IntelligenceSardinesQuizGame";
+import IntelligenceSardinesQuizCard from "@/components/brainfest/IntelligenceSardinesQuizCard";
 import Footer from "@/components/brainfest/Footer";
 import GdprBanner from "@/components/brainfest/GdprBanner";
 
 // Category type - updated to match new navigation
-type CategoryId = "micronutrition" | "micronutrition2" | "plants" | "memory-music" | "memory-cards" | "sardines";
+type CategoryId = "micronutrition" | "micronutrition2" | "plants" | "memory-music" | "memory-cards" | "sardines" | "intelligence-sardines";
 
 // Map quiz categories to our category IDs
 const getCategoryForQuiz = (quiz: Quiz): "micronutrition" | "micronutrition2" | "plants" => {
@@ -44,6 +46,7 @@ const Index = () => {
   const [activeVitaminDLevel, setActiveVitaminDLevel] = useState<1 | 2 | 3 | null>(null);
   const [activePlantsLevel, setActivePlantsLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeSardinesLevel, setActiveSardinesLevel] = useState<1 | 2 | 3 | 4 | null>(null);
+  const [showIntelligenceSardines, setShowIntelligenceSardines] = useState(false);
   const [completedMicronutritionLevels, setCompletedMicronutritionLevels] = useState<number[]>(() => {
     const saved = localStorage.getItem(MICRONUTRITION_PROGRESS_KEY);
     return saved ? JSON.parse(saved) : [];
@@ -159,6 +162,7 @@ const Index = () => {
     setActiveVitaminDLevel(null);
     setActivePlantsLevel(null);
     setActiveSardinesLevel(null);
+    setShowIntelligenceSardines(false);
   };
 
   const activeQuiz = quizzes.find((q) => q.id === activeQuizId);
@@ -207,6 +211,16 @@ const Index = () => {
         language={language}
         onBack={handleBackToHome}
         onLevelComplete={handleSardinesLevelComplete}
+      />
+    );
+  }
+
+  // Show Intelligence Sardines Quiz Game
+  if (showIntelligenceSardines) {
+    return (
+      <IntelligenceSardinesQuizGame
+        language={language}
+        onBack={handleBackToHome}
       />
     );
   }
@@ -630,6 +644,45 @@ const Index = () => {
                   language={language} 
                   completedLevels={completedSardinesLevels}
                   onSelectLevel={handlePlaySardines}
+                />
+              </div>
+            </motion.section>
+          )}
+
+          {/* Intelligence Sardines Quiz section - in JOUER category */}
+          {selectedCategory === "intelligence-sardines" && (
+            <motion.section 
+              className="mt-10 sm:mt-12 md:mt-14 mb-10 sm:mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-100 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
+                  🐟
+                </span>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  {language === "fr" ? "Intelligence Nutritionnelle : Les Sardines" : "Nutritional Intelligence: Sardines"}
+                </h2>
+                <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
+              </div>
+              
+              {/* Description */}
+              <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
+                <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl whitespace-pre-line">
+                  {language === "fr"
+                    ? "🧠 Un quiz cognitif en 5 niveaux pour tester votre intelligence nutritionnelle.\n\nObservation, déduction biologique, pièges conceptuels, charge cognitive élevée... Défiez votre cerveau et découvrez votre indice de clarté mentale !"
+                    : "🧠 A 5-level cognitive quiz to test your nutritional intelligence.\n\nObservation, biological deduction, conceptual traps, high cognitive load... Challenge your brain and discover your mental clarity index!"
+                  }
+                </p>
+              </div>
+              
+              {/* Intelligence Sardines Card */}
+              <div className="max-w-md mx-auto">
+                <IntelligenceSardinesQuizCard 
+                  language={language} 
+                  onPlay={() => setShowIntelligenceSardines(true)}
                 />
               </div>
             </motion.section>
