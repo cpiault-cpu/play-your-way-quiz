@@ -14,11 +14,13 @@ import VitaminDQuizGame from "@/components/brainfest/VitaminDQuizGame";
 import VitaminDQuizCard from "@/components/brainfest/VitaminDQuizCard";
 import PlantsQuizGame from "@/components/brainfest/PlantsQuizGame";
 import PlantsQuizCard from "@/components/brainfest/PlantsQuizCard";
+import SardinesQuizGame from "@/components/brainfest/SardinesQuizGame";
+import SardinesQuizCard from "@/components/brainfest/SardinesQuizCard";
 import Footer from "@/components/brainfest/Footer";
 import GdprBanner from "@/components/brainfest/GdprBanner";
 
 // Category type - updated to match new navigation
-type CategoryId = "micronutrition" | "micronutrition2" | "plants" | "memory-music" | "memory-cards";
+type CategoryId = "micronutrition" | "micronutrition2" | "plants" | "memory-music" | "memory-cards" | "sardines";
 
 // Map quiz categories to our category IDs
 const getCategoryForQuiz = (quiz: Quiz): "micronutrition" | "micronutrition2" | "plants" => {
@@ -31,6 +33,7 @@ const getCategoryForQuiz = (quiz: Quiz): "micronutrition" | "micronutrition2" | 
 const MICRONUTRITION_PROGRESS_KEY = "micronutrition_progress";
 const VITAMIND_PROGRESS_KEY = "vitamind_progress";
 const PLANTS_PROGRESS_KEY = "plants_progress";
+const SARDINES_PROGRESS_KEY = "sardines_progress";
 
 const Index = () => {
   const [language, setLanguage] = useState<Language>("fr");
@@ -40,6 +43,7 @@ const Index = () => {
   const [activeMicronutritionLevel, setActiveMicronutritionLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeVitaminDLevel, setActiveVitaminDLevel] = useState<1 | 2 | 3 | null>(null);
   const [activePlantsLevel, setActivePlantsLevel] = useState<1 | 2 | 3 | null>(null);
+  const [activeSardinesLevel, setActiveSardinesLevel] = useState<1 | 2 | 3 | 4 | null>(null);
   const [completedMicronutritionLevels, setCompletedMicronutritionLevels] = useState<number[]>(() => {
     const saved = localStorage.getItem(MICRONUTRITION_PROGRESS_KEY);
     return saved ? JSON.parse(saved) : [];
@@ -50,6 +54,10 @@ const Index = () => {
   });
   const [completedPlantsLevels, setCompletedPlantsLevels] = useState<number[]>(() => {
     const saved = localStorage.getItem(PLANTS_PROGRESS_KEY);
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [completedSardinesLevels, setCompletedSardinesLevels] = useState<number[]>(() => {
+    const saved = localStorage.getItem(SARDINES_PROGRESS_KEY);
     return saved ? JSON.parse(saved) : [];
   });
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory-music");
@@ -68,6 +76,11 @@ const Index = () => {
   useEffect(() => {
     localStorage.setItem(PLANTS_PROGRESS_KEY, JSON.stringify(completedPlantsLevels));
   }, [completedPlantsLevels]);
+
+  // Save sardines progress to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(SARDINES_PROGRESS_KEY, JSON.stringify(completedSardinesLevels));
+  }, [completedSardinesLevels]);
 
   const handleToggleLanguage = () => {
     setLanguage((prev) => (prev === "fr" ? "en" : "fr"));
@@ -98,6 +111,10 @@ const Index = () => {
     setActivePlantsLevel(level);
   };
 
+  const handlePlaySardines = (level: 1 | 2 | 3 | 4) => {
+    setActiveSardinesLevel(level);
+  };
+
   const handleMicronutritionLevelComplete = (level: 1 | 2 | 3) => {
     setCompletedMicronutritionLevels(prev => [...new Set([...prev, level])]);
     if (level < 3) {
@@ -125,6 +142,15 @@ const Index = () => {
     }
   };
 
+  const handleSardinesLevelComplete = (level: 1 | 2 | 3 | 4) => {
+    setCompletedSardinesLevels(prev => [...new Set([...prev, level])]);
+    if (level < 4) {
+      setActiveSardinesLevel((level + 1) as 1 | 2 | 3 | 4);
+    } else {
+      setActiveSardinesLevel(null);
+    }
+  };
+
   const handleBackToHome = () => {
     setActiveQuizId(null);
     setActiveMusicalMemoryLevel(null);
@@ -132,6 +158,7 @@ const Index = () => {
     setActiveMicronutritionLevel(null);
     setActiveVitaminDLevel(null);
     setActivePlantsLevel(null);
+    setActiveSardinesLevel(null);
   };
 
   const activeQuiz = quizzes.find((q) => q.id === activeQuizId);
@@ -172,6 +199,17 @@ const Index = () => {
     );
   }
 
+  // Show Sardines Quiz Game
+  if (activeSardinesLevel) {
+    return (
+      <SardinesQuizGame
+        level={activeSardinesLevel}
+        language={language}
+        onBack={handleBackToHome}
+        onLevelComplete={handleSardinesLevelComplete}
+      />
+    );
+  }
 
   // Show Memory Pairs Game
   if (activeMemoryPairsLevel) {
@@ -553,6 +591,46 @@ const Index = () => {
                     />
                   </motion.div>
                 ))}
+              </div>
+            </motion.section>
+          )}
+
+          {/* Sardines Quiz section */}
+          {selectedCategory === "sardines" && (
+            <motion.section 
+              className="mt-10 sm:mt-12 md:mt-14 mb-10 sm:mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-cyan-100 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
+                  🐟
+                </span>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  {language === "fr" ? "Petites Sardines" : "Little Sardines"}
+                </h2>
+                <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
+              </div>
+              
+              {/* Description */}
+              <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
+                <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl whitespace-pre-line">
+                  {language === "fr"
+                    ? "🐟 Plongez dans l'univers de la sardine ! De la saison de pêche à la conservation, en passant par les oméga-3 et les protéines, devenez expert de ce trésor nutritionnel.\n\nUn quiz en 4 niveaux pour découvrir tous les secrets de ce petit poisson extraordinaire."
+                    : "🐟 Dive into the world of sardines! From fishing season to conservation, through omega-3s and proteins, become an expert on this nutritional treasure.\n\nA 4-level quiz to discover all the secrets of this extraordinary little fish."
+                  }
+                </p>
+              </div>
+              
+              {/* Sardines Card with 4 levels */}
+              <div className="max-w-md mx-auto">
+                <SardinesQuizCard 
+                  language={language} 
+                  completedLevels={completedSardinesLevels}
+                  onSelectLevel={handlePlaySardines}
+                />
               </div>
             </motion.section>
           )}
