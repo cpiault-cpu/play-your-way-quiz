@@ -702,8 +702,8 @@ export const successMessages = {
     en: "🐟 Nutritional mastery achieved!\nYou now understand the subtleties of omega-3s."
   },
   finalComplete: {
-    fr: "🐟 Niveau expert atteint !\nPetite sardine, grande intelligence nutritionnelle.\nVotre cerveau vient clairement de faire une belle prise.",
-    en: "🐟 Expert level reached!\nLittle sardine, great nutritional intelligence.\nYour brain clearly just made a great catch."
+    fr: "Bravo ! À bientôt pour aller plus loin, avec d'autres informations intéressantes, des combinaisons d'assiettes idéales, etc. Stay tuned :-)",
+    en: "Well done! See you soon to go further, with more interesting information, ideal plate combinations, etc. Stay tuned :-)"
   },
   tryAgain: {
     fr: "Pas tout à fait... Relisez le texte reformulé et réessayez !",

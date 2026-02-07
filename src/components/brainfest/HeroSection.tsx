@@ -37,6 +37,7 @@ const heroTexts = {
 };
 
 const savoirCategories: Category[] = [
+  { id: "sardines", name: { fr: "Sardines", en: "Sardines" }, emoji: "🐟" },
   { id: "micronutrition", name: { fr: "Micronutrition", en: "Micronutrition" }, emoji: "💊" },
   { id: "micronutrition2", name: { fr: "Vitamine D", en: "Vitamin D" }, emoji: "☀️" },
   { id: "plants", name: { fr: "Plantes", en: "Plants" }, emoji: "🌿" },
@@ -45,7 +46,6 @@ const savoirCategories: Category[] = [
 const entrainerCategories: Category[] = [
   { id: "memory-music", name: { fr: "Musique", en: "Music" }, emoji: "🎵" },
   { id: "memory-cards", name: { fr: "Cartes", en: "Cards" }, emoji: "🃏" },
-  { id: "sardines", name: { fr: "Sardines", en: "Sardines" }, emoji: "🐟" },
 ];
 
 interface HeroSectionProps {
