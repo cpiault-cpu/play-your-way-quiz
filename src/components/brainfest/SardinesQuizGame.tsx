@@ -27,7 +27,7 @@ interface AnswerResult {
   isCorrect: boolean;
 }
 
-const READING_TIME = 15; // seconds
+const READING_TIME = 8; // seconds
 
 // Sound effect for validation
 const playValidationSound = (isCorrect: boolean) => {
@@ -246,8 +246,8 @@ const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: Sardines
               
               <p className="text-muted-foreground mb-8 max-w-md">
                 {language === "fr" 
-                  ? "Vous allez lire un texte pendant 15 secondes. Mémorisez les informations clés, puis répondez aux questions."
-                  : "You will read a text for 15 seconds. Memorize the key information, then answer the questions."
+                  ? "Vous allez lire un texte pendant quelques secondes. Mémorisez les informations clés, puis répondez aux questions."
+                  : "You will read a text for a few seconds. Memorize the key information, then answer the questions."
                 }
               </p>
 
