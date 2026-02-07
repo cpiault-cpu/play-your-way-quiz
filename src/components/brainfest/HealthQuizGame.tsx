@@ -100,7 +100,9 @@ const HealthQuizGame = ({ language, level, seriesId = 'nutrition', onBack }: Hea
     try {
       await saveAttempt(email, quizId);
     } catch (error) {
-      console.error("Error saving email:", error);
+      if (import.meta.env.DEV) {
+        console.error("Error saving email:", error);
+      }
     }
     
     setGameState("reading");
@@ -159,7 +161,11 @@ const HealthQuizGame = ({ language, level, seriesId = 'nutrition', onBack }: Hea
       }
       
       // Update score in database
-      updateScore(email, quizId, score + (isAnswerCorrect ? 1 : 0)).catch(console.error);
+      updateScore(email, quizId, score + (isAnswerCorrect ? 1 : 0)).catch((err) => {
+        if (import.meta.env.DEV) {
+          console.error("Error updating score:", err);
+        }
+      });
       
       setGameState("results");
     }

@@ -30,7 +30,9 @@ export const useQuizProgress = () => {
         setProgress(JSON.parse(stored));
       }
     } catch (error) {
-      console.error('Error loading quiz progress:', error);
+      if (import.meta.env.DEV) {
+        console.error('Error loading quiz progress:', error);
+      }
     }
   }, []);
 
@@ -40,7 +42,9 @@ export const useQuizProgress = () => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(newProgress));
       setProgress(newProgress);
     } catch (error) {
-      console.error('Error saving quiz progress:', error);
+      if (import.meta.env.DEV) {
+        console.error('Error saving quiz progress:', error);
+      }
     }
   }, []);
 

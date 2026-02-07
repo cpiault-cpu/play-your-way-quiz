@@ -126,7 +126,9 @@ const AdvancedQuizGame = ({ category, level, language, onBack }: AdvancedQuizGam
     try {
       await saveAttempt(email, quizId);
     } catch (error) {
-      console.error("Error saving attempt:", error);
+      if (import.meta.env.DEV) {
+        console.error("Error saving attempt:", error);
+      }
     }
 
     setGameState("intro");
