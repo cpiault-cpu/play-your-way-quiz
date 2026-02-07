@@ -36,7 +36,9 @@ export const useQuizAttempt = (): UseQuizAttemptResult => {
         .maybeSingle();
 
       if (queryError) {
-        console.error("Error checking email:", queryError);
+        if (import.meta.env.DEV) {
+          console.error("Error checking email:", queryError);
+        }
         setError(queryError.message);
         return false;
       }
@@ -44,7 +46,9 @@ export const useQuizAttempt = (): UseQuizAttemptResult => {
       // If data exists, email has been used
       return !!data;
     } catch (err) {
-      console.error("Error checking email:", err);
+      if (import.meta.env.DEV) {
+        console.error("Error checking email:", err);
+      }
       setError(err instanceof Error ? err.message : "Unknown error");
       return false;
     } finally {
@@ -73,11 +77,15 @@ export const useQuizAttempt = (): UseQuizAttemptResult => {
         });
 
       if (insertError) {
-        console.error("Error saving attempt:", insertError);
+        if (import.meta.env.DEV) {
+          console.error("Error saving attempt:", insertError);
+        }
         throw insertError;
       }
     } catch (err) {
-      console.error("Error saving attempt:", err);
+      if (import.meta.env.DEV) {
+        console.error("Error saving attempt:", err);
+      }
       throw err;
     }
   }, []);
@@ -101,11 +109,15 @@ export const useQuizAttempt = (): UseQuizAttemptResult => {
         .eq("quiz_id", quizId);
 
       if (updateError) {
-        console.error("Error updating score:", updateError);
+        if (import.meta.env.DEV) {
+          console.error("Error updating score:", updateError);
+        }
         throw updateError;
       }
     } catch (err) {
-      console.error("Error updating score:", err);
+      if (import.meta.env.DEV) {
+        console.error("Error updating score:", err);
+      }
       throw err;
     }
   }, []);

@@ -50,8 +50,10 @@ const Footer = ({ language }: FooterProps) => {
         setFormData({ firstName: "", lastName: "", email: "" });
       }, 2000);
     } catch (error) {
-      console.error('Error saving signup:', error);
-      toast.error(language === "fr" ? "Erreur lors de l'inscription" : "Error during signup");
+      if (import.meta.env.DEV) {
+        console.error('Signup failed:', error);
+      }
+      toast.error(language === "fr" ? "Erreur lors de l'inscription. Veuillez réessayer." : "Error during signup. Please try again.");
     } finally {
       setIsLoading(false);
     }
