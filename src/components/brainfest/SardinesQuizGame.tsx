@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Clock, Check, AlertCircle, ChevronRight, Volume2 } from "lucide-react";
+import { ArrowLeft, Clock, Check, AlertCircle, ChevronRight, Volume2, Loader2 } from "lucide-react";
 import { Language } from "@/data/quizData";
 import { 
   sardinesLevels, 
@@ -9,8 +9,11 @@ import {
   uiTexts 
 } from "@/data/sardinesQuizData";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import FishIcon from "./icons/FishIcon";
+import { toast } from "sonner";
+import { useQuizAttempt } from "@/hooks/useQuizAttempt";
 
 interface SardinesQuizGameProps {
   level: 1 | 2 | 3 | 4;
@@ -19,7 +22,7 @@ interface SardinesQuizGameProps {
   onLevelComplete?: (level: 1 | 2 | 3 | 4) => void;
 }
 
-type GamePhase = "intro" | "reading" | "quiz" | "results";
+type GamePhase = "email" | "intro" | "reading" | "quiz" | "results";
 
 interface AnswerResult {
   question: SardinesQuestion;
@@ -61,7 +64,8 @@ const playValidationSound = (isCorrect: boolean) => {
 };
 
 const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: SardinesQuizGameProps) => {
-  const [phase, setPhase] = useState<GamePhase>("intro");
+  const [phase, setPhase] = useState<GamePhase>("email");
+  const [email, setEmail] = useState("");
   const [currentVersion, setCurrentVersion] = useState<"A" | "B">("A");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -70,11 +74,51 @@ const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: Sardines
   const [showFeedback, setShowFeedback] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
 
+  const { checkEmailUsed, saveAttempt, isChecking } = useQuizAttempt();
+  const quizId = `sardines-${level}`;
+
   const levelData = sardinesLevels.find(l => l.level === level);
+
+  // Email validation
+  const validateEmail = (emailToValidate: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailToValidate);
+  };
+
+  const handleEmailSubmit = async () => {
+    if (!validateEmail(email)) {
+      toast.error(
+        language === "fr"
+          ? "Veuillez entrer une adresse email valide"
+          : "Please enter a valid email address"
+      );
+      return;
+    }
+
+    // Check if email already used for this quiz
+    const alreadyUsed = await checkEmailUsed(email, quizId);
+    if (alreadyUsed) {
+      toast.error(
+        language === "fr"
+          ? "Vous avez déjà participé à ce quiz avec cette adresse email."
+          : "You have already participated in this quiz with this email address."
+      );
+      return;
+    }
+
+    // Save the attempt
+    try {
+      await saveAttempt(email, quizId);
+    } catch (error) {
+      console.error("Error saving attempt:", error);
+    }
+
+    setPhase("intro");
+  };
 
   // Reset state when level changes
   useEffect(() => {
-    setPhase("intro");
+    setPhase("email");
+    setEmail("");
     setCurrentVersion("A");
     setCurrentQuestionIndex(0);
     setSelectedAnswer(null);
@@ -220,6 +264,77 @@ const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: Sardines
 
       <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-8">
         <AnimatePresence mode="wait">
+          {/* EMAIL PHASE */}
+          {phase === "email" && (
+            <motion.div
+              key="email"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="flex flex-col items-center justify-center min-h-[60vh] text-center"
+            >
+              <div 
+                className="w-24 h-24 rounded-full flex items-center justify-center mb-6"
+                style={{ backgroundColor: `${levelData?.color}40` }}
+              >
+                <FishIcon className="w-14 h-14" color={levelData?.color} />
+              </div>
+              
+              <h2 className="text-2xl font-bold text-foreground mb-2">
+                {levelData?.title[language]}
+              </h2>
+              
+              <p className="text-muted-foreground mb-6 max-w-md">
+                {language === "fr"
+                  ? "Entrez votre adresse email pour commencer"
+                  : "Enter your email address to start"
+                }
+              </p>
+
+              <div className="w-full max-w-sm space-y-4">
+                <Input
+                  type="email"
+                  placeholder={language === "fr" ? "votre@email.com" : "your@email.com"}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="text-center text-lg py-6 bg-white text-foreground"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleEmailSubmit();
+                    }
+                  }}
+                />
+
+                <Button
+                  onClick={handleEmailSubmit}
+                  disabled={isChecking || !email.trim()}
+                  className="w-full py-6 text-lg font-semibold text-white rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
+                  style={{ backgroundColor: levelData?.color }}
+                >
+                  {isChecking ? (
+                    <>
+                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                      {language === "fr" ? "Vérification..." : "Checking..."}
+                    </>
+                  ) : (
+                    <>
+                      {language === "fr" ? "Commencer" : "Start"}
+                      <ChevronRight className="w-5 h-5 ml-2" />
+                    </>
+                  )}
+                </Button>
+
+                <Button
+                  onClick={onBack}
+                  variant="ghost"
+                  className="w-full text-muted-foreground"
+                >
+                  {uiTexts.back[language]}
+                </Button>
+              </div>
+            </motion.div>
+          )}
+
           {/* INTRO PHASE */}
           {phase === "intro" && (
             <motion.div
