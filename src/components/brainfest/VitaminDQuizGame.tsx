@@ -80,18 +80,7 @@ const VitaminDQuizGame = ({ level, language, onBack, onLevelComplete }: VitaminD
       return;
     }
 
-    // Check if email already used for this quiz
-    const alreadyUsed = await checkEmailUsed(email, quizId);
-    if (alreadyUsed) {
-      toast.error(
-        language === "fr"
-          ? "Vous avez déjà participé à ce quiz avec cette adresse email."
-          : "You have already participated in this quiz with this email address."
-      );
-      return;
-    }
-
-    // Save the attempt
+    // Save the attempt (allow replays with same email)
     try {
       await saveAttempt(email, quizId);
     } catch (error) {
