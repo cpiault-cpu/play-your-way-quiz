@@ -1286,7 +1286,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
             >
               <div className="flex flex-col items-center justify-center h-full p-2">
                 {config.useInstruments ? (
-                  <span className="text-3xl sm:text-4xl md:text-5xl">{(note as InstrumentNote).emoji}</span>
+                  <span className="text-5xl sm:text-6xl md:text-7xl">{(note as InstrumentNote).emoji}</span>
                 ) : (
                   <span className={`drop-shadow-lg text-lg sm:text-xl md:text-2xl font-bold ${activeNote === index ? "text-gray-800" : "text-white"}`}>
                     {(note as typeof PIANO_NOTES[0]).name}
