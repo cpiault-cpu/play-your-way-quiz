@@ -12,28 +12,8 @@ interface Category {
 }
 
 const heroTexts = {
-  fr: [
-    {
-      text: "Une alimentation équilibrée est essentielle pour préserver un cerveau en pleine santé. Nous en parlons régulièrement. Une alimentation anti-inflammatoire et notamment riche en oméga-3 est une valeur fondamentale de l'ADN de Maison Peita."
-    },
-    {
-      text: "L'esprit a aussi besoin de se nourrir : apprendre, stimuler sa mémoire, jouer et s'ouvrir à de nouvelles connaissances tout au long de la vie renforcent la vivacité, la curiosité et le plaisir d'apprendre."
-    },
-    {
-      text: "Formés en naturopathie et micronutrition depuis de nombreuses années, nous avons créé cette page pour vous proposer des jeux amusants d'entraînement du cerveau et pour partager avec vous des connaissances sur le merveilleux fonctionnement du vivant."
-    }
-  ],
-  en: [
-    {
-      text: "A balanced diet is essential for maintaining optimal brain health. We talk about it regularly. An anti-inflammatory diet, particularly rich in omega-3, is a core value of Maison Peita's DNA."
-    },
-    {
-      text: "The mind also needs nourishment: learning, stimulating memory, playing, and exploring new knowledge throughout life enhance vitality, curiosity, and the joy of learning."
-    },
-    {
-      text: "Trained in naturopathy and micronutrition for many years, we created this page to offer fun brain-training games and share knowledge about the wonderful workings of life."
-    }
-  ]
+  fr: "Une alimentation anti-inflammatoire riche en oméga-3 est au cœur de l'ADN de Maison Peita. L'esprit a aussi besoin de se nourrir : apprendre, stimuler sa mémoire et jouer renforcent la vivacité et le plaisir d'apprendre. Formés en naturopathie et micronutrition, nous vous proposons des jeux d'entraînement du cerveau et des connaissances sur le vivant.",
+  en: "An anti-inflammatory diet rich in omega-3 is at the heart of Maison Peita's DNA. The mind also needs nourishment: learning, stimulating memory and playing enhance vitality and the joy of learning. Trained in naturopathy and micronutrition, we offer brain-training games and knowledge about life."
 };
 
 const savoirCategories: Category[] = [
@@ -62,132 +42,74 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
 
   return (
     <>
-      {/* Partie haute - fond #B6BDB0 */}
+      {/* Partie haute compacte - fond #B6BDB0 */}
       <section className="relative overflow-hidden" style={{ backgroundColor: '#B6BDB0' }}>
-        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-14">
-          {/* Top bar with language toggle */}
-          <div className="flex flex-col items-end mb-6 md:mb-8">
-            <motion.button
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              onClick={onToggleLanguage}
-              className="flex items-center gap-2 px-4 py-2 text-sm bg-white border border-[#B6BDB0] shadow-sm"
-              style={{ borderRadius: '12px', color: '#000000' }}
-              aria-label={language === "fr" ? "Switch to English" : "Passer en Français"}
-            >
-              <span className="text-lg">{language === "fr" ? "🇬🇧" : "🇫🇷"}</span>
-              <span className="font-medium">{language === "fr" ? "EN" : "FR"}</span>
-            </motion.button>
-            
-            {/* Logo below flag - visible only on mobile */}
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-3 md:py-6">
+          {/* Top bar with language toggle and logo */}
+          <div className="flex items-center justify-between mb-3 md:mb-4">
+            {/* Logo */}
             <motion.a 
               href="https://www.peita.fr" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="md:hidden mt-4 floating-logo"
+              className="floating-logo"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.4 }}
             >
               <img 
                 src="/images/peita-logo-transparent.png" 
                 alt="PEITA Logo" 
-                className="h-14 w-auto drop-shadow-xl"
+                className="h-10 md:h-14 w-auto drop-shadow-lg"
               />
             </motion.a>
+            
+            {/* Language toggle */}
+            <motion.button
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={onToggleLanguage}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white border border-[#B6BDB0] shadow-sm"
+              style={{ borderRadius: '10px', color: '#000000' }}
+              aria-label={language === "fr" ? "Switch to English" : "Passer en Français"}
+            >
+              <span className="text-base">{language === "fr" ? "🇬🇧" : "🇫🇷"}</span>
+              <span className="font-medium text-xs">{language === "fr" ? "EN" : "FR"}</span>
+            </motion.button>
           </div>
 
-          {/* Main content */}
-          <div className="flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-12 items-start mb-8 md:mb-10">
-            {/* Left column - Title and tagline */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
-              className="text-left w-full"
-            >
+          {/* Compact content block */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="bg-white p-3 md:p-4 border border-[#B6BDB0] mb-2"
+            style={{ borderRadius: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.08)' }}
+          >
+            {/* Title and tagline on same line */}
+            <div className="flex flex-wrap items-center gap-2 mb-2">
               <h1 
-                className="mb-4 md:mb-6"
-                style={{ 
-                  fontFamily: 'Montserrat, sans-serif', 
-                  fontWeight: 600, 
-                  fontSize: '36px', 
-                  color: '#000000',
-                  lineHeight: 1.2
-                }}
+                className="text-base md:text-xl font-semibold"
+                style={{ fontFamily: 'Montserrat, sans-serif', color: '#000000', lineHeight: 1.3 }}
               >
                 {language === "fr" ? "Testez vos connaissances et votre mémoire" : "Test your knowledge and memory"}
               </h1>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="inline-flex items-center px-4 py-2 bg-white border border-[#B6BDB0]"
-                style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.1)', borderRadius: '12px' }}
+              <span 
+                className="inline-flex items-center px-2 py-0.5 bg-[#87917E] text-white text-xs font-medium"
+                style={{ borderRadius: '8px' }}
               >
-                <p style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 600, fontSize: '18px', color: '#000000' }}>
-                  {language === "fr" ? "Apprenez. Jouez. Gagnez." : "Learn. Play. Win."}
-                </p>
-              </motion.div>
-            </motion.div>
-
-            {/* Right column - Logo only on desktop */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-              className="hidden md:flex justify-end w-full"
-            >
-              <a 
-                href="https://www.peita.fr" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="floating-logo"
-              >
-                <img 
-                  src="/images/peita-logo-transparent.png" 
-                  alt="PEITA Logo" 
-                  className="h-20 lg:h-24 w-auto drop-shadow-xl"
-                />
-              </a>
-            </motion.div>
-          </div>
-
-          {/* Text cards - horizontal scroll on both mobile and desktop */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-2 md:mb-4"
-          >
-            <div 
-              className="flex flex-row gap-4 overflow-x-auto pb-4 px-1 snap-x snap-mandatory -mx-4 sm:mx-0"
-              style={{ WebkitOverflowScrolling: 'touch' }}
-            >
-              {heroTexts[language].map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                  className="flex-shrink-0 w-[85%] sm:w-[70%] md:w-[45%] lg:w-[32%] first:ml-4 last:mr-4 snap-center"
-                >
-                  <div 
-                    className="h-full bg-white p-5 border border-[#B6BDB0]"
-                    style={{ 
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                      borderRadius: '12px'
-                    }}
-                  >
-                    <p style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 400, fontSize: '14px', color: '#000000', lineHeight: 1.6 }}>
-                      {item.text}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
+                {language === "fr" ? "Apprenez. Jouez. Gagnez." : "Learn. Play. Win."}
+              </span>
             </div>
+            
+            {/* Condensed description */}
+            <p 
+              className="text-xs md:text-sm leading-snug"
+              style={{ fontFamily: 'Montserrat, sans-serif', color: '#333333' }}
+            >
+              {heroTexts[language]}
+            </p>
           </motion.div>
         </div>
       </section>
@@ -200,13 +122,13 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
           borderTop: '1px solid #7A8278'
         }}
       >
-        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-4 md:py-10">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-3 md:py-6">
           {/* Category buttons - Two sections */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex flex-col gap-4 md:gap-8"
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="flex flex-col gap-3 md:gap-6"
           >
             {/* SAVOIR Section */}
             <div className="flex flex-col items-start w-full gap-2 md:gap-0">
