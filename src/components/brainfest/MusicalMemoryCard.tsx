@@ -49,6 +49,22 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
     return language === "fr" ? `gagnez ${value}` : `win ${value}`;
   };
 
+  const getLevelLabel = () => {
+    if (language === "fr") {
+      switch (level) {
+        case 1: return "6 exercices • 4 notes facile";
+        case 2: return "4 exercices • 5 notes ça se corse un peu";
+        case 3: return "4 exercices • 6 notes ça devient sérieux";
+      }
+    } else {
+      switch (level) {
+        case 1: return "6 exercises • 4 notes easy";
+        case 2: return "4 exercises • 5 notes getting harder";
+        case 3: return "4 exercises • 6 notes getting serious";
+      }
+    }
+  };
+
   const getLevelDesc = () => {
     return t.levelDesc;
   };
@@ -65,7 +81,7 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
     >
       <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
         <span className={`${getLevelBadgeClass()} text-sm md:text-xs font-bold px-4 py-2 md:px-3 md:py-1.5 rounded-full text-white`}>
-          {t.level} {level}
+          {getLevelLabel()}
         </span>
         <span className="text-sm md:text-sm text-muted-foreground font-medium">
           {getDiscountText()}
