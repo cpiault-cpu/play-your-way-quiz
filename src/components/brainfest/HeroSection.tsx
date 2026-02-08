@@ -130,46 +130,45 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               </span>
             </div>
             
-            {/* Horizontal scroll carousel for intro text with indicator */}
+            {/* Horizontal scroll carousel for intro text */}
             <div className="relative">
               <div 
                 ref={introScrollRef}
-                className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory"
+                className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory -mx-2 px-2 md:mx-0 md:px-0"
                 style={{ 
                   WebkitOverflowScrolling: 'touch',
                   scrollbarWidth: 'none',
                   msOverflowStyle: 'none'
                 }}
               >
-                {heroTexts[language].map((text, index) => (
-                  <div 
-                    key={index}
-                    className="flex-shrink-0 w-[70%] md:w-[24%] p-2 bg-[#f5f5f5] border border-[#E0E0E0] snap-start"
-                    style={{ 
-                      borderRadius: '8px',
-                      fontFamily: 'Montserrat, sans-serif', 
-                      color: '#333333',
-                      fontSize: '16px',
-                      lineHeight: 1.5
-                    }}
-                  >
-                    {text}
-                  </div>
-                ))}
+                {heroTexts[language].map((text, index) => {
+                  const isLastBlock = index === heroTexts[language].length - 1;
+                  return (
+                    <div 
+                      key={index}
+                      className="relative flex-shrink-0 w-[calc(100%-16px)] md:w-[24%] p-3 pb-6 bg-[#f5f5f5] border border-[#E0E0E0] snap-start"
+                      style={{ 
+                        borderRadius: '8px',
+                        fontFamily: 'Montserrat, sans-serif', 
+                        color: '#333333',
+                        fontSize: '16px',
+                        lineHeight: 1.5
+                      }}
+                    >
+                      {text}
+                      {/* Scroll arrow inside each block - hidden on last block and desktop */}
+                      {!isLastBlock && (
+                        <span 
+                          className="absolute bottom-2 right-3 text-[#87917E] text-sm md:hidden"
+                          style={{ fontSize: '14px' }}
+                        >
+                          →
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
-              {/* Scroll indicator arrow - thin arrow without gradient */}
-              <AnimatePresence>
-                {canScrollIntro && (
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="flex justify-end mt-1 md:hidden"
-                  >
-                    <span className="text-[#87917E] text-sm">→</span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
           </motion.div>
         </div>
