@@ -183,14 +183,14 @@
     66% { transform: translate(-10px, 10px) scale(0.95); }
   }
 
-  /* Modern quiz card */
+  /* Modern quiz card - Memory Cards green background */
   .quiz-card {
-    background: var(--gradient-card);
+    background: linear-gradient(145deg, #7BC5A0 0%, #6AB58F 100%);
     box-shadow: var(--shadow-card);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     max-width: 100%;
     contain: paint;
-    border: 1px solid hsl(var(--border));
+    border: 1px solid #5BA883;
     position: relative;
     overflow: hidden;
   }
