@@ -16,18 +16,14 @@ const translations = {
     level: "Niveau",
     discount: "de réduction",
     play: "Jouer",
-    level1Desc: "4 exercices d'une suite de 4 notes à deviner pour gagner. Entraînez votre mémoire auditive !",
-    level2Desc: "4 exercices d'une suite de 5 notes à mémoriser. Un défi pour votre oreille musicale !",
-    level3Desc: "4 exercices d'une suite de 8 notes à reproduire. Le niveau expert pour les virtuoses !",
+    levelDesc: "Écoutez et reproduisez les enchaînements de notes pour réveiller votre oreille musicale et aiguiser votre mémoire.",
   },
   en: {
     title: "Musical Memory",
     level: "Level",
     discount: "discount",
     play: "Play",
-    level1Desc: "4 exercises with 4-note sequences to guess. Train your auditory memory!",
-    level2Desc: "4 exercises with 5-note sequences to memorize. A challenge for your musical ear!",
-    level3Desc: "4 exercises with 8-note sequences to reproduce. Expert level for virtuosos!",
+    levelDesc: "Listen and reproduce note sequences to awaken your musical ear and sharpen your memory.",
   },
 };
 
@@ -54,11 +50,7 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
   };
 
   const getLevelDesc = () => {
-    switch (level) {
-      case 1: return t.level1Desc;
-      case 2: return t.level2Desc;
-      case 3: return t.level3Desc;
-    }
+    return t.levelDesc;
   };
 
   return (
