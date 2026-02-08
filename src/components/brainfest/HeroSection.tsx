@@ -47,6 +47,7 @@ interface HeroSectionProps {
 const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCategory }: HeroSectionProps) => {
   const savoirScrollRef = useRef<HTMLDivElement>(null);
   const entrainerScrollRef = useRef<HTMLDivElement>(null);
+  const introScrollRef = useRef<HTMLDivElement>(null);
 
   return (
     <>
@@ -99,42 +100,53 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             <div className="flex flex-wrap items-center gap-1 md:gap-2 mb-1 md:mb-2">
               <h1 
                 className="font-semibold"
-                style={{ fontFamily: 'Montserrat, sans-serif', color: '#000000', lineHeight: 1.3, fontSize: '16px' }}
+                style={{ fontFamily: 'Montserrat, sans-serif', color: '#000000', lineHeight: 1.3, fontSize: '18px' }}
               >
                 {language === "fr" ? "Testez vos connaissances et votre mémoire" : "Test your knowledge and memory"}
               </h1>
               <span 
                 className="inline-flex items-center px-2 py-0.5 bg-[#87917E] text-white font-medium"
-                style={{ borderRadius: '8px', fontSize: '12px' }}
+                style={{ borderRadius: '8px', fontSize: '14px' }}
               >
                 {language === "fr" ? "Apprenez. Jouez. Gagnez." : "Learn. Play. Win."}
               </span>
             </div>
             
-            {/* Horizontal scroll carousel for intro text */}
-            <div 
-              className="flex gap-3 overflow-x-auto pb-1 -mx-2 px-2"
-              style={{ 
-                WebkitOverflowScrolling: 'touch',
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none'
-              }}
-            >
-              {heroTexts[language].map((text, index) => (
+            {/* Horizontal scroll carousel for intro text with indicator */}
+            <div className="relative">
+              <div 
+                ref={introScrollRef}
+                className="flex gap-3 overflow-x-auto pb-1 -mx-2 px-2"
+                style={{ 
+                  WebkitOverflowScrolling: 'touch',
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none'
+                }}
+              >
+                {heroTexts[language].map((text, index) => (
+                  <div 
+                    key={index}
+                    className="flex-shrink-0 w-[75%] md:w-[32%] p-2 bg-[#f5f5f5] border border-[#E0E0E0]"
+                    style={{ 
+                      borderRadius: '8px',
+                      fontFamily: 'Montserrat, sans-serif', 
+                      color: '#333333',
+                      fontSize: '14px',
+                      lineHeight: 1.5
+                    }}
+                  >
+                    {text}
+                  </div>
+                ))}
+              </div>
+              {/* Scroll indicator arrow for mobile */}
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center pointer-events-none md:hidden">
                 <div 
-                  key={index}
-                  className="flex-shrink-0 w-[75%] md:w-[32%] p-2 bg-[#f5f5f5] border border-[#E0E0E0]"
-                  style={{ 
-                    borderRadius: '8px',
-                    fontFamily: 'Montserrat, sans-serif', 
-                    color: '#333333',
-                    fontSize: '12px',
-                    lineHeight: 1.4
-                  }}
-                >
-                  {text}
-                </div>
-              ))}
+                  className="w-8 h-full bg-gradient-to-l from-white to-transparent"
+                  style={{ minHeight: '40px' }}
+                />
+                <span className="text-[#87917E] text-lg animate-pulse">→</span>
+              </div>
             </div>
           </motion.div>
         </div>
