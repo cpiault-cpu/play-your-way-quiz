@@ -86,15 +86,7 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
       return;
     }
 
-    const isUsed = await checkEmailUsed(email, "carre-cognitif");
-    if (isUsed) {
-      setEmailError(language === "fr" 
-        ? "Vous avez déjà joué avec cet email" 
-        : "You already played with this email"
-      );
-      return;
-    }
-
+    // Save the attempt (allow replays with same email)
     await saveAttempt(email, "carre-cognitif", null);
     setPhase("level-select");
   };

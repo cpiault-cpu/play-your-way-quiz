@@ -117,12 +117,7 @@ const AdvancedQuizGame = ({ category, level, language, onBack }: AdvancedQuizGam
       return;
     }
 
-    const alreadyUsed = await checkEmailUsed(email, quizId);
-    if (alreadyUsed) {
-      toast.error(t.alreadyPlayed);
-      return;
-    }
-
+    // Save the attempt (allow replays with same email)
     try {
       await saveAttempt(email, quizId);
     } catch (error) {

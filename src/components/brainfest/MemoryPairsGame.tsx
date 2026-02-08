@@ -177,18 +177,7 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
       return;
     }
     
-    // Check if email already used for this game
-    const alreadyUsed = await checkEmailUsed(email, quizId);
-    if (alreadyUsed) {
-      toast.error(
-        language === "fr" 
-          ? "Vous avez déjà participé à ce jeu avec cette adresse email."
-          : "You have already participated in this game with this email address."
-      );
-      return;
-    }
-    
-    // Save the attempt
+    // Save the attempt (allow replays with same email)
     try {
       await saveAttempt(email, quizId);
     } catch (error) {
