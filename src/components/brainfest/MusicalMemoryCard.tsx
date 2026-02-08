@@ -16,14 +16,14 @@ const translations = {
     level: "Niveau",
     discount: "de réduction",
     play: "Jouer",
-    levelDesc: "Laissez-vous guider par le son…\nReproduisez des séquences musicales pour réveiller votre mémoire auditive et aiguiser votre intuition…",
+    levelDesc: "Écoutez et reproduisez ces enchaînements de notes pour réveiller votre oreille musicale et aiguiser votre mémoire.",
   },
   en: {
     title: "Musical Memory",
     level: "Level",
     discount: "discount",
     play: "Play",
-    levelDesc: "Let the sound guide you…\nReproduce musical sequences to awaken your auditory memory and sharpen your intuition…",
+    levelDesc: "Listen and reproduce these note sequences to awaken your musical ear and sharpen your memory.",
   },
 };
 
@@ -75,7 +75,7 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
       <h3 className="text-xl md:text-xl font-bold text-foreground mb-3 md:mb-2 break-words">
         {t.title}
       </h3>
-      <p className="text-base md:text-sm text-muted-foreground mb-4 leading-relaxed whitespace-pre-line">
+      <p className="text-base md:text-sm text-muted-foreground mb-4 leading-relaxed">
         {getLevelDesc()}
       </p>
 
