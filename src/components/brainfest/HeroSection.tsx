@@ -12,8 +12,16 @@ interface Category {
 }
 
 const heroTexts = {
-  fr: "Une alimentation anti-inflammatoire riche en oméga-3 est au cœur de l'ADN de Maison Peita. L'esprit a aussi besoin de se nourrir : apprendre, stimuler sa mémoire et jouer renforcent la vivacité et le plaisir d'apprendre. Formés en naturopathie et micronutrition, nous vous proposons des jeux d'entraînement du cerveau et des connaissances sur le vivant.",
-  en: "An anti-inflammatory diet rich in omega-3 is at the heart of Maison Peita's DNA. The mind also needs nourishment: learning, stimulating memory and playing enhance vitality and the joy of learning. Trained in naturopathy and micronutrition, we offer brain-training games and knowledge about life."
+  fr: [
+    "Une alimentation anti-inflammatoire, riche en oméga-3, est bénéfique pour la santé, notamment le cerveau. Chez Maison Peita, cette notion est au cœur de notre ADN.",
+    "L'esprit a également besoin d'être correctement nourri. Apprendre, stimuler sa mémoire, jouer… autant d'exercices qui entretiennent la vivacité et le plaisir d'apprendre.",
+    "C'est pourquoi nous vous proposons des jeux d'entraînement de la mémoire, et partageons avec vous nos connaissances en naturopathie et micronutrition : de quoi nourrir vos connaissances autant que votre curiosité."
+  ],
+  en: [
+    "An anti-inflammatory diet, rich in omega-3s, is beneficial for health, especially the brain. At Maison Peita, this concept is at the heart of our DNA.",
+    "The mind also needs to be properly nourished. Learning, stimulating memory, playing… all exercises that maintain alertness and the joy of learning.",
+    "That's why we offer memory training games and share our knowledge in naturopathy and micronutrition: food for your knowledge as well as your curiosity."
+  ]
 };
 
 const savoirCategories: Category[] = [
@@ -90,26 +98,44 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             {/* Title and tagline on same line */}
             <div className="flex flex-wrap items-center gap-1 md:gap-2 mb-1 md:mb-2">
               <h1 
-                className="text-sm md:text-xl font-semibold"
-                style={{ fontFamily: 'Montserrat, sans-serif', color: '#000000', lineHeight: 1.3 }}
+                className="font-semibold"
+                style={{ fontFamily: 'Montserrat, sans-serif', color: '#000000', lineHeight: 1.3, fontSize: '16px' }}
               >
                 {language === "fr" ? "Testez vos connaissances et votre mémoire" : "Test your knowledge and memory"}
               </h1>
               <span 
-                className="inline-flex items-center px-2 py-0.5 bg-[#87917E] text-white text-[10px] md:text-xs font-medium"
-                style={{ borderRadius: '8px' }}
+                className="inline-flex items-center px-2 py-0.5 bg-[#87917E] text-white font-medium"
+                style={{ borderRadius: '8px', fontSize: '12px' }}
               >
                 {language === "fr" ? "Apprenez. Jouez. Gagnez." : "Learn. Play. Win."}
               </span>
             </div>
             
-            {/* Condensed description - hidden on mobile */}
-            <p 
-              className="hidden md:block text-sm leading-snug"
-              style={{ fontFamily: 'Montserrat, sans-serif', color: '#333333' }}
+            {/* Horizontal scroll carousel for intro text */}
+            <div 
+              className="flex gap-3 overflow-x-auto pb-1 -mx-2 px-2"
+              style={{ 
+                WebkitOverflowScrolling: 'touch',
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none'
+              }}
             >
-              {heroTexts[language]}
-            </p>
+              {heroTexts[language].map((text, index) => (
+                <div 
+                  key={index}
+                  className="flex-shrink-0 w-[75%] md:w-[32%] p-2 bg-[#f5f5f5] border border-[#E0E0E0]"
+                  style={{ 
+                    borderRadius: '8px',
+                    fontFamily: 'Montserrat, sans-serif', 
+                    color: '#333333',
+                    fontSize: '12px',
+                    lineHeight: 1.4
+                  }}
+                >
+                  {text}
+                </div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </section>
