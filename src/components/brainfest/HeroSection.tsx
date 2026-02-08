@@ -167,11 +167,11 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                         fontFamily: 'Montserrat, sans-serif', 
                         fontWeight: 500, 
                         fontSize: isPlantes ? '12px' : '13px', 
-                        color: isSelected ? '#2E5A3A' : '#000000',
-                        backgroundColor: isSelected ? '#7BC5A0' : '#FFFFFF',
-                        borderColor: isSelected ? '#6AB58F' : '#E0E0E0',
+                        color: '#000000',
+                        backgroundColor: isSelected ? '#d5e6dd' : '#FFFFFF',
+                        borderColor: isSelected ? '#b8d4c4' : '#E0E0E0',
                         borderRadius: '12px',
-                        boxShadow: isSelected ? '0 4px 12px rgba(123, 197, 160, 0.4)' : '0 2px 8px rgba(0,0,0,0.12)',
+                        boxShadow: isSelected ? '0 4px 12px rgba(213, 230, 221, 0.5)' : '0 2px 8px rgba(0,0,0,0.12)',
                         transition: 'all 0.2s ease'
                       }}
                     >
@@ -224,11 +224,11 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                         fontFamily: 'Montserrat, sans-serif', 
                         fontWeight: 500, 
                         fontSize: '13px', 
-                        color: isSelected ? '#2E5A3A' : '#000000',
-                        backgroundColor: isSelected ? '#7BC5A0' : '#FFFFFF',
-                        borderColor: isSelected ? '#6AB58F' : '#E0E0E0',
+                        color: '#000000',
+                        backgroundColor: isSelected ? '#d5e6dd' : '#FFFFFF',
+                        borderColor: isSelected ? '#b8d4c4' : '#E0E0E0',
                         borderRadius: '12px',
-                        boxShadow: isSelected ? '0 4px 12px rgba(123, 197, 160, 0.4)' : '0 2px 8px rgba(0,0,0,0.12)',
+                        boxShadow: isSelected ? '0 4px 12px rgba(213, 230, 221, 0.5)' : '0 2px 8px rgba(0,0,0,0.12)',
                         transition: 'all 0.2s ease'
                       }}
                     >
