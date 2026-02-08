@@ -185,14 +185,20 @@
 
   /* Modern quiz card - Memory Cards green background */
   .quiz-card {
-    background: linear-gradient(145deg, #7BC5A0 0%, #6AB58F 100%);
+    background: var(--gradient-card);
     box-shadow: var(--shadow-card);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     max-width: 100%;
     contain: paint;
-    border: 1px solid #5BA883;
+    border: 1px solid hsl(var(--border));
     position: relative;
     overflow: hidden;
+  }
+  
+  /* Uniform green background for all game/quiz cards */
+  .card-green-bg {
+    background: linear-gradient(145deg, #7BC5A0 0%, #6AB58F 100%) !important;
+    border: 1px solid #5BA883 !important;
   }
 
   .quiz-card::before {

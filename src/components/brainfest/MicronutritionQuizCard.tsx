@@ -54,9 +54,9 @@ const MicronutritionQuizCard = ({ level, language, onPlay, isCompleted }: Micron
     <motion.div
       whileHover={{ y: -4, scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
-      className={`relative bg-gradient-to-br ${config.bgGradient} rounded-2xl shadow-lg border border-border/30 overflow-hidden cursor-pointer`}
+      className="relative card-green-bg rounded-2xl shadow-lg overflow-hidden cursor-pointer"
       onClick={() => onPlay(level)}
-      style={{ fontFamily: 'Montserrat, sans-serif' }}
+      style={{ fontFamily: 'Montserrat, sans-serif', borderRadius: '12px' }}
     >
       {/* Completed badge */}
       {isCompleted && (
