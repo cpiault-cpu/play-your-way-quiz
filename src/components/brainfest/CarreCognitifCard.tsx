@@ -37,12 +37,12 @@ const CarreCognitifCard = ({ language, onPlay }: CarreCognitifCardProps) => {
 
         {/* Description */}
         <p 
-          className="text-sm text-muted-foreground mb-4 leading-relaxed"
+          className="text-sm text-muted-foreground mb-4 leading-relaxed whitespace-pre-line"
           style={{ fontFamily: 'Montserrat, sans-serif' }}
         >
           {language === "fr" 
-            ? "Un puzzle visuel inspiré du sudoku. Complétez la grille en respectant la règle invisible."
-            : "A visual puzzle inspired by sudoku. Complete the grid following the invisible rule."
+            ? "Un puzzle visuel pour stimuler votre logique et votre déduction.\n\nComplétez la grille en respectant une règle invisible. Mémoire de travail, reconnaissance de motifs, intelligence fluide... Accrochez vous :-) Découvrez le pouvoir de votre cerveau !"
+            : "A visual puzzle to stimulate your logic and deduction.\n\nComplete the grid following an invisible rule. Working memory, pattern recognition, fluid intelligence... Hold on tight :-) Discover the power of your brain!"
           }
         </p>
 
