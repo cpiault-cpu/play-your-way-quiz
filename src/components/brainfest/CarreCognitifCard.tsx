@@ -10,7 +10,7 @@ interface CarreCognitifCardProps {
 const CarreCognitifCard = ({ language, onPlay }: CarreCognitifCardProps) => {
   return (
     <motion.div
-      className="bg-white rounded-xl shadow-lg overflow-hidden border border-border/30"
+      className="card-green-bg rounded-xl shadow-lg overflow-hidden"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}

@@ -44,7 +44,8 @@ const SardinesQuizCard = ({ language, completedLevels, onSelectLevel }: Sardines
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5 }}
-      className="bg-white rounded-2xl shadow-xl overflow-hidden border border-border/30"
+      className="card-green-bg rounded-2xl shadow-xl overflow-hidden"
+      style={{ borderRadius: '12px' }}
     >
       {/* Header with fish icon */}
       <div className="bg-gradient-to-r from-[#A8E6CF] via-[#B5EAD7] to-[#D4B5E8] p-6 text-center">
