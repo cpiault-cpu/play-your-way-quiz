@@ -160,7 +160,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-4 md:mb-10"
+            className="mb-2 md:mb-4"
           >
             <div 
               className="flex flex-row gap-4 overflow-x-auto pb-4 px-1 snap-x snap-mandatory -mx-4 sm:mx-0"
@@ -188,21 +188,6 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                 </motion.div>
               ))}
             </div>
-          </motion.div>
-
-          {/* Warning message */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="text-center pb-4 md:pb-8 py-1.5 md:py-2.5"
-          >
-            <p style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 500, fontSize: '13px', color: '#000000' }} className="md:text-sm">
-              ⚠️ {language === "fr" 
-                ? "Attention, vous ne pouvez faire chaque quiz qu'une seule fois avec votre adresse mail."
-                : "Warning, you can only take each quiz once with your email address."
-              }
-            </p>
           </motion.div>
         </div>
       </section>
