@@ -107,7 +107,7 @@ const translations = {
     success: "Bravo ! Exercice réussi",
     failure: "Oops ! Mauvaise note",
     gameOver: "Partie terminée",
-    victory: "Victoire !",
+    victory: "Bravo !",
     finalScore: "Score final",
     exercises: "exercices réussis",
     youWon: "Vous avez gagné !",
@@ -115,9 +115,9 @@ const translations = {
     back: "Retour",
     start: "Commencer",
     instructions: "Écoutez la séquence de notes et reproduisez-la en cliquant sur les touches colorées dans le bon ordre.",
-    level1Desc: "6 exercices • 4 notes",
-    level2Desc: "4 exercices • 5 notes",
-    level3Desc: "4 exercices • 6 notes",
+    level1Desc: "6 exercices • 4 notes facile",
+    level2Desc: "4 exercices • 5 notes ça se corse un peu",
+    level3Desc: "4 exercices • 6 notes ça devient sérieux",
     of: "sur",
     couponTitle: "Félicitations !",
     couponText: "Voici votre code de réduction :",
@@ -125,6 +125,7 @@ const translations = {
     enterEmail: "Entrez votre adresse email pour commencer",
     emailPlaceholder: "votre@email.com",
     invalidEmail: "Veuillez entrer une adresse email valide",
+    allLevelsComplete: "à bientôt pour de nouveaux jeux musicaux. Inscrivez-vous ou suivez-nous sur Instagram",
   },
   en: {
     title: "Musical Memory",
@@ -135,7 +136,7 @@ const translations = {
     success: "Great! Exercise completed",
     failure: "Oops! Wrong note",
     gameOver: "Game Over",
-    victory: "Victory!",
+    victory: "Bravo!",
     finalScore: "Final Score",
     exercises: "exercises completed",
     youWon: "You won!",
@@ -143,9 +144,9 @@ const translations = {
     back: "Back",
     start: "Start",
     instructions: "Listen to the sequence of notes and reproduce it by clicking the colored keys in the correct order.",
-    level1Desc: "6 exercises • 4 notes",
-    level2Desc: "4 exercises • 5 notes",
-    level3Desc: "4 exercises • 6 notes",
+    level1Desc: "6 exercises • 4 notes easy",
+    level2Desc: "4 exercises • 5 notes getting harder",
+    level3Desc: "4 exercises • 6 notes getting serious",
     of: "of",
     couponTitle: "Congratulations!",
     couponText: "Here is your discount code:",
@@ -153,6 +154,7 @@ const translations = {
     enterEmail: "Enter your email address to start",
     emailPlaceholder: "your@email.com",
     invalidEmail: "Please enter a valid email address",
+    allLevelsComplete: "See you soon for new musical games. Sign up or follow us on Instagram",
   },
 };
 
@@ -1193,8 +1195,16 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
               <div className="bg-card border border-border rounded-xl p-4 sm:p-6 md:p-8">
                 <Trophy className="w-14 h-14 sm:w-20 sm:h-20 text-yellow-500 mx-auto mb-3 sm:mb-4" />
                 <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-2">
-                  🎉 {t.couponTitle}
+                  🎉 {t.victory}
                 </h2>
+                
+                {/* Show special message if level 3 completed */}
+                {level === 3 && (
+                  <p className="text-base sm:text-lg text-muted-foreground mb-4 italic">
+                    {t.allLevelsComplete}
+                  </p>
+                )}
+                
                 <p className="text-lg sm:text-xl text-foreground mb-4">
                   {t.couponText}
                 </p>
