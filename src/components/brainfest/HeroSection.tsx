@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Language } from "@/data/quizData";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import ScrollIndicator from "./ScrollIndicator";
 
 type CategoryId = "micronutrition" | "micronutrition2" | "plants" | "memory-music" | "memory-cards" | "sardines" | "carre-cognitif";
@@ -48,6 +48,23 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
   const savoirScrollRef = useRef<HTMLDivElement>(null);
   const entrainerScrollRef = useRef<HTMLDivElement>(null);
   const introScrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollIntro, setCanScrollIntro] = useState(true);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      if (introScrollRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = introScrollRef.current;
+        setCanScrollIntro(scrollLeft < scrollWidth - clientWidth - 10);
+      }
+    };
+
+    const element = introScrollRef.current;
+    if (element) {
+      checkScroll();
+      element.addEventListener('scroll', checkScroll);
+      return () => element.removeEventListener('scroll', checkScroll);
+    }
+  }, []);
 
   return (
     <>
@@ -139,14 +156,23 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                   </div>
                 ))}
               </div>
-              {/* Scroll indicator arrow for mobile */}
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center pointer-events-none md:hidden">
-                <div 
-                  className="w-8 h-full bg-gradient-to-l from-white to-transparent"
-                  style={{ minHeight: '40px' }}
-                />
-                <span className="text-[#87917E] text-lg animate-pulse">→</span>
-              </div>
+              {/* Scroll indicator arrow for mobile - disappears when scrolled */}
+              <AnimatePresence>
+                {canScrollIntro && (
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center pointer-events-none md:hidden"
+                  >
+                    <div 
+                      className="w-8 h-full bg-gradient-to-l from-white to-transparent"
+                      style={{ minHeight: '40px' }}
+                    />
+                    <span className="text-[#87917E] text-lg animate-pulse">→</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </motion.div>
         </div>
