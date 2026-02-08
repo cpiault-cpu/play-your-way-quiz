@@ -296,10 +296,10 @@ const Index = () => {
               
               {/* Description */}
               <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
-                <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl whitespace-pre-line">
+                <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
                   {language === "fr" 
-                    ? "Écoutez, captez, jouez la suite… Comme le vent qui siffle entre les rochers ou les vagues qui dessinent leur rythme sur le sable, reproduisez ces enchaînements de notes pour réveiller votre oreille musicale. Un exercice malin pour aiguiser votre mémoire et transformer chaque essai en une petite victoire. Prêt à devenir le maestro de votre propre partition ?"
-                    : "Let the notes guide you… Like the wind weaving through the dunes or the ocean sketching rhythms on the shore, listen closely and replay these musical sequences. A playful way to sharpen your ear and trust your instincts no sheet music, just pure intuition. Ready to conduct your memory like a hidden symphony?"
+                    ? "Écoutez et reproduisez ces enchaînements de notes pour réveiller votre oreille musicale et aiguiser votre mémoire."
+                    : "Listen and reproduce these note sequences to awaken your musical ear and sharpen your memory."
                   }
                 </p>
               </div>
