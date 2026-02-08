@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Clock, Check, AlertCircle, Leaf, ChevronRight } from "lucide-react";
+import { ArrowLeft, Clock, Check, AlertCircle, Leaf, ChevronRight, Loader2 } from "lucide-react";
 import { Language } from "@/data/quizData";
 import { 
   plantsLevels, 
@@ -9,7 +9,10 @@ import {
   plantsUiTexts 
 } from "@/data/plantsQuizData";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
+import { toast } from "sonner";
+import { useQuizAttempt } from "@/hooks/useQuizAttempt";
 
 interface PlantsQuizGameProps {
   level: 1 | 2 | 3;
@@ -18,7 +21,7 @@ interface PlantsQuizGameProps {
   onLevelComplete?: (level: 1 | 2 | 3) => void;
 }
 
-type GamePhase = "intro" | "reading" | "quiz" | "results";
+type GamePhase = "email" | "intro" | "reading" | "quiz" | "results";
 
 interface AnswerResult {
   question: PlantsQuestion;
@@ -29,7 +32,8 @@ interface AnswerResult {
 const READING_TIME = 15; // seconds
 
 const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuizGameProps) => {
-  const [phase, setPhase] = useState<GamePhase>("intro");
+  const [phase, setPhase] = useState<GamePhase>("email");
+  const [email, setEmail] = useState("");
   const [currentVersion, setCurrentVersion] = useState<"A" | "B">("A");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -38,11 +42,15 @@ const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuiz
   const [showFeedback, setShowFeedback] = useState(false);
   const [attemptCount, setAttemptCount] = useState(0);
 
+  const { checkEmailUsed, saveAttempt, isChecking } = useQuizAttempt();
+  const quizId = `plants-${level}`;
+
   const levelData = plantsLevels.find(l => l.level === level);
 
   // Reset state when level changes
   useEffect(() => {
-    setPhase("intro");
+    setPhase("email");
+    setEmail("");
     setCurrentVersion("A");
     setCurrentQuestionIndex(0);
     setSelectedAnswer(null);
@@ -56,6 +64,42 @@ const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuiz
   const questions = currentVersionData?.questions || [];
   const textLines = currentVersionData?.text[language] || [];
   const currentQuestion = questions[currentQuestionIndex];
+
+  // Email validation
+  const validateEmail = (emailToValidate: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailToValidate);
+  };
+
+  const handleEmailSubmit = async () => {
+    if (!validateEmail(email)) {
+      toast.error(
+        language === "fr"
+          ? "Veuillez entrer une adresse email valide"
+          : "Please enter a valid email address"
+      );
+      return;
+    }
+
+    // Check if email already used for this quiz
+    const alreadyUsed = await checkEmailUsed(email, quizId);
+    if (alreadyUsed) {
+      toast.error(
+        language === "fr"
+          ? "Vous avez déjà participé à ce quiz avec cette adresse email."
+          : "You have already participated in this quiz with this email address."
+      );
+      return;
+    }
+
+    // Save the attempt
+    try {
+      await saveAttempt(email, quizId);
+    } catch (error) {
+      console.error("Error saving attempt:", error);
+    }
+
+    setPhase("intro");
+  };
 
   // Reading timer
   useEffect(() => {
@@ -173,6 +217,61 @@ const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuiz
 
       <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-8">
         <AnimatePresence mode="wait">
+          {/* EMAIL PHASE */}
+          {phase === "email" && (
+            <motion.div
+              key="email"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="flex flex-col items-center justify-center min-h-[60vh] text-center"
+            >
+              <div 
+                className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
+                style={{ backgroundColor: `${getLevelColor()}20` }}
+              >
+                <Leaf className="w-10 h-10" style={{ color: getLevelColor() }} />
+              </div>
+              
+              <h2 className="text-2xl font-bold text-foreground mb-4">
+                {language === "fr" ? "Plantes médicinales" : "Medicinal Plants"} - {levelData?.title[language]}
+              </h2>
+              
+              <p className="text-muted-foreground mb-8 max-w-md">
+                {language === "fr"
+                  ? "Entrez votre adresse email pour commencer"
+                  : "Enter your email address to start"
+                }
+              </p>
+
+              <div className="w-full max-w-sm space-y-4">
+                <Input
+                  type="email"
+                  placeholder={language === "fr" ? "votre@email.com" : "your@email.com"}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="text-center"
+                  onKeyDown={(e) => e.key === "Enter" && handleEmailSubmit()}
+                />
+                <Button
+                  onClick={handleEmailSubmit}
+                  disabled={isChecking}
+                  className="w-full px-8 py-6 text-lg font-semibold text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                  style={{ backgroundColor: "#4A6741" }}
+                >
+                  {isChecking ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <>
+                      {plantsUiTexts.start[language]}
+                      <ChevronRight className="w-5 h-5 ml-2" />
+                    </>
+                  )}
+                </Button>
+              </div>
+            </motion.div>
+          )}
+
           {/* INTRO PHASE */}
           {phase === "intro" && (
             <motion.div
