@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Language } from "@/data/quizData";
 import { useRef, useState, useEffect } from "react";
 
-type CategoryId = "micronutrition" | "micronutrition2" | "plants" | "memory-music" | "memory-cards" | "sardines" | "carre-cognitif";
+type CategoryId = "micronutrition" | "micronutrition2" | "vitamind-light" | "plants" | "memory-music" | "memory-cards" | "sardines" | "carre-cognitif";
 
 interface Category {
   id: CategoryId;
@@ -29,6 +29,7 @@ const savoirCategories: Category[] = [
   { id: "sardines", name: { fr: "Sardines", en: "Sardines" }, emoji: "🐟" },
   { id: "micronutrition", name: { fr: "Micronutrition", en: "Micronutrition" }, emoji: "💊" },
   { id: "micronutrition2", name: { fr: "Vitamine D", en: "Vitamin D" }, emoji: "☀️" },
+  { id: "vitamind-light", name: { fr: "Lumière", en: "Light" }, emoji: "🌅" },
   { id: "plants", name: { fr: "Plantes", en: "Plants" }, emoji: "🌿" },
 ];
 

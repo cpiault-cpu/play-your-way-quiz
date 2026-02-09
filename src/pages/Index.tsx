@@ -12,6 +12,8 @@ import MicronutritionQuizGame from "@/components/brainfest/MicronutritionQuizGam
 import MicronutritionQuizCard from "@/components/brainfest/MicronutritionQuizCard";
 import VitaminDQuizGame from "@/components/brainfest/VitaminDQuizGame";
 import VitaminDQuizCard from "@/components/brainfest/VitaminDQuizCard";
+import VitaminDLightQuizGame from "@/components/brainfest/VitaminDLightQuizGame";
+import VitaminDLightQuizCard from "@/components/brainfest/VitaminDLightQuizCard";
 import PlantsQuizGame from "@/components/brainfest/PlantsQuizGame";
 import PlantsQuizCard from "@/components/brainfest/PlantsQuizCard";
 import SardinesQuizGame from "@/components/brainfest/SardinesQuizGame";
@@ -22,7 +24,7 @@ import Footer from "@/components/brainfest/Footer";
 import GdprBanner from "@/components/brainfest/GdprBanner";
 
 // Category type - updated to match new navigation
-type CategoryId = "micronutrition" | "micronutrition2" | "plants" | "memory-music" | "memory-cards" | "sardines" | "carre-cognitif";
+type CategoryId = "micronutrition" | "micronutrition2" | "vitamind-light" | "plants" | "memory-music" | "memory-cards" | "sardines" | "carre-cognitif";
 
 // Map quiz categories to our category IDs
 const getCategoryForQuiz = (quiz: Quiz): "micronutrition" | "micronutrition2" | "plants" => {
@@ -43,7 +45,8 @@ const Index = () => {
   const [activeMusicalMemoryLevel, setActiveMusicalMemoryLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeMemoryPairsLevel, setActiveMemoryPairsLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeMicronutritionLevel, setActiveMicronutritionLevel] = useState<1 | 2 | 3 | null>(null);
-  const [activeVitaminDLevel, setActiveVitaminDLevel] = useState<1 | 2 | 3 | 4 | null>(null);
+  const [activeVitaminDLevel, setActiveVitaminDLevel] = useState<1 | 2 | 3 | null>(null);
+  const [activeVitaminDLightLevel, setActiveVitaminDLightLevel] = useState<1 | 2 | 3 | 4 | null>(null);
   const [activePlantsLevel, setActivePlantsLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeSardinesLevel, setActiveSardinesLevel] = useState<1 | 2 | 3 | 4 | null>(null);
   const [showCarreCognitif, setShowCarreCognitif] = useState(false);
@@ -106,8 +109,12 @@ const Index = () => {
     setActiveMicronutritionLevel(level);
   };
 
-  const handlePlayVitaminD = (level: 1 | 2 | 3 | 4) => {
+  const handlePlayVitaminD = (level: 1 | 2 | 3) => {
     setActiveVitaminDLevel(level);
+  };
+
+  const handlePlayVitaminDLight = (level: 1 | 2 | 3 | 4) => {
+    setActiveVitaminDLightLevel(level);
   };
 
   const handlePlayPlants = (level: 1 | 2 | 3) => {
@@ -127,12 +134,20 @@ const Index = () => {
     }
   };
 
-  const handleVitaminDLevelComplete = (level: 1 | 2 | 3 | 4) => {
+  const handleVitaminDLevelComplete = (level: 1 | 2 | 3) => {
     setCompletedVitaminDLevels(prev => [...new Set([...prev, level])]);
-    if (level < 4) {
-      setActiveVitaminDLevel((level + 1) as 1 | 2 | 3 | 4);
+    if (level < 3) {
+      setActiveVitaminDLevel((level + 1) as 1 | 2 | 3);
     } else {
       setActiveVitaminDLevel(null);
+    }
+  };
+
+  const handleVitaminDLightLevelComplete = (level: 1 | 2 | 3 | 4) => {
+    if (level < 4) {
+      setActiveVitaminDLightLevel((level + 1) as 1 | 2 | 3 | 4);
+    } else {
+      setActiveVitaminDLightLevel(null);
     }
   };
 
@@ -160,6 +175,7 @@ const Index = () => {
     setActiveMemoryPairsLevel(null);
     setActiveMicronutritionLevel(null);
     setActiveVitaminDLevel(null);
+    setActiveVitaminDLightLevel(null);
     setActivePlantsLevel(null);
     setActiveSardinesLevel(null);
     setShowCarreCognitif(false);
@@ -187,6 +203,18 @@ const Index = () => {
         language={language}
         onBack={handleBackToHome}
         onLevelComplete={handleVitaminDLevelComplete}
+      />
+    );
+  }
+
+  // Show Vitamin D Light Quiz Game
+  if (activeVitaminDLightLevel) {
+    return (
+      <VitaminDLightQuizGame
+        level={activeVitaminDLightLevel}
+        language={language}
+        onBack={handleBackToHome}
+        onLevelComplete={handleVitaminDLightLevelComplete}
       />
     );
   }
@@ -427,7 +455,7 @@ const Index = () => {
               
               {/* Mobile: vertical stack */}
               <div className="md:hidden flex flex-col gap-4 min-w-0">
-                {[1, 2, 3, 4].map((level, index) => (
+                {[1, 2, 3].map((level, index) => (
                   <motion.div
                     key={level}
                     initial={{ opacity: 0, y: 15 }}
@@ -436,10 +464,80 @@ const Index = () => {
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                   >
                     <VitaminDQuizCard 
-                      level={level as 1 | 2 | 3 | 4} 
+                      level={level as 1 | 2 | 3} 
                       language={language} 
                       onPlay={handlePlayVitaminD}
                       isCompleted={completedVitaminDLevels.includes(level)}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+              
+              {/* Desktop: grid */}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3].map((level, index) => (
+                  <motion.div
+                    key={level}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <VitaminDQuizCard 
+                      level={level as 1 | 2 | 3} 
+                      language={language} 
+                      onPlay={handlePlayVitaminD}
+                      isCompleted={completedVitaminDLevels.includes(level)}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.section>
+          )}
+
+          {/* Vitamin D Light Quiz - NEW "Que la lumière soit" Quiz */}
+          {selectedCategory === "vitamind-light" && (
+            <motion.section 
+              className="mt-10 sm:mt-12 md:mt-14 mb-10 sm:mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-amber-100 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
+                  🌅
+                </span>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  {language === "fr" ? "Vitamine D, que la lumière soit" : "Vitamin D, let there be light"}
+                </h2>
+                <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
+              </div>
+              
+              {/* Description */}
+              <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
+                <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl">
+                  {language === "fr" 
+                    ? "Décryptez les liens entre lumière, hormones et métabolisme. Un quiz chronométré pour aiguiser votre compréhension endocrinienne."
+                    : "Decipher the links between light, hormones and metabolism. A timed quiz to sharpen your endocrine understanding."
+                  }
+                </p>
+              </div>
+              
+              {/* Mobile: vertical stack */}
+              <div className="md:hidden flex flex-col gap-4 min-w-0">
+                {[1, 2, 3, 4].map((level, index) => (
+                  <motion.div
+                    key={level}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                  >
+                    <VitaminDLightQuizCard 
+                      level={level as 1 | 2 | 3 | 4} 
+                      language={language} 
+                      onPlay={handlePlayVitaminDLight}
                     />
                   </motion.div>
                 ))}
@@ -455,11 +553,10 @@ const Index = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                   >
-                    <VitaminDQuizCard 
+                    <VitaminDLightQuizCard 
                       level={level as 1 | 2 | 3 | 4} 
                       language={language} 
-                      onPlay={handlePlayVitaminD}
-                      isCompleted={completedVitaminDLevels.includes(level)}
+                      onPlay={handlePlayVitaminDLight}
                     />
                   </motion.div>
                 ))}
