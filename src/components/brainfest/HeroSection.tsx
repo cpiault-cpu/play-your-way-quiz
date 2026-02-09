@@ -1,6 +1,7 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Language } from "@/data/quizData";
 import { useRef, useState, useEffect } from "react";
+import wellnessHero from "@/assets/wellness-hero.png";
 
 type CategoryId = "micronutrition" | "micronutrition2" | "vitamind-light" | "plants" | "memory-music" | "memory-cards" | "sardines" | "carre-cognitif";
 
@@ -12,16 +13,16 @@ interface Category {
 
 const heroTexts = {
   fr: [
-    "Une alimentation anti-inflammatoire riche en oméga-3 est bénéfique pour la santé notamment le cerveau. Chez Maison Peita cette notion est au cœur de notre ADN.",
-    "Apprendre, stimuler sa mémoire, jouer… autant d'exercices qui entretiennent la vivacité et le plaisir de comprendre.",
-    "C'est pourquoi nous vous proposons ces petits jeux d'entraînement de la mémoire et partageons avec vous nos connaissances en naturopathie et micronutrition pour cultiver vos connaissances et votre curiosité.",
-    "Les matières et les jeux seront actualisés régulièrement. Stay tuned..."
+    "Une alimentation anti-inflammatoire riche en oméga-3 nourrit votre cerveau et protège votre vitalité. Chez Maison Peita, cette conviction guide chacune de nos créations.",
+    "Stimuler sa mémoire, apprendre, jouer… autant de rituels qui entretiennent la vivacité d'esprit et le plaisir de comprendre.",
+    "Nous partageons avec vous nos connaissances en naturopathie et micronutrition pour cultiver votre bien-être au quotidien.",
+    "De nouveaux contenus et exercices vous attendent régulièrement. Prenez soin de vous, restez curieux."
   ],
   en: [
-    "An anti-inflammatory diet rich in omega-3s is beneficial for health, especially the brain. At Maison Peita, this concept is at the heart of our DNA.",
-    "Learning, stimulating memory, playing… all exercises that maintain alertness and the joy of understanding.",
-    "That's why we offer these little memory training games and share our knowledge in naturopathy and micronutrition to cultivate your knowledge and curiosity.",
-    "Topics and games will be updated regularly. Stay tuned..."
+    "An anti-inflammatory diet rich in omega-3s nourishes your brain and protects your vitality. At Maison Peita, this conviction guides each of our creations.",
+    "Stimulating memory, learning, playing… rituals that maintain mental sharpness and the joy of understanding.",
+    "We share our knowledge in naturopathy and micronutrition to cultivate your daily well-being.",
+    "New content and exercises await you regularly. Take care of yourself, stay curious."
   ]
 };
 
@@ -50,32 +51,14 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
   const savoirScrollRef = useRef<HTMLDivElement>(null);
   const entrainerScrollRef = useRef<HTMLDivElement>(null);
   const introScrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollIntro, setCanScrollIntro] = useState(true);
-
-  useEffect(() => {
-    const checkScroll = () => {
-      if (introScrollRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = introScrollRef.current;
-        setCanScrollIntro(scrollLeft < scrollWidth - clientWidth - 10);
-      }
-    };
-
-    const element = introScrollRef.current;
-    if (element) {
-      checkScroll();
-      element.addEventListener('scroll', checkScroll);
-      return () => element.removeEventListener('scroll', checkScroll);
-    }
-  }, []);
 
   return (
     <>
-      {/* Partie haute compacte - fond #B6BDB0 */}
+      {/* Partie haute - fond #B6BDB0 */}
       <section className="relative overflow-hidden" style={{ backgroundColor: '#B6BDB0' }}>
-        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-2 md:py-6">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-3 md:py-6">
           {/* Top bar with language toggle and logo */}
           <div className="flex items-center justify-between mb-4 md:mb-6">
-            {/* Logo */}
             <motion.a 
               href="https://www.peita.fr" 
               target="_blank" 
@@ -92,43 +75,52 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               />
             </motion.a>
             
-            {/* Language toggle */}
             <motion.button
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
               onClick={onToggleLanguage}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white border border-[#B6BDB0] shadow-sm"
-              style={{ borderRadius: '10px', color: '#000000' }}
+              className="flex items-center gap-2 px-4 py-2 text-sm bg-white border border-[#B6BDB0] shadow-sm"
+              style={{ borderRadius: '12px', color: '#000000' }}
               aria-label={language === "fr" ? "Switch to English" : "Passer en Français"}
             >
-              <span className="text-base">{language === "fr" ? "🇬🇧" : "🇫🇷"}</span>
-              <span className="font-medium text-xs">{language === "fr" ? "EN" : "FR"}</span>
+              <span className="text-lg">{language === "fr" ? "🇬🇧" : "🇫🇷"}</span>
+              <span className="font-semibold text-sm">{language === "fr" ? "EN" : "FR"}</span>
             </motion.button>
           </div>
 
-          {/* Compact content block */}
+          {/* Content block with wellness positioning */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="bg-white p-2 md:p-4 border border-[#B6BDB0]"
-            style={{ borderRadius: '12px', boxShadow: '0 2px 6px rgba(0,0,0,0.08)' }}
+            className="bg-white p-4 md:p-6 border border-[#B6BDB0]"
+            style={{ borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.06)' }}
           >
-            {/* Title and tagline on same line */}
-            <div className="flex flex-wrap items-center gap-1 md:gap-2 mb-2 md:mb-3">
-              <h1 
-                className="font-semibold"
-                style={{ fontFamily: 'Montserrat, sans-serif', color: '#000000', lineHeight: 1.3, fontSize: '20px' }}
-              >
-                {language === "fr" ? "Testez vos connaissances et votre mémoire" : "Test your knowledge and memory"}
-              </h1>
-              <span 
-                className="inline-flex items-center px-2 py-0.5 bg-[#87917E] text-white font-medium"
-                style={{ borderRadius: '8px', fontSize: '18px' }}
-              >
-                {language === "fr" ? "Apprenez. Jouez. Gagnez." : "Learn. Play. Win."}
-              </span>
+            {/* Wellness-oriented header */}
+            <div className="flex flex-col gap-2 mb-4">
+              <div className="flex items-center gap-3">
+                <img 
+                  src={wellnessHero} 
+                  alt="Bien-être et nature" 
+                  className="w-14 h-14 md:w-16 md:h-16 rounded-xl object-cover flex-shrink-0"
+                  style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}
+                />
+                <div>
+                  <h1 
+                    className="font-bold leading-tight"
+                    style={{ fontFamily: 'Montserrat, sans-serif', color: '#2D3B2E', fontSize: '22px' }}
+                  >
+                    {language === "fr" ? "Votre pause bien-être cérébral" : "Your brain wellness break"}
+                  </h1>
+                  <p
+                    className="mt-1 font-medium"
+                    style={{ fontFamily: 'Montserrat, sans-serif', color: '#5A6B5C', fontSize: '16px' }}
+                  >
+                    {language === "fr" ? "Mémoire · Vitalité · Prévention" : "Memory · Vitality · Prevention"}
+                  </p>
+                </div>
+              </div>
             </div>
             
             {/* Horizontal scroll carousel for intro text */}
@@ -147,21 +139,20 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                   return (
                     <div 
                       key={index}
-                      className="relative flex-shrink-0 w-[calc(100%-16px)] md:w-[24%] p-3 pb-6 bg-[#f5f5f5] border border-[#E0E0E0] snap-start"
+                      className="relative flex-shrink-0 w-[calc(100%-16px)] md:w-[24%] p-4 pb-7 bg-[#f7f6f3] border border-[#e0ddd6] snap-start"
                       style={{ 
-                        borderRadius: '8px',
+                        borderRadius: '12px',
                         fontFamily: 'Montserrat, sans-serif', 
-                        color: '#333333',
+                        color: '#2D3B2E',
                         fontSize: '16px',
-                        lineHeight: 1.5
+                        lineHeight: 1.6
                       }}
                     >
                       {text}
-                      {/* Scroll arrow inside each block - hidden on last block and desktop */}
                       {!isLastBlock && (
                         <span 
-                          className="absolute bottom-2 right-3 text-[#87917E] text-sm md:hidden"
-                          style={{ fontSize: '14px' }}
+                          className="absolute bottom-2 right-3 text-[#87917E] md:hidden"
+                          style={{ fontSize: '16px' }}
                         >
                           →
                         </span>
@@ -175,7 +166,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
         </div>
       </section>
 
-      {/* Partie basse - fond #87917E avec bordure de séparation */}
+      {/* Partie basse - fond #87917E */}
       <section 
         className="relative overflow-hidden"
         style={{ 
@@ -183,60 +174,59 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
           borderTop: '1px solid #7A8278'
         }}
       >
-        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-2 md:py-6">
-          {/* Category buttons - Two sections */}
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-3 md:py-6">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.2 }}
-            className="flex flex-col gap-2 md:gap-6"
+            className="flex flex-col gap-3 md:gap-6"
           >
-            {/* SAVOIR Section */}
-            <div className="flex flex-col items-start w-full gap-1 md:gap-0">
+            {/* APPRENDRE Section */}
+            <div className="flex flex-col items-start w-full gap-1.5 md:gap-0">
               <h3 
-                className="text-sm md:text-lg tracking-wide mb-1 md:mb-4"
+                className="text-sm md:text-lg tracking-wide mb-1 md:mb-4 flex items-center gap-2"
                 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, color: '#FFFFFF' }}
               >
-                {language === "fr" ? "APPRENDRE" : "LEARN"}
+                <span className="text-base md:text-xl">🌱</span>
+                {language === "fr" ? "CULTIVEZ VOS SAVOIRS" : "CULTIVATE YOUR KNOWLEDGE"}
               </h3>
-              {/* Mobile: Horizontal scroll | Desktop: Grid */}
               <div 
                 ref={savoirScrollRef}
-                className="flex md:grid md:grid-cols-3 gap-2 md:gap-4 w-full overflow-x-auto md:overflow-visible pb-1 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0"
+                className="flex md:grid md:grid-cols-3 gap-2.5 md:gap-4 w-full overflow-x-auto md:overflow-visible pb-1 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0"
                 style={{ 
                   WebkitOverflowScrolling: 'touch',
                   scrollbarWidth: 'none',
                   msOverflowStyle: 'none'
                 }}
               >
-                {savoirCategories.map((cat, index) => {
+                {savoirCategories.map((cat) => {
                   const needsWrap = cat.id === 'plants' || cat.id === 'vitamind-light' || cat.id === 'sardines' || cat.id === 'micronutrition2';
                   const isSelected = selectedCategory === cat.id;
                   return (
                     <motion.button
                       key={cat.id}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: isSelected ? 1.05 : 1 }}
-                      transition={{ duration: 0.2, ease: "easeOut" }}
-                      whileTap={{ scale: 0.95 }}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: isSelected ? 1.03 : 1 }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                      whileTap={{ scale: 0.97 }}
                       onClick={() => onSelectCategory(cat.id)}
-                        className={`flex-shrink-0 ${needsWrap ? 'w-[48%]' : 'w-[45%]'} h-[44px] md:h-auto md:w-full border flex items-center justify-center gap-1.5 md:gap-2.5 px-2 md:px-3 py-1.5 md:py-3`}
+                      className={`flex-shrink-0 ${needsWrap ? 'w-[48%]' : 'w-[45%]'} min-h-[52px] md:h-auto md:w-full border flex items-center justify-center gap-2 md:gap-2.5 px-3 md:px-4 py-2.5 md:py-3.5`}
                       style={{ 
                         fontFamily: 'Montserrat, sans-serif', 
-                        fontWeight: 500, 
-                        fontSize: needsWrap ? '10px' : '13px', 
-                        color: '#000000',
+                        fontWeight: 600, 
+                        fontSize: needsWrap ? '11px' : '14px', 
+                        color: '#1a2b1c',
                         backgroundColor: isSelected ? '#d5e6dd' : '#FFFFFF',
                         borderColor: isSelected ? '#b8d4c4' : '#E0E0E0',
-                        borderRadius: '12px',
-                        boxShadow: isSelected ? '0 4px 12px rgba(213, 230, 221, 0.5)' : '0 2px 8px rgba(0,0,0,0.12)',
-                        transition: 'all 0.2s ease'
+                        borderRadius: '14px',
+                        boxShadow: isSelected ? '0 4px 14px rgba(213, 230, 221, 0.6)' : '0 2px 8px rgba(0,0,0,0.08)',
+                        transition: 'all 0.25s ease'
                       }}
                     >
-                        <span className="text-lg md:text-2xl flex-shrink-0">{cat.emoji}</span>
+                      <span className="text-xl md:text-2xl flex-shrink-0">{cat.emoji}</span>
                       <span 
                         className={needsWrap ? "text-center leading-tight" : "whitespace-nowrap"}
-                        style={needsWrap ? { lineHeight: '1.2' } : undefined}
+                        style={needsWrap ? { lineHeight: '1.3' } : undefined}
                       >
                         {cat.name[language]}
                       </span>
@@ -246,48 +236,48 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               </div>
             </div>
 
-            {/* S'ENTRAINER Section */}
-            <div className="flex flex-col items-start w-full gap-1 md:gap-0">
+            {/* JOUER Section */}
+            <div className="flex flex-col items-start w-full gap-1.5 md:gap-0">
               <h3 
-                className="text-sm md:text-lg tracking-wide mb-1 md:mb-4"
+                className="text-sm md:text-lg tracking-wide mb-1 md:mb-4 flex items-center gap-2"
                 style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 700, color: '#FFFFFF' }}
               >
-                {language === "fr" ? "JOUER" : "PLAY"}
+                <span className="text-base md:text-xl">🧠</span>
+                {language === "fr" ? "ENTRAÎNEZ VOTRE MÉMOIRE" : "TRAIN YOUR MEMORY"}
               </h3>
-              {/* Mobile: Horizontal scroll | Desktop: Grid */}
               <div 
                 ref={entrainerScrollRef}
-                className="flex md:grid md:grid-cols-3 gap-2 md:gap-4 w-full overflow-x-auto md:overflow-visible pb-1 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0"
+                className="flex md:grid md:grid-cols-3 gap-2.5 md:gap-4 w-full overflow-x-auto md:overflow-visible pb-1 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0"
                 style={{ 
                   WebkitOverflowScrolling: 'touch',
                   scrollbarWidth: 'none',
                   msOverflowStyle: 'none'
                 }}
               >
-                {entrainerCategories.map((cat, index) => {
+                {entrainerCategories.map((cat) => {
                   const isSelected = selectedCategory === cat.id;
                   return (
                     <motion.button
                       key={cat.id}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: isSelected ? 1.05 : 1 }}
-                      transition={{ duration: 0.2, ease: "easeOut" }}
-                      whileTap={{ scale: 0.95 }}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: isSelected ? 1.03 : 1 }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                      whileTap={{ scale: 0.97 }}
                       onClick={() => onSelectCategory(cat.id)}
-                      className="flex-shrink-0 w-[45%] h-[44px] md:h-auto md:w-full border flex items-center justify-center gap-1.5 md:gap-2.5 px-2 md:px-3 py-1.5 md:py-3"
+                      className="flex-shrink-0 w-[45%] min-h-[52px] md:h-auto md:w-full border flex items-center justify-center gap-2 md:gap-2.5 px-3 md:px-4 py-2.5 md:py-3.5"
                       style={{ 
                         fontFamily: 'Montserrat, sans-serif', 
-                        fontWeight: 500, 
-                        fontSize: '13px', 
-                        color: '#000000',
+                        fontWeight: 600, 
+                        fontSize: '14px', 
+                        color: '#1a2b1c',
                         backgroundColor: isSelected ? '#d5e6dd' : '#FFFFFF',
                         borderColor: isSelected ? '#b8d4c4' : '#E0E0E0',
-                        borderRadius: '12px',
-                        boxShadow: isSelected ? '0 4px 12px rgba(213, 230, 221, 0.5)' : '0 2px 8px rgba(0,0,0,0.12)',
-                        transition: 'all 0.2s ease'
+                        borderRadius: '14px',
+                        boxShadow: isSelected ? '0 4px 14px rgba(213, 230, 221, 0.6)' : '0 2px 8px rgba(0,0,0,0.08)',
+                        transition: 'all 0.25s ease'
                       }}
                     >
-                      <span className="text-lg md:text-2xl flex-shrink-0">{cat.emoji}</span>
+                      <span className="text-xl md:text-2xl flex-shrink-0">{cat.emoji}</span>
                       <span className="whitespace-nowrap">{cat.name[language]}</span>
                     </motion.button>
                   );
