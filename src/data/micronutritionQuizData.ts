@@ -669,8 +669,8 @@ export const successMessages = {
     en: "Ready to go further?"
   },
   finalComplete: {
-    fr: "Maîtrise acquise. Ces connaissances vous seront utiles.",
-    en: "Mastery acquired. This knowledge will be useful to you."
+    fr: "Bravo ! Agréable ces petits rappels de notions n'est-ce pas ? On continue bientôt.",
+    en: "Bravo! Nice little knowledge refreshers, aren't they? More coming soon."
   },
   tryAgain: {
     fr: "Continuons à renforcer ces notions. Une nouvelle lecture vous attend.",

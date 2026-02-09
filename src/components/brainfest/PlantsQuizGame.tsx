@@ -196,7 +196,7 @@ const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuiz
           <div className="flex items-center gap-2">
             <span className="text-lg">{getLevelEmoji()}</span>
             <h1 className="text-lg font-bold text-foreground">
-              {language === "fr" ? "Plantes médicinales" : "Medicinal Plants"} - {levelData?.title[language]}
+              {language === "fr" ? "Plantes santé" : "Health Plants"} - {levelData?.title[language]}
             </h1>
           </div>
 
@@ -223,7 +223,7 @@ const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuiz
               </div>
               
               <h2 className="text-2xl font-bold text-foreground mb-4">
-                {language === "fr" ? "Plantes médicinales" : "Medicinal Plants"} - {levelData?.title[language]}
+                {language === "fr" ? "Plantes santé" : "Health Plants"} - {levelData?.title[language]}
               </h2>
               
               <p className="text-muted-foreground mb-8 max-w-md">

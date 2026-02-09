@@ -539,8 +539,8 @@ export const plantsSuccessMessages = {
     en: "🌿 Excellent! Your plant memory is sharpening.\nReady to go further?"
   },
   finalComplete: {
-    fr: "🌿 Niveau expert atteint !\nVotre cerveau maîtrise désormais les plantes médicinales et leurs usages.",
-    en: "🌿 Expert level reached!\nYour brain now masters medicinal plants and their uses."
+    fr: "L'utilisation des plantes n'est pas anodine. Certaines peuvent être déconseillées selon des facteurs individuels comme les médicaments, les antécédents médicaux ou des allergies. Chaque organisme réagit différemment. Il est toujours essentiel d'être accompagné par un professionnel de santé pour un usage sûr et adapté.",
+    en: "The use of plants is not trivial. Some may be inadvisable depending on individual factors such as medications, medical history or allergies. Each body reacts differently. It is always essential to be accompanied by a health professional for safe and appropriate use."
   },
   tryAgain: {
     fr: "Relisez attentivement le texte reformulé pour mieux ancrer ces informations.",

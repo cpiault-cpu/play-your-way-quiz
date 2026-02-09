@@ -439,7 +439,7 @@ const Index = () => {
                   ☀️
                 </span>
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                  {language === "fr" ? "Micronutrition 2 : Vitamine D" : "Micronutrition 2: Vitamin D"}
+                  {language === "fr" ? "VitD ça dépend" : "VitD it depends"}
                 </h2>
                 <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
               </div>
@@ -580,7 +580,7 @@ const Index = () => {
                   🧠
                 </span>
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                  {language === "fr" ? "Micronutrition" : "Micronutrition"}
+                  {language === "fr" ? "Micronutrition 1" : "Micronutrition 1"}
                 </h2>
                 <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
               </div>
@@ -651,7 +651,7 @@ const Index = () => {
                   🌿
                 </span>
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                  {language === "fr" ? "Plantes médicinales" : "Medicinal Plants"}
+                  {language === "fr" ? "Plantes santé" : "Health Plants"}
                 </h2>
                 <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
               </div>
@@ -722,7 +722,7 @@ const Index = () => {
                   🐟
                 </span>
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                  {language === "fr" ? "Petites Sardines" : "Little Sardines"}
+                  {language === "fr" ? "Sardines, Sardines, Mais pourquoi ?" : "Sardines, Sardines, But why?"}
                 </h2>
                 <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
               </div>
