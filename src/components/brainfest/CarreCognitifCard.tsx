@@ -41,8 +41,8 @@ const CarreCognitifCard = ({ language, onPlay }: CarreCognitifCardProps) => {
           style={{ fontFamily: 'Montserrat, sans-serif' }}
         >
           {language === "fr" 
-            ? "Un puzzle visuel pour stimuler votre logique et votre déduction.\n\nComplétez la grille en respectant une règle invisible. Mémoire de travail, reconnaissance de motifs, intelligence fluide... Accrochez vous :-) Découvrez le pouvoir de votre cerveau !"
-            : "A visual puzzle to stimulate your logic and deduction.\n\nComplete the grid following an invisible rule. Working memory, pattern recognition, fluid intelligence... Hold on tight :-) Discover the power of your brain!"
+            ? "Un puzzle visuel pour stimuler votre logique et votre déduction.\n\nComplétez la grille en respectant une règle invisible. Mémoire de travail, reconnaissance de motifs, intelligence fluide... Découvrez le pouvoir de votre cerveau !\n\nAttention, le niveau 5 est quand même pas facile du tout"
+            : "A visual puzzle to stimulate your logic and deduction.\n\nComplete the grid following an invisible rule. Working memory, pattern recognition, fluid intelligence... Discover the power of your brain!\n\nWarning, level 5 is really not easy at all"
           }
         </p>
 

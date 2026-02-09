@@ -218,6 +218,11 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
 
   // Initialize AudioContext - must resume on user interaction for mobile browsers
   const initAudio = useCallback(async () => {
+    // If the context was closed (e.g. by cleanup), recreate it
+    if (audioContextRef.current && audioContextRef.current.state === "closed") {
+      audioContextRef.current = null;
+    }
+    
     // Create AudioContext if it doesn't exist
     if (!audioContextRef.current) {
       const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
@@ -960,11 +965,12 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
     }
   }, [gameState, playerInput, sequence, playNote, playSequence, generateSequence, config, seriesCompleted, currentSeries, getNotesForRound, usedSequences]);
 
-  // Cleanup audio context on unmount
+  // Cleanup audio context on unmount - only close, don't null
   useEffect(() => {
     return () => {
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
+      if (audioContextRef.current && audioContextRef.current.state !== "closed") {
+        audioContextRef.current.close().catch(() => {});
+        audioContextRef.current = null;
       }
     };
   }, []);
