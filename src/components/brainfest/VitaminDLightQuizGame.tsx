@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
+import FishIcon from "@/components/brainfest/icons/FishIcon";
 
 interface VitaminDLightQuizGameProps {
   level: 1 | 2 | 3 | 4;
@@ -206,9 +207,10 @@ const VitaminDLightQuizGame = ({ level, language, onBack, onLevelComplete }: Vit
               
               <p className="text-muted-foreground mb-8 max-w-md text-sm">
                 {language === "fr"
-                  ? "Décryptez les liens entre lumière, hormones et métabolisme. Un quiz chronométré pour aiguiser votre compréhension endocrinienne."
-                  : "Decipher the links between light, hormones and metabolism. A timed quiz to sharpen your endocrine understanding."
+                  ? "Faites la lumière sur les liens (un peu secrets) entre soleil, hormones et vitamine D."
+                  : "Shed light on the (somewhat secret) links between sun, hormones and vitamin D."
                 }
+                <FishIcon className="inline-block w-5 h-5 ml-2 align-middle" color="#4A6741" />
               </p>
 
               <div className="w-full max-w-sm space-y-4">
