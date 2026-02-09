@@ -22,6 +22,7 @@ import CarreCognitifGame from "@/components/brainfest/CarreCognitifGame";
 import CarreCognitifCard from "@/components/brainfest/CarreCognitifCard";
 import Footer from "@/components/brainfest/Footer";
 import GdprBanner from "@/components/brainfest/GdprBanner";
+import FishIcon from "@/components/brainfest/icons/FishIcon";
 
 // Category type - updated to match new navigation
 type CategoryId = "micronutrition" | "micronutrition2" | "vitamind-light" | "plants" | "memory-music" | "memory-cards" | "sardines" | "carre-cognitif";
@@ -518,9 +519,10 @@ const Index = () => {
               <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
                 <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl">
                   {language === "fr" 
-                    ? "Décryptez les liens entre lumière, hormones et métabolisme. Un quiz chronométré pour aiguiser votre compréhension endocrinienne."
-                    : "Decipher the links between light, hormones and metabolism. A timed quiz to sharpen your endocrine understanding."
+                    ? "Faites la lumière sur les liens (un peu secrets) entre soleil, hormones et vitamine D."
+                    : "Shed light on the (somewhat secret) links between sun, hormones and vitamin D."
                   }
+                  <FishIcon className="inline-block w-5 h-5 ml-2 align-middle" color="#4A6741" />
                 </p>
               </div>
               
