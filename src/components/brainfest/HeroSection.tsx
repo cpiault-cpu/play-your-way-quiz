@@ -29,7 +29,7 @@ const savoirCategories: Category[] = [
   { id: "sardines", name: { fr: "Sardines", en: "Sardines" }, emoji: "🐟" },
   { id: "micronutrition", name: { fr: "Micronutrition", en: "Micronutrition" }, emoji: "💊" },
   { id: "micronutrition2", name: { fr: "Vitamine D", en: "Vitamin D" }, emoji: "☀️" },
-  { id: "vitamind-light", name: { fr: "Lumière", en: "Light" }, emoji: "🌅" },
+  { id: "vitamind-light", name: { fr: "VitD-Que la lumière soit", en: "VitD-Let there be light" }, emoji: "🌅" },
   { id: "plants", name: { fr: "Plantes", en: "Plants" }, emoji: "🌿" },
 ];
 
@@ -211,6 +211,8 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
               >
                 {savoirCategories.map((cat, index) => {
                   const isPlantes = cat.id === 'plants';
+                  const isVitDLight = cat.id === 'vitamind-light';
+                  const needsWrap = isPlantes || isVitDLight;
                   const isSelected = selectedCategory === cat.id;
                   return (
                     <motion.button
@@ -220,11 +222,11 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                       transition={{ duration: 0.2, ease: "easeOut" }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => onSelectCategory(cat.id)}
-                        className="flex-shrink-0 w-[45%] h-[44px] md:h-auto md:w-full border flex items-center justify-center gap-1.5 md:gap-2.5 px-2 md:px-3 py-1.5 md:py-3"
+                        className={`flex-shrink-0 ${needsWrap ? 'w-[48%]' : 'w-[45%]'} h-[44px] md:h-auto md:w-full border flex items-center justify-center gap-1.5 md:gap-2.5 px-2 md:px-3 py-1.5 md:py-3`}
                       style={{ 
                         fontFamily: 'Montserrat, sans-serif', 
                         fontWeight: 500, 
-                        fontSize: isPlantes ? '12px' : '13px', 
+                        fontSize: needsWrap ? '11px' : '13px', 
                         color: '#000000',
                         backgroundColor: isSelected ? '#d5e6dd' : '#FFFFFF',
                         borderColor: isSelected ? '#b8d4c4' : '#E0E0E0',
@@ -235,8 +237,8 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                     >
                         <span className="text-lg md:text-2xl flex-shrink-0">{cat.emoji}</span>
                       <span 
-                        className={isPlantes ? "text-center leading-tight" : "whitespace-nowrap"}
-                        style={isPlantes ? { lineHeight: '1.2' } : undefined}
+                        className={(isPlantes || cat.id === 'vitamind-light') ? "text-center leading-tight" : "whitespace-nowrap"}
+                        style={(isPlantes || cat.id === 'vitamind-light') ? { lineHeight: '1.2' } : undefined}
                       >
                         {cat.name[language]}
                       </span>
