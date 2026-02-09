@@ -23,7 +23,7 @@ interface VitaminDLightQuizGameProps {
 
 type GamePhase = "email" | "intro" | "reading" | "quiz" | "results";
 
-const READING_TIME = 15;
+const READING_TIME = 10;
 const ANSWER_TIME = 10;
 
 const VitaminDLightQuizGame = ({ level, language, onBack, onLevelComplete }: VitaminDLightQuizGameProps) => {
@@ -261,8 +261,8 @@ const VitaminDLightQuizGame = ({ level, language, onBack, onLevelComplete }: Vit
               
               <p className="text-muted-foreground mb-8 max-w-md">
                 {language === "fr" 
-                  ? "Vous allez lire un texte pendant 15 secondes. Mémorisez les informations clés, puis répondez à la question en 10 secondes."
-                  : "You will read a text for 15 seconds. Memorize the key information, then answer the question in 10 seconds."
+                  ? "Vous allez lire un texte pendant 10 secondes. Mémorisez les informations clés, puis répondez à la question en 10 secondes."
+                  : "You will read a text for 10 seconds. Memorize the key information, then answer the question in 10 seconds."
                 }
               </p>
 
