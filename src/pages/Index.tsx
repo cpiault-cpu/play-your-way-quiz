@@ -771,8 +771,8 @@ const Index = () => {
               <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
                 <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl whitespace-pre-line">
                   {language === "fr"
-                    ? "🧩 Un puzzle visuel inspiré du sudoku pour stimuler votre logique et votre déduction.\n\nComplétez la grille en respectant une règle invisible. Mémoire de travail, reconnaissance de motifs, intelligence fluide... Découvrez le pouvoir de votre cerveau !"
-                    : "🧩 A visual puzzle inspired by sudoku to stimulate your logic and deduction.\n\nComplete the grid following an invisible rule. Working memory, pattern recognition, fluid intelligence... Discover the power of your brain!"
+                    ? "🧩 Un puzzle visuel pour stimuler votre logique et votre déduction.\n\nComplétez la grille en respectant une règle invisible. Mémoire de travail, reconnaissance de motifs, intelligence fluide... Découvrez le pouvoir de votre cerveau !"
+                    : "🧩 A visual puzzle to stimulate your logic and deduction.\n\nComplete the grid following an invisible rule. Working memory, pattern recognition, fluid intelligence... Discover the power of your brain!"
                   }
                 </p>
               </div>
