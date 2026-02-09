@@ -173,7 +173,7 @@ export const uiTexts = {
     2: { fr: "Charge Mentale", en: "Mental Load" },
     3: { fr: "Règle Double", en: "Double Rule" },
     4: { fr: "Règle Cachée", en: "Hidden Rule" },
-    5: { fr: "Sudoku Mémoire", en: "Memory Sudoku" },
+    5: { fr: "Grille Mémoire", en: "Memory Grid" },
     6: { fr: "Piège Cérébral", en: "Brain Trap" },
     7: { fr: "Fausse Évidence", en: "False Evidence" },
   },
@@ -239,14 +239,14 @@ export const levelColors = {
   7: "#FFD700", // Or
 };
 
-// Generate a valid sudoku-style grid
+// Generate a valid latin-square grid
 export function generateValidGrid(size: 4 | 5, symbols: readonly string[]): string[][] {
   const grid: string[][] = [];
   
   for (let row = 0; row < size; row++) {
     grid[row] = [];
     for (let col = 0; col < size; col++) {
-      // Shift the pattern for each row to create a valid sudoku
+      // Shift the pattern for each row to create a valid grid
       const shift = row;
       const index = (col + shift) % size;
       grid[row][col] = symbols[index];
