@@ -43,7 +43,7 @@ const Index = () => {
   const [activeMusicalMemoryLevel, setActiveMusicalMemoryLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeMemoryPairsLevel, setActiveMemoryPairsLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeMicronutritionLevel, setActiveMicronutritionLevel] = useState<1 | 2 | 3 | null>(null);
-  const [activeVitaminDLevel, setActiveVitaminDLevel] = useState<1 | 2 | 3 | null>(null);
+  const [activeVitaminDLevel, setActiveVitaminDLevel] = useState<1 | 2 | 3 | 4 | null>(null);
   const [activePlantsLevel, setActivePlantsLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeSardinesLevel, setActiveSardinesLevel] = useState<1 | 2 | 3 | 4 | null>(null);
   const [showCarreCognitif, setShowCarreCognitif] = useState(false);
@@ -106,7 +106,7 @@ const Index = () => {
     setActiveMicronutritionLevel(level);
   };
 
-  const handlePlayVitaminD = (level: 1 | 2 | 3) => {
+  const handlePlayVitaminD = (level: 1 | 2 | 3 | 4) => {
     setActiveVitaminDLevel(level);
   };
 
@@ -127,10 +127,10 @@ const Index = () => {
     }
   };
 
-  const handleVitaminDLevelComplete = (level: 1 | 2 | 3) => {
+  const handleVitaminDLevelComplete = (level: 1 | 2 | 3 | 4) => {
     setCompletedVitaminDLevels(prev => [...new Set([...prev, level])]);
-    if (level < 3) {
-      setActiveVitaminDLevel((level + 1) as 1 | 2 | 3);
+    if (level < 4) {
+      setActiveVitaminDLevel((level + 1) as 1 | 2 | 3 | 4);
     } else {
       setActiveVitaminDLevel(null);
     }
@@ -427,7 +427,7 @@ const Index = () => {
               
               {/* Mobile: vertical stack */}
               <div className="md:hidden flex flex-col gap-4 min-w-0">
-                {[1, 2, 3].map((level, index) => (
+                {[1, 2, 3, 4].map((level, index) => (
                   <motion.div
                     key={level}
                     initial={{ opacity: 0, y: 15 }}
@@ -436,7 +436,7 @@ const Index = () => {
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                   >
                     <VitaminDQuizCard 
-                      level={level as 1 | 2 | 3} 
+                      level={level as 1 | 2 | 3 | 4} 
                       language={language} 
                       onPlay={handlePlayVitaminD}
                       isCompleted={completedVitaminDLevels.includes(level)}
@@ -446,8 +446,8 @@ const Index = () => {
               </div>
               
               {/* Desktop: grid */}
-              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[1, 2, 3].map((level, index) => (
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[1, 2, 3, 4].map((level, index) => (
                   <motion.div
                     key={level}
                     initial={{ opacity: 0, y: 15 }}
@@ -456,7 +456,7 @@ const Index = () => {
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                   >
                     <VitaminDQuizCard 
-                      level={level as 1 | 2 | 3} 
+                      level={level as 1 | 2 | 3 | 4} 
                       language={language} 
                       onPlay={handlePlayVitaminD}
                       isCompleted={completedVitaminDLevels.includes(level)}
