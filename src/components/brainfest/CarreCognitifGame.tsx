@@ -417,7 +417,7 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
               row.map((cell, colIndex) => (
                 <div
                   key={`${rowIndex}-${colIndex}`}
-                  className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center bg-gray-50 rounded-lg text-2xl"
+                  className="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center bg-gray-50 rounded-lg text-2xl sm:text-3xl"
                   style={{ borderRadius: "8px" }}
                 >
                   {cell}
@@ -497,7 +497,7 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
                     <motion.button
                       key={`${rowIndex}-${colIndex}`}
                       onClick={() => handleCellClick(rowIndex, colIndex)}
-                      className={`w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center text-2xl transition-all ${
+                      className={`w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center text-2xl sm:text-3xl transition-all ${
                         isEditable 
                           ? "cursor-pointer hover:bg-blue-50" 
                           : "cursor-default"
@@ -539,7 +539,7 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
                     <motion.button
                       key={symbol}
                       onClick={() => handleSymbolSelect(symbol)}
-                      className="w-14 h-14 flex items-center justify-center text-3xl bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow"
+                      className="w-16 h-16 flex items-center justify-center text-3xl sm:text-4xl bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow"
                       style={{ borderRadius: "12px" }}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
@@ -556,7 +556,7 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
           <Button
             onClick={handleValidate}
             disabled={!isGridComplete(grid)}
-            className="w-full py-6"
+            className="w-full py-7 text-lg"
             style={{ 
               backgroundColor: isGridComplete(grid) ? "#1E90FF" : "#CCCCCC",
               borderRadius: "12px",
