@@ -539,8 +539,8 @@ export const plantsSuccessMessages = {
     en: "🌿 Excellent! Your plant memory is sharpening.\nReady to go further?"
   },
   finalComplete: {
-    fr: "L'utilisation des plantes n'est pas anodine. Certaines peuvent être déconseillées selon des facteurs individuels comme les médicaments, les antécédents médicaux ou des allergies. Chaque organisme réagit différemment. Il est toujours essentiel d'être accompagné par un professionnel de santé pour un usage sûr et adapté.",
-    en: "The use of plants is not trivial. Some may be inadvisable depending on individual factors such as medications, medical history or allergies. Each body reacts differently. It is always essential to be accompanied by a health professional for safe and appropriate use."
+    fr: "Bravo ! de nouvelles plantes seront présentées bientôt.\nAttention toute fois, l'utilisation des plantes n'est pas anodine. Certaines peuvent être déconseillées selon des facteurs individuels comme les médicaments, les antécédents médicaux .. ou des allergies . Chaque organisme réagit différemment. Il est toujours essentiel d'être accompagné par un professionnel de santé pour un usage sûr et adapté. Et de connaitre la provenance des plantes . La qualité des plantes dépend du sol dans lequel elles poussent",
+    en: "Congratulations! New plants will be presented soon.\nHowever, the use of plants is not trivial. Some may be inadvisable depending on individual factors such as medications, medical history, or allergies. Each body reacts differently. It is always essential to be accompanied by a health professional for safe and appropriate use. And to know the origin of the plants. The quality of plants depends on the soil in which they grow"
   },
   tryAgain: {
     fr: "Relisez attentivement le texte reformulé pour mieux ancrer ces informations.",
