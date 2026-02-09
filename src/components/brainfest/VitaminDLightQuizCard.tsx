@@ -103,13 +103,10 @@ const VitaminDLightQuizCard = ({ level, language, onPlay, isCompleted }: Vitamin
         {/* Features */}
         <div className="flex flex-wrap gap-2 mb-4">
           <span className="text-xs px-2 py-1 rounded-full bg-white/70 text-muted-foreground">
-            📖 15s {language === "fr" ? "lecture" : "reading"}
+            📖 10s {language === "fr" ? "lecture" : "reading"}
           </span>
           <span className="text-xs px-2 py-1 rounded-full bg-white/70 text-muted-foreground">
             ⏱️ 10s {language === "fr" ? "réponse" : "answer"}
-          </span>
-          <span className="text-xs px-2 py-1 rounded-full bg-white/70 text-muted-foreground">
-            📚 {language === "fr" ? "Source PubMed" : "PubMed Source"}
           </span>
         </div>
 

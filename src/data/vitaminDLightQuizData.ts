@@ -238,8 +238,8 @@ export const vitaminDLightLevels: VitaminDLightLevel[] = [
     },
     sources: [
       {
-        title: "Hypothalamus-pituitary-thyroid axis interactions",
-        link: "https://www.ncbi.nlm.nih.gov/books/NBK279388/",
+        title: "Physiology of the Hypothalamic-Pituitary-Thyroid Axis",
+        link: "https://www.ncbi.nlm.nih.gov/books/NBK278958/",
         description: {
           fr: "Explique les interactions entre les axes hormonaux hypothalamo-hypophysaires.",
           en: "Explains the interactions between hypothalamic-pituitary hormonal axes."
