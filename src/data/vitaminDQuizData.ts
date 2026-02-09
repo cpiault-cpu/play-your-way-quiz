@@ -669,8 +669,8 @@ export const vitaminDSuccessMessages = {
     en: "🧠 Excellent! Your memory has just consolidated key knowledge.\nReady to go deeper?"
   },
   finalComplete: {
-    fr: "🧠 Niveau expert atteint !\nVotre cerveau maîtrise désormais les mécanismes clés de la vitamine D.",
-    en: "🧠 Expert level reached!\nYour brain now masters the key mechanisms of vitamin D."
+    fr: "Bravo ! Bonne maîtrise. Il faut tout de même savoir que d'autres facteurs affectent l'absorption de la vitamine D. Une naturopathe saura vous l'expliquer plus en détail.",
+    en: "Bravo! Good mastery. However, you should know that other factors affect vitamin D absorption. A naturopath can explain this in more detail."
   },
   tryAgain: {
     fr: "Relisez attentivement le texte reformulé pour mieux ancrer ces informations.",

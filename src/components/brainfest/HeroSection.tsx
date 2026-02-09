@@ -26,11 +26,11 @@ const heroTexts = {
 };
 
 const savoirCategories: Category[] = [
-  { id: "sardines", name: { fr: "Sardines", en: "Sardines" }, emoji: "🐟" },
-  { id: "micronutrition", name: { fr: "Micronutrition", en: "Micronutrition" }, emoji: "💊" },
-  { id: "micronutrition2", name: { fr: "Vitamine D", en: "Vitamin D" }, emoji: "☀️" },
+  { id: "sardines", name: { fr: "Sardines, Sardines, Mais pourquoi ?", en: "Sardines, Sardines, But why?" }, emoji: "🐟" },
+  { id: "micronutrition", name: { fr: "Micronutrition 1", en: "Micronutrition 1" }, emoji: "💊" },
+  { id: "micronutrition2", name: { fr: "VitD ça dépend", en: "VitD it depends" }, emoji: "☀️" },
   { id: "vitamind-light", name: { fr: "VitD-Que la lumière soit", en: "VitD-Let there be light" }, emoji: "🌅" },
-  { id: "plants", name: { fr: "Plantes", en: "Plants" }, emoji: "🌿" },
+  { id: "plants", name: { fr: "Plantes santé", en: "Health Plants" }, emoji: "🌿" },
 ];
 
 const entrainerCategories: Category[] = [
@@ -210,9 +210,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                 }}
               >
                 {savoirCategories.map((cat, index) => {
-                  const isPlantes = cat.id === 'plants';
-                  const isVitDLight = cat.id === 'vitamind-light';
-                  const needsWrap = isPlantes || isVitDLight;
+                  const needsWrap = cat.id === 'plants' || cat.id === 'vitamind-light' || cat.id === 'sardines' || cat.id === 'micronutrition2';
                   const isSelected = selectedCategory === cat.id;
                   return (
                     <motion.button
@@ -226,7 +224,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                       style={{ 
                         fontFamily: 'Montserrat, sans-serif', 
                         fontWeight: 500, 
-                        fontSize: needsWrap ? '11px' : '13px', 
+                        fontSize: needsWrap ? '10px' : '13px', 
                         color: '#000000',
                         backgroundColor: isSelected ? '#d5e6dd' : '#FFFFFF',
                         borderColor: isSelected ? '#b8d4c4' : '#E0E0E0',
@@ -237,8 +235,8 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                     >
                         <span className="text-lg md:text-2xl flex-shrink-0">{cat.emoji}</span>
                       <span 
-                        className={(isPlantes || cat.id === 'vitamind-light') ? "text-center leading-tight" : "whitespace-nowrap"}
-                        style={(isPlantes || cat.id === 'vitamind-light') ? { lineHeight: '1.2' } : undefined}
+                        className={needsWrap ? "text-center leading-tight" : "whitespace-nowrap"}
+                        style={needsWrap ? { lineHeight: '1.2' } : undefined}
                       >
                         {cat.name[language]}
                       </span>
