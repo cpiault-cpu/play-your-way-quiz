@@ -475,7 +475,7 @@ const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuiz
               <div className="text-center mb-8">
                 {isPerfect ? (
                   <>
-                    <p className="text-xl font-semibold text-foreground whitespace-pre-line mb-4">
+                    <p className="text-foreground whitespace-pre-line mb-4" style={{ fontSize: '14px', lineHeight: '1.6' }}>
                       {level === 3 ? plantsSuccessMessages.finalComplete[language] : plantsSuccessMessages.levelComplete[language]}
                     </p>
                   </>
