@@ -1,49 +1,56 @@
 import { motion } from "framer-motion";
-import { Sun, ChevronRight, Sparkles } from "lucide-react";
+import { Sunrise, ChevronRight, Sparkles } from "lucide-react";
 import { Language } from "@/data/quizData";
 
-interface VitaminDQuizCardProps {
-  level: 1 | 2 | 3;
+interface VitaminDLightQuizCardProps {
+  level: 1 | 2 | 3 | 4;
   language: Language;
-  onPlay: (level: 1 | 2 | 3) => void;
+  onPlay: (level: 1 | 2 | 3 | 4) => void;
   isCompleted?: boolean;
 }
 
-const VitaminDQuizCard = ({ level, language, onPlay, isCompleted }: VitaminDQuizCardProps) => {
+const VitaminDLightQuizCard = ({ level, language, onPlay, isCompleted }: VitaminDLightQuizCardProps) => {
   const getLevelConfig = () => {
     switch (level) {
       case 1:
         return {
-          title: { fr: "Fondations", en: "Foundations" },
+          title: { fr: "Circadien & lumière", en: "Circadian & Light" },
           description: { 
-            fr: "Découvrez les bases de la vitamine D", 
-            en: "Discover the basics of vitamin D" 
+            fr: "Découvrez les liens entre lumière et hormones", 
+            en: "Discover the links between light and hormones" 
           },
           emoji: "🟢",
-          color: "#7FB3A3",
-          bgGradient: "from-amber-50 to-yellow-50"
+          color: "#4CAF50"
         };
       case 2:
         return {
-          title: { fr: "Consolidation", en: "Consolidation" },
+          title: { fr: "Cholestérol & Vitamine D", en: "Cholesterol & Vitamin D" },
           description: { 
-            fr: "Approfondissez vos connaissances", 
-            en: "Deepen your knowledge" 
+            fr: "Approfondissez la biochimie de la vitamine D", 
+            en: "Deepen your knowledge of vitamin D biochemistry" 
           },
           emoji: "🟠",
-          color: "#E8A87C",
-          bgGradient: "from-orange-50 to-amber-50"
+          color: "#FF9800"
         };
       case 3:
         return {
-          title: { fr: "Maîtrise", en: "Mastery" },
+          title: { fr: "Cortisol & Thyroïde", en: "Cortisol & Thyroid" },
           description: { 
-            fr: "Atteignez le niveau expert", 
-            en: "Reach expert level" 
+            fr: "Explorez les interactions entre cortisol et thyroïde", 
+            en: "Explore interactions between cortisol and thyroid" 
           },
-          emoji: "🔴",
-          color: "#D17B7B",
-          bgGradient: "from-red-50 to-rose-50"
+          emoji: "🔵",
+          color: "#2196F3"
+        };
+      case 4:
+        return {
+          title: { fr: "Intégration endocrinienne", en: "Endocrine Integration" },
+          description: { 
+            fr: "Maîtrisez le réseau hormonal complet", 
+            en: "Master the complete hormonal network" 
+          },
+          emoji: "🟣",
+          color: "#9C27B0"
         };
     }
   };
@@ -73,7 +80,7 @@ const VitaminDQuizCard = ({ level, language, onPlay, isCompleted }: VitaminDQuiz
             className="w-12 h-12 rounded-full flex items-center justify-center"
             style={{ backgroundColor: `${config.color}20` }}
           >
-            <Sun className="w-6 h-6" style={{ color: config.color }} />
+            <Sunrise className="w-6 h-6" style={{ color: config.color }} />
           </div>
           <div>
             <div className="flex items-center gap-2">
@@ -99,10 +106,10 @@ const VitaminDQuizCard = ({ level, language, onPlay, isCompleted }: VitaminDQuiz
             📖 15s {language === "fr" ? "lecture" : "reading"}
           </span>
           <span className="text-xs px-2 py-1 rounded-full bg-white/70 text-muted-foreground">
-            ❓ 4 questions
+            ⏱️ 10s {language === "fr" ? "réponse" : "answer"}
           </span>
           <span className="text-xs px-2 py-1 rounded-full bg-white/70 text-muted-foreground">
-            🔄 {language === "fr" ? "Adaptatif" : "Adaptive"}
+            📚 {language === "fr" ? "Source PubMed" : "PubMed Source"}
           </span>
         </div>
 
@@ -119,4 +126,4 @@ const VitaminDQuizCard = ({ level, language, onPlay, isCompleted }: VitaminDQuiz
   );
 };
 
-export default VitaminDQuizCard;
+export default VitaminDLightQuizCard;
