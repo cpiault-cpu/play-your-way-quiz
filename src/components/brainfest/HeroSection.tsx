@@ -13,16 +13,16 @@ interface Category {
 
 const heroTexts = {
   fr: [
-    "Une alimentation anti-inflammatoire riche en oméga-3 nourrit votre cerveau et protège votre vitalité. Chez Maison Peita, cette conviction guide chacune de nos créations.",
+    "Une alimentation anti-inflammatoire riche en oméga-3 nourrit votre cerveau et protège votre vitalité. Cette notion est dans l'ADN Chez Maison Peita.",
     "Stimuler sa mémoire, apprendre, jouer… autant de rituels qui entretiennent la vivacité d'esprit et le plaisir de comprendre.",
     "Nous partageons avec vous nos connaissances en naturopathie et micronutrition pour cultiver votre bien-être au quotidien.",
     "De nouveaux contenus et exercices vous attendent régulièrement. Prenez soin de vous, restez curieux."
   ],
   en: [
-    "An anti-inflammatory diet rich in omega-3s nourishes your brain and protects your vitality. At Maison Peita, this conviction guides each of our creations.",
-    "Stimulating memory, learning, playing… rituals that maintain mental sharpness and the joy of understanding.",
-    "We share our knowledge in naturopathy and micronutrition to cultivate your daily well-being.",
-    "New content and exercises await you regularly. Take care of yourself, stay curious."
+    "An anti-inflammatory, omega-3-rich diet nourishes your brain and protects your vitality. This principle is at the core of Maison Peita's DNA.",
+    "Stimulating your memory, learning, and playing—these rituals keep your mind sharp and the joy of understanding alive.",
+    "We share our expertise in naturopathy and micronutrition to help you cultivate daily well-being.",
+    "New content and exercises await you regularly. Take care of yourself, and stay curious."
   ]
 };
 
