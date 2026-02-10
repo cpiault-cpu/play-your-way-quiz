@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
+import { useQuizEmail } from "@/hooks/useQuizEmail";
 
 interface PlantsQuizGameProps {
   level: 1 | 2 | 3;
@@ -32,8 +33,8 @@ interface AnswerResult {
 const READING_TIME = 15; // seconds
 
 const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuizGameProps) => {
-  const [phase, setPhase] = useState<GamePhase>("email");
-  const [email, setEmail] = useState("");
+  const { email, setEmail, saveEmail, hasStoredEmail } = useQuizEmail("plants");
+  const [phase, setPhase] = useState<GamePhase>(() => hasStoredEmail ? "intro" : "email");
   const [currentVersion, setCurrentVersion] = useState<"A" | "B">("A");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -47,10 +48,9 @@ const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuiz
 
   const levelData = plantsLevels.find(l => l.level === level);
 
-  // Reset state when level changes
+  // Reset state when level changes - skip email if already provided
   useEffect(() => {
-    setPhase("email");
-    setEmail("");
+    setPhase(hasStoredEmail ? "intro" : "email");
     setCurrentVersion("A");
     setCurrentQuestionIndex(0);
     setSelectedAnswer(null);
@@ -58,7 +58,7 @@ const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuiz
     setReadingTimeLeft(READING_TIME);
     setShowFeedback(false);
     setAttemptCount(0);
-  }, [level]);
+  }, [level, hasStoredEmail]);
 
   const currentVersionData = levelData?.versions[currentVersion];
   const questions = currentVersionData?.questions || [];
@@ -80,6 +80,7 @@ const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuiz
       return;
     }
 
+    saveEmail(email);
     // Save the attempt (allow replays with same email)
     try {
       await saveAttempt(email, quizId);

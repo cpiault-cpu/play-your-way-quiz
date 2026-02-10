@@ -8,6 +8,7 @@ import { Language } from "@/data/quizData";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
+import { useQuizEmail } from "@/hooks/useQuizEmail";
 
 // Confetti celebration function
 const fireConfetti = () => {
@@ -173,10 +174,10 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
   const config = LEVEL_CONFIG[level];
   const notes = config.useInstruments ? INSTRUMENT_NOTES : PIANO_NOTES;
   const { checkEmailUsed, saveAttempt, isChecking } = useQuizAttempt();
+  const { email, setEmail, saveEmail, hasStoredEmail } = useQuizEmail("musical-memory");
   const quizId = `musical-memory-${level}`;
   
-  const [gameState, setGameState] = useState<"email" | "idle" | "playing" | "listening" | "input" | "success" | "failure" | "gameover" | "victory">("email");
-  const [email, setEmail] = useState("");
+  const [gameState, setGameState] = useState<"email" | "idle" | "playing" | "listening" | "input" | "success" | "failure" | "gameover" | "victory">(() => hasStoredEmail ? "idle" : "email");
   const [sequence, setSequence] = useState<number[]>([]);
   const [playerInput, setPlayerInput] = useState<number[]>([]);
   const [currentSeries, setCurrentSeries] = useState(0);
@@ -195,6 +196,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
       return;
     }
     
+    saveEmail(email);
     // Save the attempt (allow replays with same email)
     try {
       await saveAttempt(email, quizId);

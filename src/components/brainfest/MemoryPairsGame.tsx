@@ -7,6 +7,7 @@ import { Language } from "@/data/quizData";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
+import { useQuizEmail } from "@/hooks/useQuizEmail";
 
 // Import plant images
 import lavenderImg from "@/assets/plants/lavender.png";
@@ -142,10 +143,10 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
   const t = translations[language];
   const config = LEVEL_CONFIG[level];
   const { checkEmailUsed, saveAttempt, isChecking } = useQuizAttempt();
+  const { email, setEmail, saveEmail, hasStoredEmail } = useQuizEmail("memory-pairs");
   const quizId = `memory-pairs-${level}`;
   
-  const [gameState, setGameState] = useState<"email" | "playing" | "gameSuccess" | "gameOver" | "victory">("email");
-  const [email, setEmail] = useState("");
+  const [gameState, setGameState] = useState<"email" | "playing" | "gameSuccess" | "gameOver" | "victory">(() => hasStoredEmail ? "playing" : "email");
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
@@ -166,6 +167,7 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
       return;
     }
     
+    saveEmail(email);
     // Save the attempt (allow replays with same email)
     try {
       await saveAttempt(email, quizId);
