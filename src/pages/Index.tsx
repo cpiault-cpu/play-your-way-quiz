@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Language, quizzes, Quiz } from "@/data/quizData";
 import HeroSection from "@/components/brainfest/HeroSection";
@@ -68,6 +68,17 @@ const Index = () => {
     return saved ? JSON.parse(saved) : [];
   });
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory-music");
+  const quizContentRef = useRef<HTMLDivElement>(null);
+
+  const handleSelectCategory = useCallback((category: CategoryId | null) => {
+    setSelectedCategory(category);
+    if (category) {
+      // Small delay to let the content render before scrolling
+      setTimeout(() => {
+        quizContentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 150);
+    }
+  }, []);
 
   // Save micronutrition progress to localStorage whenever it changes
   useEffect(() => {
@@ -294,11 +305,11 @@ const Index = () => {
         language={language} 
         onToggleLanguage={handleToggleLanguage}
         selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
+        onSelectCategory={handleSelectCategory}
       />
 
       {/* Quiz Levels */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20 flex-grow">
+      <main ref={quizContentRef} className="max-w-6xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20 flex-grow scroll-mt-4">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -798,7 +809,7 @@ const Index = () => {
       {/* Sardines Promo Popup */}
       <SardinesPromoBubble 
         language={language} 
-        onNavigateToSardines={() => setSelectedCategory("sardines")}
+        onNavigateToSardines={() => handleSelectCategory("sardines")}
       />
     </div>
   );
