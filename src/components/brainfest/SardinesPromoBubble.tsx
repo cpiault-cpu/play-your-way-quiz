@@ -15,23 +15,18 @@ const SardinesPromoBubble = ({ language, onNavigateToSardines }: SardinesPromoBu
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const dismissed = sessionStorage.getItem(PROMO_DISMISSED_KEY);
-    if (!dismissed) {
-      // Show after a short delay for smooth entrance
-      const timer = setTimeout(() => setIsVisible(true), 1500);
-      return () => clearTimeout(timer);
-    }
+    // Always show the promo on every page load/refresh
+    const timer = setTimeout(() => setIsVisible(true), 1500);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleDismiss = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsVisible(false);
-    sessionStorage.setItem(PROMO_DISMISSED_KEY, "true");
   };
 
   const handleClick = () => {
     setIsVisible(false);
-    sessionStorage.setItem(PROMO_DISMISSED_KEY, "true");
     onNavigateToSardines();
   };
 

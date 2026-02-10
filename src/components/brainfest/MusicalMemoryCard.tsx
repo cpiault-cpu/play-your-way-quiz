@@ -43,11 +43,6 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
     }
   };
 
-  const getDiscountText = () => {
-    const discounts = { 1: "5%", 2: "10%", 3: "15%" };
-    const value = discounts[level];
-    return language === "fr" ? `gagnez ${value}` : `win ${value}`;
-  };
 
   const getLevelLabel = () => {
     if (language === "fr") {
@@ -82,9 +77,6 @@ const MusicalMemoryCard = ({ level, language, onPlay }: MusicalMemoryCardProps) 
       <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4">
         <span className={`${getLevelBadgeClass()} text-sm md:text-xs font-bold px-4 py-2 md:px-3 md:py-1.5 rounded-full text-white`}>
           {getLevelLabel()}
-        </span>
-        <span className="text-sm md:text-sm text-muted-foreground font-medium">
-          {getDiscountText()}
         </span>
       </div>
 

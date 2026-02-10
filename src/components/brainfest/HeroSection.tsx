@@ -215,9 +215,9 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                         fontFamily: 'Montserrat, sans-serif', 
                         fontWeight: 600, 
                         fontSize: needsWrap ? '11px' : '14px', 
-                        color: '#1a2b1c',
-                        backgroundColor: isSelected ? '#d5e6dd' : '#FFFFFF',
-                        borderColor: isSelected ? '#b8d4c4' : '#E0E0E0',
+                        color: cat.id === 'sardines' && !isSelected ? '#FFFFFF' : '#1a2b1c',
+                        backgroundColor: isSelected ? '#d5e6dd' : (cat.id === 'sardines' ? '#0891b2' : '#FFFFFF'),
+                        borderColor: isSelected ? '#b8d4c4' : (cat.id === 'sardines' ? '#06b6d4' : '#E0E0E0'),
                         borderRadius: '14px',
                         boxShadow: isSelected ? '0 4px 14px rgba(213, 230, 221, 0.6)' : '0 2px 8px rgba(0,0,0,0.08)',
                         transition: 'all 0.25s ease'
