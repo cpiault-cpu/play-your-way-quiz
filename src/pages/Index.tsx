@@ -23,7 +23,7 @@ import CarreCognitifCard from "@/components/brainfest/CarreCognitifCard";
 import Footer from "@/components/brainfest/Footer";
 import GdprBanner from "@/components/brainfest/GdprBanner";
 import FishIcon from "@/components/brainfest/icons/FishIcon";
-
+import SardinesPromoBubble from "@/components/brainfest/SardinesPromoBubble";
 // Category type - updated to match new navigation
 type CategoryId = "micronutrition" | "micronutrition2" | "vitamind-light" | "plants" | "memory-music" | "memory-cards" | "sardines" | "carre-cognitif";
 
@@ -794,6 +794,12 @@ const Index = () => {
       
       {/* GDPR Banner */}
       <GdprBanner language={language} />
+      
+      {/* Sardines Promo Popup */}
+      <SardinesPromoBubble 
+        language={language} 
+        onNavigateToSardines={() => setSelectedCategory("sardines")}
+      />
     </div>
   );
 };

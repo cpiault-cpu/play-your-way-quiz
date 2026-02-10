@@ -391,47 +391,15 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                 </div>
               )}
 
-              {/* Discount code only for PERFECT score */}
-              {score === quiz.questions.length && (
-                <div className="bg-muted rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-2">{t.discountCode}</p>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
-                    <code className="text-sm sm:text-lg font-mono font-bold text-primary bg-background px-3 sm:px-4 py-2 rounded break-all">
-                      {discountCode}
-                    </code>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={handleCopyCode}
-                      className="border-border"
-                    >
-                      {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                    </Button>
-                  </div>
-                  <Button
-                    className="btn-primary-custom text-white w-full mt-4 text-sm sm:text-base"
-                    asChild
-                  >
-                    <a href="https://www.peita.fr/product-page/8-boites-de-petites-sardines" target="_blank" rel="noopener noreferrer">
-                      {language === "fr" 
-                        ? "Copiez votre coupon et utilisez-le lors de votre commande" 
-                        : "Copy your coupon and use it at checkout"}
-                    </a>
-                  </Button>
-                </div>
-              )}
-
-              {/* Always show shop button at the end */}
-              {score < quiz.questions.length && (
-                <Button
-                  className="btn-primary-custom text-white w-full mb-4 text-sm sm:text-base"
-                  asChild
-                >
-                  <a href="https://www.peita.fr/product-page/8-boites-de-petites-sardines" target="_blank" rel="noopener noreferrer">
-                    {language === "fr" ? "Visiter la boutique" : "Visit the shop"}
-                  </a>
-                </Button>
-              )}
+              {/* Shop button */}
+              <Button
+                className="btn-primary-custom text-white w-full mb-4 text-sm sm:text-base"
+                asChild
+              >
+                <a href="https://www.peita.fr/product-page/8-boites-de-petites-sardines" target="_blank" rel="noopener noreferrer">
+                  {language === "fr" ? "Visiter la boutique" : "Visit the shop"}
+                </a>
+              </Button>
 
               <Button
                 onClick={onBack}

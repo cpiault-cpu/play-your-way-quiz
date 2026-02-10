@@ -165,18 +165,7 @@ const LEVEL_CONFIG = {
   3: { notesPerSequence: 6, exercisesToWin: 4, useInstruments: true },
 };
 
-// Discount codes per level
-const DISCOUNT_CODES = {
-  1: "MEMOIRE5",
-  2: "MEMOIRE10",
-  3: "MEMOIRE15",
-};
-
-const DISCOUNT_AMOUNTS = {
-  1: "5%",
-  2: "10%",
-  3: "15%",
-};
+// Discount codes removed - no longer offering promotions on this game
 
 const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) => {
   const t = translations[language];
@@ -1201,36 +1190,15 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                 )}
                 
                 <p className="text-lg sm:text-xl text-foreground mb-4">
-                  {t.couponText}
+                  {language === "fr" ? "Bravo, vous avez gagné !" : "Congratulations, you won!"}
                 </p>
-                
-                {/* Coupon code display */}
-                <div className="bg-gradient-to-r from-amber-100 to-yellow-100 border-2 border-dashed border-amber-400 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6">
-                  <p className="text-2xl sm:text-3xl md:text-4xl font-black text-amber-700 tracking-wider">
-                    {DISCOUNT_CODES[level]}
-                  </p>
-                  <p className="text-lg sm:text-xl font-semibold text-amber-600 mt-2">
-                    {DISCOUNT_AMOUNTS[level]} {language === "fr" ? "de réduction" : "discount"}
-                  </p>
-                </div>
-                
-                <Button
-                  onClick={() => {
-                    navigator.clipboard.writeText(DISCOUNT_CODES[level]);
-                  }}
-                  className="btn-primary-custom text-white text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4 mb-4"
-                >
-                  📋 {language === "fr" ? "Copier le code" : "Copy code"}
-                </Button>
 
                 <Button
                   className="btn-primary-custom text-white w-full text-sm sm:text-lg px-4 sm:px-6 py-4 sm:py-5 mb-4"
                   asChild
                 >
                   <a href="https://www.peita.fr/product-page/8-boites-de-petites-sardines" target="_blank" rel="noopener noreferrer">
-                    {language === "fr" 
-                      ? "Copiez votre coupon et utilisez-le lors de votre commande" 
-                      : "Copy your coupon and use it at checkout"}
+                    {language === "fr" ? "Visiter la boutique" : "Visit the shop"}
                   </a>
                 </Button>
                 

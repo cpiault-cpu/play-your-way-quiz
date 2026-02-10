@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Clock, Check, AlertCircle, ChevronRight, Volume2, Loader2 } from "lucide-react";
+import { ArrowLeft, Clock, Check, AlertCircle, ChevronRight, Volume2, Loader2, Copy } from "lucide-react";
 import { Language } from "@/data/quizData";
 import { 
   sardinesLevels, 
@@ -590,13 +590,56 @@ const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: Sardines
                       <ChevronRight className="w-5 h-5 ml-2" />
                     </Button>
                   ) : (
-                    <Button
-                      onClick={onBack}
-                      className="w-full py-6 text-lg font-semibold text-white rounded-xl shadow-lg"
-                      style={{ backgroundColor: "#4A6741" }}
-                    >
-                      {uiTexts.back[language]}
-                    </Button>
+                    <>
+                      {/* SARDINES15 coupon for completing all 4 levels */}
+                      <div className="w-full bg-gradient-to-r from-cyan-50 to-teal-50 rounded-2xl shadow-xl p-6 mb-4 border-2 border-cyan-400">
+                        <p className="text-lg font-bold text-foreground mb-2">
+                          {language === "fr" ? "🎉 Félicitations !" : "🎉 Congratulations!"}
+                        </p>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          {language === "fr" 
+                            ? "Vous avez réussi tous les niveaux ! Voici votre code de réduction de 15% :"
+                            : "You completed all levels! Here's your 15% discount code:"}
+                        </p>
+                        <div className="bg-white rounded-xl p-4 border-2 border-dashed border-cyan-400 mb-3">
+                          <p className="text-2xl font-black text-cyan-700 tracking-wider text-center">
+                            SARDINES15
+                          </p>
+                          <p className="text-sm font-semibold text-cyan-600 mt-1 text-center">
+                            -15% {language === "fr" ? "de réduction" : "discount"}
+                          </p>
+                        </div>
+                        <Button
+                          onClick={() => {
+                            navigator.clipboard.writeText("SARDINES15");
+                            toast.success(language === "fr" ? "Code copié !" : "Code copied!");
+                          }}
+                          variant="outline"
+                          className="w-full border-cyan-400 text-cyan-700 hover:bg-cyan-50"
+                        >
+                          <Copy className="w-4 h-4 mr-2" />
+                          {language === "fr" ? "Copier le code" : "Copy code"}
+                        </Button>
+                      </div>
+                      <Button
+                        className="w-full py-6 text-lg font-semibold text-white rounded-xl shadow-lg"
+                        style={{ backgroundColor: "#0891b2" }}
+                        asChild
+                      >
+                        <a href="https://www.peita.fr/product-page/8-boites-de-petites-sardines" target="_blank" rel="noopener noreferrer">
+                          {language === "fr" 
+                            ? "Copiez votre coupon et utilisez-le lors de votre commande" 
+                            : "Copy your coupon and use it at checkout"}
+                        </a>
+                      </Button>
+                      <Button
+                        onClick={onBack}
+                        className="w-full py-6 text-lg font-semibold text-white rounded-xl shadow-lg"
+                        style={{ backgroundColor: "#4A6741" }}
+                      >
+                        {uiTexts.back[language]}
+                      </Button>
+                    </>
                   )
                 ) : (
                   <Button

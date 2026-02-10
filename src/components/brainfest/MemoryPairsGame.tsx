@@ -102,18 +102,7 @@ const LEVEL_CONFIG = {
   3: { pairsCount: 8, gamesToWin: 3 },
 };
 
-// Discount codes per level
-const DISCOUNT_CODES = {
-  1: "PLANTES5",
-  2: "PLANTES10",
-  3: "PLANTES15",
-};
-
-const DISCOUNT_AMOUNTS = {
-  1: "5%",
-  2: "10%",
-  3: "15%",
-};
+// Discount codes removed - no longer offering promotions on this game
 
 const GAME_DURATION = 30; // 30 seconds per game
 
@@ -319,10 +308,7 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
     }
   };
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(DISCOUNT_CODES[level]);
-    toast.success(t.couponCopied);
-  };
+  // copyToClipboard removed - no discount codes
 
   const getGridCols = () => {
     switch (config.pairsCount) {
@@ -462,16 +448,7 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
             {t.victoryMsg}
           </p>
           
-          {/* Coupon section */}
-          <div className="bg-primary/10 border-2 border-primary rounded-xl p-6 mb-6">
-            <p className="text-foreground font-medium mb-2">{t.couponText}</p>
-            <button
-              onClick={copyToClipboard}
-              className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-bold text-xl hover:bg-primary/90 transition-colors"
-            >
-              {DISCOUNT_CODES[level]} (-{DISCOUNT_AMOUNTS[level]})
-            </button>
-          </div>
+          {/* Shop button */}
           
           <div className="flex flex-col gap-3">
             <Button
