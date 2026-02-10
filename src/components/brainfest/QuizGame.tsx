@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Quiz, Language, translations } from "@/data/quizData";
 import { toast } from "sonner";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
+import { useQuizEmail } from "@/hooks/useQuizEmail";
 const TIMER_DURATION = 30; // seconds per question
 interface QuizGameProps {
   quiz: Quiz;
@@ -26,8 +27,8 @@ interface WrongAnswer {
 const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
   const t = translations[language];
   const { checkEmailUsed, saveAttempt, updateScore, isChecking } = useQuizAttempt();
-  const [gameState, setGameState] = useState<GameState>("email");
-  const [email, setEmail] = useState("");
+  const { email, setEmail, saveEmail, hasStoredEmail } = useQuizEmail(`quiz-${quiz.id}`);
+  const [gameState, setGameState] = useState<GameState>(() => hasStoredEmail ? "playing" : "email");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [isAnswered, setIsAnswered] = useState(false);
@@ -50,6 +51,7 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
       return;
     }
 
+    saveEmail(email);
     // Save the attempt (allow replays with same email)
     try {
       await saveAttempt(email, quiz.id);

@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Check, RotateCcw, Share2, Home } from "lucide-react";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
+import { useQuizEmail } from "@/hooks/useQuizEmail";
 
 interface CarreCognitifGameProps {
   language: Language;
@@ -29,8 +30,8 @@ interface CarreCognitifGameProps {
 type GamePhase = "email" | "level-select" | "playing" | "memorize" | "reconstruct" | "feedback" | "complete";
 
 const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
-  const [phase, setPhase] = useState<GamePhase>("email");
-  const [email, setEmail] = useState("");
+  const { email, setEmail, saveEmail, hasStoredEmail } = useQuizEmail("carre-cognitif");
+  const [phase, setPhase] = useState<GamePhase>(() => hasStoredEmail ? "level-select" : "email");
   const [emailError, setEmailError] = useState("");
   const [currentLevel, setCurrentLevel] = useState<number>(1);
   const [grid, setGrid] = useState<(string | null)[][]>([]);
@@ -86,6 +87,7 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
       return;
     }
 
+    saveEmail(email);
     // Save the attempt (allow replays with same email)
     await saveAttempt(email, "carre-cognitif", null);
     setPhase("level-select");

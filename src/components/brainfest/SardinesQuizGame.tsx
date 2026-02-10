@@ -14,6 +14,7 @@ import { Progress } from "@/components/ui/progress";
 import FishIcon from "./icons/FishIcon";
 import { toast } from "sonner";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
+import { useQuizEmail } from "@/hooks/useQuizEmail";
 
 interface SardinesQuizGameProps {
   level: 1 | 2 | 3 | 4;
@@ -64,8 +65,8 @@ const playValidationSound = (isCorrect: boolean) => {
 };
 
 const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: SardinesQuizGameProps) => {
-  const [phase, setPhase] = useState<GamePhase>("email");
-  const [email, setEmail] = useState("");
+  const { email, setEmail, saveEmail, hasStoredEmail } = useQuizEmail("sardines");
+  const [phase, setPhase] = useState<GamePhase>(() => hasStoredEmail ? "intro" : "email");
   const [currentVersion, setCurrentVersion] = useState<"A" | "B">("A");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -94,6 +95,7 @@ const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: Sardines
       return;
     }
 
+    saveEmail(email);
     // Save the attempt (allow replays with same email)
     try {
       await saveAttempt(email, quizId);
@@ -104,17 +106,16 @@ const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: Sardines
     setPhase("intro");
   };
 
-  // Reset state when level changes
+  // Reset state when level changes - skip email if already provided
   useEffect(() => {
-    setPhase("email");
-    setEmail("");
+    setPhase(hasStoredEmail ? "intro" : "email");
     setCurrentVersion("A");
     setCurrentQuestionIndex(0);
     setSelectedAnswer(null);
     setAnswers([]);
     setReadingTimeLeft(READING_TIME);
     setShowFeedback(false);
-  }, [level]);
+  }, [level, hasStoredEmail]);
 
   const currentVersionData = levelData?.versions[currentVersion];
   const questions = currentVersionData?.questions || [];

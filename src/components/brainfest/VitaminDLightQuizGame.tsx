@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
+import { useQuizEmail } from "@/hooks/useQuizEmail";
 import FishIcon from "@/components/brainfest/icons/FishIcon";
 
 interface VitaminDLightQuizGameProps {
@@ -28,8 +29,8 @@ const READING_TIME = 10;
 const ANSWER_TIME = 10;
 
 const VitaminDLightQuizGame = ({ level, language, onBack, onLevelComplete }: VitaminDLightQuizGameProps) => {
-  const [phase, setPhase] = useState<GamePhase>("email");
-  const [email, setEmail] = useState("");
+  const { email, setEmail, saveEmail, hasStoredEmail } = useQuizEmail("vitamind-light");
+  const [phase, setPhase] = useState<GamePhase>(() => hasStoredEmail ? "intro" : "email");
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [readingTimeLeft, setReadingTimeLeft] = useState(READING_TIME);
   const [answerTimeLeft, setAnswerTimeLeft] = useState(ANSWER_TIME);
@@ -42,17 +43,16 @@ const VitaminDLightQuizGame = ({ level, language, onBack, onLevelComplete }: Vit
 
   const levelData = vitaminDLightLevels.find(l => l.level === level) as VitaminDLightLevel | undefined;
 
-  // Reset state when level changes
+  // Reset state when level changes - skip email if already provided
   useEffect(() => {
-    setPhase("email");
-    setEmail("");
+    setPhase(hasStoredEmail ? "intro" : "email");
     setSelectedAnswer(null);
     setReadingTimeLeft(READING_TIME);
     setAnswerTimeLeft(ANSWER_TIME);
     setShowFeedback(false);
     setIsCorrect(false);
     setCanSelectAnswer(false);
-  }, [level]);
+  }, [level, hasStoredEmail]);
 
   // Email validation
   const validateEmail = (emailToValidate: string) => {
@@ -69,6 +69,7 @@ const VitaminDLightQuizGame = ({ level, language, onBack, onLevelComplete }: Vit
       return;
     }
 
+    saveEmail(email);
     try {
       await saveAttempt(email, quizId);
     } catch (error) {
