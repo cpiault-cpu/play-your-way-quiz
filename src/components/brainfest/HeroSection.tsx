@@ -55,7 +55,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
   return (
     <>
       {/* Partie haute - fond #B6BDB0 */}
-      <section className="relative overflow-hidden" style={{ backgroundColor: '#B6BDB0' }}>
+      <section className="relative overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-3 md:py-6">
           {/* Top bar with language toggle and logo */}
           <div className="flex items-center justify-between mb-4 md:mb-6">
