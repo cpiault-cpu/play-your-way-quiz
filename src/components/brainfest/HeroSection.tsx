@@ -13,10 +13,10 @@ interface Category {
 
 const heroTexts = {
   fr: [
-    "Une alimentation anti-inflammatoire riche en oméga-3 nourrit votre cerveau et protège votre vitalité. Cette notion est dans l'ADN Chez Maison Peita, comme vous le savez.",
-    "Stimuler sa mémoire, apprendre, jouer, autant de rituels qui entretiennent la vivacité d'esprit et le plaisir de comprendre.",
-    "Nous partageons avec vous nos connaissances en naturopathie et micronutrition pour cultiver votre bien-être.",
-    "De nouvelles matières et jeux vous attendent régulièrement. Prenez soin de vous et restez curieux :)"
+    "Une alimentation anti-inflammatoire riche en oméga-3 nourrit votre cerveau et protège votre vitalité Cette notion est dans l'ADN Chez Maison Peita",
+    "Stimuler sa mémoire apprendre jouer autant de rituels qui entretiennent la vivacité d'esprit et le plaisir de comprendre",
+    "Nous partageons avec vous nos connaissances en naturopathie et micronutrition pour cultiver votre bien-être au quotidien",
+    "De nouveaux exercices et jeux vous attendent régulièrement Prenez soin de vous restez curieux"
   ],
   en: [
     "An anti-inflammatory, omega-3-rich diet nourishes your brain and protects your vitality. This principle is at the core of Maison Peita's DNA, as you know.",
@@ -94,8 +94,8 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="bg-white p-4 md:p-6 border border-[#B6BDB0]"
-            style={{ borderRadius: '16px', boxShadow: '0 4px 12px rgba(0,0,0,0.06)' }}
+            className="p-4 md:p-6"
+            style={{ borderRadius: '16px' }}
           >
             {/* Wellness-oriented header */}
             <div className="flex flex-col gap-2 mb-4">
@@ -139,7 +139,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                   return (
                     <div 
                       key={index}
-                      className="relative flex-shrink-0 w-[calc(100%-16px)] md:w-[24%] p-4 pr-10 snap-start"
+                      className="flex-shrink-0 w-[calc(100%-16px)] md:w-[24%] p-4 pb-3 snap-start flex flex-col"
                       style={{ 
                         borderRadius: '10px',
                         fontFamily: 'Montserrat, sans-serif', 
@@ -150,10 +150,10 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                         backgroundColor: 'transparent'
                       }}
                     >
-                      {text}
+                      <span className="flex-1">{text}</span>
                       {!isLastBlock && (
                         <span 
-                          className="absolute top-1/2 -translate-y-1/2 right-3"
+                          className="block text-right mt-2"
                           style={{ fontSize: '18px', color: '#333333' }}
                         >
                           →
