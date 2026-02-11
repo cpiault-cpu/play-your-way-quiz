@@ -13,16 +13,16 @@ interface Category {
 
 const heroTexts = {
   fr: [
-    "Une alimentation anti-inflammatoire riche en oméga-3 nourrit votre cerveau et protège votre vitalité. Cette notion est dans l'ADN Chez Maison Peita.",
-    "Stimuler sa mémoire, apprendre, jouer… autant de rituels qui entretiennent la vivacité d'esprit et le plaisir de comprendre.",
-    "Nous partageons avec vous nos connaissances en naturopathie et micronutrition pour cultiver votre bien-être au quotidien.",
-    "De nouveaux contenus et exercices vous attendent régulièrement. Prenez soin de vous, restez curieux."
+    "Une alimentation anti-inflammatoire riche en oméga-3 nourrit votre cerveau et protège votre vitalité. Cette notion est dans l'ADN Chez Maison Peita, comme vous le savez.",
+    "Stimuler sa mémoire, apprendre, jouer, autant de rituels qui entretiennent la vivacité d'esprit et le plaisir de comprendre.",
+    "Nous partageons avec vous nos connaissances en naturopathie et micronutrition pour cultiver votre bien-être.",
+    "De nouvelles matières et jeux vous attendent régulièrement. Prenez soin de vous et restez curieux :)"
   ],
   en: [
-    "An anti-inflammatory, omega-3-rich diet nourishes your brain and protects your vitality. This principle is at the core of Maison Peita's DNA.",
+    "An anti-inflammatory, omega-3-rich diet nourishes your brain and protects your vitality. This principle is at the core of Maison Peita's DNA, as you know.",
     "Stimulating your memory, learning, and playing—these rituals keep your mind sharp and the joy of understanding alive.",
-    "We share our expertise in naturopathy and micronutrition to help you cultivate daily well-being.",
-    "New content and exercises await you regularly. Take care of yourself, and stay curious."
+    "We share our expertise in naturopathy and micronutrition to help you cultivate your well-being.",
+    "New topics and games await you regularly. Take care of yourself and stay curious :)"
   ]
 };
 
@@ -111,7 +111,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                     className="font-bold leading-tight"
                     style={{ fontFamily: 'Montserrat, sans-serif', color: '#2D3B2E', fontSize: '22px' }}
                   >
-                    {language === "fr" ? "Votre pause bien-être cérébral" : "Your brain wellness break"}
+                    {language === "fr" ? "Faites vibrer votre cerveau avec du savoir et des jeux" : "Make your brain buzz with knowledge and games"}
                   </h1>
                   <p
                     className="mt-1 font-medium"
@@ -139,20 +139,22 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                   return (
                     <div 
                       key={index}
-                      className="relative flex-shrink-0 w-[calc(100%-16px)] md:w-[24%] p-4 pb-7 bg-[#f7f6f3] border border-[#e0ddd6] snap-start"
+                      className="relative flex-shrink-0 w-[calc(100%-16px)] md:w-[24%] p-4 pr-10 snap-start"
                       style={{ 
-                        borderRadius: '12px',
+                        borderRadius: '10px',
                         fontFamily: 'Montserrat, sans-serif', 
-                        color: '#2D3B2E',
+                        color: '#000000',
                         fontSize: '16px',
-                        lineHeight: 1.6
+                        lineHeight: 1.6,
+                        border: '1px solid #333333',
+                        backgroundColor: 'transparent'
                       }}
                     >
                       {text}
                       {!isLastBlock && (
                         <span 
-                          className="absolute bottom-2 right-3 text-[#87917E] md:hidden"
-                          style={{ fontSize: '16px' }}
+                          className="absolute top-1/2 -translate-y-1/2 right-3"
+                          style={{ fontSize: '18px', color: '#333333' }}
                         >
                           →
                         </span>
