@@ -234,17 +234,19 @@ const MicronutritionQuizGame = ({ level, language, onBack, onLevelComplete }: Mi
                 }
               </p>
 
-              <div className="w-full max-w-sm space-y-4">
+              <form onSubmit={(e) => { e.preventDefault(); handleEmailSubmit(); }} className="w-full max-w-sm space-y-4">
                 <Input
                   type="email"
                   placeholder={language === "fr" ? "votre@email.com" : "your@email.com"}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="text-center"
-                  onKeyDown={(e) => e.key === "Enter" && handleEmailSubmit()}
+                  autoComplete="email"
+                  inputMode="email"
+                  required
                 />
                 <Button
-                  onClick={handleEmailSubmit}
+                  type="submit"
                   disabled={isChecking}
                   className="w-full px-8 py-6 text-lg font-semibold text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
                   style={{ backgroundColor: "#4A6741" }}
@@ -258,7 +260,7 @@ const MicronutritionQuizGame = ({ level, language, onBack, onLevelComplete }: Mi
                     </>
                   )}
                 </Button>
-              </div>
+              </form>
             </motion.div>
           )}
 

@@ -314,7 +314,7 @@ const AdvancedQuizGame = ({ category, level, language, onBack }: AdvancedQuizGam
                 {t.enterEmail}
               </p>
 
-              <div className="space-y-3 sm:space-y-4">
+              <form onSubmit={(e) => { e.preventDefault(); handleStartQuiz(); }} className="space-y-3 sm:space-y-4">
                 <Input
                   type="email"
                   placeholder={t.emailPlaceholder}
@@ -322,9 +322,12 @@ const AdvancedQuizGame = ({ category, level, language, onBack }: AdvancedQuizGam
                   onChange={(e) => setEmail(e.target.value)}
                   className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 text-base"
                   style={{ fontFamily: 'Montserrat, sans-serif' }}
+                  autoComplete="email"
+                  inputMode="email"
+                  required
                 />
                 <Button
-                  onClick={handleStartQuiz}
+                  type="submit"
                   disabled={isChecking}
                   className="w-full text-white font-medium text-sm sm:text-base py-2.5 sm:py-3"
                   style={{ backgroundColor: '#4A6741', fontFamily: 'Montserrat, sans-serif' }}
@@ -338,7 +341,7 @@ const AdvancedQuizGame = ({ category, level, language, onBack }: AdvancedQuizGam
                     t.startQuiz
                   )}
                 </Button>
-              </div>
+              </form>
             </motion.div>
           )}
 

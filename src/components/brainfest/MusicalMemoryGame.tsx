@@ -1014,16 +1014,19 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                 </h2>
                 <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8">{t.enterEmail}</p>
 
-                <div className="space-y-3 sm:space-y-4 max-w-md mx-auto">
+                <form onSubmit={(e) => { e.preventDefault(); handleEmailSubmit(); }} className="space-y-3 sm:space-y-4 max-w-md mx-auto">
                   <Input
                     type="email"
                     placeholder={t.emailPlaceholder}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 text-base"
+                    autoComplete="email"
+                    inputMode="email"
+                    required
                   />
                   <Button
-                    onClick={handleEmailSubmit}
+                    type="submit"
                     disabled={isChecking}
                     className="w-full btn-primary-custom text-white font-medium text-sm sm:text-base py-2.5 sm:py-3"
                   >
@@ -1036,7 +1039,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                       t.start
                     )}
                   </Button>
-                </div>
+                </form>
               </div>
             </motion.div>
           )}
