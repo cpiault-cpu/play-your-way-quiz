@@ -207,7 +207,7 @@ const HealthQuizGame = ({ language, level, seriesId = 'nutrition', onBack }: Hea
               <p className="text-muted-foreground">{t.level} {level}</p>
             </div>
             
-            <div className="space-y-4">
+            <form onSubmit={(e) => { e.preventDefault(); handleEmailSubmit(); }} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   {t.enterEmail}
@@ -218,12 +218,14 @@ const HealthQuizGame = ({ language, level, seriesId = 'nutrition', onBack }: Hea
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t.emailPlaceholder}
                   className="w-full bg-white text-foreground border-border"
-                  onKeyDown={(e) => e.key === "Enter" && handleEmailSubmit()}
+                  autoComplete="email"
+                  inputMode="email"
+                  required
                 />
               </div>
               
               <Button 
-                onClick={handleEmailSubmit}
+                type="submit"
                 disabled={isChecking}
                 className="w-full btn-primary-custom"
               >
@@ -236,7 +238,7 @@ const HealthQuizGame = ({ language, level, seriesId = 'nutrition', onBack }: Hea
                   t.start
                 )}
               </Button>
-            </div>
+            </form>
           </motion.div>
         </div>
       </div>

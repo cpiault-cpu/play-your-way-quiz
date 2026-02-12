@@ -339,16 +339,19 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
           <p className="text-muted-foreground mb-6 text-sm px-2 bg-primary/5 py-3 rounded-lg border border-primary/10">
             {t.instructions}
           </p>
-          <div className="space-y-4">
+          <form onSubmit={(e) => { e.preventDefault(); handleEmailSubmit(); }} className="space-y-4">
             <Input
               type="email"
               placeholder={t.emailPlaceholder}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="text-center"
+              autoComplete="email"
+              inputMode="email"
+              required
             />
             <Button
-              onClick={handleEmailSubmit}
+              type="submit"
               disabled={isChecking}
               className="w-full btn-primary-custom text-white"
             >
@@ -361,6 +364,8 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
                 t.start
               )}
             </Button>
+          </form>
+          <div className="space-y-4 mt-4">
             <Button
               onClick={onBack}
               variant="outline"

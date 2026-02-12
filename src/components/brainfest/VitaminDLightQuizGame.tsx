@@ -214,17 +214,19 @@ const VitaminDLightQuizGame = ({ level, language, onBack, onLevelComplete }: Vit
                 <FishIcon className="inline-block w-5 h-5 ml-2 align-middle" color="#4A6741" />
               </p>
 
-              <div className="w-full max-w-sm space-y-4">
+              <form onSubmit={(e) => { e.preventDefault(); handleEmailSubmit(); }} className="w-full max-w-sm space-y-4">
                 <Input
                   type="email"
                   placeholder={language === "fr" ? "votre@email.com" : "your@email.com"}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="text-center bg-white text-foreground"
-                  onKeyDown={(e) => e.key === "Enter" && handleEmailSubmit()}
+                  autoComplete="email"
+                  inputMode="email"
+                  required
                 />
                 <Button
-                  onClick={handleEmailSubmit}
+                  type="submit"
                   disabled={isChecking}
                   className="w-full px-8 py-6 text-lg font-semibold text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
                   style={{ backgroundColor: "#4A6741" }}
@@ -238,7 +240,7 @@ const VitaminDLightQuizGame = ({ level, language, onBack, onLevelComplete }: Vit
                     </>
                   )}
                 </Button>
-              </div>
+              </form>
             </motion.div>
           )}
 

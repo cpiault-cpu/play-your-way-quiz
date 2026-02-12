@@ -281,22 +281,20 @@ const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: Sardines
                 }
               </p>
 
-              <div className="w-full max-w-sm space-y-4">
+              <form onSubmit={(e) => { e.preventDefault(); handleEmailSubmit(); }} className="w-full max-w-sm space-y-4">
                 <Input
                   type="email"
                   placeholder={language === "fr" ? "votre@email.com" : "your@email.com"}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="text-center text-lg py-6 bg-white text-foreground"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      handleEmailSubmit();
-                    }
-                  }}
+                  autoComplete="email"
+                  inputMode="email"
+                  required
                 />
 
                 <Button
-                  onClick={handleEmailSubmit}
+                  type="submit"
                   disabled={isChecking || !email.trim()}
                   className="w-full py-6 text-lg font-semibold text-white rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
                   style={{ backgroundColor: levelData?.color }}
@@ -313,6 +311,7 @@ const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: Sardines
                     </>
                   )}
                 </Button>
+              </form>
 
                 <Button
                   onClick={onBack}
@@ -321,7 +320,6 @@ const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: Sardines
                 >
                   {uiTexts.back[language]}
                 </Button>
-              </div>
             </motion.div>
           )}
 

@@ -209,16 +209,19 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
               </h2>
               <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8">{t.enterEmail}</p>
 
-              <div className="space-y-3 sm:space-y-4">
-              <Input
+              <form onSubmit={(e) => { e.preventDefault(); handleStartQuiz(); }} className="space-y-3 sm:space-y-4">
+                <Input
                   type="email"
                   placeholder={t.emailPlaceholder}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 text-base"
+                  autoComplete="email"
+                  inputMode="email"
+                  required
                 />
                 <Button
-                  onClick={handleStartQuiz}
+                  type="submit"
                   disabled={isChecking}
                   className="w-full btn-primary-custom text-white font-medium text-sm sm:text-base py-2.5 sm:py-3"
                 >
@@ -231,7 +234,7 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                     t.startQuiz
                   )}
                 </Button>
-              </div>
+              </form>
             </motion.div>
           )}
 

@@ -238,7 +238,7 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
                 {uiTexts.emailPrompt[language]}
               </p>
 
-              <div className="space-y-4">
+              <form onSubmit={(e) => { e.preventDefault(); handleEmailSubmit(); }} className="space-y-4">
                 <div>
                   <Label htmlFor="email">Email</Label>
                   <Input
@@ -252,6 +252,9 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
                     placeholder="votre@email.com"
                     className="mt-1"
                     style={{ borderRadius: "8px" }}
+                    autoComplete="email"
+                    inputMode="email"
+                    required
                   />
                   {emailError && (
                     <p className="text-red-500 text-sm mt-1">{emailError}</p>
@@ -259,7 +262,7 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
                 </div>
 
                 <Button
-                  onClick={handleEmailSubmit}
+                  type="submit"
                   disabled={isChecking || !email}
                   className="w-full"
                   style={{ 
@@ -270,17 +273,17 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
                 >
                   {isChecking ? "..." : uiTexts.start[language]}
                 </Button>
+              </form>
 
                 <Button
                   variant="ghost"
                   onClick={onBack}
-                  className="w-full"
+                  className="w-full mt-4"
                   style={{ fontFamily: "Montserrat, sans-serif" }}
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   {uiTexts.back[language]}
                 </Button>
-              </div>
             </CardContent>
           </Card>
         </motion.div>
