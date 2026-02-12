@@ -21,6 +21,7 @@ export const useQuizAttempt = (): UseQuizAttemptResult => {
 
   /**
    * Check if an email has already been used for a specific quiz
+   * Uses edge function to avoid exposing all signups data via SELECT policy
    * @returns true if the email has already been used (attempt exists)
    */
   const checkEmailUsed = useCallback(async (email: string, quizId: string): Promise<boolean> => {
@@ -28,23 +29,23 @@ export const useQuizAttempt = (): UseQuizAttemptResult => {
     setError(null);
     
     try {
-      const { data, error: queryError } = await supabase
-        .from("signups")
-        .select("id")
-        .eq("email", email.toLowerCase().trim())
-        .eq("quiz_id", quizId)
-        .maybeSingle();
+      const { data, error: fnError } = await supabase.functions.invoke("quiz-operations", {
+        body: {
+          action: "check-email",
+          email: email.toLowerCase().trim(),
+          quiz_id: quizId,
+        },
+      });
 
-      if (queryError) {
+      if (fnError) {
         if (import.meta.env.DEV) {
-          console.error("Error checking email:", queryError);
+          console.error("Error checking email:", fnError);
         }
-        setError(queryError.message);
+        setError(fnError.message);
         return false;
       }
 
-      // If data exists, email has been used
-      return !!data;
+      return data?.exists ?? false;
     } catch (err) {
       if (import.meta.env.DEV) {
         console.error("Error checking email:", err);
@@ -59,6 +60,7 @@ export const useQuizAttempt = (): UseQuizAttemptResult => {
   /**
    * Save a new quiz attempt to the database
    * Only saves if GDPR consent has been accepted
+   * Uses direct INSERT (still allowed by RLS policy)
    */
   const saveAttempt = useCallback(async (email: string, quizId: string, score?: number | null): Promise<void> => {
     // Only save if user has accepted GDPR consent
@@ -92,6 +94,7 @@ export const useQuizAttempt = (): UseQuizAttemptResult => {
 
   /**
    * Update the score for an existing attempt
+   * Uses edge function to avoid needing public UPDATE policy
    * Only updates if GDPR consent has been accepted
    */
   const updateScore = useCallback(async (email: string, quizId: string, score: number): Promise<void> => {
@@ -102,17 +105,20 @@ export const useQuizAttempt = (): UseQuizAttemptResult => {
     }
 
     try {
-      const { error: updateError } = await supabase
-        .from("signups")
-        .update({ score })
-        .eq("email", email.toLowerCase().trim())
-        .eq("quiz_id", quizId);
+      const { error: fnError } = await supabase.functions.invoke("quiz-operations", {
+        body: {
+          action: "update-score",
+          email: email.toLowerCase().trim(),
+          quiz_id: quizId,
+          score,
+        },
+      });
 
-      if (updateError) {
+      if (fnError) {
         if (import.meta.env.DEV) {
-          console.error("Error updating score:", updateError);
+          console.error("Error updating score:", fnError);
         }
-        throw updateError;
+        throw fnError;
       }
     } catch (err) {
       if (import.meta.env.DEV) {
