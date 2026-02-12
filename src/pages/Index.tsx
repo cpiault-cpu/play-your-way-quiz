@@ -21,7 +21,6 @@ import SardinesQuizCard from "@/components/brainfest/SardinesQuizCard";
 import CarreCognitifGame from "@/components/brainfest/CarreCognitifGame";
 import CarreCognitifCard from "@/components/brainfest/CarreCognitifCard";
 import Footer from "@/components/brainfest/Footer";
-import GdprBanner from "@/components/brainfest/GdprBanner";
 import FishIcon from "@/components/brainfest/icons/FishIcon";
 import SardinesPromoBubble from "@/components/brainfest/SardinesPromoBubble";
 // Category type - updated to match new navigation
@@ -803,8 +802,6 @@ const Index = () => {
       {/* Footer */}
       <Footer language={language} />
       
-      {/* GDPR Banner */}
-      <GdprBanner language={language} />
       
       {/* Sardines Promo Popup */}
       <SardinesPromoBubble 
