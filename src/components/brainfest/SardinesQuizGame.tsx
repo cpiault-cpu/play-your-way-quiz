@@ -289,8 +289,7 @@ const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: Sardines
                   name="email"
                   type="email"
                   placeholder={language === "fr" ? "votre@email.com" : "your@email.com"}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  defaultValue={email}
                   className="text-center text-lg py-6 bg-white text-foreground"
                   autoComplete="email"
                   inputMode="email"

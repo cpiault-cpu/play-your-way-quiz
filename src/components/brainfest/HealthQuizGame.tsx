@@ -219,8 +219,7 @@ const HealthQuizGame = ({ language, level, seriesId = 'nutrition', onBack }: Hea
                 <Input
                   name="email"
                   type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  defaultValue={email}
                   placeholder={t.emailPlaceholder}
                   className="w-full bg-white text-foreground border-border"
                   autoComplete="email"

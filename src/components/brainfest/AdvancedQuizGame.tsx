@@ -111,15 +111,19 @@ const AdvancedQuizGame = ({ category, level, language, onBack }: AdvancedQuizGam
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const handleStartQuiz = async () => {
-    if (!validateEmail(email)) {
+  const handleStartQuiz = async (e?: React.FormEvent<HTMLFormElement>) => {
+    if (e) e.preventDefault();
+    const form = e?.currentTarget;
+    const submittedEmail = form ? (new FormData(form).get("email") as string || "").trim() : email.trim();
+    
+    if (!validateEmail(submittedEmail)) {
       toast.error(t.invalidEmail);
       return;
     }
 
-    // Save the attempt (allow replays with same email)
+    setEmail(submittedEmail);
     try {
-      await saveAttempt(email, quizId);
+      await saveAttempt(submittedEmail, quizId);
     } catch (error) {
       if (import.meta.env.DEV) {
         console.error("Error saving attempt:", error);
@@ -314,12 +318,12 @@ const AdvancedQuizGame = ({ category, level, language, onBack }: AdvancedQuizGam
                 {t.enterEmail}
               </p>
 
-              <form onSubmit={(e) => { e.preventDefault(); handleStartQuiz(); }} className="space-y-3 sm:space-y-4">
+              <form onSubmit={handleStartQuiz} className="space-y-3 sm:space-y-4">
                 <Input
+                  name="email"
                   type="email"
                   placeholder={t.emailPlaceholder}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  defaultValue={email}
                   className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 text-base"
                   style={{ fontFamily: 'Montserrat, sans-serif' }}
                   autoComplete="email"

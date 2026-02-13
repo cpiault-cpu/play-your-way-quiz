@@ -347,8 +347,7 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
               name="email"
               type="email"
               placeholder={t.emailPlaceholder}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              defaultValue={email}
               className="text-center"
               autoComplete="email"
               inputMode="email"
