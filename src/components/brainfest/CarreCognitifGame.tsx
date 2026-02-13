@@ -264,7 +264,7 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
 
                 <Button
                   type="submit"
-                  disabled={isChecking || !email}
+                  disabled={isChecking}
                   className="w-full"
                   style={{ 
                     backgroundColor: "#1E90FF", 

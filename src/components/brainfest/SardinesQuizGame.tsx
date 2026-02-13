@@ -299,7 +299,7 @@ const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: Sardines
 
                 <Button
                   type="submit"
-                  disabled={isChecking || !email.trim()}
+                  disabled={isChecking}
                   className="w-full py-6 text-lg font-semibold text-white rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
                   style={{ backgroundColor: levelData?.color }}
                 >
