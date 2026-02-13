@@ -59,8 +59,12 @@ const VitaminDLightQuizGame = ({ level, language, onBack, onLevelComplete }: Vit
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailToValidate);
   };
 
-  const handleEmailSubmit = async () => {
-    if (!validateEmail(email)) {
+  const handleEmailSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const submittedEmail = (formData.get("email") as string || "").trim();
+    
+    if (!validateEmail(submittedEmail)) {
       toast.error(
         language === "fr"
           ? "Veuillez entrer une adresse email valide"
@@ -69,9 +73,9 @@ const VitaminDLightQuizGame = ({ level, language, onBack, onLevelComplete }: Vit
       return;
     }
 
-    saveEmail(email);
+    saveEmail(submittedEmail);
     try {
-      await saveAttempt(email, quizId);
+      await saveAttempt(submittedEmail, quizId);
     } catch (error) {
       console.error("Error saving attempt:", error);
     }
@@ -214,8 +218,9 @@ const VitaminDLightQuizGame = ({ level, language, onBack, onLevelComplete }: Vit
                 <FishIcon className="inline-block w-5 h-5 ml-2 align-middle" color="#4A6741" />
               </p>
 
-              <form onSubmit={(e) => { e.preventDefault(); handleEmailSubmit(); }} className="w-full max-w-sm space-y-4">
+              <form onSubmit={handleEmailSubmit} className="w-full max-w-sm space-y-4">
                 <Input
+                  name="email"
                   type="email"
                   placeholder={language === "fr" ? "votre@email.com" : "your@email.com"}
                   value={email}

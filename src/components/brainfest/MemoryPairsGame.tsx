@@ -161,16 +161,19 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const handleEmailSubmit = async () => {
-    if (!validateEmail(email)) {
+  const handleEmailSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const submittedEmail = (formData.get("email") as string || "").trim();
+    
+    if (!validateEmail(submittedEmail)) {
       toast.error(t.invalidEmail);
       return;
     }
     
-    saveEmail(email);
-    // Save the attempt (allow replays with same email)
+    saveEmail(submittedEmail);
     try {
-      await saveAttempt(email, quizId);
+      await saveAttempt(submittedEmail, quizId);
     } catch (error) {
       console.error("Error saving attempt:", error);
     }
@@ -339,8 +342,9 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
           <p className="text-muted-foreground mb-6 text-sm px-2 bg-primary/5 py-3 rounded-lg border border-primary/10">
             {t.instructions}
           </p>
-          <form onSubmit={(e) => { e.preventDefault(); handleEmailSubmit(); }} className="space-y-4">
+          <form onSubmit={handleEmailSubmit} className="space-y-4">
             <Input
+              name="email"
               type="email"
               placeholder={t.emailPlaceholder}
               value={email}

@@ -79,15 +79,19 @@ const HealthQuizGame = ({ language, level, seriesId = 'nutrition', onBack }: Hea
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const handleEmailSubmit = async () => {
-    if (!validateEmail(email)) {
+  const handleEmailSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const submittedEmail = (formData.get("email") as string || "").trim();
+    
+    if (!validateEmail(submittedEmail)) {
       toast.error(t.invalidEmail);
       return;
     }
     
     // Save email to database (allow replays with same email)
     try {
-      await saveAttempt(email, quizId);
+      await saveAttempt(submittedEmail, quizId);
     } catch (error) {
       if (import.meta.env.DEV) {
         console.error("Error saving email:", error);
@@ -207,12 +211,13 @@ const HealthQuizGame = ({ language, level, seriesId = 'nutrition', onBack }: Hea
               <p className="text-muted-foreground">{t.level} {level}</p>
             </div>
             
-            <form onSubmit={(e) => { e.preventDefault(); handleEmailSubmit(); }} className="space-y-4">
+            <form onSubmit={handleEmailSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   {t.enterEmail}
                 </label>
                 <Input
+                  name="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
