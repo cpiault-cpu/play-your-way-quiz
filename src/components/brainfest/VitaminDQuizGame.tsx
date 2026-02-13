@@ -14,6 +14,7 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
 import { useQuizEmail } from "@/hooks/useQuizEmail";
+import EmailConsentCheckbox from "@/components/brainfest/EmailConsentCheckbox";
 
 interface VitaminDQuizGameProps {
   level: 1 | 2 | 3;
@@ -252,6 +253,7 @@ const VitaminDQuizGame = ({ level, language, onBack, onLevelComplete }: VitaminD
                   required
                   onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                 />
+                <EmailConsentCheckbox language={language} />
                 <Button
                   type="submit"
                   disabled={isChecking}

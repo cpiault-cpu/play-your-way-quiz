@@ -24,18 +24,18 @@ const PrivacyPolicy = () => {
         : "Quiz personalization, progress saving, anonymous analytics to improve user experience."
     },
     {
+      icon: UserCheck,
+      title: language === "fr" ? "Gérer mes données" : "Manage my data",
+      content: language === "fr"
+        ? <>Vos données (email, scores) serviront uniquement à :<br/>• Gérer votre participation au quiz.<br/>• Vous envoyer vos réductions ou codes promo.<br/>• Améliorer l'expérience utilisateur (statistiques anonymes).<br/><br/>Elles ne seront jamais cédées à des tiers et seront supprimées après 3 mois.<br/><br/>Vous pouvez accéder, modifier ou demander la suppression de vos données en nous contactant à : <a href="mailto:c.piault@peita.fr" className="text-primary underline hover:opacity-70">c.piault@peita.fr</a></>
+        : <>Your data (email, scores) will only be used to:<br/>• Manage your quiz participation.<br/>• Send you your discounts or promo codes.<br/>• Improve the user experience (anonymous statistics).<br/><br/>They will never be shared with third parties and will be deleted after 3 months.<br/><br/>You can access, modify or request deletion of your data by contacting us at: <a href="mailto:c.piault@peita.fr" className="text-primary underline hover:opacity-70">c.piault@peita.fr</a></>
+    },
+    {
       icon: Clock,
       title: language === "fr" ? "Durée de conservation" : "Retention Period",
       content: language === "fr"
-        ? "3 ans après la dernière activité sur votre compte."
-        : "3 years after the last activity on your account."
-    },
-    {
-      icon: UserCheck,
-      title: language === "fr" ? "Droits des utilisateurs" : "User Rights",
-      content: language === "fr"
-        ? <>Vous pouvez accéder, modifier ou demander la suppression de vos données en nous contactant à : <a href="mailto:c.piault@peita.fr" className="text-primary underline hover:opacity-70">c.piault@peita.fr</a></>
-        : <>You can access, modify or request deletion of your data by contacting us at: <a href="mailto:c.piault@peita.fr" className="text-primary underline hover:opacity-70">c.piault@peita.fr</a></>
+        ? "Les données personnelles (emails, scores) sont automatiquement supprimées 3 mois après leur collecte. Les données anonymisées peuvent être conservées plus longtemps à des fins statistiques."
+        : "Personal data (emails, scores) is automatically deleted 3 months after collection. Anonymized data may be kept longer for statistical purposes."
     },
     {
       icon: Lock,

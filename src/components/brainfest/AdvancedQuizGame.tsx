@@ -13,6 +13,7 @@ import {
 import { toast } from "sonner";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
 import { useQuizProgress } from "@/hooks/useQuizProgress";
+import EmailConsentCheckbox from "@/components/brainfest/EmailConsentCheckbox";
 
 const TIMER_DURATION = 10; // 10 seconds per question
 
@@ -331,6 +332,7 @@ const AdvancedQuizGame = ({ category, level, language, onBack }: AdvancedQuizGam
                   required
                   onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                 />
+                <EmailConsentCheckbox language={language} />
                 <Button
                   type="submit"
                   disabled={isChecking}

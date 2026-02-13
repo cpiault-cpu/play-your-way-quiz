@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
 import { useQuizEmail } from "@/hooks/useQuizEmail";
+import EmailConsentCheckbox from "@/components/brainfest/EmailConsentCheckbox";
 
 // Confetti celebration function
 const fireConfetti = () => {
@@ -1029,6 +1030,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                     required
                     onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                   />
+                  <EmailConsentCheckbox language={language} />
                   <Button
                     type="submit"
                     disabled={isChecking}
