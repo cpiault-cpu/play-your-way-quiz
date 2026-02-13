@@ -248,6 +248,7 @@ const MicronutritionQuizGame = ({ level, language, onBack, onLevelComplete }: Mi
                   autoComplete="email"
                   inputMode="email"
                   required
+                  onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                 />
                 <Button
                   type="submit"

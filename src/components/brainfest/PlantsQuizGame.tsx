@@ -75,7 +75,10 @@ const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuiz
     const formData = new FormData(e.currentTarget);
     const submittedEmail = (formData.get("email") as string || "").trim();
     
+    console.log("[PlantsQuiz] Email submit triggered. FormData email:", JSON.stringify(submittedEmail), "Length:", submittedEmail.length);
+    
     if (!validateEmail(submittedEmail)) {
+      console.log("[PlantsQuiz] Email validation FAILED for:", JSON.stringify(submittedEmail));
       toast.error(
         language === "fr"
           ? "Veuillez entrer une adresse email valide"
@@ -84,6 +87,7 @@ const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuiz
       return;
     }
 
+    console.log("[PlantsQuiz] Email validation PASSED. Saving and proceeding to intro phase.");
     saveEmail(submittedEmail);
     try {
       await saveAttempt(submittedEmail, quizId);
@@ -247,6 +251,7 @@ const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuiz
                   autoComplete="email"
                   inputMode="email"
                   required
+                  onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                 />
                 <Button
                   type="submit"

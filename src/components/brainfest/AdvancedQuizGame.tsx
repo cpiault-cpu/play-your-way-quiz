@@ -329,6 +329,7 @@ const AdvancedQuizGame = ({ category, level, language, onBack }: AdvancedQuizGam
                   autoComplete="email"
                   inputMode="email"
                   required
+                  onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                 />
                 <Button
                   type="submit"
