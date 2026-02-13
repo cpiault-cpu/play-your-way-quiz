@@ -294,6 +294,7 @@ const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: Sardines
                   autoComplete="email"
                   inputMode="email"
                   required
+                  onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                 />
 
                 <Button

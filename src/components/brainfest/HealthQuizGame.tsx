@@ -225,6 +225,7 @@ const HealthQuizGame = ({ language, level, seriesId = 'nutrition', onBack }: Hea
                   autoComplete="email"
                   inputMode="email"
                   required
+                  onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                 />
               </div>
               

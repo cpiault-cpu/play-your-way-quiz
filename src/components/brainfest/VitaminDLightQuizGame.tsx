@@ -228,6 +228,7 @@ const VitaminDLightQuizGame = ({ level, language, onBack, onLevelComplete }: Vit
                   autoComplete="email"
                   inputMode="email"
                   required
+                  onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                 />
                 <Button
                   type="submit"

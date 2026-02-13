@@ -250,6 +250,7 @@ const VitaminDQuizGame = ({ level, language, onBack, onLevelComplete }: VitaminD
                   autoComplete="email"
                   inputMode="email"
                   required
+                  onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                 />
                 <Button
                   type="submit"

@@ -222,6 +222,7 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                   autoComplete="email"
                   inputMode="email"
                   required
+                  onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                 />
                 <Button
                   type="submit"

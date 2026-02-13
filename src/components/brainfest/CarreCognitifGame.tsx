@@ -255,6 +255,7 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
                     autoComplete="email"
                     inputMode="email"
                     required
+                    onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                   />
                   {emailError && (
                     <p className="text-red-500 text-sm mt-1">{emailError}</p>
