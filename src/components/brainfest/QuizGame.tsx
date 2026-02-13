@@ -7,6 +7,7 @@ import { Quiz, Language, translations } from "@/data/quizData";
 import { toast } from "sonner";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
 import { useQuizEmail } from "@/hooks/useQuizEmail";
+import EmailConsentCheckbox from "@/components/brainfest/EmailConsentCheckbox";
 const TIMER_DURATION = 30; // seconds per question
 interface QuizGameProps {
   quiz: Quiz;
@@ -224,6 +225,7 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                   required
                   onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                 />
+                <EmailConsentCheckbox language={language} />
                 <Button
                   type="submit"
                   disabled={isChecking}

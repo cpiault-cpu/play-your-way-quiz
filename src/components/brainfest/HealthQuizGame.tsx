@@ -9,6 +9,7 @@ import { healthQuizLevels, healthQuizTranslations, HealthQuizSeriesId, healthQui
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
+import EmailConsentCheckbox from "@/components/brainfest/EmailConsentCheckbox";
 
 // Confetti celebration function
 const fireConfetti = () => {
@@ -228,7 +229,7 @@ const HealthQuizGame = ({ language, level, seriesId = 'nutrition', onBack }: Hea
                   onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                 />
               </div>
-              
+              <EmailConsentCheckbox language={language} />
               <Button 
                 type="submit"
                 disabled={isChecking}

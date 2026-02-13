@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
 import { useQuizEmail } from "@/hooks/useQuizEmail";
+import EmailConsentCheckbox from "@/components/brainfest/EmailConsentCheckbox";
 
 // Import plant images
 import lavenderImg from "@/assets/plants/lavender.png";
@@ -354,6 +355,7 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
               required
               onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
             />
+            <EmailConsentCheckbox language={language} />
             <Button
               type="submit"
               disabled={isChecking}

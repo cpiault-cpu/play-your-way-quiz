@@ -21,6 +21,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Check, RotateCcw, Share2, Home } from "lucide-react";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
 import { useQuizEmail } from "@/hooks/useQuizEmail";
+import EmailConsentCheckbox from "@/components/brainfest/EmailConsentCheckbox";
 
 interface CarreCognitifGameProps {
   language: Language;
@@ -255,13 +256,13 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
                     autoComplete="email"
                     inputMode="email"
                     required
-                    onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
+                  onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                   />
                   {emailError && (
                     <p className="text-red-500 text-sm mt-1">{emailError}</p>
                   )}
                 </div>
-
+                <EmailConsentCheckbox language={language} />
                 <Button
                   type="submit"
                   disabled={isChecking}
