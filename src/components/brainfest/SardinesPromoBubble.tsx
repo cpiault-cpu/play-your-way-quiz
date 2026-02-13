@@ -39,13 +39,13 @@ const SardinesPromoBubble = ({ language, onNavigateToSardines }: SardinesPromoBu
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
           onClick={handleClick}
-          className="fixed bottom-24 left-1/2 -translate-x-1/2 z-40 cursor-pointer max-w-[90vw] sm:max-w-md"
+          className="fixed bottom-24 left-[46%] -translate-x-1/2 z-40 cursor-pointer max-w-[85vw] sm:max-w-sm"
         >
           {/* Bubble */}
           <motion.div
             animate={{ y: [0, -6, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            className="relative rounded-2xl px-5 py-4 shadow-2xl border-2 border-white/30"
+            className="relative rounded-2xl px-4 py-3 shadow-2xl border-2 border-white/30"
             style={{
               background: "linear-gradient(135deg, #0891b2, #06b6d4, #22d3ee)",
             }}
@@ -59,27 +59,17 @@ const SardinesPromoBubble = ({ language, onNavigateToSardines }: SardinesPromoBu
             </button>
 
             {/* Content */}
-            <div className="flex items-center gap-3">
-              <div className="flex-shrink-0">
-                <motion.div
-                  animate={{ rotate: [0, 10, -10, 0] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <FishIcon className="w-10 h-10" color="white" />
-                </motion.div>
-              </div>
-              <div>
-                <p className="text-white font-bold text-sm sm:text-base leading-tight">
-                  {language === "fr"
-                    ? "🎉 Gagnez 15% de réduction sur votre commande en réussissant tous les niveaux de ce questionnaire !"
-                    : "🎉 Win 15% off your order by completing all levels of this quiz!"}
-                </p>
-                <p className="text-cyan-100 text-xs mt-1 font-medium">
-                  {language === "fr"
-                    ? "Cliquez ici pour jouer →"
-                    : "Click here to play →"}
-                </p>
-              </div>
+            <div>
+              <p className="text-white font-medium text-xs leading-tight">
+                {language === "fr"
+                  ? "🎉 Gagnez 15% de réduction sur votre commande en réussissant tous les niveaux de ce questionnaire !"
+                  : "🎉 Win 15% off your order by completing all levels of this quiz!"}
+              </p>
+              <p className="text-cyan-100 text-xs mt-1 font-medium">
+                {language === "fr"
+                  ? "Cliquez ici pour jouer →"
+                  : "Click here to play →"}
+              </p>
             </div>
 
             {/* Arrow pointing down */}
