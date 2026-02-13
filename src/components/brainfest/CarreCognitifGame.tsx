@@ -80,16 +80,19 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
   }, []);
 
   // Handle email submission
-  const handleEmailSubmit = async () => {
+  const handleEmailSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const submittedEmail = (formData.get("email") as string || "").trim();
+    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(submittedEmail)) {
       setEmailError(language === "fr" ? "Email invalide" : "Invalid email");
       return;
     }
 
-    saveEmail(email);
-    // Save the attempt (allow replays with same email)
-    await saveAttempt(email, "carre-cognitif", null);
+    saveEmail(submittedEmail);
+    await saveAttempt(submittedEmail, "carre-cognitif", null);
     setPhase("level-select");
   };
 
@@ -238,11 +241,12 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
                 {uiTexts.emailPrompt[language]}
               </p>
 
-              <form onSubmit={(e) => { e.preventDefault(); handleEmailSubmit(); }} className="space-y-4">
+              <form onSubmit={handleEmailSubmit} className="space-y-4">
                 <div>
                   <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
+                    name="email"
                     type="email"
                     value={email}
                     onChange={(e) => {

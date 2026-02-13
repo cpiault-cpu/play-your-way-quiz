@@ -70,8 +70,14 @@ const VitaminDQuizGame = ({ level, language, onBack, onLevelComplete }: VitaminD
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailToValidate);
   };
 
-  const handleEmailSubmit = async () => {
-    if (!validateEmail(email)) {
+  const handleEmailSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    // Read value directly from the form input to avoid stale React state
+    const formData = new FormData(e.currentTarget);
+    const submittedEmail = (formData.get("email") as string || "").trim();
+    
+    if (!validateEmail(submittedEmail)) {
       toast.error(
         language === "fr"
           ? "Veuillez entrer une adresse email valide"
@@ -80,10 +86,10 @@ const VitaminDQuizGame = ({ level, language, onBack, onLevelComplete }: VitaminD
       return;
     }
 
-    saveEmail(email);
+    saveEmail(submittedEmail);
     // Save the attempt (allow replays with same email)
     try {
-      await saveAttempt(email, quizId);
+      await saveAttempt(submittedEmail, quizId);
     } catch (error) {
       console.error("Error saving attempt:", error);
     }
@@ -234,8 +240,9 @@ const VitaminDQuizGame = ({ level, language, onBack, onLevelComplete }: VitaminD
                 }
               </p>
 
-              <form onSubmit={(e) => { e.preventDefault(); handleEmailSubmit(); }} className="w-full max-w-sm space-y-4">
+              <form onSubmit={handleEmailSubmit} className="w-full max-w-sm space-y-4">
                 <Input
+                  name="email"
                   type="email"
                   placeholder={language === "fr" ? "votre@email.com" : "your@email.com"}
                   value={email}

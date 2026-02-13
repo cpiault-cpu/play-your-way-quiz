@@ -190,16 +190,19 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const handleEmailSubmit = async () => {
-    if (!validateEmail(email)) {
+  const handleEmailSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const submittedEmail = (formData.get("email") as string || "").trim();
+    
+    if (!validateEmail(submittedEmail)) {
       toast.error(t.invalidEmail);
       return;
     }
     
-    saveEmail(email);
-    // Save the attempt (allow replays with same email)
+    saveEmail(submittedEmail);
     try {
-      await saveAttempt(email, quizId);
+      await saveAttempt(submittedEmail, quizId);
     } catch (error) {
       console.error("Error saving attempt:", error);
     }
@@ -1014,8 +1017,9 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                 </h2>
                 <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8">{t.enterEmail}</p>
 
-                <form onSubmit={(e) => { e.preventDefault(); handleEmailSubmit(); }} className="space-y-3 sm:space-y-4 max-w-md mx-auto">
+                <form onSubmit={handleEmailSubmit} className="space-y-3 sm:space-y-4 max-w-md mx-auto">
                   <Input
+                    name="email"
                     type="email"
                     placeholder={t.emailPlaceholder}
                     value={email}
