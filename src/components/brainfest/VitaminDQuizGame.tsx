@@ -245,8 +245,7 @@ const VitaminDQuizGame = ({ level, language, onBack, onLevelComplete }: VitaminD
                   name="email"
                   type="email"
                   placeholder={language === "fr" ? "votre@email.com" : "your@email.com"}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  defaultValue={email}
                   className="text-center bg-white text-foreground"
                   autoComplete="email"
                   inputMode="email"

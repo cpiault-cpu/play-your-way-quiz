@@ -242,8 +242,7 @@ const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuiz
                   name="email"
                   type="email"
                   placeholder={language === "fr" ? "votre@email.com" : "your@email.com"}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  defaultValue={email}
                   className="text-center"
                   autoComplete="email"
                   inputMode="email"

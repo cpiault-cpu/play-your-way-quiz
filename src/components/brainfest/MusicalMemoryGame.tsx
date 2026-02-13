@@ -1022,8 +1022,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                     name="email"
                     type="email"
                     placeholder={t.emailPlaceholder}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    defaultValue={email}
                     className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 text-base"
                     autoComplete="email"
                     inputMode="email"

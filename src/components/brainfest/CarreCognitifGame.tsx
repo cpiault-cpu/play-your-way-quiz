@@ -248,11 +248,7 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
                     id="email"
                     name="email"
                     type="email"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                      setEmailError("");
-                    }}
+                    defaultValue={email}
                     placeholder="votre@email.com"
                     className="mt-1"
                     style={{ borderRadius: "8px" }}
