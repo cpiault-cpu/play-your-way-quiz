@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Clock, Check, AlertCircle, Flame, ChevronRight, Loader2, ExternalLink } from "lucide-react";
+import { ArrowLeft, Clock, Check, AlertCircle, Flame, ChevronRight, Loader2 } from "lucide-react";
 import { Language } from "@/data/quizData";
 import { 
   antiInflammatoryLevels, 
@@ -547,15 +547,7 @@ const AntiInflammatoryQuizGame = ({ level, language, onBack, onLevelComplete }: 
                   <span className="text-5xl">🧠</span>
                 </div>
                 <h2 className="text-2xl font-bold text-foreground mb-3">{uiTexts.finalTitle[language]}</h2>
-                <p className="text-lg text-muted-foreground mb-8">{uiTexts.finalMessage[language]}</p>
-                
-                <div className="bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl p-5 border border-purple-200 mb-6">
-                  <p className="text-sm text-purple-700 mb-3">👉 {uiTexts.followInstagram[language]}</p>
-                  <a href="https://www.instagram.com/maison_peita/" target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold hover:opacity-90 transition-all">
-                    <ExternalLink className="w-4 h-4" />Instagram
-                  </a>
-                </div>
+                <p className="text-lg text-muted-foreground mb-8 whitespace-pre-line">{uiTexts.finalMessage[language]}</p>
 
                 <Button variant="outline" onClick={onBack} className="w-full">{uiTexts.back[language]}</Button>
               </div>
