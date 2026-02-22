@@ -21,10 +21,12 @@ import SardinesQuizCard from "@/components/brainfest/SardinesQuizCard";
 import CarreCognitifGame from "@/components/brainfest/CarreCognitifGame";
 import CarreCognitifCard from "@/components/brainfest/CarreCognitifCard";
 import Footer from "@/components/brainfest/Footer";
+import AntiInflammatoryQuizGame from "@/components/brainfest/AntiInflammatoryQuizGame";
+import AntiInflammatoryQuizCard from "@/components/brainfest/AntiInflammatoryQuizCard";
 import FishIcon from "@/components/brainfest/icons/FishIcon";
 
 // Category type - updated to match new navigation
-type CategoryId = "micronutrition" | "micronutrition2" | "vitamind-light" | "plants" | "memory-music" | "memory-cards" | "sardines" | "carre-cognitif";
+type CategoryId = "anti-inflammatory" | "micronutrition" | "micronutrition2" | "vitamind-light" | "plants" | "memory-music" | "memory-cards" | "sardines" | "carre-cognitif";
 
 // Map quiz categories to our category IDs
 const getCategoryForQuiz = (quiz: Quiz): "micronutrition" | "micronutrition2" | "plants" => {
@@ -38,6 +40,7 @@ const MICRONUTRITION_PROGRESS_KEY = "micronutrition_progress";
 const VITAMIND_PROGRESS_KEY = "vitamind_progress";
 const PLANTS_PROGRESS_KEY = "plants_progress";
 const SARDINES_PROGRESS_KEY = "sardines_progress";
+const ANTI_INFLAMMATORY_PROGRESS_KEY = "anti_inflammatory_progress";
 
 const Index = () => {
   const [language, setLanguage] = useState<Language>("fr");
@@ -50,6 +53,7 @@ const Index = () => {
   const [activePlantsLevel, setActivePlantsLevel] = useState<1 | 2 | 3 | null>(null);
   const [activeSardinesLevel, setActiveSardinesLevel] = useState<1 | 2 | 3 | 4 | null>(null);
   const [showCarreCognitif, setShowCarreCognitif] = useState(false);
+  const [activeAntiInflammatoryLevel, setActiveAntiInflammatoryLevel] = useState<number | null>(null);
   const [completedMicronutritionLevels, setCompletedMicronutritionLevels] = useState<number[]>(() => {
     const saved = localStorage.getItem(MICRONUTRITION_PROGRESS_KEY);
     return saved ? JSON.parse(saved) : [];
@@ -64,6 +68,10 @@ const Index = () => {
   });
   const [completedSardinesLevels, setCompletedSardinesLevels] = useState<number[]>(() => {
     const saved = localStorage.getItem(SARDINES_PROGRESS_KEY);
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [completedAntiInflammatoryLevels, setCompletedAntiInflammatoryLevels] = useState<number[]>(() => {
+    const saved = localStorage.getItem(ANTI_INFLAMMATORY_PROGRESS_KEY);
     return saved ? JSON.parse(saved) : [];
   });
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory-music");
@@ -98,6 +106,10 @@ const Index = () => {
   useEffect(() => {
     localStorage.setItem(SARDINES_PROGRESS_KEY, JSON.stringify(completedSardinesLevels));
   }, [completedSardinesLevels]);
+
+  useEffect(() => {
+    localStorage.setItem(ANTI_INFLAMMATORY_PROGRESS_KEY, JSON.stringify(completedAntiInflammatoryLevels));
+  }, [completedAntiInflammatoryLevels]);
 
   const handleToggleLanguage = () => {
     setLanguage((prev) => (prev === "fr" ? "en" : "fr"));
@@ -134,6 +146,19 @@ const Index = () => {
 
   const handlePlaySardines = (level: 1 | 2 | 3 | 4) => {
     setActiveSardinesLevel(level);
+  };
+
+  const handlePlayAntiInflammatory = (level: number) => {
+    setActiveAntiInflammatoryLevel(level);
+  };
+
+  const handleAntiInflammatoryLevelComplete = (level: number) => {
+    setCompletedAntiInflammatoryLevels(prev => [...new Set([...prev, level])]);
+    if (level < 6) {
+      setActiveAntiInflammatoryLevel(level + 1);
+    } else {
+      setActiveAntiInflammatoryLevel(null);
+    }
   };
 
   const handleMicronutritionLevelComplete = (level: 1 | 2 | 3) => {
@@ -190,9 +215,22 @@ const Index = () => {
     setActivePlantsLevel(null);
     setActiveSardinesLevel(null);
     setShowCarreCognitif(false);
+    setActiveAntiInflammatoryLevel(null);
   };
 
   const activeQuiz = quizzes.find((q) => q.id === activeQuizId);
+
+  // Show Anti-Inflammatory Quiz Game
+  if (activeAntiInflammatoryLevel) {
+    return (
+      <AntiInflammatoryQuizGame
+        level={activeAntiInflammatoryLevel}
+        language={language}
+        onBack={handleBackToHome}
+        onLevelComplete={handleAntiInflammatoryLevelComplete}
+      />
+    );
+  }
 
   // Show Micronutrition Quiz Game
   if (activeMicronutritionLevel) {
@@ -712,6 +750,60 @@ const Index = () => {
                       onPlay={handlePlayPlants}
                       isCompleted={completedPlantsLevels.includes(level)}
                     />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.section>
+          )}
+
+          {/* Anti-Inflammatory Quiz section */}
+          {selectedCategory === "anti-inflammatory" && (
+            <motion.section 
+              className="mt-10 sm:mt-12 md:mt-14 mb-10 sm:mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-orange-100 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
+                  🔥
+                </span>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  {language === "fr" ? "Alimentation Anti-Inflammatoire" : "Anti-Inflammatory Diet"}
+                </h2>
+                <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
+              </div>
+              
+              <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
+                <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl whitespace-pre-line">
+                  {language === "fr" 
+                    ? "Un exercice de connaissance visuel, évolutif et entièrement personnalisé.\n\nIci, le parcours s'adapte à vous : chaque niveau tient compte de vos réponses précédentes. On avance seulement quand la compréhension est solide. Chaque étape validée vous fait réellement progresser. 🧠"
+                    : "A visual, evolving and fully personalized knowledge exercise.\n\nHere, the path adapts to you: each level takes your previous answers into account. You only move forward when understanding is solid. Each validated step makes you truly progress. 🧠"
+                  }
+                </p>
+              </div>
+              
+              {/* Mobile: vertical stack */}
+              <div className="md:hidden flex flex-col gap-4 min-w-0">
+                {[1, 2, 3, 4, 5, 6].map((lvl, index) => (
+                  <motion.div key={lvl} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ duration: 0.4, delay: index * 0.1 }}>
+                    <AntiInflammatoryQuizCard 
+                      level={lvl} language={language} onPlay={handlePlayAntiInflammatory}
+                      isCompleted={completedAntiInflammatoryLevels.includes(lvl)} />
+                  </motion.div>
+                ))}
+              </div>
+              
+              {/* Desktop: grid */}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3, 4, 5, 6].map((lvl, index) => (
+                  <motion.div key={lvl} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ duration: 0.4, delay: index * 0.1 }}>
+                    <AntiInflammatoryQuizCard 
+                      level={lvl} language={language} onPlay={handlePlayAntiInflammatory}
+                      isCompleted={completedAntiInflammatoryLevels.includes(lvl)} />
                   </motion.div>
                 ))}
               </div>
