@@ -778,8 +778,8 @@ const Index = () => {
               <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
                 <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl whitespace-pre-line">
                   {language === "fr" 
-                    ? "Un exercice de connaissance visuel, évolutif et entièrement personnalisé.\n\nIci, le parcours s'adapte à vous : chaque niveau tient compte de vos réponses précédentes. On avance seulement quand la compréhension est solide. Chaque étape validée vous fait réellement progresser. 🧠"
-                    : "A visual, evolving and fully personalized knowledge exercise.\n\nHere, the path adapts to you: each level takes your previous answers into account. You only move forward when understanding is solid. Each validated step makes you truly progress. 🧠"
+                    ? "L'inflammation chronique, c'est comme un feu qui couve. Heureusement, certains aliments agissent comme des pompiers. Voici un test de connaissance en plusieurs niveaux.\nLe parcours s'adapte à vous : chaque niveau tient compte de vos réponses précédentes."
+                    : "Chronic inflammation is like a smoldering fire. Fortunately, certain foods act as firefighters. Here is a multi-level knowledge test.\nThe path adapts to you: each level takes your previous answers into account."
                   }
                 </p>
               </div>
