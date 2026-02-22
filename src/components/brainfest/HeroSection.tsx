@@ -27,7 +27,7 @@ const heroTexts = {
 };
 
 const savoirCategories: Category[] = [
-  { id: "anti-inflammatory", name: { fr: "Anti-Inflammatoire Expert", en: "Anti-Inflammatory Expert" }, emoji: "🔥" },
+  { id: "anti-inflammatory", name: { fr: "Stratège anti-inflammatoire", en: "Anti-Inflammatory Strategist" }, emoji: "🔥" },
   { id: "sardines", name: { fr: "Sardines, Sardines, Mais pourquoi ?", en: "Sardines, Sardines, But why?" }, emoji: "🐟" },
   { id: "micronutrition", name: { fr: "Micronutrition 1", en: "Micronutrition 1" }, emoji: "💊" },
   { id: "micronutrition2", name: { fr: "VitD ça dépend", en: "VitD it depends" }, emoji: "☀️" },
