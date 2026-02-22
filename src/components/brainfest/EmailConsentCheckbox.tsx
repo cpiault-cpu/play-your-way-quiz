@@ -20,8 +20,8 @@ const EmailConsentCheckbox = ({ language }: EmailConsentCheckboxProps) => {
         style={{ fontFamily: "Montserrat, sans-serif" }}
       >
         {language === "fr"
-          ? "J'accepte que mon email soit utilisé pour participer au quiz et recevoir mes réductions."
-          : "I agree that my email will be used to participate in the quiz and receive my discounts."}
+          ? "J'accepte que mon email soit utilisé pour participer aux jeux et avoir accès aux autres."
+          : "I agree that my email will be used to participate in the games and access the others."}
       </label>
     </div>
   );
