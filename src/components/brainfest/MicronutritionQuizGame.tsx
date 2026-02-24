@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Clock, Check, AlertCircle, Brain, ChevronRight, Loader2 } from "lucide-react";
+import ShareButton from "@/components/brainfest/ShareButton";
+import { getQuizByType } from "@/data/quizRegistry";
 import { Language } from "@/data/quizData";
 import { 
   micronutritionLevels, 
@@ -206,7 +208,7 @@ const MicronutritionQuizGame = ({ level, language, onBack, onLevelComplete }: Mi
             </h1>
           </div>
 
-          <div className="w-20" />
+          <ShareButton url={`/quiz/${getQuizByType("micronutrition")?.slug}`} title={language === "fr" ? "Micronutrition 1" : "Micronutrition 1"} />
         </div>
       </header>
 

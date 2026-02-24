@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, RotateCcw, Clock, ExternalLink, Loader2 } from "lucide-react";
+import ShareButton from "@/components/brainfest/ShareButton";
+import { getQuizByType } from "@/data/quizRegistry";
 import { Language } from "@/data/quizData";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
@@ -336,7 +338,10 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="max-w-md mx-auto text-center">
-          <div className="text-6xl mb-4">🌿</div>
+          <div className="flex items-center justify-between mb-4">
+            <div className="text-6xl">🌿</div>
+            <ShareButton url={`/quiz/${getQuizByType("memory-cards")?.slug}`} title={language === "fr" ? "Memory Cartes" : "Memory Cards"} variant="full" />
+          </div>
           <h1 className="font-serif text-2xl font-bold text-foreground mb-4">
             {t.title} - {language === "fr" ? "Niveau" : "Level"} {level}
           </h1>
@@ -512,15 +517,18 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
           <h1 className="font-serif text-lg font-bold text-foreground">
             {t.game} {currentGame}/{config.gamesToWin}
           </h1>
-          
-          <Button
-            onClick={handleRestart}
-            variant="ghost"
-            size="sm"
-            className="text-muted-foreground"
-          >
-            <RotateCcw className="w-4 h-4" />
-          </Button>
+
+          <div className="flex items-center gap-1">
+            <ShareButton url={`/quiz/${getQuizByType("memory-cards")?.slug}`} title={language === "fr" ? "Memory Cartes" : "Memory Cards"} />
+            <Button
+              onClick={handleRestart}
+              variant="ghost"
+              size="sm"
+              className="text-muted-foreground"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
 
         {/* Timer */}

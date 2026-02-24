@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Play, Volume2, RotateCcw, Trophy, Loader2 } from "lucide-react";
+import ShareButton from "@/components/brainfest/ShareButton";
+import { getQuizByType } from "@/data/quizRegistry";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
@@ -991,15 +993,16 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
           >
             <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </Button>
-          <div className="min-w-0">
-            <h1 className="font-serif text-xl sm:text-2xl md:text-4xl font-bold text-foreground flex items-center gap-2 truncate">
-              <Volume2 className="w-5 h-5 sm:w-7 sm:h-7 text-primary flex-shrink-0" />
-              <span className="truncate">{t.title}</span>
-            </h1>
-            <p className="text-muted-foreground text-sm sm:text-base md:text-lg truncate">
-              {t.subtitle} • {getLevelDescription()}
-            </p>
-          </div>
+            <div className="min-w-0 flex-1">
+              <h1 className="font-serif text-xl sm:text-2xl md:text-4xl font-bold text-foreground flex items-center gap-2 truncate">
+                <Volume2 className="w-5 h-5 sm:w-7 sm:h-7 text-primary flex-shrink-0" />
+                <span className="truncate">{t.title}</span>
+              </h1>
+              <p className="text-muted-foreground text-sm sm:text-base md:text-lg truncate">
+                {t.subtitle} • {getLevelDescription()}
+              </p>
+            </div>
+            <ShareButton url={`/quiz/${getQuizByType("memory-music")?.slug}`} title={language === "fr" ? "Mémoire Musicale" : "Musical Memory"} />
         </div>
 
         {/* Game Status */}

@@ -98,3 +98,7 @@ export const quizRegistry: QuizRegistryEntry[] = [
 export const getQuizBySlug = (slug: string): QuizRegistryEntry | undefined => {
   return quizRegistry.find((q) => q.slug === slug);
 };
+
+export const getQuizByType = (type: string): QuizRegistryEntry | undefined => {
+  return quizRegistry.find((q) => q.type === type);
+};

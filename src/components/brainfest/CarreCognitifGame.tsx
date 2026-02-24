@@ -19,6 +19,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Check, RotateCcw, Share2, Home } from "lucide-react";
+import ShareButton from "@/components/brainfest/ShareButton";
+import { getQuizByType } from "@/data/quizRegistry";
 import { useQuizAttempt } from "@/hooks/useQuizAttempt";
 import { useQuizEmail } from "@/hooks/useQuizEmail";
 import EmailConsentCheckbox from "@/components/brainfest/EmailConsentCheckbox";
@@ -311,11 +313,12 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
               <ArrowLeft className="w-5 h-5" />
             </Button>
             <h1 
-              className="text-2xl font-bold"
+              className="text-2xl font-bold flex-1"
               style={{ fontFamily: "Montserrat, sans-serif" }}
             >
               {uiTexts.gameTitle[language]}
             </h1>
+            <ShareButton url={`/quiz/${getQuizByType("carre-cognitif")?.slug}`} title={language === "fr" ? "Puzzle Cognitif" : "Cognitive Puzzle"} />
           </div>
 
           {/* Best time display */}
