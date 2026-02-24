@@ -194,6 +194,7 @@ const QuizDirect = () => {
             url={shareUrl}
             title={entry.title[language]}
             text={entry.description[language]}
+            variant="full"
           />
         </div>
       </div>
