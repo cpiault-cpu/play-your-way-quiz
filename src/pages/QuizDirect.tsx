@@ -81,7 +81,20 @@ const QuizDirect = () => {
     }
   };
 
-  const shareUrl = `/quiz/${entry.slug}`;
+  // Map quiz types to homepage category anchors
+  const typeToCategory: Record<string, string> = {
+    "microbiote": "microbiote",
+    "anti-inflammatory": "anti-inflammatory",
+    "sardines": "sardines",
+    "micronutrition": "micronutrition",
+    "vitamind": "micronutrition2",
+    "vitamind-light": "vitamind-light",
+    "plants": "plants",
+    "memory-music": "memory-music",
+    "memory-cards": "memory-cards",
+    "carre-cognitif": "carre-cognitif",
+  };
+  const shareUrl = `/#${typeToCategory[entry.type] || entry.type}`;
 
   const renderGame = () => {
     switch (entry.type) {

@@ -340,7 +340,7 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
         <div className="max-w-md mx-auto text-center">
           <div className="flex items-center justify-between mb-4">
             <div className="text-6xl">🌿</div>
-            <ShareButton url={`/quiz/${getQuizByType("memory-cards")?.slug}`} title={language === "fr" ? "Memory Cartes" : "Memory Cards"} variant="full" />
+            <ShareButton url="/#memory-cards" title={language === "fr" ? "Memory Cartes" : "Memory Cards"} variant="full" />
           </div>
           <h1 className="font-serif text-2xl font-bold text-foreground mb-4">
             {t.title} - {language === "fr" ? "Niveau" : "Level"} {level}
@@ -519,7 +519,7 @@ const MemoryPairsGame = ({ level, language, onBack }: MemoryPairsGameProps) => {
           </h1>
 
           <div className="flex items-center gap-1">
-            <ShareButton url={`/quiz/${getQuizByType("memory-cards")?.slug}`} title={language === "fr" ? "Memory Cartes" : "Memory Cards"} />
+            <ShareButton url="/#memory-cards" title={language === "fr" ? "Memory Cartes" : "Memory Cards"} />
             <Button
               onClick={handleRestart}
               variant="ghost"

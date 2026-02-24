@@ -1002,7 +1002,7 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                 {t.subtitle} • {getLevelDescription()}
               </p>
             </div>
-            <ShareButton url={`/quiz/${getQuizByType("memory-music")?.slug}`} title={language === "fr" ? "Mémoire Musicale" : "Musical Memory"} />
+            <ShareButton url="/#memory-music" title={language === "fr" ? "Mémoire Musicale" : "Musical Memory"} />
         </div>
 
         {/* Game Status */}

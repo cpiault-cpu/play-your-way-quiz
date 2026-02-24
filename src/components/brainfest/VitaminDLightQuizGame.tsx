@@ -187,7 +187,7 @@ const VitaminDLightQuizGame = ({ level, language, onBack, onLevelComplete }: Vit
             </h1>
           </div>
 
-          <ShareButton url={`/quiz/${getQuizByType("vitamind-light")?.slug}`} title={language === "fr" ? "Que la lumière soit" : "Let there be light"} />
+          <ShareButton url="/#vitamind-light" title={language === "fr" ? "Que la lumière soit" : "Let there be light"} />
         </div>
       </header>
 

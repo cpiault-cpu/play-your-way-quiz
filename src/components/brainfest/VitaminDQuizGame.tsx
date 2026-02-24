@@ -210,7 +210,7 @@ const VitaminDQuizGame = ({ level, language, onBack, onLevelComplete }: VitaminD
             </h1>
           </div>
 
-          <ShareButton url={`/quiz/${getQuizByType("vitamind")?.slug}`} title={language === "fr" ? "VitD ça dépend" : "VitD it depends"} />
+          <ShareButton url="/#micronutrition2" title={language === "fr" ? "VitD ça dépend" : "VitD it depends"} />
         </div>
       </header>
 

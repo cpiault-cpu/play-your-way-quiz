@@ -318,7 +318,7 @@ const CarreCognitifGame = ({ language, onBack }: CarreCognitifGameProps) => {
             >
               {uiTexts.gameTitle[language]}
             </h1>
-            <ShareButton url={`/quiz/${getQuizByType("carre-cognitif")?.slug}`} title={language === "fr" ? "Puzzle Cognitif" : "Cognitive Puzzle"} />
+            <ShareButton url="/#carre-cognitif" title={language === "fr" ? "Puzzle Cognitif" : "Cognitive Puzzle"} />
           </div>
 
           {/* Best time display */}

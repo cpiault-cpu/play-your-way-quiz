@@ -323,7 +323,7 @@ const MicrobioteQuizGame = ({ level, language, onBack, onLevelComplete }: Microb
               {language === "fr" ? "Safari Microbiote" : "Microbiota Safari"} - {levelData?.title[language]}
             </h1>
           </div>
-          <ShareButton url={`/quiz/${getQuizByType("microbiote")?.slug}`} title={language === "fr" ? "Safari Microbiote" : "Microbiota Safari"} />
+          <ShareButton url="/#microbiote" title={language === "fr" ? "Safari Microbiote" : "Microbiota Safari"} />
         </div>
       </header>
 
