@@ -58,12 +58,12 @@ const ShareButton = ({ url, title, text, variant = "compact" }: ShareButtonProps
       {/* Main share button */}
       <button
         onClick={handleShare}
-        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:scale-105 active:scale-95 min-h-[44px] min-w-[44px]"
-        style={{ backgroundColor: "#4A6741", fontFamily: "Montserrat, sans-serif" }}
+        className="inline-flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-xl text-white transition-all hover:scale-105 active:scale-95 min-h-[44px] min-w-[44px]"
+        style={{ backgroundColor: "#3B82F6", fontFamily: "Montserrat, sans-serif" }}
         aria-label="Partager ce quiz"
       >
         <Share2 className="w-5 h-5" />
-        {variant === "full" && "Partager"}
+        <span className="text-[10px] font-bold leading-none">Partager</span>
       </button>
 
       {/* Fallback panel (desktop or when native share fails) */}
