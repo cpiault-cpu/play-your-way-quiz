@@ -23,10 +23,12 @@ import CarreCognitifCard from "@/components/brainfest/CarreCognitifCard";
 import Footer from "@/components/brainfest/Footer";
 import AntiInflammatoryQuizGame from "@/components/brainfest/AntiInflammatoryQuizGame";
 import AntiInflammatoryQuizCard from "@/components/brainfest/AntiInflammatoryQuizCard";
+import MicrobioteQuizGame from "@/components/brainfest/MicrobioteQuizGame";
+import MicrobioteQuizCard from "@/components/brainfest/MicrobioteQuizCard";
 import FishIcon from "@/components/brainfest/icons/FishIcon";
 
 // Category type - updated to match new navigation
-type CategoryId = "anti-inflammatory" | "micronutrition" | "micronutrition2" | "vitamind-light" | "plants" | "memory-music" | "memory-cards" | "sardines" | "carre-cognitif";
+type CategoryId = "anti-inflammatory" | "micronutrition" | "micronutrition2" | "vitamind-light" | "plants" | "memory-music" | "memory-cards" | "sardines" | "carre-cognitif" | "microbiote";
 
 // Map quiz categories to our category IDs
 const getCategoryForQuiz = (quiz: Quiz): "micronutrition" | "micronutrition2" | "plants" => {
@@ -41,7 +43,7 @@ const VITAMIND_PROGRESS_KEY = "vitamind_progress";
 const PLANTS_PROGRESS_KEY = "plants_progress";
 const SARDINES_PROGRESS_KEY = "sardines_progress";
 const ANTI_INFLAMMATORY_PROGRESS_KEY = "anti_inflammatory_progress";
-
+const MICROBIOTE_PROGRESS_KEY = "microbiote_progress";
 const Index = () => {
   const [language, setLanguage] = useState<Language>("fr");
   const [activeQuizId, setActiveQuizId] = useState<string | null>(null);
@@ -54,6 +56,7 @@ const Index = () => {
   const [activeSardinesLevel, setActiveSardinesLevel] = useState<1 | 2 | 3 | 4 | null>(null);
   const [showCarreCognitif, setShowCarreCognitif] = useState(false);
   const [activeAntiInflammatoryLevel, setActiveAntiInflammatoryLevel] = useState<number | null>(null);
+  const [activeMicrobioteLevel, setActiveMicrobioteLevel] = useState<number | null>(null);
   const [completedMicronutritionLevels, setCompletedMicronutritionLevels] = useState<number[]>(() => {
     const saved = localStorage.getItem(MICRONUTRITION_PROGRESS_KEY);
     return saved ? JSON.parse(saved) : [];
@@ -72,6 +75,10 @@ const Index = () => {
   });
   const [completedAntiInflammatoryLevels, setCompletedAntiInflammatoryLevels] = useState<number[]>(() => {
     const saved = localStorage.getItem(ANTI_INFLAMMATORY_PROGRESS_KEY);
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [completedMicrobioteLevels, setCompletedMicrobioteLevels] = useState<number[]>(() => {
+    const saved = localStorage.getItem(MICROBIOTE_PROGRESS_KEY);
     return saved ? JSON.parse(saved) : [];
   });
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory-music");
@@ -111,6 +118,10 @@ const Index = () => {
     localStorage.setItem(ANTI_INFLAMMATORY_PROGRESS_KEY, JSON.stringify(completedAntiInflammatoryLevels));
   }, [completedAntiInflammatoryLevels]);
 
+  useEffect(() => {
+    localStorage.setItem(MICROBIOTE_PROGRESS_KEY, JSON.stringify(completedMicrobioteLevels));
+  }, [completedMicrobioteLevels]);
+
   const handleToggleLanguage = () => {
     setLanguage((prev) => (prev === "fr" ? "en" : "fr"));
   };
@@ -125,6 +136,19 @@ const Index = () => {
 
   const handlePlayMemoryPairs = (level: 1 | 2 | 3) => {
     setActiveMemoryPairsLevel(level);
+  };
+
+  const handlePlayMicrobiote = (level: number) => {
+    setActiveMicrobioteLevel(level);
+  };
+
+  const handleMicrobioteLevelComplete = (level: number) => {
+    setCompletedMicrobioteLevels(prev => [...new Set([...prev, level])]);
+    if (level < 4) {
+      setActiveMicrobioteLevel(level + 1);
+    } else {
+      setActiveMicrobioteLevel(null);
+    }
   };
 
 
@@ -216,9 +240,22 @@ const Index = () => {
     setActiveSardinesLevel(null);
     setShowCarreCognitif(false);
     setActiveAntiInflammatoryLevel(null);
+    setActiveMicrobioteLevel(null);
   };
 
   const activeQuiz = quizzes.find((q) => q.id === activeQuizId);
+
+  // Show Microbiote Quiz Game
+  if (activeMicrobioteLevel) {
+    return (
+      <MicrobioteQuizGame
+        level={activeMicrobioteLevel}
+        language={language}
+        onBack={handleBackToHome}
+        onLevelComplete={handleMicrobioteLevelComplete}
+      />
+    );
+  }
 
   // Show Anti-Inflammatory Quiz Game
   if (activeAntiInflammatoryLevel) {
@@ -804,6 +841,60 @@ const Index = () => {
                     <AntiInflammatoryQuizCard 
                       level={lvl} language={language} onPlay={handlePlayAntiInflammatory}
                       isCompleted={completedAntiInflammatoryLevels.includes(lvl)} />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.section>
+          )}
+
+          {/* Microbiote Quiz section */}
+          {selectedCategory === "microbiote" && (
+            <motion.section 
+              className="mt-10 sm:mt-12 md:mt-14 mb-10 sm:mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="flex items-center gap-3 mb-5 sm:mb-6">
+                <span className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 flex items-center justify-center text-xl sm:text-2xl flex-shrink-0">
+                  🦠
+                </span>
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  {language === "fr" ? "Microbiote : Le Grand Safari Intérieur" : "Microbiota: The Great Inner Safari"}
+                </h2>
+                <div className="flex-1 h-px bg-border/50 ml-2 hidden sm:block" />
+              </div>
+              
+              <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
+                <p className="text-sm sm:text-base text-foreground leading-relaxed max-w-3xl whitespace-pre-line">
+                  {language === "fr"
+                    ? "🌿 Explorez votre jungle microbienne niveau par niveau !\n\nImaginez une forêt tropicale miniature logée dans vos intestins : 100 000 milliards de locataires y vivent, travaillent et communiquent en secret. Prêt·e à rencontrer vos alliés invisibles ?\n\nBienvenue dans l'aventure microbienne ! Ici, chaque bactérie a son rôle. Certaines fabriquent vos vitamines, d'autres boostent vos défenses, et les plus audacieuses chuchotent même à votre cerveau !"
+                    : "🌿 Explore your microbial jungle level by level!\n\nImagine a miniature tropical forest living in your intestines: 100 trillion tenants live, work and communicate in secret. Ready to meet your invisible allies?\n\nWelcome to the microbial adventure! Here, every bacterium has its role. Some make your vitamins, others boost your defenses, and the boldest even whisper to your brain!"
+                  }
+                </p>
+              </div>
+              
+              {/* Mobile: vertical stack */}
+              <div className="md:hidden flex flex-col gap-4 min-w-0">
+                {[1, 2, 3, 4].map((lvl, index) => (
+                  <motion.div key={lvl} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ duration: 0.4, delay: index * 0.1 }}>
+                    <MicrobioteQuizCard 
+                      level={lvl} language={language} onPlay={handlePlayMicrobiote}
+                      isCompleted={completedMicrobioteLevels.includes(lvl)} />
+                  </motion.div>
+                ))}
+              </div>
+              
+              {/* Desktop: grid */}
+              <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[1, 2, 3, 4].map((lvl, index) => (
+                  <motion.div key={lvl} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ duration: 0.4, delay: index * 0.1 }}>
+                    <MicrobioteQuizCard 
+                      level={lvl} language={language} onPlay={handlePlayMicrobiote}
+                      isCompleted={completedMicrobioteLevels.includes(lvl)} />
                   </motion.div>
                 ))}
               </div>

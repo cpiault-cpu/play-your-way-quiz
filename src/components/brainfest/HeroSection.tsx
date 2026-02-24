@@ -3,7 +3,7 @@ import { Language } from "@/data/quizData";
 import { useRef, useState, useEffect } from "react";
 import wellnessHero from "@/assets/wellness-hero.png";
 
-type CategoryId = "anti-inflammatory" | "micronutrition" | "micronutrition2" | "vitamind-light" | "plants" | "memory-music" | "memory-cards" | "sardines" | "carre-cognitif";
+type CategoryId = "anti-inflammatory" | "micronutrition" | "micronutrition2" | "vitamind-light" | "plants" | "memory-music" | "memory-cards" | "sardines" | "carre-cognitif" | "microbiote";
 
 interface Category {
   id: CategoryId;
@@ -28,6 +28,7 @@ const heroTexts = {
 
 const savoirCategories: Category[] = [
   { id: "anti-inflammatory", name: { fr: "Stratège anti-inflammatoire", en: "Anti-Inflammatory Strategist" }, emoji: "🔥" },
+  { id: "microbiote", name: { fr: "Microbiote : Safari Intérieur", en: "Microbiota: Inner Safari" }, emoji: "🦠" },
   { id: "sardines", name: { fr: "Sardines, Sardines, Mais pourquoi ?", en: "Sardines, Sardines, But why?" }, emoji: "🐟" },
   { id: "micronutrition", name: { fr: "Micronutrition 1", en: "Micronutrition 1" }, emoji: "💊" },
   { id: "micronutrition2", name: { fr: "VitD ça dépend", en: "VitD it depends" }, emoji: "☀️" },
@@ -203,7 +204,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
                 }}
               >
                 {savoirCategories.map((cat) => {
-                  const needsWrap = cat.id === 'plants' || cat.id === 'vitamind-light' || cat.id === 'sardines' || cat.id === 'micronutrition2' || cat.id === 'anti-inflammatory';
+                  const needsWrap = cat.id === 'plants' || cat.id === 'vitamind-light' || cat.id === 'sardines' || cat.id === 'micronutrition2' || cat.id === 'anti-inflammatory' || cat.id === 'microbiote';
                   const isSelected = selectedCategory === cat.id;
                   return (
                     <motion.button
