@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Clock, Check, AlertCircle, ChevronRight, Volume2, Loader2, Copy } from "lucide-react";
+import ShareButton from "@/components/brainfest/ShareButton";
+import { getQuizByType } from "@/data/quizRegistry";
 import { Language } from "@/data/quizData";
 import { 
   sardinesLevels, 
@@ -247,12 +249,15 @@ const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: Sardines
             </h1>
           </div>
 
-          <button
-            onClick={() => setSoundEnabled(!soundEnabled)}
-            className={`p-2 rounded-full transition-colors ${soundEnabled ? 'text-foreground' : 'text-muted-foreground'}`}
-          >
-            <Volume2 className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setSoundEnabled(!soundEnabled)}
+              className={`p-2 rounded-full transition-colors ${soundEnabled ? 'text-foreground' : 'text-muted-foreground'}`}
+            >
+              <Volume2 className="w-5 h-5" />
+            </button>
+            <ShareButton url={`/quiz/${getQuizByType("sardines")?.slug}`} title={language === "fr" ? "Petites Sardines" : "Little Sardines"} />
+          </div>
         </div>
       </header>
 

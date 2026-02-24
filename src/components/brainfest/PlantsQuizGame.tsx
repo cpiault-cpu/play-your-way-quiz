@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Clock, Check, AlertCircle, Leaf, ChevronRight, Loader2 } from "lucide-react";
+import ShareButton from "@/components/brainfest/ShareButton";
+import { getQuizByType } from "@/data/quizRegistry";
 import { Language } from "@/data/quizData";
 import { 
   plantsLevels, 
@@ -209,7 +211,7 @@ const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuiz
             </h1>
           </div>
 
-          <div className="w-20" />
+          <ShareButton url={`/quiz/${getQuizByType("plants")?.slug}`} title={language === "fr" ? "Plantes santé" : "Health Plants"} />
         </div>
       </header>
 

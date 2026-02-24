@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Clock, Check, AlertCircle, ChevronRight, Loader2, Bug } from "lucide-react";
+import ShareButton from "@/components/brainfest/ShareButton";
+import { getQuizByType } from "@/data/quizRegistry";
 import { Language } from "@/data/quizData";
 import { 
   microbioteLevels, 
@@ -321,7 +323,7 @@ const MicrobioteQuizGame = ({ level, language, onBack, onLevelComplete }: Microb
               {language === "fr" ? "Safari Microbiote" : "Microbiota Safari"} - {levelData?.title[language]}
             </h1>
           </div>
-          <div className="w-20" />
+          <ShareButton url={`/quiz/${getQuizByType("microbiote")?.slug}`} title={language === "fr" ? "Safari Microbiote" : "Microbiota Safari"} />
         </div>
       </header>
 

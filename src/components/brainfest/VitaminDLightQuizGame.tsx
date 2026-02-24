@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Clock, Check, AlertCircle, Sunrise, ChevronRight, Loader2, ExternalLink } from "lucide-react";
+import ShareButton from "@/components/brainfest/ShareButton";
+import { getQuizByType } from "@/data/quizRegistry";
 import { Language } from "@/data/quizData";
 import { 
   vitaminDLightLevels, 
@@ -185,7 +187,7 @@ const VitaminDLightQuizGame = ({ level, language, onBack, onLevelComplete }: Vit
             </h1>
           </div>
 
-          <div className="w-20" />
+          <ShareButton url={`/quiz/${getQuizByType("vitamind-light")?.slug}`} title={language === "fr" ? "Que la lumière soit" : "Let there be light"} />
         </div>
       </header>
 

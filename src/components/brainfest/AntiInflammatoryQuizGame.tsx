@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Clock, Check, AlertCircle, Flame, ChevronRight, Loader2 } from "lucide-react";
+import ShareButton from "@/components/brainfest/ShareButton";
+import { getQuizByType } from "@/data/quizRegistry";
 import { Language } from "@/data/quizData";
 import { 
   antiInflammatoryLevels, 
@@ -349,7 +351,7 @@ const AntiInflammatoryQuizGame = ({ level, language, onBack, onLevelComplete }: 
               {language === "fr" ? "Anti-Inflammatoire" : "Anti-Inflammatory"} - {levelData?.title[language]}
             </h1>
           </div>
-          <div className="w-20" />
+          <ShareButton url={`/quiz/${getQuizByType("anti-inflammatory")?.slug}`} title={language === "fr" ? "Anti-Inflammatoire" : "Anti-Inflammatory"} />
         </div>
       </header>
 
