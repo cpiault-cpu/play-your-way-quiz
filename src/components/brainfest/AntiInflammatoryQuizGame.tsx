@@ -351,7 +351,7 @@ const AntiInflammatoryQuizGame = ({ level, language, onBack, onLevelComplete }: 
               {language === "fr" ? "Anti-Inflammatoire" : "Anti-Inflammatory"} - {levelData?.title[language]}
             </h1>
           </div>
-          <ShareButton url={`/quiz/${getQuizByType("anti-inflammatory")?.slug}`} title={language === "fr" ? "Anti-Inflammatoire" : "Anti-Inflammatory"} />
+          <ShareButton url="/#anti-inflammatory" title={language === "fr" ? "Anti-Inflammatoire" : "Anti-Inflammatory"} />
         </div>
       </header>
 

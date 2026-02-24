@@ -208,7 +208,7 @@ const MicronutritionQuizGame = ({ level, language, onBack, onLevelComplete }: Mi
             </h1>
           </div>
 
-          <ShareButton url={`/quiz/${getQuizByType("micronutrition")?.slug}`} title={language === "fr" ? "Micronutrition 1" : "Micronutrition 1"} />
+          <ShareButton url="/#micronutrition" title={language === "fr" ? "Micronutrition 1" : "Micronutrition 1"} />
         </div>
       </header>
 

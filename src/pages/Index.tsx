@@ -84,6 +84,20 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>("memory-music");
   const quizContentRef = useRef<HTMLDivElement>(null);
 
+  // Handle hash-based deep linking to categories (e.g. /#anti-inflammatory)
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (hash) {
+      const validCategories: CategoryId[] = ["anti-inflammatory", "micronutrition", "micronutrition2", "vitamind-light", "plants", "memory-music", "memory-cards", "sardines", "carre-cognitif", "microbiote"];
+      if (validCategories.includes(hash as CategoryId)) {
+        setSelectedCategory(hash as CategoryId);
+        setTimeout(() => {
+          quizContentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 300);
+      }
+    }
+  }, []);
+
   const handleSelectCategory = useCallback((category: CategoryId | null) => {
     setSelectedCategory(category);
     if (category) {

@@ -211,7 +211,7 @@ const PlantsQuizGame = ({ level, language, onBack, onLevelComplete }: PlantsQuiz
             </h1>
           </div>
 
-          <ShareButton url={`/quiz/${getQuizByType("plants")?.slug}`} title={language === "fr" ? "Plantes santé" : "Health Plants"} />
+          <ShareButton url="/#plants" title={language === "fr" ? "Plantes santé" : "Health Plants"} />
         </div>
       </header>
 

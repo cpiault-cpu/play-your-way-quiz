@@ -256,7 +256,7 @@ const SardinesQuizGame = ({ level, language, onBack, onLevelComplete }: Sardines
             >
               <Volume2 className="w-5 h-5" />
             </button>
-            <ShareButton url={`/quiz/${getQuizByType("sardines")?.slug}`} title={language === "fr" ? "Petites Sardines" : "Little Sardines"} />
+            <ShareButton url="/#sardines" title={language === "fr" ? "Petites Sardines" : "Little Sardines"} />
           </div>
         </div>
       </header>
