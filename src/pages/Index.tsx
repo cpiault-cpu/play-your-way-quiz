@@ -426,8 +426,8 @@ const Index = () => {
               <div className="bg-white rounded-xl p-4 mb-6 shadow-sm border border-border/30">
                 <p className="text-sm sm:text-base text-gray-900 leading-relaxed max-w-3xl">
                   {language === "fr" 
-                    ? "Écoutez et reproduisez ces enchaînements de notes pour réveiller votre oreille musicale et aiguiser votre mémoire."
-                    : "Listen and reproduce these note sequences to awaken your musical ear and sharpen your memory."
+                    ? "Les oméga-3, surtout l'EPA et le DHA, sont des acides gras essentiels qui jouent un rôle clé dans le bon fonctionnement du cerveau. Ils favorisent la fluidité des membranes neuronales, ce qui améliore la communication entre les cellules cérébrales et soutient la mémoire à court et long terme. Et si on regardait comment se porte votre mémoire ?"
+                    : "Omega-3s, especially EPA and DHA, are essential fatty acids that play a key role in brain function. They promote the fluidity of neuronal membranes, which improves communication between brain cells and supports short and long-term memory. What if we checked how your memory is doing?"
                   }
                 </p>
               </div>
