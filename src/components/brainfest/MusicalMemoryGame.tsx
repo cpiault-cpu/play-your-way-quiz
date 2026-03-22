@@ -1154,14 +1154,6 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                 <p className="text-muted-foreground text-sm sm:text-lg mb-4 sm:mb-6">
                   {t.finalScore}
                 </p>
-                <Button
-                  className="btn-primary-custom text-white w-full text-sm sm:text-lg px-4 sm:px-6 py-4 sm:py-5 mb-4"
-                  asChild
-                >
-                  <a href="https://www.peita.fr/product-page/8-boites-de-petites-sardines" target="_blank" rel="noopener noreferrer">
-                    {language === "fr" ? "Visiter la boutique" : "Visit the shop"}
-                  </a>
-                </Button>
 
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                   <Button
@@ -1207,14 +1199,6 @@ const MusicalMemoryGame = ({ language, level, onBack }: MusicalMemoryGameProps) 
                   {language === "fr" ? "Bravo, vous avez gagné !" : "Congratulations, you won!"}
                 </p>
 
-                <Button
-                  className="btn-primary-custom text-white w-full text-sm sm:text-lg px-4 sm:px-6 py-4 sm:py-5 mb-4"
-                  asChild
-                >
-                  <a href="https://www.peita.fr/product-page/8-boites-de-petites-sardines" target="_blank" rel="noopener noreferrer">
-                    {language === "fr" ? "Visiter la boutique" : "Visit the shop"}
-                  </a>
-                </Button>
                 
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                   <Button

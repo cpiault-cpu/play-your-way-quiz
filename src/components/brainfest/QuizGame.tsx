@@ -402,15 +402,6 @@ const QuizGame = ({ quiz, language, onBack }: QuizGameProps) => {
                 </div>
               )}
 
-              {/* Shop button */}
-              <Button
-                className="btn-primary-custom text-white w-full mb-4 text-sm sm:text-base"
-                asChild
-              >
-                <a href="https://www.peita.fr/product-page/8-boites-de-petites-sardines" target="_blank" rel="noopener noreferrer">
-                  {language === "fr" ? "Visiter la boutique" : "Visit the shop"}
-                </a>
-              </Button>
 
               <Button
                 onClick={onBack}
