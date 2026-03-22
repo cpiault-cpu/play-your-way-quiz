@@ -174,7 +174,7 @@ const Footer = ({ language }: FooterProps) => {
           </Dialog>
         </motion.div>
 
-        {/* Social Links */}
+        {/* Links */}
         <motion.div 
           className="flex flex-wrap justify-center items-center gap-6 sm:gap-8"
           initial={{ opacity: 0, y: 15 }}
@@ -182,16 +182,6 @@ const Footer = ({ language }: FooterProps) => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <a
-            href="https://www.instagram.com/maison_peita/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:opacity-70 transition-opacity group"
-            style={{ color: '#000000' }}
-          >
-            <Instagram className="w-6 h-6 group-hover:scale-110 transition-transform" />
-            <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}>@maison_peita</span>
-          </a>
           <Link
             to="/politique-de-confidentialite"
             className="flex items-center gap-2 hover:opacity-70 transition-opacity group"
