@@ -192,16 +192,6 @@ const Footer = ({ language }: FooterProps) => {
             <Instagram className="w-6 h-6 group-hover:scale-110 transition-transform" />
             <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}>@maison_peita</span>
           </a>
-          <a
-            href="https://www.peita.fr/boutique"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:opacity-70 transition-opacity group"
-            style={{ color: '#000000' }}
-          >
-            <ShoppingBag className="w-6 h-6 group-hover:scale-110 transition-transform" />
-            <span style={{ fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}>{language === "fr" ? "Boutique" : "Shop"}</span>
-          </a>
           <Link
             to="/politique-de-confidentialite"
             className="flex items-center gap-2 hover:opacity-70 transition-opacity group"
