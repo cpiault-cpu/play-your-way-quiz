@@ -62,7 +62,7 @@ const HeroSection = ({ language, onToggleLanguage, selectedCategory, onSelectCat
           {/* Top bar with language toggle and logo */}
           <div className="flex items-center justify-between mb-4 md:mb-6">
             <motion.a 
-              href="https://www.peita.fr" 
+              href="https://www.peita.fr/product-page/8-boites-de-petites-sardines" 
               target="_blank" 
               rel="noopener noreferrer"
               className="floating-logo"
