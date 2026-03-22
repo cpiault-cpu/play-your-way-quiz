@@ -78,8 +78,8 @@ const Footer = ({ language }: FooterProps) => {
           transition={{ duration: 0.5 }}
         >
           {language === "fr" 
-            ? "Cette page sera renouvelée souvent avec de nouveaux jeux et des matières à étudier plus profondément. Inscrivez-vous pour être tenus au courant et suivez-nous sur Instagram."
-            : "This page will be updated frequently with new games and deeper study materials. Sign up to stay informed and follow us on Instagram."
+            ? "Cette page sera renouvelée souvent avec de nouveaux jeux et des matières à étudier plus profondément. Inscrivez-vous pour être tenus au courant."
+            : "This page will be updated frequently with new games and deeper study materials. Sign up to stay informed."
           }
         </motion.p>
 
